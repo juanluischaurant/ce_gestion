@@ -81,6 +81,7 @@
                                         <th>Código</th>
                                         <th>Nombre</th>
                                         <th>Cupos</th>
+                                        <th>Ocupados</th>
                                         <th>Precio</th>
                                         <th>Opciones</th>
                                         <th></th>
@@ -120,7 +121,7 @@
                           
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <button type="submit" class="btn btn-success btn-flat">Guardar</button>
+                                    <button type="submit" id='guardar-inscripcion' disabled class="btn btn-success btn-flat">Guardar</button>
                                 </div>
                                 
                             </div>

@@ -103,6 +103,7 @@ class Inscripciones_model extends CI_Model {
 
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
+        instancia.cupos_instancia_ocupados,
         curso.nombre_curso,
         instancia.precio_instancia,
         concat(curso.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as label,
@@ -119,15 +120,29 @@ class Inscripciones_model extends CI_Model {
 
     
     public function getPagosJSON($valor) {
-        $this->db->select('id_pago, serial_pago, 
+        // $this->db->select('id_pago, serial_pago, 
+        // concat(numero_operacion, " - ", nombres_cliente, " ", apellidos_cliente) as label, monto_operacion, 
+        // numero_operacion, 
+        // concat(nombres_cliente, " ", apellidos_cliente) as nombre_cliente, 
+        // cedula_cliente, 
+        // fk_id_tipo_operacion');
+        // $this->db->from('cliente');
+        // $this->db->join('pago_de_inscripcion', 'cliente.id_cliente = pago_de_inscripcion.fk_id_pagador');
+        // $this->db->where('estado_pago = 1');
+
+
+        // Nuevo código
+        $this->db->select('pi.id_pago, 
+        pi.serial_pago, 
+        pi.numero_operacion, 
+        pi.estado_pago,
         concat(numero_operacion, " - ", nombres_cliente, " ", apellidos_cliente) as label, monto_operacion, 
-        numero_operacion, 
         concat(nombres_cliente, " ", apellidos_cliente) as nombre_cliente, 
         cedula_cliente, 
-        fk_id_tipo_operacion');
-        $this->db->from('cliente');
-        $this->db->join('pago_de_inscripcion', 'cliente.id_cliente = pago_de_inscripcion.fk_id_pagador');
-        $this->db->where('estado_pago = 1');
+        fk_id_tipo_operacion')
+        ->from('pago_de_inscripcion as pi')
+        ->join('cliente as c', 'c.id_cliente = pi.fk_id_pagador')
+        ->where('pi.estado_pago', 1);
         
         if($valor != '')
         {

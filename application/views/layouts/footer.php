@@ -48,7 +48,7 @@
         // =============================================
 
         $('#example1').DataTable();
-        $('.sidebar-menu').tree(); 
+        $('.sidebar-menu').tree();
 
         $('.btn-remove').on('click', function(e) {
             // Código para el botón de eliminar en las tablas
@@ -80,7 +80,7 @@
                 exportOptions: {
                     columns: [ 0, 1, 2]
                 }
-                
+
             }
         ],
 
@@ -117,7 +117,7 @@
                 exportOptions: {
                     columns: [ 0, 1, 2, 3]
                 }
-                
+
             }
         ],
 
@@ -143,8 +143,12 @@
         // =============================================
 
 
+        // =============================================
+        // JS para Facilitadores
+        // =============================================
 
         $('.btn-view-facilitador').on('click', function() {
+            // Al clickear el botón de vista de facilitador, expande modal
             let facilitador = $(this).val();
             let infoFacilitador = facilitador.split('*');
 
@@ -157,10 +161,10 @@
         });
 
         // =============================================
-        // 
+        // Fin de JS para Facilitadores
         // =============================================
 
-        
+
 
         // =============================================
         // JS para Pagos
@@ -175,7 +179,7 @@
 
                 console.log(infoTipoDePago)
 
-                $('#id-tipo-de-pago').val(infoTipoDePago[0]); 
+                $('#id-tipo-de-pago').val(infoTipoDePago[0]);
 
                 if(tipoDePago === 'Efectivo') {
                     $('#serial-de-pago').val('efe-'+generarNumero(infoTipoDePago[1]));
@@ -184,7 +188,7 @@
                 } else if(tipoDePago === 'Exonerado') {
                     $('#serial-de-pago').val('exo-'+generarNumero(infoTipoDePago[1]));
                 }
-                
+
             } else {
                 $('#id-tipo-de-pago').val(null);
                 $('#serial-de-pago').val(null);
@@ -256,7 +260,7 @@
                 });
             }, minLength: 1,
             select: function(event, ui) {
-                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_cliente+'*'+ui.item.id_pago+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion;
+                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_cliente+'*'+ui.item.id_pago+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
         });
@@ -265,25 +269,43 @@
             data = $(this).val();
 
             if(data != '') {
+
                 datosPago = data.split('*');
-                html = '<tr>';
-                html += '<td><input type="hidden" name="serial-pago[]" value="'+datosPago[0]+'">'+datosPago[0]+'</td>';
-                html += '<td><input type="hidden" name="numero-operacion[]" value="'+datosPago[1]+'">'+datosPago[1]+'</td>';
-                html += '<td><input type="hidden" name="monto-operacion[]" value="'+datosPago[2]+'">'+datosPago[2]+'<input type="hidden" name="id_pago[]" value="'+datosPago[6]+'"></td>';
-                html += '<td><input type="hidden" name="nombre_cliente[]" value="'+datosPago[3]+'">'+datosPago[4]+'<input type="hidden" name="fk_id_tipo_operacion[]" value="'+datosPago[7]+'">'+'</td>';
 
-                html += '<td><button type="button" class="btn btn-danger btn-remove-curso"><span class="fa fa-remove"></span></button></td>'
-                html += '</tr>';
+                if(datosPago[8] == 1) {
 
-                $('#tabla-pagos tbody').append(html);
+                    html = '<tr>';
+                    html += '<td><input type="hidden" name="serial-pago[]" value="'+datosPago[0]+'">'+datosPago[0]+'</td>';
+                    html += '<td><input type="hidden" name="numero-operacion[]" value="'+datosPago[1]+'">'+datosPago[1]+'</td>';
+                    html += '<td><input type="hidden" name="monto-operacion[]" value="'+datosPago[2]+'">'+datosPago[2]+'<input type="hidden" name="id_pago[]" value="'+datosPago[6]+'"></td>';
+                    html += '<td><input type="hidden" name="nombre_cliente[]" value="'+datosPago[3]+'">'+datosPago[4]+'<input type="hidden" name="fk_id_tipo_operacion[]" value="'+datosPago[7]+'">'+'</td>';
 
-                sumar();
+                    html += '<td><button type="button" class="btn btn-danger btn-remove-pago"><span class="fa fa-remove"></span></button></td>'
+                    html += '</tr>';
 
+                    $('#tabla-pagos tbody').append(html);
+
+                    sumar();
+
+                    $('#numero-de-operacion').val('');
+
+                } else if(datosPago[8] == 0) {
+
+                    alert('Pago no disponible');
+                    $('#numero-de-operacion').val('');
+
+                } else if(datosPago[8] == 2) {
+
+                    alert('Pago ya ha sido utilizado');
+                    $('#numero-de-operacion').val('');
+
+                }
+                
             } else {
                 alert('seleccione un pago');
             }
         });
-        
+
         // =============================================
         // Fin de JS para Inscripciones
         // =============================================
@@ -396,7 +418,7 @@
                 });
             }, minLength: 3,
             select: function(event, ui) {
-                data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia;
+                data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia+'*'+ui.item.cupos_instancia_ocupados;
                 $('#btn-agregar').val(data);
             }
         });
@@ -405,19 +427,31 @@
             data = $(this).val();
 
             if(data != '') {
-                datosCurso = data.split('*');
+
+                let datosCurso = data.split('*');
+                let cupos_totales = datosCurso[2];
+                let cupos_ocupados = datosCurso[4];
+
+                if(cupos_ocupados >= cupos_totales) {
+                    alert('El curso está lleno, por favor seleccione uno nuevo');
+                } else {
                 html = '<tr>';
                 html += '<td><input type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
                 html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
                 html += '<td><input type="hidden" name="cuposcursos[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
-                html += '<td><input type="hidden" name="precioactualcursos[]" value="'+datosCurso[3]+'">'+datosCurso[3]+'</td>';
+                html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
+                html += '<td><input type="hidden" name="precioactualcursos[]" value="'+datosCurso[3]+'">' + datosCurso[3] + '</td>';
 
                 html += '<td><button type="button" class="btn btn-danger btn-remove-curso"><span class="fa fa-remove"></span></button></td>'
                 html += '</tr>';
 
                 $('#tbventas tbody').append(html);
 
+                switchGuardarInscripcion();
+
                 sumar();
+
+                }
 
             } else {
                 alert('seleccione un curso');
@@ -426,9 +460,22 @@
 
         $(document).on('click', '.btn-remove-curso', function() {
             $(this).closest('tr').remove();
+
+            console.log($('#tbventas tr').length);
+
+            if($('#tbventas tr').length <= 1) {
+                $('#guardar-inscripcion').attr('disabled', true);
+            }
+            
             sumar();
         });
-        
+
+        $(document).on('click', '.btn-remove-pago', function() {
+            $(this).closest('tr').remove();
+            sumar();
+
+        });
+
         // NO OLVIDES PROGRAMAR ESTO
         // ¿Es realmente necesario?
         // $(document).on('keyup', '#tbventas input.cantidades', function() {
@@ -436,8 +483,6 @@
         //     precio = $(this).closest('tr').find('td:eq(2)');
         //     importe = cantidad * precio
         // });
-
-
 
         $('.btn-view-participante').on('click', function() {
             let participante = $(this).val();
@@ -501,6 +546,7 @@
     }
 
     function sumar() {
+        // Calcula el total cada vez que se llama esta función
         subtotal = 0;
         monto_pagado = 0;
 
@@ -513,7 +559,7 @@
         // --------------
 
         $('#tbventas tbody tr').each(function() {
-            subtotal = subtotal + Number($(this).find('td:eq(3)').text());
+            subtotal = subtotal + Number($(this).find('td:eq(4)').text());
         });
         $('input[name=subtotal]').val(subtotal);
 
@@ -523,6 +569,17 @@
 
         $('input[name=total]').val(total);
     }
+
+    function switchGuardarInscripcion() {
+
+        let theAttribute = $('#guardar-inscripcion').attr('disabled');
+
+        if(typeof theAttribute !== typeof undefined && theAttribute !== false) {
+            $('#guardar-inscripcion').removeAttr('disabled');
+        }
+
+    }
+
 </script>
 
 </body>

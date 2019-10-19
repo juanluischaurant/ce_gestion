@@ -276,6 +276,7 @@ WHERE i.id_inscripcion IN (
 )
 
 -- Selecciona participantes inscritos en una instancia
+-- Esta consulta puede ser utilizada para generar la lista de asistencias
 SELECT i.fk_id_participante_1, cli.nombres_cliente
 FROM inscripcion i
 JOIN cliente cli
