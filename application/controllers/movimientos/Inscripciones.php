@@ -40,7 +40,7 @@ class Inscripciones extends CI_Controller {
 		// $fk_id_estatus_1 = ; <- Configurado automáticamente en 1
 		// $fk_id_pago_inscripcion_1 = ; <. No utilizado para almacenar en la tabla `inscripcion`
 		// $fk_id_usuario_1 = ; <= aur por configurar
-		$fecha_inscripcion = $this->input->post('fecha-inscrpicion');
+		$fecha_inscripcion = $this->input->post('fecha-inscripcion');
 
 		// $hora_inscripcion = ; <- Es calculada automátimamente a nivel de BD
 		// $hora_cancelada = ; <- No utilizada para esta operación
