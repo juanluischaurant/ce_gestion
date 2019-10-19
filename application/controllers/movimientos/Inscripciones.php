@@ -41,15 +41,12 @@ class Inscripciones extends CI_Controller {
 		// $fk_id_pago_inscripcion_1 = ; <. No utilizado para almacenar en la tabla `inscripcion`
 		// $fk_id_usuario_1 = ; <= aur por configurar
 		$fecha_inscripcion = $this->input->post('fecha-inscripcion');
-
 		// $hora_inscripcion = ; <- Es calculada automátimamente a nivel de BD
 		// $hora_cancelada = ; <- No utilizada para esta operación
-		
 		$monto_pagado = $this->input->post('monto-pagado');
 		$precio_total = $this->input->post('subtotal');
 		$descuento = $this->input->post('descuento');
 		$precio_final = $this->input->post('total');
-		
 		// $activa = ; <- valor por defecto 1
 
 		// Llaves utilizadas para almacenar en la tabla inscripcion_curso
@@ -71,6 +68,7 @@ class Inscripciones extends CI_Controller {
 		if ($this->Inscripciones_model->save($data)) {
 			$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
 		
+			// Guarda los detalles de la inscripción
 			$this->saveInscripcionCurso($fk_id_curso, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
 
 			redirect(base_url()."movimientos/inscripciones");
@@ -82,13 +80,17 @@ class Inscripciones extends CI_Controller {
 
 	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago) {
 		// Guarda los datos de la tabla de relación inscripcion_curso
+
 		for ($i=0; $i < count($idcursos); $i++) { 
 			$data  = array(
 				'fk_id_inscripcion_1' => $id_ultima_inscripcion,
 				'fk_id_curso_1' => $idcursos[$i]
 			);
 
+			// Almacena en inscripcion_curso
 			$this->Pagos_model->saveInscripcionCurso($data);
+
+			// Actualiza el conteo de cupos disponibles en el curso
 			$this->updateCuposCurso($idcursos[$i],$cupos_curso[$i]);
 			
 		}
@@ -115,7 +117,7 @@ class Inscripciones extends CI_Controller {
 	protected function updateCuposCurso($idcurso, $cupos_curso) {
 		$cursoActual = $this->Instancias_model->getInstancia($idcurso);
 		$data = array(
-			'cupos_instancia' => $cursoActual->cupos_instancia - 1, 
+			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 
 		);
 		$this->Instancias_model->update($idcurso,$data);
 	}
