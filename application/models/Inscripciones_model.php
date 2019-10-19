@@ -17,7 +17,8 @@ class Inscripciones_model extends CI_Model {
         $resultados = $this->db->select(
             'inscripcion_curso.fk_id_inscripcion_1, 
             inscripcion.hora_inscripcion, 
-            concat(curso.nombre_curso, " ", p.mes_inicio_periodo, "-", p.mes_cierre_periodo, " ", p.year_periodo) as nombre_completo_instancia, cliente.cedula_cliente,
+            concat(curso.nombre_curso, " ", p.mes_inicio_periodo, "-", p.mes_cierre_periodo, " ", p.year_periodo) as nombre_completo_instancia,
+            cliente.cedula_cliente,
             inscripcion_curso.id_inscripcion_curso')
         ->from('inscripcion_curso')
         ->join('inscripcion', 'inscripcion.id_inscripcion = inscripcion_curso.fk_id_inscripcion_1')
@@ -126,7 +127,7 @@ class Inscripciones_model extends CI_Model {
         fk_id_tipo_operacion');
         $this->db->from('cliente');
         $this->db->join('pago_de_inscripcion', 'cliente.id_cliente = pago_de_inscripcion.fk_id_pagador');
-        
+        $this->db->where('estado_pago = 1');
         
         if($valor != '')
         {

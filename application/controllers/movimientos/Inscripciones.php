@@ -80,10 +80,6 @@ class Inscripciones extends CI_Controller {
 		
 	}
 
-	protected function revisarInscripcionParticipante($id_participante) {
-		$this->Inscripciones_model->revisarInscripcionParticipante($id_participante);
-	}
-
 	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago) {
 		// Guarda los datos de la tabla de relación inscripcion_curso
 		for ($i=0; $i < count($idcursos); $i++) { 
@@ -102,6 +98,7 @@ class Inscripciones extends CI_Controller {
 				'fk_id_inscripcion' => $id_ultima_inscripcion
 			);
 			$this->updateIdInscripcion($ids_pago[$j], $data);
+			$this->updateEstadoPago($ids_pago[$j]);
 		} 
 
 	}
@@ -125,6 +122,11 @@ class Inscripciones extends CI_Controller {
 
 	protected function updateIdInscripcion($id_pago, $id_ultima_inscripcion) {
 		$this->Inscripciones_model->updateIdInscripcion($id_pago, $id_ultima_inscripcion);
+	}
+
+	protected function updateEstadoPago($id_pago) {
+		// Actualiza el campo estado_pago en la tabla pago_de_inscripcion
+		$this->Pagos_model->updateIdInscripcion($id_pago);
 	}
 
 	public function view() {

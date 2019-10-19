@@ -43,10 +43,19 @@ class Pagos_model extends CI_Model {
       $this->db->where("id_tipo_de_operacion",$idOperacion);
       $this->db->update("tipo_de_operacion",$data);
     }
+
+    public function updateIdInscripcion($id_pago) {
+      $data = array(
+        'estado_pago' => 2
+      );
+      $this->db->where("id_pago",$id_pago);
+      $this->db->update("pago_de_inscripcion", $data);
+    }
     
     public function saveInscripcionCurso($data){
 		$this->db->insert("inscripcion_curso",$data);
 	}
+
 
     // Métodos utilizadas para el pluggin AUTOCOMPLETE
     public function getClientesJSON($valor) {
