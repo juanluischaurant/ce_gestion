@@ -139,12 +139,16 @@
     });
 
         // =============================================
-        // Fin de JS para DataTables
+        // Fin de JS para Facilitadores
         // =============================================
 
 
+        // =============================================
+        // JS para Facilitadores
+        // =============================================
 
         $('.btn-view-facilitador').on('click', function() {
+            // Al clickear el botón de vista de facilitador, expande modal
             let facilitador = $(this).val();
             let infoFacilitador = facilitador.split('*');
 
@@ -157,7 +161,7 @@
         });
 
         // =============================================
-        // 
+        // Fin de JS para Facilitadores
         // =============================================
 
         
