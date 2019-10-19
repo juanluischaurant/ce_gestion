@@ -17,13 +17,13 @@ class Inscripciones_model extends CI_Model {
         $resultados = $this->db->select(
             'inscripcion_curso.fk_id_inscripcion_1, 
             inscripcion.hora_inscripcion, 
-            concat(curso.nombre_curso, " ", periodo.year_periodo) as nombre_completo_instancia, cliente.cedula_cliente,
+            concat(curso.nombre_curso, " ", p.mes_inicio_periodo, "-", p.mes_cierre_periodo, " ", p.year_periodo) as nombre_completo_instancia, cliente.cedula_cliente,
             inscripcion_curso.id_inscripcion_curso')
         ->from('inscripcion_curso')
         ->join('inscripcion', 'inscripcion.id_inscripcion = inscripcion_curso.fk_id_inscripcion_1')
         ->join('cliente', 'cliente.id_cliente = inscripcion.fk_id_participante_1')
         ->join('instancia', 'instancia.id_instancia = inscripcion_curso.fk_id_curso_1')
-        ->join('periodo', 'id_periodo = instancia.fk_id_periodo_1')
+        ->join('periodo as p', 'id_periodo = instancia.fk_id_periodo_1')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->get();
 
