@@ -13,7 +13,8 @@
     
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">  
-    
+    <!-- DataTables Export-->
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/template/datatables-export/css/buttons.dataTables.min.css">   
  
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/template/dist/css/AdminLTE.min.css">
