@@ -65,8 +65,8 @@ class Cursos extends CI_Controller {
 		$descripcion = $this->input->post('descripcion');
 
 		$data = array(
-			'nombre' => $nombre,
-			'descripcion' => $descripcion
+			'nombre_curso' => $nombre,
+			'descripcion_curso' => $descripcion
 		);
 
 		

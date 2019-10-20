@@ -27,15 +27,15 @@
                         <?php endif; ?>
 
                         <form action="<?php echo base_url(); ?>gestion/cursos/update" method="POST">
-                            <input type="hidden" name="id_curso" id="nombre" class="form-control" value="<?php echo $curso->id; ?>">
+                            <input type="hidden" name="id_curso" id="nombre" class="form-control" value="<?php echo $curso->id_curso; ?>">
                             <div class="form-group">
                                 <label for="nombre">Nombre: </label>
-                                <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo $curso->nombre; ?>">
+                                <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo $curso->nombre_curso; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="descripcion">Descripción: </label>
-                                <input type="text" name="descripcion" id="descripcion" class="form-control" value="<?php echo $curso->descripcion; ?>">
+                                <input type="text" name="descripcion" id="descripcion" class="form-control" value="<?php echo $curso->descripcion_curso; ?>">
                             </div>
 
                             <div class="form-group"> 
