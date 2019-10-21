@@ -70,11 +70,14 @@ class Cursos extends CI_Controller {
 		);
 
 		
-		if($this->Cursos_model->update($id_curso, $data)) {
+		if(!$this->Cursos_model->update($id_curso, $data)) {
+			$this->session->set_flashdata('success', 'Curso actualizado exitosamente.');
 			redirect(base_url().'gestion/cursos');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar el curso.');
 			redirect(base_url().'gestion/cursos/edit/'.$id_curso);
+
+
 		}
 	}
 
