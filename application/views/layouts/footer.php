@@ -434,6 +434,7 @@
 
                 if(cupos_ocupados >= cupos_totales) {
                     alert('El curso está lleno, por favor seleccione uno nuevo');
+                    $('#producto').val('');
                 } else {
                 html = '<tr>';
                 html += '<td><input type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
@@ -460,8 +461,6 @@
 
         $(document).on('click', '.btn-remove-curso', function() {
             $(this).closest('tr').remove();
-
-            console.log($('#tbventas tr').length);
 
             if($('#tbventas tr').length <= 1) {
                 $('#guardar-inscripcion').attr('disabled', true);
@@ -554,20 +553,20 @@
         $('#tabla-pagos tbody tr').each(function() {
             monto_pagado = monto_pagado + Number($(this).find('td:eq(2)').text());
         });
-        $('input[name=monto-pagado]').val(monto_pagado);
+        $('input[name=monto-pagado]').val(monto_pagado.toFixed(2));
 
         // --------------
 
         $('#tbventas tbody tr').each(function() {
             subtotal = subtotal + Number($(this).find('td:eq(4)').text());
         });
-        $('input[name=subtotal]').val(subtotal);
+        $('input[name=subtotal]').val(subtotal.toFixed(2));
 
         descuento = $('input[name=descuento]').val();
 
         total = subtotal - descuento;
 
-        $('input[name=total]').val(total);
+        $('input[name=total]').val(total.toFixed(2));
     }
 
     function switchGuardarInscripcion() {
