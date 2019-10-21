@@ -21,21 +21,21 @@
                         <?php if($this->session->flashdata('error')): ?>
                         <div class="alert alert-danger alert-dismissible">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+                            <h4><i class="icon fa fa-ban"></i> ¡Atención!</h4>
                             <?php echo $this->session->flashdata('error'); ?>
                         </div>
                         <?php endif; ?>
 
                         <form action="<?php echo base_url(); ?>gestion/cursos/update" method="POST">
-                            <input type="hidden" name="id_curso" id="nombre" class="form-control" value="<?php echo $curso->id; ?>">
+                            <input type="hidden" name="id_curso" id="id_curso" class="form-control" value="<?php echo $curso->id_curso; ?>">
                             <div class="form-group">
                                 <label for="nombre">Nombre: </label>
-                                <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo $curso->nombre; ?>">
+                                <input type="text" name="nombre" id="nombre" class="form-control" value="<?php echo $curso->nombre_curso; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="descripcion">Descripción: </label>
-                                <input type="text" name="descripcion" id="descripcion" class="form-control" value="<?php echo $curso->descripcion; ?>">
+                                <input type="text" name="descripcion" id="descripcion" class="form-control" value="<?php echo $curso->descripcion_curso; ?>">
                             </div>
 
                             <div class="form-group"> 
