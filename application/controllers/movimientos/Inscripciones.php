@@ -75,7 +75,7 @@ class Inscripciones extends CI_Controller {
 		} else{ 
 			redirect(base_url()."movimientos/inscripciones/add");
 		}
-		
+
 	}
 
 	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago) {
@@ -105,13 +105,14 @@ class Inscripciones extends CI_Controller {
 
 	}
 		
-	protected function updateConteoOperaciones($idTipoPago) {
-		$conteoActual = $this->Pagos_model->getTipoDeOperacion($idTipoPago);
-		$data  = array(
-			'conteo_operaciones' => $conteoActual->conteo_operaciones + 1, 
-		);
-		$this->Pagos_model->updateConteoOperaciones($idTipoPago,$data);
-	}
+	// No utilizada en este controlador, movido al controlador Pagos
+	// protected function updateConteoOperaciones($idTipoPago) {
+	// 	$conteoActual = $this->Pagos_model->getTipoDeOperacion($idTipoPago);
+	// 	$data  = array(
+	// 		'conteo_operaciones' => $conteoActual->conteo_operaciones + 1, 
+	// 	);
+	// 	$this->Pagos_model->updateConteoOperaciones($idTipoPago,$data);
+	// }
 	
 
 	protected function updateCuposCurso($idcurso, $cupos_curso) {
@@ -128,6 +129,8 @@ class Inscripciones extends CI_Controller {
 
 	protected function updateEstadoPago($id_pago) {
 		// Actualiza el campo estado_pago en la tabla pago_de_inscripcion
+		
+		// Considera cambiar el nombre de este método que fué renombrado incorrectamente
 		$this->Pagos_model->updateIdInscripcion($id_pago);
 	}
 
