@@ -7,16 +7,32 @@ class Facilitadores_model extends CI_Model {
 	public function getFacilitadores() {
 
         $resultados = $this->db->select(
-            'f.id_facilitador,
-            f.cedula_facilitador,
-            f.nombre_facilitador,
-            f.apellido_facilitador,
-            f.genero_facilitador,
-            f.telefono_1_facilitador,
-            f.telefono_2_facilitador,
-            f.direccion_facilitador'
-        )
-        ->from('facilitador f')  
+        //     'f.id_facilitador,
+        //     f.cedula_facilitador,
+        //     f.nombre_facilitador,
+        //     f.apellido_facilitador,
+        //     f.genero_facilitador,
+        //     f.telefono_1_facilitador,
+        //     f.telefono_2_facilitador,
+        //     f.direccion_facilitador'
+        // )
+        // ->from('facilitador f')  
+        // ->where('f.estado_facilitador', 1) 
+        'p.persona_id,
+        p.cedula_persona,
+        p.nombres_persona,
+        p.apellidos_persona,
+        p.genero_persona,
+        p.fecha_nacimiento_persona,
+        p.telefono_persona,
+        p.direccion_persona,
+        p.estado_persona,
+        f.id_facilitador,
+        f.estado_facilitador,
+        f.fecha_registro_facilitador,
+        f.fk_id_persona_3')
+        ->from('persona as p')
+        ->join('facilitador as f', 'f.id_facilitador = p.persona_id')
         ->where('f.estado_facilitador', 1) 
         ->get(); 
 
