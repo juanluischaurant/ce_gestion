@@ -38,11 +38,11 @@
                                 <?php foreach($facilitadores as $facilitador): ?>
                                     <tr>
                                         <td><?php echo $facilitador->id_facilitador; ?></td>
-                                        <td><?php echo $facilitador->nombre_facilitador; ?></td>
-                                        <td><?php echo $facilitador->apellido_facilitador; ?></td>
-                                        <td><?php echo $facilitador->telefono_1_facilitador; ?></td>
-                                        <td><?php echo $facilitador->cedula_facilitador; ?></td>
-                                        <?php $dataFacilitador = $facilitador->id_facilitador.'*'.$facilitador->nombre_facilitador.'*'.$facilitador->apellido_facilitador.'*'.$facilitador->telefono_1_facilitador.'*'.$facilitador->cedula_facilitador; ?>
+                                        <td><?php echo $facilitador->nombres_persona; ?></td>
+                                        <td><?php echo $facilitador->apellidos_persona; ?></td>
+                                        <td><?php echo $facilitador->telefono_persona; ?></td>
+                                        <td><?php echo $facilitador->cedula_persona; ?></td>
+                                        <?php $dataFacilitador = $facilitador->id_facilitador.'*'.$facilitador->nombres_persona.'*'.$facilitador->apellidos_persona.'*'.$facilitador->telefono_persona.'*'.$facilitador->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-facilitador" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataFacilitador?>'><span class="fa fa-eye"></span></button>
