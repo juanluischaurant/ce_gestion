@@ -5,6 +5,7 @@ class Facilitadores extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
+        $this->load->model('Personas_model');  
         $this->load->model('Facilitadores_model');  
     }
 
@@ -58,25 +59,29 @@ class Facilitadores extends CI_Controller {
 
 	public function update() {
 		$id_facilitador = $this->input->post('id-facilitador');
+		$fk_id_persona_3 = $this->input->post('fk-id-persona');
+
 		$cedula = $this->input->post('cedula-facilitador');
 		$nombres = $this->input->post('nombre-facilitador');
 		$apellidos = $this->input->post('apellido-facilitador');
-		$fecha_nacimiento = $this->input->post('nacimiento-facilitador');
 		$genero = $this->input->post('genero-facilitador');
+		$fecha_nacimiento = $this->input->post('nacimiento-facilitador');
 		$telefono = $this->input->post('telefono-facilitador');
 		$direccion = $this->input->post('direccion-facilitador');
 
+		// $estado_facilitador; <- Aún no utilizada
+
 		$data = array(
-			'cedula_facilitador' => $cedula,
-			'nombre_facilitador' => $nombres,
-			'apellido_facilitador' => $apellidos,
-			'fecha_nacimiento_facilitador' => $fecha_nacimiento,
-			'genero_facilitador' => $genero,
-			'telefono_1_facilitador' => $telefono,
-			'direccion_facilitador' => $direccion
+			'cedula_persona' => $cedula,
+			'nombres_persona' => $nombres,
+			'apellidos_persona' => $apellidos,
+			'fecha_nacimiento_persona' => $fecha_nacimiento,
+			'genero_persona' => $genero,
+			'telefono_persona' => $telefono,
+			'direccion_persona' => $direccion
 		);
 
-		if($this->Facilitadores_model->update($id_facilitador, $data)) {
+		if($this->Personas_model->update($fk_id_persona_3, $data)) {
 			redirect(base_url().'gestion/facilitadores');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
