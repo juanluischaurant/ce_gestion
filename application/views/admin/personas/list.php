@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Facilitadores
+        Personas
         <small>Lista General</small>
         </h1>
     </section>
@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/facilitadores/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Facilitador</a>
+                        <a href="<?php echo base_url(); ?>gestion/personas/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Persona</a>
                     </div>
                 </div>
                 
@@ -34,23 +34,23 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($facilitadores)): ?>
-                                <?php foreach($facilitadores as $facilitador): ?>
+                                <?php if(!empty($personas)): ?>
+                                <?php foreach($personas as $persona): ?>
                                     <tr>
-                                        <td><?php echo $facilitador->id_facilitador; ?></td>
-                                        <td><?php echo $facilitador->nombres_persona; ?></td>
-                                        <td><?php echo $facilitador->apellidos_persona; ?></td>
-                                        <td><?php echo $facilitador->telefono_persona; ?></td>
-                                        <td><?php echo $facilitador->cedula_persona; ?></td>
-                                        <?php $dataFacilitador = $facilitador->id_facilitador.'*'.$facilitador->nombres_persona.'*'.$facilitador->apellidos_persona.'*'.$facilitador->telefono_persona.'*'.$facilitador->cedula_persona.'*'.$facilitador->fk_id_persona_3; ?>
+                                        <td><?php echo $persona->persona_id; ?></td>
+                                        <td><?php echo $persona->nombres_persona; ?></td>
+                                        <td><?php echo $persona->apellidos_persona; ?></td>
+                                        <td><?php echo $persona->telefono_persona; ?></td>
+                                        <td><?php echo $persona->cedula_persona; ?></td>
+                                        <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-facilitador" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataFacilitador?>'><span class="fa fa-eye"></span></button>
+                                                <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitadores/edit/<?php echo $facilitador->id_facilitador; ?>" .
+                                                <a href="<?php echo base_url() ?>gestion/personas/edit/<?php echo $persona->persona_id; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitadores/delete/<?php echo $facilitador->id_facilitador; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/personas/delete/<?php echo $persona->persona_id; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -77,7 +77,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Informacion del Facilitador</h4>
+        <h4 class="modal-title">Información de Persona</h4>
       </div>
       <div class="modal-body">
         
