@@ -408,6 +408,31 @@
         // =============================================
 
 
+        // =============================================
+        // JS para Participantes
+        // =============================================
+
+        $(document).on('click', '.btn-check-participante', function() {
+            let participante = $(this).val();
+            let informacionParticipante = participante.split('*');
+
+            $('#nacimiento-participante').val(informacionParticipante[5]);
+            $('#fk-id-persona').val(informacionParticipante[0]);
+            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+
+            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#guardar-participante').removeAttr('disabled');
+
+            // Oculta ventana modal
+            $('#modal-default').modal('hide');
+        });
+
+        // =============================================
+        // Fin de JS para Participantes
+        // =============================================
+
+
+
         $(document).on('click', '.btn-check', function() {
             let participante = $(this).val();
             let infoParticipante = participante.split('*');
