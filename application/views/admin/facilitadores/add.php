@@ -26,13 +26,18 @@
 
                         <form action="<?php echo base_url();?>gestion/facilitadores/store" method="POST">
 
-                            <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->persona_id : ''; ?>">
-                            
                             <div class="form-group">
-                                <label for="cedula-facilitador">Cédula:</label>
-                                <input type="text" class="form-control" id="cedula-facilitador" name="cedula-facilitador" value="<?php echo isset($persona) ? $persona->cedula_persona : ''; ?>">
+                                <label for="">Seleccionar Facilitador:</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled="disabled" id="cedula-persona">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
+                                    </span>
+                                </div><!-- /input-group -->
                             </div>
 
+                            <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->persona_id : ''; ?>">
+                            
                             <div class="form-group">
                                 <label for="nombre-facilitador">Nombres:</label>
                                 <input type="text" class="form-control" id="nombre-facilitador" name="nombre-facilitador" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
@@ -45,7 +50,7 @@
 
                             <div class="form-group">
                                 <label for="nacimiento-facilitador">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="nacimiento-facilitador" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
+                                <input type="date" class="form-control" id="nacimiento-facilitador" name="nacimiento-facilitador" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -80,3 +85,52 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- Modal para lista de facilitadores -->
+<div class="modal fade" id="modal-default">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Lita de Clientes</h4>
+            </div>
+            <div class="modal-body">
+                <table id="example1" class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Documento</th>
+                            <th>Opcion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if(!empty($personas)): ?>
+                        <?php foreach($personas as $persona): ?>
+                            <tr>
+                                <td><?php echo $persona->persona_id; ?></td>
+                                <td><?php echo $persona->nombres_persona; ?></td>
+                                <td><?php echo $persona->apellidos_persona; ?></td>
+                                <td><?php echo $persona->cedula_persona; ?></td>
+                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona; ?>
+                                <td>
+                                    <button type='button' class='btn btn-success btn-check-facilitador' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+

@@ -21,7 +21,9 @@ class Facilitadores extends CI_Controller {
     
     public function add($id_persona = 'new') {
 
+
 		if($id_persona !== 'new') {
+
 			$data_persona = array(
 				'persona' => $this->Personas_model->getPersona($id_persona),
 			);
@@ -32,10 +34,14 @@ class Facilitadores extends CI_Controller {
 			$this->load->view('layouts/footer');
 		
 		} elseif($id_persona = 'new') {
-		
+					
+			$data_persona = array(
+				"personas" => $this->Personas_model->getPersonas() 
+			);
+
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/facilitadores/add');
+			$this->load->view('admin/facilitadores/add', $data_persona);
 			$this->load->view('layouts/footer');
 		
 		}
@@ -59,6 +65,8 @@ class Facilitadores extends CI_Controller {
 			'fk_id_persona_3' => $fk_id_persona_3,
 		);
 
+		if($this->Facilitadores_model->evitaFacilitadorDuplicado($fk_id_persona_3) === true) {
+
 			if($this->Facilitadores_model->save($data_facilitador)) {
 
 				redirect(base_url().'gestion/facilitadores');
@@ -69,6 +77,13 @@ class Facilitadores extends CI_Controller {
 				redirect(base_url().'gestion/facilitadores/add');	
 
 			}
+
+		} else {
+
+			$this->session->set_flashdata('error', 'Esta persona ya está registrada como facilitador.');
+			redirect(base_url().'gestion/facilitadores/add');	
+
+		}
 
 	}
 
