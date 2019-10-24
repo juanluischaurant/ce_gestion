@@ -62,5 +62,18 @@ class Facilitadores_model extends CI_Model {
         return $this->db->update('facilitador', $data);
     }
 
+    public function evitaFacilitadorDuplicado($id) {
+        // Al momento de asignar el rol de Facilitador a una Persona, verifica que esta acción no haya sido realizada anteriormente
+        $query = $this->db->select('fk_id_persona_3')
+        ->from('facilitador')
+        ->where('fk_id_persona_3', $id)
+        ->get();
+
+        if($query->num_rows() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

@@ -120,16 +120,6 @@ class Inscripciones_model extends CI_Model {
 
     
     public function getPagosJSON($valor) {
-        // $this->db->select('id_pago, serial_pago, 
-        // concat(numero_operacion, " - ", nombres_cliente, " ", apellidos_cliente) as label, monto_operacion, 
-        // numero_operacion, 
-        // concat(nombres_cliente, " ", apellidos_cliente) as nombre_cliente, 
-        // cedula_cliente, 
-        // fk_id_tipo_operacion');
-        // $this->db->from('cliente');
-        // $this->db->join('pago_de_inscripcion', 'cliente.id_cliente = pago_de_inscripcion.fk_id_pagador');
-        // $this->db->where('estado_pago = 1');
-
 
         // Nuevo código
         $this->db->select('pi.id_pago, 

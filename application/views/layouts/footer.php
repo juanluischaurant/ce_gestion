@@ -147,6 +147,17 @@
         // JS para Facilitadores
         // =============================================
 
+        $(document).on('click', '.btn-check-facilitador', function() {
+            let facilitador = $(this).val();
+            let informacionFacilitador = facilitador.split('*');
+
+            $('#nacimiento-facilitador').val(informacionFacilitador[5]);
+            $('#fk-id-persona').val(informacionFacilitador[0]);
+            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+
+            $('#modal-default').modal('hide');
+        });
+
         $('.btn-view-facilitador').on('click', function() {
             // Al clickear el botón de vista de facilitador, expande modal
             let facilitador = $(this).val();
