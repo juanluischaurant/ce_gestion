@@ -19,16 +19,31 @@ class Participantes extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function add() {
+	public function add($id_persona = 'new') {
 		
-		$data_persona = array(
-			"personas" => $this->Personas_model->getPersonas() 
-		);
+		if($id_persona !== 'new') {
 
-        $this->load->view('layouts/header');
-        $this->load->view('layouts/aside');
-        $this->load->view('admin/participantes/add', $data_persona);
-		$this->load->view('layouts/footer');
+			$data_persona = array(
+				'persona' => $this->Personas_model->getPersona($id_persona),
+			);
+
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/participantes/add', $data_persona); 
+			$this->load->view('layouts/footer');
+		
+		} elseif($id_persona = 'new') {
+					
+			$data_persona = array(
+				"personas" => $this->Personas_model->getPersonas() 
+			);
+
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/participantes/add', $data_persona);
+			$this->load->view('layouts/footer');
+		
+		}
 		
 	}
 	
@@ -48,17 +63,28 @@ class Participantes extends CI_Controller {
 			'fk_id_persona_2' => $fk_id_persona_2,
 		);
 
-	
-		if($this->Participantes_model->save($data_participante)) {
 
-			redirect(base_url().'gestion/participantes');
+
+		if($this->Participantes_model->evitaParticipanteDuplicado($fk_id_persona_2) === true) {
+
+			if($this->Participantes_model->save($data_participante)) {
+
+				redirect(base_url().'gestion/participantes');
+	
+			} else {
+	
+				$this->session->set_flashdata('error', 'No se pudo guardar la información');
+				redirect(base_url().'gestion/participantes/add');	
+	
+			}
 
 		} else {
 
-			$this->session->set_flashdata('error', 'No se pudo guardar la información');
+			$this->session->set_flashdata('error', 'Esta persona ya está registrada como participante.');
 			redirect(base_url().'gestion/participantes/add');	
 
 		}
+
 
 	}
 
