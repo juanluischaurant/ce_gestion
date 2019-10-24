@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-flat">Guardar</button>
+                                <button type="submit" disabled id="guardar-facilitador" class="btn btn-success btn-flat">Guardar</button>
                             </div>
 
                         </form>

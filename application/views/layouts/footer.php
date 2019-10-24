@@ -155,6 +155,10 @@
             $('#fk-id-persona').val(informacionFacilitador[0]);
             // $('#nombre-curso-instanciado').val(infoCurso[1]);
 
+            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#guardar-facilitador').removeAttr('disabled');
+
+            // Oculta ventana modal
             $('#modal-default').modal('hide');
         });
 
