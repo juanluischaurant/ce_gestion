@@ -9,7 +9,7 @@ class Facilitadores extends CI_Controller {
         $this->load->model('Facilitadores_model');  
     }
 
-    public function index() {
+    public function index() { 
 		$data = array(
 			'facilitadores' => $this->Facilitadores_model->getFacilitadores(),
 		);
@@ -19,41 +19,56 @@ class Facilitadores extends CI_Controller {
 		$this->load->view('layouts/footer');
     }
     
-    public function add() {
-        $this->load->view('layouts/header');
-        $this->load->view('layouts/aside');
-        $this->load->view('admin/facilitadores/add');
-        $this->load->view('layouts/footer');
+    public function add($id_persona = 'new') {
+
+		if($id_persona !== 'new') {
+			$data_persona = array(
+				'persona' => $this->Personas_model->getPersona($id_persona),
+			);
+
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/facilitadores/add', $data_persona); 
+			$this->load->view('layouts/footer');
+		
+		} elseif($id_persona = 'new') {
+		
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/facilitadores/add');
+			$this->load->view('layouts/footer');
+		
+		}
     }
     
     public function store() {
 
-		$cedula = $this->input->post("cedula-facilitador");
-		$nombres = $this->input->post('nombre-facilitador');
-		$apellidos = $this->input->post('apellido-facilitador');
-		$fecha_nacimiento = $this->input->post('nacimiento-facilitador');
-		$genero = $this->input->post('genero-facilitador');
-		$telefono = $this->input->post('telefono-facilitador');
-		$direccion = $this->input->post('direccion-facilitador');
+		$fk_id_persona_3 = $this->input->post('fk-id-persona');
 
-		$data = array(
-			'cedula_facilitador' => $cedula,
-			'nombre_facilitador' => $nombres,
-			'apellido_facilitador' => $apellidos,
-			'fecha_nacimiento_facilitador' => $fecha_nacimiento,
-			'genero_facilitador' => $genero,
-			'telefono_1_facilitador' => $telefono,
-			'direccion_facilitador' => $direccion,
-			'estado_facilitador' => '1'
+		// No utilizados porque estis datos ya fueron guardados en la tabla personas
+		//
+		// $cedula = $this->input->post("cedula-facilitador");
+		// $nombres = $this->input->post('nombre-facilitador');
+		// $apellidos = $this->input->post('apellido-facilitador');
+		// $fecha_nacimiento = $this->input->post('nacimiento-facilitador');
+		// $genero = $this->input->post('genero-facilitador');
+		// $telefono = $this->input->post('telefono-facilitador');
+		// $direccion = $this->input->post('direccion-facilitador');
 
+		$data_facilitador = array(
+			'fk_id_persona_3' => $fk_id_persona_3,
 		);
 
-		if($this->Facilitadores_model->save($data)) { 
-			redirect(base_url().'gestion/facilitadores');
-		} else {
-			$this->session->set_flashdata('error', 'No se pudo guardar la información');
-			redirect(base_url().'gestion/facilitadores/add');	
-		}
+			if($this->Facilitadores_model->save($data_facilitador)) {
+
+				redirect(base_url().'gestion/facilitadores');
+
+			} else {
+
+				$this->session->set_flashdata('error', 'No se pudo guardar la información');
+				redirect(base_url().'gestion/facilitadores/add');	
+
+			}
 
 	}
 

@@ -20,12 +20,14 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
+                            <li><a href="<?php echo base_url(); ?>gestion/personas"><i class="fa fa-circle-o"></i> Personas</a></li>
+                            <li><a href="<?php echo base_url(); ?>gestion/clientes"><i class="fa fa-circle-o"></i> Clientes</a></li>
+                            <li><a href="<?php echo base_url(); ?>gestion/facilitadores"><i class="fa fa-circle-o"></i> Facilitadores</a></li>
+                            <li><a href="<?php echo base_url(); ?>gestion/participantes"><i class="fa fa-circle-o"></i> Participantes</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/locaciones"><i class="fa fa-circle-o"></i> Locaciones</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/periodos"><i class="fa fa-circle-o"></i> Períodos</a></li>
-                            <li><a href="<?php echo base_url(); ?>gestion/facilitadores"><i class="fa fa-circle-o"></i> Facilitadores</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/cursos"><i class="fa fa-circle-o"></i> Cursos</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/instancias"><i class="fa fa-circle-o"></i> Instancias</a></li>
-                            <li><a href="<?php echo base_url(); ?>gestion/participantes"><i class="fa fa-circle-o"></i> Participantes</a></li>
                         </ul>
                     </li>
                     <li class="treeview">

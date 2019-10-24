@@ -3,7 +3,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Facilitadores_model extends CI_Model {
 
-    // Estas dos funciones sirven para unir las tablas relacionadas a la tabla "dictado"
 	public function getFacilitadores() {
 
     $resultados = $this->db->select(
@@ -22,8 +21,8 @@ class Facilitadores_model extends CI_Model {
         f.fk_id_persona_3,
         f.estado_facilitador')
         ->from('persona as p')
-        ->join('facilitador as f', 'f.id_facilitador = p.persona_id')
-        ->where('f.estado_facilitador', 1) 
+        ->join('facilitador as f', 'f.fk_id_persona_3 = p.persona_id')
+        ->where('f.estado_facilitador', '1') 
         ->get(); 
 
         return $resultados->result();
@@ -46,7 +45,7 @@ class Facilitadores_model extends CI_Model {
             f.fk_id_persona_3,
             f.estado_facilitador')
             ->from('persona as p')
-            ->join('facilitador as f', 'f.id_facilitador = p.persona_id')
+            ->join('facilitador as f', 'f.fk_id_persona_3 = p.persona_id')
             ->where('f.id_facilitador', $id)
             ->get('facilitador');
 
@@ -54,7 +53,7 @@ class Facilitadores_model extends CI_Model {
     }
 
     public function save($data) {
-        // Almacena un curso listo para ser instanciado
+        // Almacena un facilitador listo para ser asignado
         return $this->db->insert('facilitador', $data); 
     }
 
