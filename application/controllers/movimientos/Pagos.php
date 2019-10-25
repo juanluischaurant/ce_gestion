@@ -34,17 +34,17 @@ class Pagos extends CI_Controller {
         $id_tipo_de_pago = $this->input->post('id-tipo-de-pago');
         $id_cliente = $this->input->post('id-cliente');
         $serial_de_pago = $this->input->post('serial-de-pago');
-        $numero_de_operacion = $this->input->post('numero-de-operacion');
+        $numero_de_operacion = $this->input->post('numero-de-operacion-unico');
         $monto_de_operacion = $this->input->post('monto-de-operacion');
         $fecha_de_operacion = $this->input->post('fecha-operacion');
 
-        $this->form_validation->set_rules('numero-de-operacion', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
+        $this->form_validation->set_rules('numero-de-operacion-unico', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
 
         if($this->form_validation->run()) {
             $data = array(
                 'fk_id_banco' => $id_banco_operacion,
                 'fk_id_tipo_operacion' => $id_tipo_de_pago,
-                'fk_id_pagador' => $id_cliente,
+                'fk_id_cliente' => $id_cliente,
                 'serial_pago' => $serial_de_pago,
                 'numero_operacion' => $numero_de_operacion,
                 'monto_operacion' => $monto_de_operacion,
@@ -54,12 +54,15 @@ class Pagos extends CI_Controller {
             if($this->Pagos_model->save($data)) {
                 $id_ultimo_pago = $this->Pagos_model->lastID();
                 $this->updateConteoOperaciones($id_tipo_de_pago);
-    
+                $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
+                redirect(base_url().'movimientos/pagos/');    
             } else {
+                $this->session->set_flashdata('error', 'No se pudo guardar la información.');
                 redirect(base_url().'movimientos/pagos/add');
             }
 
         } else {
+            $this->session->set_flashdata('error', 'No se pudo guardar la información.');
             $this->add();
         }
 

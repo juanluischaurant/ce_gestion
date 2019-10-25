@@ -41,7 +41,7 @@
                                         <td><?php echo $inscripcion->fk_id_inscripcion_1; ?></td>
                                         <td><?php echo $inscripcion->hora_inscripcion; ?></td>
                                         <td><?php echo $inscripcion->nombre_completo_instancia; ?></td>
-                                        <td><?php echo $inscripcion->cedula_cliente; ?></td>
+                                        <td><?php echo $inscripcion->cedula_persona; ?></td>
 
                                         <td>
                                             <div class="btn-group">

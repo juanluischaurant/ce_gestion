@@ -155,6 +155,10 @@
             $('#fk-id-persona').val(informacionFacilitador[0]);
             // $('#nombre-curso-instanciado').val(infoCurso[1]);
 
+            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#guardar-facilitador').removeAttr('disabled');
+
+            // Oculta ventana modal
             $('#modal-default').modal('hide');
         });
 
@@ -219,7 +223,7 @@
                         response(data)
                     }
                 });
-            }, minLength: 3,
+            }, minLength: 1,
             select: function(event, ui) {
                 // Considera eliminar esta variable `data` no utilizada aquí
                 data = ui.item.id_cliente+'*'+ui.item.label;
@@ -271,7 +275,7 @@
                 });
             }, minLength: 1,
             select: function(event, ui) {
-                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_cliente+'*'+ui.item.id_pago+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
+                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_persona+'*'+ui.item.id_pago+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
         });
@@ -404,12 +408,37 @@
         // =============================================
 
 
+        // =============================================
+        // JS para Participantes
+        // =============================================
+
+        $(document).on('click', '.btn-check-participante', function() {
+            let participante = $(this).val();
+            let informacionParticipante = participante.split('*');
+
+            $('#nacimiento-participante').val(informacionParticipante[5]);
+            $('#fk-id-persona').val(informacionParticipante[0]);
+            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+
+            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#guardar-participante').removeAttr('disabled');
+
+            // Oculta ventana modal
+            $('#modal-default').modal('hide');
+        });
+
+        // =============================================
+        // Fin de JS para Participantes
+        // =============================================
+
+
+
         $(document).on('click', '.btn-check', function() {
             let participante = $(this).val();
             let infoParticipante = participante.split('*');
 
             $('#id_participante').val(infoParticipante[0]);
-            $('#nombre_participante').val(infoParticipante[1]);
+            $('#nombre_participante').val(infoParticipante[1] + ' ' +  infoParticipante[2]);
 
             $('#modal-default').modal('hide');
         });

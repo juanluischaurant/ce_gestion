@@ -7,6 +7,8 @@ class Instancias_model extends CI_Model {
         // Obtén una lista de cursos instanciados
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
+        instancia.cupos_instancia_ocupados,
+        concat(instancia.cupos_instancia, "/", instancia.cupos_instancia_ocupados) as total_cupos,
         curso.nombre_curso,
         concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico')
         ->from('instancia')
@@ -66,10 +68,17 @@ class Instancias_model extends CI_Model {
          // Obtén los registros de instancia de los profeores
          $resultados = $this->db->select(
             'f.id_facilitador,
-            concat(f.nombre_facilitador, " ", f.apellido_facilitador) as label'
+            f.fk_id_persona_3,
+            p.persona_id,
+            p.nombres_persona,
+            p.apellidos_persona,
+            concat(p.nombres_persona, " ", p.apellidos_persona) as label'
         )
         ->from('facilitador f')
-        ->like('nombre_facilitador', $valor)
+        ->join('persona as p', 'p.persona_id = f.fk_id_persona_3')
+        ->where('f.estado_facilitador', '1') 
+        ->like('p.nombres_persona', $valor)
+        ->or_like('p.apellidos_persona', $valor)
         ->get();
 
         return $resultados->result_array();

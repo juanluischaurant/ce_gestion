@@ -161,11 +161,11 @@
                         <?php if(!empty($participantes)): ?>
                         <?php foreach($participantes as $participante): ?>
                             <tr>
-                                <td><?php echo $participante->id_cliente; ?></td>
-                                <td><?php echo $participante->nombres_cliente; ?></td>
-                                <td><?php echo $participante->apellidos_cliente; ?></td>
-                                <td><?php echo $participante->cedula_cliente; ?></td>
-                                <?php $dataParticipante = $participante->id_cliente.'*'.$participante->nombres_cliente.'*'.$participante->apellidos_cliente.'*'.$participante->telefono_cliente.'*'.$participante->cedula_cliente; ?>
+                                <td><?php echo $participante->id_participante; ?></td>
+                                <td><?php echo $participante->nombres_persona; ?></td>
+                                <td><?php echo $participante->apellidos_persona; ?></td>
+                                <td><?php echo $participante->cedula_persona; ?></td>
+                                <?php $dataParticipante = $participante->id_participante.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula_persona; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
                                 </td>

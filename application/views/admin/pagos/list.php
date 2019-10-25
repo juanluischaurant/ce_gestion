@@ -41,7 +41,7 @@
                                         <td><?php echo $pago->id_pago; ?></td>
                                         <td><?php echo $pago->numero_operacion; ?></td>
                                         <td><?php echo $pago->monto_operacion; ?></td>
-                                        <td><?php echo $pago->cedula_cliente; ?></td>
+                                        <td><?php echo $pago->cedula_persona; ?></td>
                                         <td><?php echo $pago->fecha_registro_operacion; ?></td>
                                         <td>
                                             <div class="btn-group">

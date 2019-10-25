@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Participantes
+        Clientes
         <small>Nuevo</small>
         </h1>
     </section>
@@ -25,10 +25,10 @@
                              </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/participantes/store" method="POST">
+                        <form action="<?php echo base_url();?>gestion/clientes/store" method="POST">
 
                             <div class="form-group">
-                                <label for="">Seleccionar Participante:</label>
+                                <label for="">Seleccionar Cliente:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" disabled="disabled" id="cedula-persona">
                                     <span class="input-group-btn">
@@ -87,7 +87,7 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal para lista de participantes -->
+<!-- Modal para lista de clientes -->
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">

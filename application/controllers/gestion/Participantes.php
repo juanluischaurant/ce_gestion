@@ -5,6 +5,7 @@ class Participantes extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
+        $this->load->model('Personas_model');  
         $this->load->model('Participantes_model');  
     }
 
@@ -18,41 +19,72 @@ class Participantes extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function add() {
-        $this->load->view('layouts/header');
-        $this->load->view('layouts/aside');
-        $this->load->view('admin/participantes/add');
-        $this->load->view('layouts/footer');
+	public function add($id_persona = 'new') {
+		
+		if($id_persona !== 'new') {
+
+			$data_persona = array(
+				'persona' => $this->Personas_model->getPersona($id_persona),
+			);
+
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/participantes/add', $data_persona); 
+			$this->load->view('layouts/footer');
+		
+		} elseif($id_persona = 'new') {
+					
+			$data_persona = array(
+				"personas" => $this->Personas_model->getPersonas() 
+			);
+
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/participantes/add', $data_persona);
+			$this->load->view('layouts/footer');
+		
+		}
+		
 	}
 	
 	public function store() {
 
-		$cedula = $this->input->post("cedula");
-		$nombres = $this->input->post('nombres');
-		$apellidos = $this->input->post('apellidos');
-		$fecha_nacimiento = $this->input->post('fecha');
-		$genero = $this->input->post('genero');
-		$telefono = $this->input->post('telefono');
-		$direccion = $this->input->post('direccion');
+		$fk_id_persona_2 = $this->input->post('fk-id-persona');
 
-		$data = array(
-			'cedula_cliente' => $cedula,
-			'nombres_cliente' => $nombres,
-			'apellidos_cliente' => $apellidos,
-			'fecha_nacimiento_cliente' => $fecha_nacimiento,
-			'genero_cliente' => $genero,
-			'telefono_cliente' => $telefono,
-			'direccion_cliente' => $direccion,
-			'estado_cliente' => '1'
+		// $cedula = $this->input->post("cedula");
+		// $nombres = $this->input->post('nombres');
+		// $apellidos = $this->input->post('apellidos');
+		// $fecha_nacimiento = $this->input->post('fecha');
+		// $genero = $this->input->post('genero');
+		// $telefono = $this->input->post('telefono');
+		// $direccion = $this->input->post('direccion');
 
+		$data_participante = array(
+			'fk_id_persona_2' => $fk_id_persona_2,
 		);
 
-		if($this->Participantes_model->save($data)) { 
-			redirect(base_url().'gestion/participantes');
+
+
+		if($this->Participantes_model->evitaParticipanteDuplicado($fk_id_persona_2) === true) {
+
+			if($this->Participantes_model->save($data_participante)) {
+
+				redirect(base_url().'gestion/participantes');
+	
+			} else {
+	
+				$this->session->set_flashdata('error', 'No se pudo guardar la información');
+				redirect(base_url().'gestion/participantes/add');	
+	
+			}
+
 		} else {
-			$this->session->set_flashdata('error', 'No se pudo guardar la información');
+
+			$this->session->set_flashdata('error', 'Esta persona ya está registrada como participante.');
 			redirect(base_url().'gestion/participantes/add');	
+
 		}
+
 
 	}
 

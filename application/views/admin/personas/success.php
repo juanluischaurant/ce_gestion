@@ -31,7 +31,7 @@
                                 <p>El registro se ha guardado de manera correcta. ¿Qué rol tendrá Juan Luis?</p>
                                 <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
                                 <div class="row">
-                                    <div class="col-md-4"><a href="#">Participante</a></div>                                    
+                                    <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/participantes/add/<?php echo $persona;?>">Participante</a></div>                                    
                                     <div class="col-md-4"><a href="#">Cliente</a></div>                                    
                                     <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/facilitadores/add/<?php echo $persona;?>">Facilitador</a></div>                                    
                                 </div>

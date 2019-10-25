@@ -66,9 +66,9 @@ class Personas extends CI_Controller {
 
     }
     
-    public function success() {
+    public function success($ultimo_id) {
         $data_persona = array(
-            'persona' => '1'
+            'persona' => $ultimo_id
         );
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');

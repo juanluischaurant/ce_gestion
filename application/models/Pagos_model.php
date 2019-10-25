@@ -6,14 +6,16 @@ class Pagos_model extends CI_Model {
   public function getPagos() {
     // Obtén una lista de pagos realizados
     $resultados = $this->db->select(
-      'pago_de_inscripcion.id_pago, 
-      pago_de_inscripcion.numero_operacion, 
-      pago_de_inscripcion.monto_operacion, 
-      pago_de_inscripcion.fecha_registro_operacion, 
-      cliente.cedula_cliente'
+      'pdi.id_pago, 
+      pdi.numero_operacion, 
+      pdi.monto_operacion, 
+      pdi.fecha_registro_operacion, 
+      cli.id_cliente,
+      per.cedula_persona'
     )
-    ->from('pago_de_inscripcion')
-    ->join('cliente', 'cliente.id_cliente = pago_de_inscripcion.fk_id_pagador')
+    ->from('pago_de_inscripcion as pdi')
+    ->join('cliente as cli', 'cli.id_cliente = pdi.fk_id_cliente')
+    ->join('persona as per', 'per.persona_id = cli.fk_id_persona_1')
     // ->where('instancia.estado_instancia', '1')
     ->get();
 
@@ -59,11 +61,17 @@ class Pagos_model extends CI_Model {
 
     // Métodos utilizadas para el pluggin AUTOCOMPLETE
     public function getClientesJSON($valor) {
-        $this->db->select('id_cliente, concat(nombres_cliente, " ", apellidos_cliente) as nombre_cliente, cedula_cliente as label');
-        $this->db->from('cliente');
-        $this->db->like('cedula_cliente', $valor);
+      $resultados = $this->db->select(
+        'cli.id_cliente, 
+        concat(per.nombres_persona, " ", per.apellidos_persona) as nombre_cliente, 
+        per.cedula_persona as label'
+      )
+        ->from('cliente as cli')
+        ->join('persona as per', 'per.persona_id = cli.fk_id_persona_1')
 
-        $resultados = $this->db->get();
+        ->like('per.cedula_persona', $valor)
+
+        ->get();
 
         return $resultados->result_array();
         
