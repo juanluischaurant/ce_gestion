@@ -15,6 +15,15 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
+
+                    <?php if($this->session->flashdata("error")):?>
+                        <div class="alert alert-danger alert-dismissible">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                            <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>
+                            
+                        </div>
+                    <?php endif;?>
+                            
                         
                         <form action="<?php echo base_url();?>movimientos/pagos/store" method="POST" class="form-horizontal">
                             
@@ -73,10 +82,10 @@
                                     <input type="hidden" id="id-banco-de-operacion" name="id-banco-de-operacion">  
                                 </div>
 
-                                <div class="col-md-4 <?php echo !empty(form_error('numero-de-operacion')) ? 'has-error' : ''; ?>">
+                                <div class="col-md-4 <?php echo !empty(form_error('numero-de-operacion-unico')) ? 'has-error' : ''; ?>">
                                     <label for="">Número de Operación:</label>
-                                    <input type="text" class="form-control" id="numero-de-operacion" name="numero-de-operacion" value="<?php echo set_value('numero-de-operacion'); ?>">
-                                    <?php echo form_error('numero-de-operacion', '<span class="help-block">', '</span>'); ?>
+                                    <input type="text" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" value="<?php echo set_value('numero-de-operacion-unico'); ?>">
+                                    <?php echo form_error('numero-de-operacion-unico', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                             </div>

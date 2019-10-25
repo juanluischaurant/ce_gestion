@@ -17,7 +17,7 @@
                         <a href="<?php echo base_url(); ?>gestion/instancias/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Instancia</a>
                     </div>
                 </div>
-                
+
                 <hr>
 
                 <div class="row">
@@ -27,7 +27,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nombre</th>
-                                    <th>Descripción</th>
+                                    <th>Cupos</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -38,7 +38,7 @@
                                     <tr>
                                         <td><?php echo $instancia->id_instancia; ?></td>
                                         <td><?php echo $instancia->nombre_curso . " " . $instancia->periodo_academico; ?></td>
-                                        <td><?php echo $instancia->cupos_instancia; ?></td>
+                                        <td><?php echo $instancia->total_cupos; ?></td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>

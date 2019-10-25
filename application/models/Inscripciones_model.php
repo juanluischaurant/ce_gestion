@@ -11,21 +11,32 @@ class Inscripciones_model extends CI_Model {
     public function save($data) {
 		return $this->db->insert("inscripcion",$data);
     }
-    
+
+    /**
+     * Recupera una lista de inscripciones realizadas
+     * @return array
+     */   
     public function getInscripciones() {
-        // Obtén todas las inscripciones realizadas
         $resultados = $this->db->select(
             'inscripcion_curso.fk_id_inscripcion_1, 
             inscripcion.hora_inscripcion, 
             concat(curso.nombre_curso, " ", p.mes_inicio_periodo, "-", p.mes_cierre_periodo, " ", p.year_periodo) as nombre_completo_instancia,
-            cliente.cedula_cliente,
+            pe.cedula_persona,
             inscripcion_curso.id_inscripcion_curso')
         ->from('inscripcion_curso')
+
         ->join('inscripcion', 'inscripcion.id_inscripcion = inscripcion_curso.fk_id_inscripcion_1')
-        ->join('cliente', 'cliente.id_cliente = inscripcion.fk_id_participante_1')
+
+        ->join('participante as par', 'par.id_participante = inscripcion.fk_id_participante_1')
+
+        ->join('persona as pe', 'pe.persona_id = par.fk_id_persona_2')
+
         ->join('instancia', 'instancia.id_instancia = inscripcion_curso.fk_id_curso_1')
+
         ->join('periodo as p', 'id_periodo = instancia.fk_id_periodo_1')
+
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
+
         ->get();
 
         return $resultados->result();
@@ -88,15 +99,16 @@ class Inscripciones_model extends CI_Model {
         $this->db->update("pago_de_inscripcion",$data);
       }
 
-    public function getCursosJSON($valor) {
-        $this->db->select('id_curso, nombre_curso as label, cupos_curso, precio_actual_curso, descripcion_curso');
-        $this->db->from('curso');
-        $this->db->like('nombre_curso', $valor);
+      // Eliminar
+    // public function getCursosJSON($valor) {
+    //     $this->db->select('id_curso, nombre_curso as label, cupos_curso, precio_actual_curso, descripcion_curso');
+    //     $this->db->from('curso');
+    //     $this->db->like('nombre_curso', $valor);
 
-        $resultados = $this->db->get();
+    //     $resultados = $this->db->get();
 
-        return $resultados->result_array();
-    } 
+    //     return $resultados->result_array();
+    // } 
 
     public function getInstanciasJSON($valor) {
         // Obtén los registros de instancia de los cursos
@@ -123,21 +135,25 @@ class Inscripciones_model extends CI_Model {
 
         // Nuevo código
         $this->db->select('pi.id_pago, 
-        pi.serial_pago, 
-        pi.numero_operacion, 
-        pi.estado_pago,
-        concat(numero_operacion, " - ", nombres_cliente, " ", apellidos_cliente) as label, monto_operacion, 
-        concat(nombres_cliente, " ", apellidos_cliente) as nombre_cliente, 
-        cedula_cliente, 
-        fk_id_tipo_operacion')
+            pi.serial_pago, 
+            pi.numero_operacion, 
+            pi.estado_pago,
+            pi.monto_operacion, 
+            pi.estado_pago,
+            pi.fk_id_tipo_operacion,
+            concat(pi.numero_operacion, " - ", pe.nombres_persona, " ", pe.apellidos_persona) as label, 
+            concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_cliente, 
+            pe.cedula_persona')
         ->from('pago_de_inscripcion as pi')
-        ->join('cliente as c', 'c.id_cliente = pi.fk_id_pagador')
+        ->join('cliente as c', 'c.id_cliente = pi.fk_id_cliente')
+        ->join('persona as pe', 'pe.persona_id = c.fk_id_persona_1')
         ->where('pi.estado_pago', 1);
         
         if($valor != '')
         {
-            $this->db->like('numero_operacion', $valor);
-			$this->db->or_like('nombres_cliente', $valor);
+            $this->db->like('pi.numero_operacion', $valor);
+			$this->db->or_like('pe.nombres_persona', $valor);
+			$this->db->or_like('pe.apellidos_persona', $valor);
         }
         
 

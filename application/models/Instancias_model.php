@@ -7,6 +7,8 @@ class Instancias_model extends CI_Model {
         // Obtén una lista de cursos instanciados
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
+        instancia.cupos_instancia_ocupados,
+        concat(instancia.cupos_instancia, "/", instancia.cupos_instancia_ocupados) as total_cupos,
         curso.nombre_curso,
         concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico')
         ->from('instancia')
