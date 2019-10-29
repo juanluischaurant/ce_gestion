@@ -10,7 +10,7 @@ class Personas extends CI_Controller {
 
     public function index() {
 		$data = array(
-			'personas' => $this->Personas_model->GetPersonas(),
+			'personas' => $this->Personas_model->getPersonas(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -49,13 +49,11 @@ class Personas extends CI_Controller {
 
 		if($this->Personas_model->save($data_persona)) { 
 
-			$id_ultima_persona_registrada = $this->Personas_model->lastID();
+			// Carga en una variable el id del último registro creado
+			$id_ultimo_registro = $this->Personas_model->lastID();
 
-			// $data_persona = array(
-			// 	'fk_id_persona_3' => $id_ultima_persona_registrada
-			// );
-	
-            redirect(base_url().'gestion/success/'.$id_ultima_persona_registrada);
+			// Redirige a la vista "success" dentro de este controlador
+            redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
 
 		} else {
 
@@ -66,14 +64,18 @@ class Personas extends CI_Controller {
 
     }
     
-    public function success($ultimo_id) {
+    public function success($ultimo_id = 'no_id') {
+
         $data_persona = array(
-            'persona' => $ultimo_id
-        );
+			// Cambiar el ID a $ultimo_id
+			'persona' => $this->Personas_model->getPersona(8),
+		);
+		
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
         $this->load->view('admin/personas/success', $data_persona);
-        $this->load->view('layouts/footer');
+		$this->load->view('layouts/footer');
+		
     }
 
 	public function update() {
