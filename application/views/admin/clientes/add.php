@@ -32,7 +32,7 @@
                                 <div class="input-group">
                                     <input type="text" class="form-control" disabled="disabled" id="cedula-persona">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
+                                        <button class="btn btn-primary" id="busca-cliente" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
                                     </span>
                                 </div><!-- /input-group -->
                             </div>

@@ -1,6 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Pagos
+ * 
+ * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
+ */
 class Pagos extends CI_Controller {
 
 	public function __construct() {
@@ -70,12 +75,18 @@ class Pagos extends CI_Controller {
 
     }
 
-    protected function updateConteoOperaciones($idTipoOperacion) {
-        $conteoActual = $this->Pagos_model->getTipoDeOperacion($idTipoOperacion);
+    /**
+     * Actualiza el conteo de operaciones al registrar un pago
+     *
+     * @param integer $id_tipo_operacion
+     * @return void
+     */
+    protected function updateConteoOperaciones($id_tipo_operacion) {
+        $conteoActual = $this->Pagos_model->getTipoDeOperacion($id_tipo_operacion);
         $data = array(
             'conteo_operaciones' => $conteoActual->conteo_operaciones + 1
         );
-        $this->Pagos_model->updateConteoOperaciones($idTipoOperacion, $data);
+        $this->Pagos_model->updateConteoOperaciones($id_tipo_operacion, $data);
     }
     
     // Métodos utilizados para el pluggin AUTOCOMPLETE
