@@ -2,7 +2,7 @@
 CE Gestión
 ###################
 
-Aplicación desarrollada utilizando CodeIgniter y MariaDB.
+Aplicación desarrollada utilizando CodeIgniter 3.1.6 y MariaDB 10.1.34 como servidor SQL.
 
 Tiene como objetivo optimizar el proceso de inscripción en la institución donde se implemente.
 
