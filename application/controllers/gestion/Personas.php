@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Esta clase contiene funciones en común utilizadas por las sub-clases de
+ * persona, entre las que cuentan: Facilitador, Cliente(Titular), Participnte
+ * 
+ * @package CE_gestion
+ * @subpackage Personas
+ * @category Controladores
+ */
 class Personas extends CI_Controller {
 
     public function __construct() {
@@ -67,8 +75,7 @@ class Personas extends CI_Controller {
     public function success($ultimo_id = 'no_id') {
 
         $data_persona = array(
-			// Cambiar el ID a $ultimo_id
-			'persona' => $this->Personas_model->getPersona(8),
+			'persona' => $this->Personas_model->getPersona($ultimo_id),
 		);
 		
         $this->load->view('layouts/header');

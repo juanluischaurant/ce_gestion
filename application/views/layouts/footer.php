@@ -41,8 +41,11 @@
 
 <script>
     $(document).ready(function () {
-        let base_url = "<?php echo base_url();?>";
 
+        // Almacena en una variable el url base del proyecto
+        // http://localhost/ce_gestion/
+        let base_url = "<?php echo base_url();?>";
+        
         // =============================================
         // JS para DataTables
         // =============================================
@@ -64,79 +67,78 @@
 
         });
 
-        $('#export-cursos').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                title: "Listado de cursos",
-                exportOptions: {
-                    columns: [ 0, 1, 2 ]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                title: "Listado de Ventas",
-                exportOptions: {
-                    columns: [ 0, 1, 2]
-                }
+        $('#export-cursos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: "Listado de cursos",
+                    exportOptions: {
+                        columns: [ 0, 1, 2 ]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: "Listado de Ventas",
+                    exportOptions: {
+                        columns: [ 0, 1, 2]
+                    }
 
+                }
+            ],
+            language: {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se encontraron resultados en su busqueda",
+                "searchPlaceholder": "Buscar registros",
+                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
+                "infoEmpty": "No existen registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
             }
-        ],
+        });
 
-        language: {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados en su busqueda",
-            "searchPlaceholder": "Buscar registros",
-            "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-            "infoEmpty": "No existen registros",
-            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-            "search": "Buscar:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-        }
-    });
+        $('#export-inscripciones').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: "Listado de Inscripciones",
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 3 ]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: "Listado de Inscripciones",
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 3]
+                    }
 
-    $('#export-inscripciones').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                title: "Listado de Inscripciones",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
                 }
-            },
-            {
-                extend: 'pdfHtml5',
-                title: "Listado de Inscripciones",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3]
-                }
+            ],
 
+            language: {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se encontraron resultados en su busqueda",
+                "searchPlaceholder": "Buscar registros",
+                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
+                "infoEmpty": "No existen registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
             }
-        ],
-
-        language: {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados en su busqueda",
-            "searchPlaceholder": "Buscar registros",
-            "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-            "infoEmpty": "No existen registros",
-            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-            "search": "Buscar:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-        }
-    });
+        });
 
         // =============================================
         // Fin de JS para DataTables
@@ -148,6 +150,8 @@
         // =============================================
 
         if($('#fk-id-persona').val() !== '') {
+            // Si hay alguna persona seleccionada para ser instanciada, 
+            // remueve el atributo 'disabled' del botón
             $('#guardar-participante').removeAttr('disabled');
         }
 
@@ -159,6 +163,12 @@
         // =============================================
         // JS para Facilitadores
         // =============================================
+        
+        if($('#fk-id-persona').val() !== '') {
+            // Si hay alguna persona seleccionada para ser instanciada, 
+            // remueve el atributo 'disabled' del botón
+            $('#guardar-facilitador').removeAttr('disabled');
+        }
 
         $(document).on('click', '.btn-check-facilitador', function() {
             let facilitador = $(this).val();
