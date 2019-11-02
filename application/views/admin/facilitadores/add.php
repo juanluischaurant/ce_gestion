@@ -39,13 +39,13 @@
                             <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->persona_id : ''; ?>">
                             
                             <div class="form-group">
-                                <label for="nombre-facilitador">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-facilitador" name="nombre-facilitador" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <label for="nombres-facilitador">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres-facilitador" name="nombre-facilitador" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-facilitador">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-facilitador" name="apellido-facilitador" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <label for="apellidos-facilitador">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos-facilitador" name="apellido-facilitador" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -130,7 +130,7 @@
                                 <td><?php echo $persona->nombres_persona; ?></td>
                                 <td><?php echo $persona->apellidos_persona; ?></td>
                                 <td><?php echo $persona->cedula_persona; ?></td>
-                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona; ?>
+                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-facilitador' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>

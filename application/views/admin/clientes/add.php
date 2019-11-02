@@ -41,12 +41,12 @@
                             
                             <div class="form-group">
                                 <label for="nombre-cliente">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-cliente" name="nombre-cliente" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <input type="text" class="form-control" id="nombres-cliente" name="nombre-cliente" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido-cliente">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-cliente" name="apellido-cliente" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <input type="text" class="form-control" id="apellidos-cliente" name="apellido-cliente" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -134,9 +134,9 @@
                                 <td><?php echo $persona->nombres_persona; ?></td>
                                 <td><?php echo $persona->apellidos_persona; ?></td>
                                 <td><?php echo $persona->cedula_persona; ?></td>
-                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona; ?>
+                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
                                 <td>
-                                    <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
+                                    <button type='button' class='btn btn-success btn-check-cliente' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

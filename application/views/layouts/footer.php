@@ -148,11 +148,40 @@
         // JS para Clientes
         // =============================================
 
-        if($('#fk-id-persona').val() !== '') {
-            // Si hay alguna persona seleccionada para ser instanciada, 
-            // remueve el atributo 'disabled' del botón
-            $('#guardar-participante').removeAttr('disabled');
-        }
+        // if($('#fk-id-persona').val() !== '') {
+        //     // Si hay alguna persona seleccionada para ser instanciada, 
+        //     // remueve el atributo 'disabled' del botón
+        //     $('#guardar-participante').removeAttr('disabled');
+        // }
+
+        $(document).on('click', '.btn-check-cliente', function() {
+            let cliente = $(this).val();
+            let informacionCliente = cliente.split('*');
+
+            let personaId = informacionCliente[0],
+            nombresPersona = informacionCliente[1],
+            apellidosPersona = informacionCliente[2],
+            telefonoPersona = informacionCliente[3],
+            cedulaPersona = informacionCliente[4],
+            fechaNacimientoPersona = informacionCliente[5],
+            generoPersona = informacionCliente[6];
+            direccionPersona = informacionCliente[7];
+
+            $('#nacimiento-cliente').val(fechaNacimientoPersona);
+            $('#fk-id-persona').val(personaId);
+            $('#genero-cliente').val(generoPersona);
+            $('#nombres-cliente').val(nombresPersona);
+            $('#apellidos-cliente').val(apellidosPersona);
+            $('#telefono-cliente').val(telefonoPersona);
+            $('#direccion-cliente').val(direccionPersona);
+
+
+            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#guardar-cliente').removeAttr('disabled');
+
+            // Oculta ventana modal
+            $('#modal-default').modal('hide');
+        });
 
         // =============================================
         // Fin de JS para Clientes
@@ -173,9 +202,23 @@
             let facilitador = $(this).val();
             let informacionFacilitador = facilitador.split('*');
 
-            $('#nacimiento-facilitador').val(informacionFacilitador[5]);
-            $('#fk-id-persona').val(informacionFacilitador[0]);
-            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+            let personaId = informacionFacilitador[0],
+            nombresPersona = informacionFacilitador[1],
+            apellidosPersona = informacionFacilitador[2],
+            telefonoPersona = informacionFacilitador[3],
+            cedulaPersona = informacionFacilitador[4],
+            fechaNacimientoPersona = informacionFacilitador[5],
+            generoPersona = informacionFacilitador[6];
+            direccionPersona = informacionFacilitador[7];
+
+
+            $('#fk-id-persona').val(personaId);
+            $('#nombres-facilitador').val(nombresPersona);
+            $('#apellidos-facilitador').val(apellidosPersona);
+            $('#nacimiento-facilitador').val(fechaNacimientoPersona);
+            $('#genero-facilitador').val(generoPersona);
+            $('#telefono-facilitador').val(telefonoPersona);
+            $('#direccion-facilitador').val(direccionPersona);
 
             // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
             $('#guardar-facilitador').removeAttr('disabled');
@@ -212,8 +255,6 @@
             if(option != '') {
                 let infoTipoDePago = option.split('*');
                 let tipoDePago = infoTipoDePago[2];
-
-                console.log(infoTipoDePago)
 
                 $('#id-tipo-de-pago').val(infoTipoDePago[0]);
 
