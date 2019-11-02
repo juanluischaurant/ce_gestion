@@ -40,18 +40,18 @@
                             <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->persona_id : ''; ?>">
                             
                             <div class="form-group">
-                                <label for="nombre-participante">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <label for="nombre-cliente">Nombres:</label>
+                                <input type="text" class="form-control" id="nombre-cliente" name="nombre-cliente" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-participante">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <label for="apellido-cliente">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellido-cliente" name="apellido-cliente" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="nacimiento-participante">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" id="nacimiento-participante" name="nacimiento-participante" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
+                                <label for="nacimiento-cliente">Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" id="nacimiento-cliente" name="nacimiento-cliente" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -79,17 +79,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="telefono-participante">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-participante" name="telefono-participante" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
+                                <label for="telefono-cliente">Número de Teléfono:</label>
+                                <input type="text" class="form-control" id="telefono-cliente" name="telefono-cliente" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="direccion-participante">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-participante" name="direccion-participante" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
+                                <label for="direccion-cliente">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion-cliente" name="direccion-cliente" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" disabled id="guardar-participante" class="btn btn-success btn-flat">Guardar</button>
+                                <button type="submit" disabled id="guardar-cliente" class="btn btn-success btn-flat">Guardar</button>
                             </div>
 
                         </form>
