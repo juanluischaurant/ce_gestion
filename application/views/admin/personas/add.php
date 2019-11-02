@@ -26,43 +26,66 @@
 
                         <form action="<?php echo base_url();?>gestion/personas/store" method="POST">
 
-                            <div class="form-group">
-                                <label for="cedula-persona">Cédula:</label>
-                                <input type="text" class="form-control" id="cedula-persona" name="cedula-persona">
+                            <div class="row form-group">
+                                <div class="col-md-5">                                
+                                    <label for="cedula-persona">Cédula:</label>
+                                    <input type="text" class="form-control" id="cedula-persona" name="cedula-persona">
+                                </div>
+
+                                <div class="col-md-5">                                
+                                    <label for="nacimiento-persona">Fecha de Nacimiento:</label>
+                                    <input type="date" class="form-control" name="nacimiento-persona" required>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+
+                                <div class="col-md-4">
+                                    <label for="nombre-persona">Nombres:</label>
+                                    <input type="text" class="form-control" id="nombre-persona" name="nombre-persona">
+                                </div>
+
+                                <div class="col-md-6">                                
+                                    <label for="apellido-persona">Apellidos:</label>
+                                    <input type="text" class="form-control" id="apellido-persona" name="apellido-persona">
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="nombre-persona">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-persona" name="nombre-persona">
+
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-persona">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-persona" name="apellido-persona">
+                                
                             </div>
 
-                            <div class="form-group">
-                                <label for="nacimiento-persona">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="nacimiento-persona" required>
+                            <div class="row form-group">
+                                <div class="col-md-4">
+                                    <label for="genero-persona">Genero:</label>
+                                    <select name="genero-persona" id="genero-persona" class="form-control" required>
+                                        <option value="">Seleccione</option>
+                                        <option value="1">Masculino</option>
+                                        <option value="2">Femenino</option>                              
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="telefono-persona">Número de Teléfono:</label>
+                                    <input type="text" class="form-control" id="telefono-persona" name="telefono-persona">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="genero-persona">Genero:</label>
-                                <input type="text" class="form-control" name="genero-persona" required>
+                            <div class="row form-group">
+                                <div class="col-md-10">
+                                    <label for="direccion-persona">Dirección:</label>
+                                    <input type="text" class="form-control" id="direccion-persona" name="direccion-persona">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="telefono-persona">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-persona" name="telefono-persona">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="direccion-persona">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-persona" name="direccion-persona">
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-flat">Guardar</button>
+                            <div class="row form-group">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-success btn-flat">Guardar</button>
+                                </div>
                             </div>
 
                         </form>

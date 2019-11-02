@@ -6,6 +6,7 @@ class Inscripciones_model extends CI_Model {
     /**
      * Obtén el ID del último registro realizado
      *
+     * @return void
      */
     public function lastID() {
         return $this->db->insert_id();
@@ -15,6 +16,7 @@ class Inscripciones_model extends CI_Model {
      * Almacena los datos eviados por el usuario a través del controlador Inscripciones
      *
      * @param array $data
+     * @return void
      */
     public function save($data) {
 		return $this->db->insert("inscripcion",$data);

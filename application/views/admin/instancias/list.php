@@ -27,6 +27,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Nombre</th>
+                                    <th>Turno</th>
                                     <th>Cupos</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -38,6 +39,7 @@
                                     <tr>
                                         <td><?php echo $instancia->id_instancia; ?></td>
                                         <td><?php echo $instancia->nombre_curso . " " . $instancia->periodo_academico; ?></td>
+                                        <td><?php echo $instancia->nombre_turno; ?></td>
                                         <td><?php echo $instancia->total_cupos; ?></td>
                                         <td>
                                             <div class="btn-group">

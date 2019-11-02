@@ -28,7 +28,6 @@
 
                         <form action="<?php echo base_url(); ?>gestion/instancias/store" method="post" class='form-horizontal'>
                             
-                        
                             <div class="form-group <?php echo !empty(form_error('nombre_curso'))? 'has-error' : '';?>">
                                 <div class="col-md-6">
                                     <label for="">Seleccionar Curso:</label>
@@ -40,12 +39,17 @@
                                         </span>
                                     </div><!-- /input-group -->
                                 </div> 
+
+                                <div class="col-md-4">
+                                    <label for="">Costo de Instancia:</label>
+                                    <input type="number" class="form-control" id="costo-instancia" name="costo-instancia">
+                                </div>
                             </div>
 
                             <hr>
 
                             <div class="form-group">
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <label for="">Período:</label>
                                     <input type="text" class="form-control" id="periodo-instancia">
                                     <input type="hidden" id="id-periodo-instancia" name="id-periodo-instancia">  
@@ -57,6 +61,21 @@
                                     <input type="hidden" id="id-locacion-instancia" name="id-locacion-instancia">  
                                     <?php echo form_error('numero-de-operacion', '<span class="help-block">', '</span>'); ?>
                                 </div>
+
+                                <div class="col-md-2">
+                                    <?php
+
+                                        $atributos = array('class' => 'form-control', 'required');
+                                        // Genera la etiquera
+                                        echo form_label('Turno:');
+
+                                        // Genera el elemento "select"
+                                        // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
+                                        echo form_dropdown('turno-instancia', $lista_turnos, '', $atributos);
+                                    ?>
+                                    <!-- Fin del campo -->
+                                </div>
+
                             </div>
 
                             <hr>
@@ -67,10 +86,17 @@
                                     <input type="text" id="profesor-instancia" class="form-control">
                                     <input type="hidden" id="id-profesor-instancia" name="id-profesor-instancia">  
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-2">
                                     <label for="cupos-curso">Cupos: </label>
                                     <input type="text" name="cupos-instancia" id="cupos-instancia" class="form-control">
                                 </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <div class="col-md-6">
+                                    <label for="descripcion-instancia">Descripción: </label>
+                                    <input type="text" name="descripcion-instancia" id="descripcion-instancia" class="form-control">
+                                </div>    
                             </div>
 
                             <div class="form-group"> 

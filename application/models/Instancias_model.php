@@ -9,9 +9,13 @@ class Instancias_model extends CI_Model {
         instancia.cupos_instancia, 
         instancia.cupos_instancia_ocupados,
         concat(instancia.cupos_instancia, "/", instancia.cupos_instancia_ocupados) as total_cupos,
+        ti.nombre_turno,
+        ti.id_turno,
+        ti.descripcion_turno,
         curso.nombre_curso,
         concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico')
         ->from('instancia')
+        ->join('turno_instancia as ti', 'instancia.fk_id_turno_instancia_1 = ti.id_turno')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
         ->where('instancia.estado_instancia', '1')
@@ -35,6 +39,28 @@ class Instancias_model extends CI_Model {
         $this->db->where('id_instancia', $id);
         $this->db->update('instancia', $data);
     } 
+
+    /**
+     * Consulta la BD y obtiene una lista de todos los turnos disponibles
+     * para luego almacenrla en un array que es retornado
+     *
+     * @return array
+     */
+    public function turnos_dropdown() {
+
+        $query = $this->db->from('turno_instancia')
+        ->get();
+
+        $array[''] = 'Selecciona';
+
+        foreach($query->result() as $row) {
+            // Crea un arreglo llave-valor,
+            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
+            $array[$row->id_turno] = $row->nombre_turno;
+        }
+
+        return $array;
+    }
 
     
     public function getPeriodosJSON($valor) {
