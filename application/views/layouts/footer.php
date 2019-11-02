@@ -211,7 +211,6 @@
             generoPersona = informacionFacilitador[6];
             direccionPersona = informacionFacilitador[7];
 
-
             $('#fk-id-persona').val(personaId);
             $('#nombres-facilitador').val(nombresPersona);
             $('#apellidos-facilitador').val(apellidosPersona);
@@ -474,16 +473,28 @@
         // JS para Participantes
         // =============================================
 
-
         $(document).on('click', '.btn-check-participante', function() {
             let participante = $(this).val();
             let informacionParticipante = participante.split('*');
 
-            $('#nacimiento-participante').val(informacionParticipante[5]);
-            $('#fk-id-persona').val(informacionParticipante[0]);
-            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+            let personaId = informacionParticipante[0],
+            nombresPersona = informacionParticipante[1],
+            apellidosPersona = informacionParticipante[2],
+            telefonoPersona = informacionParticipante[3],
+            cedulaPersona = informacionParticipante[4],
+            fechaNacimientoPersona = informacionParticipante[5],
+            generoPersona = informacionParticipante[6];
+            direccionPersona = informacionParticipante[7];
 
-            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#fk-id-persona').val(personaId);
+            $('#nombres-participante').val(nombresPersona);
+            $('#apellidos-participante').val(apellidosPersona);
+            $('#nacimiento-participante').val(fechaNacimientoPersona);
+            $('#genero-participante').val(generoPersona);
+            $('#telefono-participante').val(telefonoPersona);
+            $('#direccion-participante').val(direccionPersona);
+
+            // Al seleccionar un participante de la lista, activa el botón "Guardar"
             $('#guardar-participante').removeAttr('disabled');
 
             // Oculta ventana modal
@@ -493,18 +504,6 @@
         // =============================================
         // Fin de JS para Participantes
         // =============================================
-
-
-
-        $(document).on('click', '.btn-check', function() {
-            let participante = $(this).val();
-            let infoParticipante = participante.split('*');
-
-            $('#id_participante').val(infoParticipante[0]);
-            $('#nombre_participante').val(infoParticipante[1] + ' ' +  infoParticipante[2]);
-
-            $('#modal-default').modal('hide');
-        });
 
         $('#producto').autocomplete({
             source: function(request, response) {

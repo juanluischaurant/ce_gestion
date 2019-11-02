@@ -41,12 +41,12 @@
                             
                             <div class="form-group">
                                 <label for="nombre-participante">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <input type="text" class="form-control" id="nombres-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido-participante">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <input type="text" class="form-control" id="apellidos-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -131,7 +131,7 @@
                                 <td><?php echo $persona->nombres_persona; ?></td>
                                 <td><?php echo $persona->apellidos_persona; ?></td>
                                 <td><?php echo $persona->cedula_persona; ?></td>
-                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona; ?>
+                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>
