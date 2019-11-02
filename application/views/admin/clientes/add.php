@@ -55,8 +55,27 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="genero-participante">Genero:</label>
-                                <input type="text" class="form-control" name="genero-participante" value="<?php echo isset($persona) ? $persona->genero_persona : ''; ?>">
+                                <label for="genero-cliente">Genero:</label>
+                                <?php
+                                    $lista_generos = array(
+                                        '' => 'Seleccione',
+                                        1 => 'Masculino',
+                                        2 => 'Femenino'
+                                    );
+
+                                    // Atributos para la entidad HTML a crear con el método form_label()
+                                    $atributos = array('class' => 'form-control', 'id' => 'genero-cliente', 'required' => 'required');
+                                    
+                                    // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
+                                    // Verifica si se encuentra asignada (isset) la variable $persona
+                                    $value = isset($persona) ? $persona->genero_persona : '';
+                                
+                                    echo form_label('Genero:'); // Genera la etiqueta
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
+                                    echo form_dropdown('genero-cliente', $lista_generos, $value, $atributos);
+                                ?>
                             </div>
 
                             <div class="form-group">

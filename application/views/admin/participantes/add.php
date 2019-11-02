@@ -63,7 +63,8 @@
                                     );
                                     $atributos = array('class' => 'form-control', 'id' => 'genero-participante', 'required' => 'required');
                                     
-                                    // Almacena el valor correspondiente a cada género (1=Masc, 2=Feme)
+                                    // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
+                                    // Verifica si se encuentra asignada (isset) la variable $persona
                                     $value = isset($persona) ? $persona->genero_persona : '';
                                 
                                     echo form_label('Genero:'); // Genera la etiqueta
@@ -71,7 +72,7 @@
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
                                     echo form_dropdown('genero-participante', $lista_generos, $value, $atributos);
-                                    ?>
+                                ?>
                             </div>
 
                             <div class="form-group">
