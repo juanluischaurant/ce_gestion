@@ -42,9 +42,8 @@
 <script>
     $(document).ready(function () {
 
-        // Almacena en una variable el url base del proyecto
+        let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
         // http://localhost/ce_gestion/
-        let base_url = "<?php echo base_url();?>";
         
         // =============================================
         // JS para DataTables
@@ -486,13 +485,21 @@
             }
         });
 
+        // Al presionar este botón, imprimir en la vista los datos consultados
         $('#btn-agregar').on('click', function() {
-            data = $(this).val();
 
+            // Almacena los datos previamente almacenados en el atributo "value" del boton clickeado
+            let data = $(this).val();
+
+            // Comprobar si la variable "data" está vacia o no
             if(data != '') {
 
                 let datosCurso = data.split('*');
+
+                // Almacena la cantidad de cupos totales por curso
                 let cupos_totales = datosCurso[2];
+
+                // Almacena la cantidad de cupos ocupados por curso
                 let cupos_ocupados = datosCurso[4];
 
                 if(cupos_ocupados >= cupos_totales) {
@@ -511,6 +518,7 @@
 
                 $('#tbventas tbody').append(html);
 
+                // Verifica el estado del atributo "disabled" del botón clickeado 
                 switchGuardarInscripcion();
 
                 sumar();
@@ -547,14 +555,16 @@
         // });
 
         $('.btn-view-participante').on('click', function() {
-            let participante = $(this).val();
-            let infoParticipante = participante.split('*');
+            let participante = $(this).val(); // Almacena datos del participante previamente almacenados en el atributo "value" del botón clickeado
+            let infoParticipante = participante.split('*'); // Divide y convierte en array la cadena de texto almacenada en "participante"
 
-            html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
+            // Estructura el html a renderizar
+            let html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
             html += '<p><strong>Apellidos: </strong>'+infoParticipante[2]+'</p>'
             html += '<p><strong>Teléfono: </strong>'+infoParticipante[3]+'</p>'
             html += '<p><strong>Cédula: </strong>'+infoParticipante[4]+'</p>';
 
+            // Renderiza el código html en el lugar indicado
             $('#modal-default .modal-body').html(html);
         });
 

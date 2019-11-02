@@ -3,17 +3,25 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Inscripciones_model extends CI_Model {
 
+    /**
+     * Obtén el ID del último registro realizado
+     *
+     */
     public function lastID() {
         return $this->db->insert_id();
-   
     }
     
+    /**
+     * Almacena los datos eviados por el usuario a través del controlador Inscripciones
+     *
+     * @param array $data
+     */
     public function save($data) {
 		return $this->db->insert("inscripcion",$data);
     }
 
     /**
-     * Recupera una lista de inscripciones realizadas
+     * Realiza consulta que retorna una lista de inscripciones realizadas
      * @return array
      */   
     public function getInscripciones() {
@@ -99,20 +107,8 @@ class Inscripciones_model extends CI_Model {
         $this->db->update("pago_de_inscripcion",$data);
       }
 
-      // Eliminar
-    // public function getCursosJSON($valor) {
-    //     $this->db->select('id_curso, nombre_curso as label, cupos_curso, precio_actual_curso, descripcion_curso');
-    //     $this->db->from('curso');
-    //     $this->db->like('nombre_curso', $valor);
-
-    //     $resultados = $this->db->get();
-
-    //     return $resultados->result_array();
-    // } 
-
     public function getInstanciasJSON($valor) {
         // Obtén los registros de instancia de los cursos
-
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
         instancia.cupos_instancia_ocupados,
@@ -132,7 +128,6 @@ class Inscripciones_model extends CI_Model {
 
     
     public function getPagosJSON($valor) {
-
         // Nuevo código
         $this->db->select('pi.id_pago, 
             pi.serial_pago, 
@@ -155,7 +150,6 @@ class Inscripciones_model extends CI_Model {
 			$this->db->or_like('pe.nombres_persona', $valor);
 			$this->db->or_like('pe.apellidos_persona', $valor);
         }
-        
 
         $valor=$this->db->get();
         return $valor->result_array();
