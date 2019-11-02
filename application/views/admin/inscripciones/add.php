@@ -167,7 +167,7 @@
                                 <td><?php echo $participante->cedula_persona; ?></td>
                                 <?php $dataParticipante = $participante->id_participante.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula_persona; ?>
                                 <td>
-                                    <button type='button' class='btn btn-success btn-check' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
+                                    <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -536,13 +536,15 @@
 
                 let datosCurso = data.split('*');
 
+                console.table(datosCurso);
+
                 // Almacena la cantidad de cupos totales por curso
                 let cupos_totales = datosCurso[2];
 
                 // Almacena la cantidad de cupos ocupados por curso
                 let cupos_ocupados = datosCurso[4];
 
-                if(cupos_ocupados >= cupos_totales) {
+                if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
                     alert('El curso está lleno, por favor seleccione uno nuevo');
                     $('#producto').val('');
                 } else {
@@ -566,7 +568,7 @@
                 }
 
             } else {
-                alert('seleccione un curso');
+                alert('Seleccione un curso');
             }
         });
 
