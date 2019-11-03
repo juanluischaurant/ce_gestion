@@ -382,6 +382,19 @@
             }
         });
 
+        $(document).on('click', '.btn-check-participante-inscripcion', function() {
+            let participante = $(this).val();
+            let infoParticipante = participante.split('*');
+
+            let idParticipante = infoParticipante[0],
+            nombreCompletoParticipante = infoParticipante[1] + ' ' +  infoParticipante[2];
+
+            $('#id_participante').val(idParticipante);
+            $('#nombre_participante').val(nombreCompletoParticipante);
+
+            $('#modal-default').modal('hide');
+        });
+
         // =============================================
         // Fin de JS para Inscripciones
         // =============================================
