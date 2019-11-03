@@ -8,15 +8,23 @@ class Inscripciones extends CI_Controller {
 		$this->load->model("Inscripciones_model");
 		$this->load->model("Pagos_model");
 		$this->load->model("Participantes_model");
-		$this->load->model('Cursos_model'); // Este podría ser eliminado de aquí
 		$this->load->model('Instancias_model');
     }
 
+	/**
+	 * Realiza consulta para obtener una lista de inscripciones realizadas,
+	 * esambla la vista llamando y carga la información consultada con el 
+	 * método $this->getInscripciones()
+	 *
+	 * @return void
+	 */
     public function index() {
-		// Load the view for Inscripciones, loading to it the $data array
+		// Almacena en el array $data una lista de inscripciones obtenida de la base de datos
 		$data = array(
 			"inscripciones" => $this->Inscripciones_model->getInscripciones() 
 		);
+
+		// Ensambla la vista y carga la información
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
 		$this->load->view('admin/inscripciones/list', $data);
@@ -26,7 +34,7 @@ class Inscripciones extends CI_Controller {
 	public function add() {
 		$data = array(
 			"tiposPago" => $this->Pagos_model->getTiposDeOperacion(),
-			"participantes" => $this->Participantes_model->getParticipantes() 
+			"participantes" => $this->Participantes_model->getParticipantes()
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -54,7 +62,6 @@ class Inscripciones extends CI_Controller {
 		$fk_id_curso = $this->input->post('idcursos');
 		$cupos_curso = $this->input->post('cuposcursos');
 		$ids_pago = $this->input->post('id_pago');
-		// =====================================
 
 		$data = Array(
 			'fk_id_participante_1' => $fk_id_participante_1,
@@ -78,9 +85,17 @@ class Inscripciones extends CI_Controller {
 
 	}
 
+	/**
+	 * Crea un nuevo registro en la tabla de relación inscripcion_curso
+	 *
+	 * @param array $idcursos
+	 * @param integer $id_ultima_inscripcion
+	 * @param integer $cupos_curso
+	 * @param array $ids_pago
+	 * @return void
+	 */
 	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago) {
-		// Guarda los datos de la tabla de relación inscripcion_curso
-
+	
 		for ($i=0; $i < count($idcursos); $i++) { 
 			$data  = array(
 				'fk_id_inscripcion_1' => $id_ultima_inscripcion,
@@ -104,16 +119,6 @@ class Inscripciones extends CI_Controller {
 		} 
 
 	}
-		
-	// No utilizada en este controlador, movido al controlador Pagos
-	// protected function updateConteoOperaciones($idTipoPago) {
-	// 	$conteoActual = $this->Pagos_model->getTipoDeOperacion($idTipoPago);
-	// 	$data  = array(
-	// 		'conteo_operaciones' => $conteoActual->conteo_operaciones + 1, 
-	// 	);
-	// 	$this->Pagos_model->updateConteoOperaciones($idTipoPago,$data);
-	// }
-	
 
 	protected function updateCuposCurso($idcurso, $cupos_curso) {
 		$cursoActual = $this->Instancias_model->getInstancia($idcurso);
@@ -127,16 +132,23 @@ class Inscripciones extends CI_Controller {
 		$this->Inscripciones_model->updateIdInscripcion($id_pago, $id_ultima_inscripcion);
 	}
 
-	protected function updateEstadoPago($id_pago) {
-		// Actualiza el campo estado_pago en la tabla pago_de_inscripcion
-		
+	/**
+	 * Actualiza el campo estado_pago en la tabla pago_de_inscripcion
+	 *
+	 * @param integer $id_pago
+	 * @return void
+	 */
+	protected function updateEstadoPago($id_pago) {		
 		// Considera cambiar el nombre de este método que fué renombrado incorrectamente
 		$this->Pagos_model->updateIdInscripcion($id_pago);
 	}
 
+	/**
+	 * Carga la información específica de una inscripción
+	 *
+	 * @return void
+	 */
 	public function view() {
-		// Carga la información específica de una inscripción
-
 		$id_inscripcion_curso = $this->input->post('id_curso_inscripcion');
 		$id_inscripcion = $this->input->post('id_inscripcion');
 

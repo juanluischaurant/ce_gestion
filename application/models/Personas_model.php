@@ -22,7 +22,8 @@ class Personas_model extends CI_Model {
     }
 
     /**
-     * Undocumented function
+     * Permite realizar una consulta a la base de datos para obterner toda la información 
+     * sobre la persona con el ID indicado
      *
      * @param int $id
      * @return void

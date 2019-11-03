@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Esta clase contiene funciones utilizadas a lo largo de CE_Gestión 
+ * donde sea necesario consultar información relacionada a facilitadores
+ * 
+ * @package CE_gestion
+ * @subpackage Personas
+ * @category Controladores
+ */
 class Facilitadores extends CI_Controller {
 
     public function __construct() {
@@ -20,7 +28,6 @@ class Facilitadores extends CI_Controller {
     }
     
     public function add($id_persona = 'new') {
-
 
 		if($id_persona !== 'new') {
 
@@ -45,6 +52,7 @@ class Facilitadores extends CI_Controller {
 			$this->load->view('layouts/footer');
 		
 		}
+		
     }
     
     public function store() {

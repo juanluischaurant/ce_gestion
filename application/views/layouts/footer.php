@@ -41,8 +41,10 @@
 
 <script>
     $(document).ready(function () {
-        let base_url = "<?php echo base_url();?>";
 
+        let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
+        // http://localhost/ce_gestion/
+        
         // =============================================
         // JS para DataTables
         // =============================================
@@ -64,79 +66,78 @@
 
         });
 
-        $('#export-cursos').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                title: "Listado de cursos",
-                exportOptions: {
-                    columns: [ 0, 1, 2 ]
-                }
-            },
-            {
-                extend: 'pdfHtml5',
-                title: "Listado de Ventas",
-                exportOptions: {
-                    columns: [ 0, 1, 2]
-                }
+        $('#export-cursos').DataTable({
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: "Listado de cursos",
+                    exportOptions: {
+                        columns: [ 0, 1, 2 ]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: "Listado de Ventas",
+                    exportOptions: {
+                        columns: [ 0, 1, 2]
+                    }
 
+                }
+            ],
+            language: {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se encontraron resultados en su busqueda",
+                "searchPlaceholder": "Buscar registros",
+                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
+                "infoEmpty": "No existen registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
             }
-        ],
+        });
 
-        language: {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados en su busqueda",
-            "searchPlaceholder": "Buscar registros",
-            "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-            "infoEmpty": "No existen registros",
-            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-            "search": "Buscar:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-        }
-    });
+        $('#export-inscripciones').DataTable( {
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'excelHtml5',
+                    title: "Listado de Inscripciones",
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 3 ]
+                    }
+                },
+                {
+                    extend: 'pdfHtml5',
+                    title: "Listado de Inscripciones",
+                    exportOptions: {
+                        columns: [ 0, 1, 2, 3]
+                    }
 
-    $('#export-inscripciones').DataTable( {
-        dom: 'Bfrtip',
-        buttons: [
-            {
-                extend: 'excelHtml5',
-                title: "Listado de Inscripciones",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3 ]
                 }
-            },
-            {
-                extend: 'pdfHtml5',
-                title: "Listado de Inscripciones",
-                exportOptions: {
-                    columns: [ 0, 1, 2, 3]
-                }
+            ],
 
+            language: {
+                "lengthMenu": "Mostrar _MENU_ registros por pagina",
+                "zeroRecords": "No se encontraron resultados en su busqueda",
+                "searchPlaceholder": "Buscar registros",
+                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
+                "infoEmpty": "No existen registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "search": "Buscar:",
+                "paginate": {
+                    "first": "Primero",
+                    "last": "Último",
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
             }
-        ],
-
-        language: {
-            "lengthMenu": "Mostrar _MENU_ registros por pagina",
-            "zeroRecords": "No se encontraron resultados en su busqueda",
-            "searchPlaceholder": "Buscar registros",
-            "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-            "infoEmpty": "No existen registros",
-            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-            "search": "Buscar:",
-            "paginate": {
-                "first": "Primero",
-                "last": "Último",
-                "next": "Siguiente",
-                "previous": "Anterior"
-            },
-        }
-    });
+        });
 
         // =============================================
         // Fin de JS para DataTables
@@ -147,9 +148,40 @@
         // JS para Clientes
         // =============================================
 
-        if($('#fk-id-persona').val() !== '') {
-            $('#guardar-participante').removeAttr('disabled');
-        }
+        // if($('#fk-id-persona').val() !== '') {
+        //     // Si hay alguna persona seleccionada para ser instanciada, 
+        //     // remueve el atributo 'disabled' del botón
+        //     $('#guardar-participante').removeAttr('disabled');
+        // }
+
+        $(document).on('click', '.btn-check-cliente', function() {
+            let cliente = $(this).val();
+            let informacionCliente = cliente.split('*');
+
+            let personaId = informacionCliente[0],
+            nombresPersona = informacionCliente[1],
+            apellidosPersona = informacionCliente[2],
+            telefonoPersona = informacionCliente[3],
+            cedulaPersona = informacionCliente[4],
+            fechaNacimientoPersona = informacionCliente[5],
+            generoPersona = informacionCliente[6];
+            direccionPersona = informacionCliente[7];
+
+            $('#nacimiento-cliente').val(fechaNacimientoPersona);
+            $('#fk-id-persona').val(personaId);
+            $('#genero-cliente').val(generoPersona);
+            $('#nombres-cliente').val(nombresPersona);
+            $('#apellidos-cliente').val(apellidosPersona);
+            $('#telefono-cliente').val(telefonoPersona);
+            $('#direccion-cliente').val(direccionPersona);
+
+
+            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#guardar-cliente').removeAttr('disabled');
+
+            // Oculta ventana modal
+            $('#modal-default').modal('hide');
+        });
 
         // =============================================
         // Fin de JS para Clientes
@@ -159,14 +191,33 @@
         // =============================================
         // JS para Facilitadores
         // =============================================
+        
+        if($('#fk-id-persona').val() !== '') {
+            // Si hay alguna persona seleccionada para ser instanciada, 
+            // remueve el atributo 'disabled' del botón
+            $('#guardar-facilitador').removeAttr('disabled');
+        }
 
         $(document).on('click', '.btn-check-facilitador', function() {
             let facilitador = $(this).val();
             let informacionFacilitador = facilitador.split('*');
 
-            $('#nacimiento-facilitador').val(informacionFacilitador[5]);
-            $('#fk-id-persona').val(informacionFacilitador[0]);
-            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+            let personaId = informacionFacilitador[0],
+            nombresPersona = informacionFacilitador[1],
+            apellidosPersona = informacionFacilitador[2],
+            telefonoPersona = informacionFacilitador[3],
+            cedulaPersona = informacionFacilitador[4],
+            fechaNacimientoPersona = informacionFacilitador[5],
+            generoPersona = informacionFacilitador[6];
+            direccionPersona = informacionFacilitador[7];
+
+            $('#fk-id-persona').val(personaId);
+            $('#nombres-facilitador').val(nombresPersona);
+            $('#apellidos-facilitador').val(apellidosPersona);
+            $('#nacimiento-facilitador').val(fechaNacimientoPersona);
+            $('#genero-facilitador').val(generoPersona);
+            $('#telefono-facilitador').val(telefonoPersona);
+            $('#direccion-facilitador').val(direccionPersona);
 
             // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
             $('#guardar-facilitador').removeAttr('disabled');
@@ -203,8 +254,6 @@
             if(option != '') {
                 let infoTipoDePago = option.split('*');
                 let tipoDePago = infoTipoDePago[2];
-
-                console.log(infoTipoDePago)
 
                 $('#id-tipo-de-pago').val(infoTipoDePago[0]);
 
@@ -333,6 +382,21 @@
             }
         });
 
+        $(document).on('click', '.btn-check-participante-inscripcion', function() {
+            let participante = $(this).val(); // Almacena el valor almacenado en el atributo value del botón clickeado
+            let infoParticipante = participante.split('*'); // divide la información en un array
+
+            // Asigna la información relevante en variables
+            let idParticipante = infoParticipante[0],
+            nombreCompletoParticipante = infoParticipante[1] + ' ' +  infoParticipante[2];
+
+            // Imprime la información relevante
+            $('#id_participante').val(idParticipante);
+            $('#nombre_participante').val(nombreCompletoParticipante);
+
+            $('#modal-default').modal('hide');
+        });
+
         // =============================================
         // Fin de JS para Inscripciones
         // =============================================
@@ -424,16 +488,28 @@
         // JS para Participantes
         // =============================================
 
-
         $(document).on('click', '.btn-check-participante', function() {
             let participante = $(this).val();
             let informacionParticipante = participante.split('*');
 
-            $('#nacimiento-participante').val(informacionParticipante[5]);
-            $('#fk-id-persona').val(informacionParticipante[0]);
-            // $('#nombre-curso-instanciado').val(infoCurso[1]);
+            let personaId = informacionParticipante[0],
+            nombresPersona = informacionParticipante[1],
+            apellidosPersona = informacionParticipante[2],
+            telefonoPersona = informacionParticipante[3],
+            cedulaPersona = informacionParticipante[4],
+            fechaNacimientoPersona = informacionParticipante[5],
+            generoPersona = informacionParticipante[6];
+            direccionPersona = informacionParticipante[7];
 
-            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            $('#fk-id-persona').val(personaId);
+            $('#nombres-participante').val(nombresPersona);
+            $('#apellidos-participante').val(apellidosPersona);
+            $('#nacimiento-participante').val(fechaNacimientoPersona);
+            $('#genero-participante').val(generoPersona);
+            $('#telefono-participante').val(telefonoPersona);
+            $('#direccion-participante').val(direccionPersona);
+
+            // Al seleccionar un participante de la lista, activa el botón "Guardar"
             $('#guardar-participante').removeAttr('disabled');
 
             // Oculta ventana modal
@@ -443,18 +519,6 @@
         // =============================================
         // Fin de JS para Participantes
         // =============================================
-
-
-
-        $(document).on('click', '.btn-check', function() {
-            let participante = $(this).val();
-            let infoParticipante = participante.split('*');
-
-            $('#id_participante').val(infoParticipante[0]);
-            $('#nombre_participante').val(infoParticipante[1] + ' ' +  infoParticipante[2]);
-
-            $('#modal-default').modal('hide');
-        });
 
         $('#producto').autocomplete({
             source: function(request, response) {
@@ -476,16 +540,26 @@
             }
         });
 
+        // Al presionar este botón, imprimir en la vista los datos consultados
         $('#btn-agregar').on('click', function() {
-            data = $(this).val();
 
+            // Almacena los datos previamente almacenados en el atributo "value" del boton clickeado
+            let data = $(this).val();
+
+            // Comprobar si la variable "data" está vacia o no
             if(data != '') {
 
                 let datosCurso = data.split('*');
+
+                console.table(datosCurso);
+
+                // Almacena la cantidad de cupos totales por curso
                 let cupos_totales = datosCurso[2];
+
+                // Almacena la cantidad de cupos ocupados por curso
                 let cupos_ocupados = datosCurso[4];
 
-                if(cupos_ocupados >= cupos_totales) {
+                if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
                     alert('El curso está lleno, por favor seleccione uno nuevo');
                     $('#producto').val('');
                 } else {
@@ -501,6 +575,7 @@
 
                 $('#tbventas tbody').append(html);
 
+                // Verifica el estado del atributo "disabled" del botón clickeado 
                 switchGuardarInscripcion();
 
                 sumar();
@@ -508,7 +583,7 @@
                 }
 
             } else {
-                alert('seleccione un curso');
+                alert('Seleccione un curso');
             }
         });
 
@@ -537,14 +612,16 @@
         // });
 
         $('.btn-view-participante').on('click', function() {
-            let participante = $(this).val();
-            let infoParticipante = participante.split('*');
+            let participante = $(this).val(); // Almacena datos del participante previamente almacenados en el atributo "value" del botón clickeado
+            let infoParticipante = participante.split('*'); // Divide y convierte en array la cadena de texto almacenada en "participante"
 
-            html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
+            // Estructura el html a renderizar
+            let html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
             html += '<p><strong>Apellidos: </strong>'+infoParticipante[2]+'</p>'
             html += '<p><strong>Teléfono: </strong>'+infoParticipante[3]+'</p>'
             html += '<p><strong>Cédula: </strong>'+infoParticipante[4]+'</p>';
 
+            // Renderiza el código html en el lugar indicado
             $('#modal-default .modal-body').html(html);
         });
 

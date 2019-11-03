@@ -41,12 +41,12 @@
                             
                             <div class="form-group">
                                 <label for="nombre-participante">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <input type="text" class="form-control" id="nombres-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido-participante">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <input type="text" class="form-control" id="apellidos-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -55,8 +55,24 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="genero-participante">Genero:</label>
-                                <input type="text" class="form-control" name="genero-participante" value="<?php echo isset($persona) ? $persona->genero_persona : ''; ?>">
+                                <?php
+                                    $lista_generos = array(
+                                        '' => 'Seleccione',
+                                        1 => 'Masculino',
+                                        2 => 'Femenino'
+                                    );
+                                    $atributos = array('class' => 'form-control', 'id' => 'genero-participante', 'required' => 'required');
+                                    
+                                    // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
+                                    // Verifica si se encuentra asignada (isset) la variable $persona
+                                    $value = isset($persona) ? $persona->genero_persona : '';
+                                
+                                    echo form_label('Genero:'); // Genera la etiqueta
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
+                                    echo form_dropdown('genero-participante', $lista_generos, $value, $atributos);
+                                ?>
                             </div>
 
                             <div class="form-group">
@@ -115,7 +131,7 @@
                                 <td><?php echo $persona->nombres_persona; ?></td>
                                 <td><?php echo $persona->apellidos_persona; ?></td>
                                 <td><?php echo $persona->cedula_persona; ?></td>
-                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona; ?>
+                                <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>

@@ -517,3 +517,18 @@ COMMIT;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+
+
+
+CREATE TABLE `turno_instancia` (
+  `id_turno` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'Referencia a la tabla Participante',
+  `nombre_turno` varchar(45) NOT NULL COMMENT 'Almacena los turnos en los que la institución oferta sus cursos',
+  `descripcion_turno` VARCHAR(250) NULL COMMENT 'Breve descripción del turno especificado'
+);
+ALTER TABLE `instancia`
+  ADD CONSTRAINT `turno_instancia_ibfk_1` FOREIGN KEY (`fk_id_turno_instancia_1`) REFERENCES `turno_instancia` (`id_turno`);
+
+
+INSERT INTO `turno_instancia`(`nombre_turno`, `descripcion_turno`) VALUES ('Mañana', 'Turno de 8:00am a 12:00m');
+INSERT INTO `turno_instancia`(`nombre_turno`, `descripcion_turno`) VALUES ('Tarde', 'Turno de 1:00pm a 5:00pm');

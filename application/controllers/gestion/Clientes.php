@@ -1,6 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+/**
+ * Esta clase contiene funciones utilizadas a lo largo de CE_Gestión 
+ * donde sea necesario consultar información relacionada a clientes (titulares)
+ * 
+ * @package CE_gestion
+ * @subpackage Personas
+ * @category Controladores
+ */
 class Clientes extends CI_Controller {
 
 	public function __construct() {

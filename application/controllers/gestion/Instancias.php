@@ -22,6 +22,7 @@ class Instancias extends CI_Controller {
 	public function add() {
         $data = array(
 			'cursos' => $this->Cursos_model->getCursos(),
+			'lista_turnos' =>  $this->Instancias_model->turnos_dropdown()
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -30,32 +31,35 @@ class Instancias extends CI_Controller {
 	}
 
 	public function store() {
-        print_r($_POST);
-        $id_curso_instanciado = $this->input->post('id-curso-instanciado');
-        $id_periodo_instancia = $this->input->post('id-periodo-instancia');
-        $id_locacion_instancia = $this->input->post('id-locacion-instancia');
-        $id_profesor_instancia = $this->input->post('id-profesor-instancia');
-        $cupos_instancia = $this->input->post('cupos-instancia');
+
+        $id_curso_instanciado = $this->input->post('id-curso-instanciado');   // fk_id_curso_1
+        $id_profesor_instancia = $this->input->post('id-profesor-instancia'); // fk_id_facilitador
+        $id_periodo_instancia = $this->input->post('id-periodo-instancia');   // fk_id_periodo_1
+        $id_locacion_instancia = $this->input->post('id-locacion-instancia'); // fk_id_locacion_1
+        $turno_instancia = $this->input->post('turno-instancia');             // turno_instancia1
+        $cupos_instancia = $this->input->post('cupos-instancia');             // cupos_instancia
+		$precio_instancia = $this->input->post('costo-instancia');            // precio_instancia
+		$descripcion_instancia = $this->input->post('descripcion-instancia'); // descripcion_instancia
 		
         $data = array (
             'fk_id_curso_1' => $id_curso_instanciado,
+            'precio_instancia' => $precio_instancia,
             'fk_id_facilitador_1' => $id_profesor_instancia,
             'fk_id_periodo_1' => $id_periodo_instancia,
-            'fk_id_locacion_1' => $id_locacion_instancia,
-            'cupos_instancia' => $cupos_instancia
+			'fk_id_locacion_1' => $id_locacion_instancia,
+			'fk_id_turno_instancia_1' => $turno_instancia,
+			'cupos_instancia' => $cupos_instancia,
+			'descripcion_instancia' => $descripcion_instancia
         );
-	
-			if($this->Instancias_model->save($data)) {
-				redirect(base_url().'gestion/instancias');
-			} else {
-				$this->session->set_flashdata('error', 'No se pudo registrar la instancia.');
-				redirect(base_url().'gestion/instancias/add');
-			}
+
+		if($this->Instancias_model->save($data)) {
+			redirect(base_url().'gestion/instancias');
+		} else {
+			$this->session->set_flashdata('error', 'No se pudo registrar la instancia.');
+			redirect(base_url().'gestion/instancias/add');
 		}
+	}
 		
-
-	
-
 	public function edit($id) {
 		$data = array(
 			'curso' => $this->Cursos_model->getCurso($id)
@@ -83,8 +87,8 @@ class Instancias extends CI_Controller {
 			$this->session->set_flashdata('error', 'No se pudo actualizar el curso.');
 			redirect(base_url().'gestion/cursos/edit/'.$id_curso);
 		}
-    }
-    
+	}
+	
     // =======================================================
 	// Métodos utilizados para el pluggin AUTOCOMPLETE
     // =======================================================

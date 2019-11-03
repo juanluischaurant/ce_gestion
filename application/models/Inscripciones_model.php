@@ -3,17 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Inscripciones_model extends CI_Model {
 
+    /**
+     * Obtén el ID del último registro realizado
+     *
+     * @return void
+     */
     public function lastID() {
         return $this->db->insert_id();
-   
     }
     
+    /**
+     * Almacena los datos eviados por el usuario a través del controlador Inscripciones
+     *
+     * @param array $data
+     * @return void
+     */
     public function save($data) {
 		return $this->db->insert("inscripcion",$data);
     }
 
     /**
-     * Recupera una lista de inscripciones realizadas
+     * Realiza consulta que retorna una lista de inscripciones realizadas
      * @return array
      */   
     public function getInscripciones() {
@@ -97,22 +107,31 @@ class Inscripciones_model extends CI_Model {
         // Actualiza la clave foránea fk_id_inscripcion 
         $this->db->where("id_pago",$id_pago);
         $this->db->update("pago_de_inscripcion",$data);
-      }
+    }
 
-      // Eliminar
-    // public function getCursosJSON($valor) {
-    //     $this->db->select('id_curso, nombre_curso as label, cupos_curso, precio_actual_curso, descripcion_curso');
-    //     $this->db->from('curso');
-    //     $this->db->like('nombre_curso', $valor);
+    /**
+     * Para comprobar si un participante está o no inscrito en un curso,
+     * regresa una lista de todos los cursos donde el participante se encuentra registrado
+     */
+    public function participante_curso() {
+        $resultados = $this->db->select('pa.id_participante, 
+        pe.nombres_persona, 
+        cu.id_curso,
+        cu.nombre_curso')
+        ->from('participante as pa')
+        ->join('persona as pe', 'pe.persona_id = pa.fk_id_persona_2')
+        ->join('inscripcion as in', 'in.fk_id_participante_1 = pa.id_participante')
+        ->join('inscripcion_curso as ic', 'ic.fk_id_inscripcion_1 = in.id_inscripcion')
+        ->join('instancia as it', 'it.id_instancia = ic.fk_id_curso_1')
+        ->join('curso as cu', 'cu.id_curso = it.fk_id_curso_1')
+        ->where('pa.id_participante', 3)
+        ->get();
 
-    //     $resultados = $this->db->get();
-
-    //     return $resultados->result_array();
-    // } 
+        return $resultados->result();
+    }
 
     public function getInstanciasJSON($valor) {
         // Obtén los registros de instancia de los cursos
-
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
         instancia.cupos_instancia_ocupados,
@@ -132,7 +151,6 @@ class Inscripciones_model extends CI_Model {
 
     
     public function getPagosJSON($valor) {
-
         // Nuevo código
         $this->db->select('pi.id_pago, 
             pi.serial_pago, 
@@ -155,7 +173,6 @@ class Inscripciones_model extends CI_Model {
 			$this->db->or_like('pe.nombres_persona', $valor);
 			$this->db->or_like('pe.apellidos_persona', $valor);
         }
-        
 
         $valor=$this->db->get();
         return $valor->result_array();
