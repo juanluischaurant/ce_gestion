@@ -8,7 +8,6 @@ class Inscripciones extends CI_Controller {
 		$this->load->model("Inscripciones_model");
 		$this->load->model("Pagos_model");
 		$this->load->model("Participantes_model");
-		$this->load->model('Cursos_model'); // Este podría ser eliminado de aquí
 		$this->load->model('Instancias_model');
     }
 
@@ -35,7 +34,7 @@ class Inscripciones extends CI_Controller {
 	public function add() {
 		$data = array(
 			"tiposPago" => $this->Pagos_model->getTiposDeOperacion(),
-			"participantes" => $this->Participantes_model->getParticipantes() 
+			"participantes" => $this->Participantes_model->getParticipantes()
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -63,7 +62,6 @@ class Inscripciones extends CI_Controller {
 		$fk_id_curso = $this->input->post('idcursos');
 		$cupos_curso = $this->input->post('cuposcursos');
 		$ids_pago = $this->input->post('id_pago');
-		// =====================================
 
 		$data = Array(
 			'fk_id_participante_1' => $fk_id_participante_1,
@@ -90,10 +88,10 @@ class Inscripciones extends CI_Controller {
 	/**
 	 * Crea un nuevo registro en la tabla de relación inscripcion_curso
 	 *
-	 * @param integer $idcursos
+	 * @param array $idcursos
 	 * @param integer $id_ultima_inscripcion
 	 * @param integer $cupos_curso
-	 * @param integer $ids_pago
+	 * @param array $ids_pago
 	 * @return void
 	 */
 	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago) {

@@ -383,12 +383,14 @@
         });
 
         $(document).on('click', '.btn-check-participante-inscripcion', function() {
-            let participante = $(this).val();
-            let infoParticipante = participante.split('*');
+            let participante = $(this).val(); // Almacena el valor almacenado en el atributo value del botón clickeado
+            let infoParticipante = participante.split('*'); // divide la información en un array
 
+            // Asigna la información relevante en variables
             let idParticipante = infoParticipante[0],
             nombreCompletoParticipante = infoParticipante[1] + ' ' +  infoParticipante[2];
 
+            // Imprime la información relevante
             $('#id_participante').val(idParticipante);
             $('#nombre_participante').val(nombreCompletoParticipante);
 

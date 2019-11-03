@@ -44,8 +44,14 @@ class Participantes_model extends CI_Model {
         return $this->db->update('participante', $data);
     }
     
+    /**
+     * Al momento de asignar el rol de Participante a una Persona, 
+     * verifica que esta acción no haya sido realizada anteriormente
+     *
+     * @param integer $id
+     * @return boolean
+     */
     public function evitaParticipanteDuplicado($id) {
-        // Al momento de asignar el rol de Facilitador a una Persona, verifica que esta acción no haya sido realizada anteriormente
         $query = $this->db->select('fk_id_persona_2')
         ->from('participante')
         ->where('fk_id_persona_2', $id)

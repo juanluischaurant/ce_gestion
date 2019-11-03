@@ -107,7 +107,28 @@ class Inscripciones_model extends CI_Model {
         // Actualiza la clave foránea fk_id_inscripcion 
         $this->db->where("id_pago",$id_pago);
         $this->db->update("pago_de_inscripcion",$data);
-      }
+    }
+
+    /**
+     * Para comprobar si un participante está o no inscrito en un curso,
+     * regresa una lista de todos los cursos donde el participante se encuentra registrado
+     */
+    public function participante_curso() {
+        $resultados = $this->db->select('pa.id_participante, 
+        pe.nombres_persona, 
+        cu.id_curso,
+        cu.nombre_curso')
+        ->from('participante as pa')
+        ->join('persona as pe', 'pe.persona_id = pa.fk_id_persona_2')
+        ->join('inscripcion as in', 'in.fk_id_participante_1 = pa.id_participante')
+        ->join('inscripcion_curso as ic', 'ic.fk_id_inscripcion_1 = in.id_inscripcion')
+        ->join('instancia as it', 'it.id_instancia = ic.fk_id_curso_1')
+        ->join('curso as cu', 'cu.id_curso = it.fk_id_curso_1')
+        ->where('pa.id_participante', 3)
+        ->get();
+
+        return $resultados->result();
+    }
 
     public function getInstanciasJSON($valor) {
         // Obtén los registros de instancia de los cursos
