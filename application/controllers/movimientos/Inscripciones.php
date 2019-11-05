@@ -190,6 +190,12 @@ class Inscripciones extends CI_Controller {
 		$participantes = $this->Inscripciones_model->getInstanciasJSON($valor);
 		echo json_encode($participantes);
 	}
+
+	public function getParticipantesJSON() {
+		$valor = $this->input->post('query');
+		$participantes = $this->Inscripciones_model->getParticipantesJSON($valor);
+		echo json_encode($participantes);
+	}
 	
 	// =======================================================
 	//Fin de Métodos utilizados para el pluggin AUTOCOMPLETE

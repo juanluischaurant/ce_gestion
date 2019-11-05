@@ -535,16 +535,21 @@
                 });
             }, minLength: 3,
             select: function(event, ui) {
-                data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia+'*'+ui.item.cupos_instancia_ocupados;
-                $('#btn-agregar').val(data);
+                // Almacena en una variable los datos recogidos con la consulta SQL realizada previamente
+                let data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia+'*'+ui.item.cupos_instancia_ocupados;
+                
+                // Almacena la variable data dentro del atributo value del elemento seleccionado
+                $('#btn-agregar-curso').val(data);
+
+                // Almacena el ID del curso en atributo personalizado de HTML
+                $('#btn-agregar-curso').attr('data-id-curso', ui.item.id_instancia);
             }
         });
 
         // Al presionar este botón, imprimir en la vista los datos consultados
-        $('#btn-agregar').on('click', function() {
+        $('#btn-agregar-curso').on('click', function() {
 
-            // Almacena los datos previamente almacenados en el atributo "value" del boton clickeado
-            let data = $(this).val();
+            let data = $(this).val(); // Almacena los datos del atributo "value" del boton clickeado
 
             // Comprobar si la variable "data" está vacia o no
             if(data != '') {
@@ -553,18 +558,15 @@
 
                 console.table(datosCurso);
 
-                // Almacena la cantidad de cupos totales por curso
-                let cupos_totales = datosCurso[2];
-
-                // Almacena la cantidad de cupos ocupados por curso
-                let cupos_ocupados = datosCurso[4];
+                let cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por curso
+                cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por curso
 
                 if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
-                    alert('El curso está lleno, por favor seleccione uno nuevo');
+                    alert('El curso está lleno, por favor seleccione otro');
                     $('#producto').val('');
                 } else {
                 html = '<tr>';
-                html += '<td><input type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
+                html += '<td><input class="curso-id" type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
                 html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
                 html += '<td><input type="hidden" name="cuposcursos[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
                 html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
@@ -585,6 +587,36 @@
             } else {
                 alert('Seleccione un curso');
             }
+        })
+        .on('click', function(event) {
+            // Solocitud AJAX realizada para obtener de la base de datos
+            // una lista de participantes inscritos en determinado curso
+            $.ajax({
+                url: base_url+'movimientos/inscripciones/getParticipantesJSON',
+                dataType: 'json',
+                type: 'post',
+                contentType: 'application/json',
+                data:  $(this).attr('data-id-curso'),
+                // data: JSON.stringify($('#producto').val()),
+                processData: false,
+                success: function( data, textStatus, jQxhr ){
+                    alert('hi');
+                },
+                error: function( jqXhr, textStatus, errorThrown ){
+                    console.log( errorThrown );
+                }
+            });
+
+        });
+
+        $(document).on('click', '.btn-remove-curso', function() {
+        $(this).closest('tr').remove();
+
+        if($('#tbventas tr').length <= 1) {
+            $('#guardar-inscripcion').attr('disabled', true);
+        }
+
+        sumar();
         });
 
         $(document).on('click', '.btn-remove-curso', function() {

@@ -146,8 +146,8 @@ class Inscripciones_model extends CI_Model {
             'instancia.id_instancia, 
             instancia.cupos_instancia, 
             instancia.cupos_instancia_ocupados,
-            curso.nombre_curso,
             instancia.precio_instancia,
+            curso.nombre_curso,
             concat(curso.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as label,
             concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico'
         )
@@ -155,12 +155,30 @@ class Inscripciones_model extends CI_Model {
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
         // ->where('instancia.estado_instancia', 1)
-        ->like('nombre_curso', $valor)
+        ->like('curso.nombre_curso', $valor)
         ->get();
 
         return $resultados->result_array();
     } 
 
+    public function getParticipantesJSON($valor) {
+        $resultados = $this->db->select(
+            'curso.nombre_curso,
+            i.fk_id_participante_1'
+         )
+        ->from('instancia')
+        ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
+        ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
+        // Para consultar una lista de participantes inscritos en determinado curso,
+        // puedes modificar este método agregando lo siguiente:
+        ->join('inscripcion_curso as ic', 'ic.fk_id_curso_1 = instancia.id_instancia')
+        ->join('inscripcion as i', 'i.id_inscripcion = ic.fk_id_inscripcion_1')
+        // ->where('instancia.estado_instancia', 1)
+        ->like('curso.id_curso', $valor)
+        ->get();
+
+        return $resultados->result_array();
+    } 
     
     public function getPagosJSON($valor) {
         // Nuevo código

@@ -72,7 +72,7 @@
                                 </div>
                                 <div class="col-md-2">
                                     <label for="">&nbsp;</label>
-                                    <button id="btn-agregar" type="button" class="btn btn-success btn-flat btn-block"><span class="fa fa-plus"></span> Agregar</button>
+                                    <button id="btn-agregar-curso" data-id-curso="" type="button" class="btn btn-success btn-flat btn-block"><span class="fa fa-plus"></span> Agregar</button>
                                 </div>
                             </div>
                             <table id="tbventas" class="table table-bordered table-striped table-hover">
