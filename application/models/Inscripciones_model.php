@@ -173,8 +173,7 @@ class Inscripciones_model extends CI_Model {
         // puedes modificar este método agregando lo siguiente:
         ->join('inscripcion_curso as ic', 'ic.fk_id_curso_1 = instancia.id_instancia')
         ->join('inscripcion as i', 'i.id_inscripcion = ic.fk_id_inscripcion_1')
-        // ->where('instancia.estado_instancia', 1)
-        ->like('curso.id_curso', $valor)
+        ->where('instancia.id_instancia',  $valor)
         ->get();
 
         return $resultados->result_array();
