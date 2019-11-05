@@ -599,10 +599,30 @@
                 data: {
                     id: $(this).attr('data-id-curso')
                 },
-                success: function( data, textStatus, jQxhr ){
-                    alert('hi');
+                success: function( data, textStatus, jQxhr )
+                {
+                    let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
+                    existe = false; // Al encontrar al participante cambia a TRUE
+
+                    // Itera sobre cada OBJETO obtenido durante la llamada AJAX
+                    for(let i = 0; i < data.length; i++)
+                    {
+                        let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
+                        
+                        if(idParticipanteInscrito == idParticipante)
+                        {
+                            // alert(idParticipanteInscrito);
+                            existe = true; // Cambia estado de la variable "existe"
+                            break; // Anula el ciclo FOR
+                        }
+                    }
+
+                    if(existe)
+                    {
+                        alert('El participante ya está registrado en esta instancia.')
+                    }
                 },
-                error: function( jqXhr, textStatus, errorThrown ){
+                error: function( jqXhr, textStatus, errorThrown ) {
                     console.log( errorThrown );
                 }
             });
