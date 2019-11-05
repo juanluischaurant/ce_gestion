@@ -589,7 +589,7 @@
             }
         })
         .on('click', function(event) {
-            console.log($(this).data('id-curso'))
+            console.log($(this).attr('data-id-curso'))
             // Solocitud AJAX realizada para obtener de la base de datos
             // una lista de participantes inscritos en determinado curso
             $.ajax({
@@ -597,9 +597,8 @@
                 url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
                 dataType: 'json',
                 data: {
-                    id: $(this).data('id-curso')
+                    id: $(this).attr('data-id-curso')
                 },
-                // data: JSON.stringify($('#producto').val()),
                 success: function( data, textStatus, jQxhr ){
                     alert('hi');
                 },

@@ -113,7 +113,7 @@ class Inscripciones_model extends CI_Model {
      * Para comprobar si un participante está o no inscrito en un curso,
      * regresa una lista de todos los cursos donde el participante se encuentra registrado
      */
-    public function participante_curso() {
+    public function participante_curso($id_curso) {
         $resultados = $this->db->select('pa.id_participante, 
         pe.nombres_persona, 
         cu.id_curso,
@@ -124,7 +124,7 @@ class Inscripciones_model extends CI_Model {
         ->join('inscripcion_curso as ic', 'ic.fk_id_inscripcion_1 = in.id_inscripcion')
         ->join('instancia as it', 'it.id_instancia = ic.fk_id_curso_1')
         ->join('curso as cu', 'cu.id_curso = it.fk_id_curso_1')
-        ->where('pa.id_participante', 3)
+        ->where('pa.id_participante', $id_curso)
         ->get();
 
         return $resultados->result();
@@ -169,8 +169,7 @@ class Inscripciones_model extends CI_Model {
         ->from('instancia')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
-        // Para consultar una lista de participantes inscritos en determinado curso,
-        // puedes modificar este método agregando lo siguiente:
+        // Para consultar una lista de participantes inscritos en determinado curso
         ->join('inscripcion_curso as ic', 'ic.fk_id_curso_1 = instancia.id_instancia')
         ->join('inscripcion as i', 'i.id_inscripcion = ic.fk_id_inscripcion_1')
         ->where('instancia.id_instancia',  $valor)
