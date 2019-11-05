@@ -523,7 +523,7 @@
         $('#producto').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/inscripciones/getCursosJSON',
+                    url: base_url+'movimientos/inscripciones/getInstanciasJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
