@@ -564,23 +564,63 @@
                 if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
                     alert('El curso está lleno, por favor seleccione otro');
                     $('#producto').val('');
-                } else {
-                html = '<tr>';
-                html += '<td><input class="curso-id" type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
-                html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
-                html += '<td><input type="hidden" name="cuposcursos[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
-                html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
-                html += '<td><input type="hidden" name="precioactualcursos[]" value="'+datosCurso[3]+'">' + datosCurso[3] + '</td>';
+                } 
+                else 
+                {
+                    $.ajax({
+                        type: 'post',
+                        url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
+                        dataType: 'json',
+                        data: {
+                            id: $(this).attr('data-id-curso')
+                        },
+                        success: function( data, textStatus, jQxhr )
+                        {
+                            let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
+                            existe = false; // Al encontrar al participante cambia a TRUE
 
-                html += '<td><button type="button" class="btn btn-danger btn-remove-curso"><span class="fa fa-remove"></span></button></td>'
-                html += '</tr>';
+                            // Itera sobre cada OBJETO obtenido durante la llamada AJAX
+                            for(let i = 0; i < data.length; i++)
+                            {
+                                let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
+                                
+                                if(idParticipanteInscrito == idParticipante)
+                                {
+                                    // alert(idParticipanteInscrito);
+                                    existe = true; // Cambia estado de la variable "existe"
+                                    break; // Anula el ciclo FOR
+                                }
+                            }
 
-                $('#tbventas tbody').append(html);
+                            if(existe)
+                            {
+                                alert('El participante ya está registrado en esta instancia.')
+                            }
+                            else if(!existe) 
+                            {    
+                                html = '<tr>';
+                                html += '<td><input class="curso-id" type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
+                                html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
+                                html += '<td><input type="hidden" name="cuposcursos[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
+                                html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
+                                html += '<td><input type="hidden" name="precioactualcursos[]" value="'+datosCurso[3]+'">' + datosCurso[3] + '</td>';
 
-                // Verifica el estado del atributo "disabled" del botón clickeado 
-                switchGuardarInscripcion();
+                                html += '<td><button type="button" class="btn btn-danger btn-remove-curso"><span class="fa fa-remove"></span></button></td>'
+                                html += '</tr>';
 
-                sumar();
+                                $('#tbventas tbody').append(html);
+
+                                // Verifica el estado del atributo "disabled" del botón clickeado 
+                                switchGuardarInscripcion();
+
+                                sumar();
+
+                            }
+                        },
+                        error: function( jqXhr, textStatus, errorThrown ) {
+                            console.log( errorThrown );
+                        }
+                    }); 
 
                 }
 
@@ -592,40 +632,40 @@
             console.log($(this).attr('data-id-curso'))
             // Solocitud AJAX realizada para obtener de la base de datos
             // una lista de participantes inscritos en determinado curso
-            $.ajax({
-                type: 'post',
-                url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
-                dataType: 'json',
-                data: {
-                    id: $(this).attr('data-id-curso')
-                },
-                success: function( data, textStatus, jQxhr )
-                {
-                    let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
-                    existe = false; // Al encontrar al participante cambia a TRUE
+            // $.ajax({
+            //     type: 'post',
+            //     url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
+            //     dataType: 'json',
+            //     data: {
+            //         id: $(this).attr('data-id-curso')
+            //     },
+            //     success: function( data, textStatus, jQxhr )
+            //     {
+            //         let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
+            //         existe = false; // Al encontrar al participante cambia a TRUE
 
-                    // Itera sobre cada OBJETO obtenido durante la llamada AJAX
-                    for(let i = 0; i < data.length; i++)
-                    {
-                        let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
+            //         // Itera sobre cada OBJETO obtenido durante la llamada AJAX
+            //         for(let i = 0; i < data.length; i++)
+            //         {
+            //             let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
                         
-                        if(idParticipanteInscrito == idParticipante)
-                        {
-                            // alert(idParticipanteInscrito);
-                            existe = true; // Cambia estado de la variable "existe"
-                            break; // Anula el ciclo FOR
-                        }
-                    }
+            //             if(idParticipanteInscrito == idParticipante)
+            //             {
+            //                 // alert(idParticipanteInscrito);
+            //                 existe = true; // Cambia estado de la variable "existe"
+            //                 break; // Anula el ciclo FOR
+            //             }
+            //         }
 
-                    if(existe)
-                    {
-                        alert('El participante ya está registrado en esta instancia.')
-                    }
-                },
-                error: function( jqXhr, textStatus, errorThrown ) {
-                    console.log( errorThrown );
-                }
-            });
+            //         if(existe)
+            //         {
+            //             alert('El participante ya está registrado en esta instancia.')
+            //         }
+            //     },
+            //     error: function( jqXhr, textStatus, errorThrown ) {
+            //         console.log( errorThrown );
+            //     }
+            // });
 
         });
 
