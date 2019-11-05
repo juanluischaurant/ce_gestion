@@ -130,15 +130,27 @@ class Inscripciones_model extends CI_Model {
         return $resultados->result();
     }
 
+    /**
+     * Obtén los registros de instancia de los cursos
+     * 
+     * Utilizado para consultar cursos en específico, se implementó este método
+     * para ser utilizado en el módulo de Inscripciones. El método consulta información
+     * en 3 varias tablas y regresa datos cómo por ejemplo: El ID de los participantes
+     * registrados en un determinado curso.
+     *
+     * @param string $valor
+     * @return array
+     */
     public function getInstanciasJSON($valor) {
-        // Obtén los registros de instancia de los cursos
-        $resultados = $this->db->select('instancia.id_instancia, 
-        instancia.cupos_instancia, 
-        instancia.cupos_instancia_ocupados,
-        curso.nombre_curso,
-        instancia.precio_instancia,
-        concat(curso.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as label,
-        concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico')
+        $resultados = $this->db->select(
+            'instancia.id_instancia, 
+            instancia.cupos_instancia, 
+            instancia.cupos_instancia_ocupados,
+            curso.nombre_curso,
+            instancia.precio_instancia,
+            concat(curso.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as label,
+            concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico'
+        )
         ->from('instancia')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
