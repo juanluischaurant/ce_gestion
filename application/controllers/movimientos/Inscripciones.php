@@ -164,15 +164,36 @@ class Inscripciones extends CI_Controller {
 	// =======================================================
 	// Métodos utilizados para el pluggin AUTOCOMPLETE
 	// =======================================================
+
+	/**
+	 * Consulta el pago indicado
+	 * 
+	 * Este método se invoca a través de una llamada AJAX realizada con jQuery
+	 *
+	 * @return void
+	 */
 	public function getPagosJSON() {
 		$valor = $this->input->post('query');
 		$pagos = $this->Inscripciones_model->getPagosJSON($valor);
 		echo json_encode($pagos);
 	}
 	
-	public function getCursosJSON() {
+	/**
+	 * Consulta el curso indicado
+	 * 
+	 * Este método se invoca a través de una llamada AJAX realizada con jQuery
+	 *
+	 * @return void
+	 */
+	public function getInstanciasJSON() {
 		$valor = $this->input->post('query');
 		$participantes = $this->Inscripciones_model->getInstanciasJSON($valor);
+		echo json_encode($participantes);
+	}
+
+	public function getParticipantesJSON() {
+		$valor = $this->input->post('id');
+		$participantes = $this->Inscripciones_model->getParticipantesJSON($valor);
 		echo json_encode($participantes);
 	}
 	

@@ -26,3 +26,22 @@ curso.id_curso = instancia.fk_id_curso_1
 
 where participante.id_participante = 3
 
+
+
+-- Participantes registrados en instancia
+SELECT `curso`.`nombre_curso`, `i`.`fk_id_participante_1` 
+FROM `instancia` 
+
+JOIN `curso` ON `curso`.`id_curso` = `instancia`.`fk_id_curso_1` 
+JOIN `periodo` ON `periodo`.`id_periodo` = `instancia`.`fk_id_periodo_1` 
+JOIN `inscripcion_curso` as `ic` ON `ic`.`fk_id_curso_1` = `instancia`.`id_instancia` 
+JOIN `inscripcion` as `i` ON `i`.`id_inscripcion` = `ic`.`fk_id_inscripcion_1` 
+
+WHERE `instancia`.`id_instancia` = 1
+
+-- Usuarios de la base de datos
+the_data_architect
+car-dark-knight
+
+the_admin_here
+car-red-ranger
