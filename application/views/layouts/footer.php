@@ -43,14 +43,19 @@
     $(document).ready(function () {
 
         let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
-        // http://localhost/ce_gestion/
+        // URL base actual (Sujeto a cambios dependiendo de
+        // la dirección real):http://localhost/ce_gestion/
+
+        
+        $('.sidebar-menu').tree(); // Menú lateral
 
         // =============================================
         // JS para DataTables
         // =============================================
 
-        $('#example1').DataTable();
-        $('.sidebar-menu').tree();
+        $('#example1').DataTable({
+            "order": [[ 1, "desc" ]]
+        });
 
         $('.btn-remove').on('click', function(e) {
             // Código para el botón de eliminar en las tablas
