@@ -42,7 +42,7 @@
                                         <td><?php echo $persona->apellidos_persona; ?></td>
                                         <td><?php echo $persona->telefono_persona; ?></td>
                                         <td><?php echo $persona->cedula_persona; ?></td>
-                                        <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona; ?>
+                                        <?php $dataPersona = $persona->persona_id; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
@@ -83,6 +83,8 @@
         
       </div>
       <div class="modal-footer">
+
+
         <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

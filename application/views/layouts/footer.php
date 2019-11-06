@@ -150,6 +150,29 @@
 
 
         // =============================================
+        // JS para Personas
+        // =============================================
+        $(document).on("click",".btn-view-persona",function() {
+            let idPersona = $(this).val(); // ID de la persona
+            $.ajax({
+                url: base_url + "gestion/personas/view",
+                type:"POST",
+                dataType:"html",
+                data:{
+                    id_persona: idPersona
+                },
+                success:function(data) {
+                    $("#modal-default .modal-body").html(data);
+                }
+            });
+        });
+
+        // =============================================
+        // Fin JS para Personas
+        // =============================================
+
+
+        // =============================================
         // JS para Clientes
         // =============================================
 

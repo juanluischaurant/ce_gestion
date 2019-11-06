@@ -24,31 +24,39 @@ class Periodos extends CI_Controller {
         $this->load->view('admin/periodos/add');
         $this->load->view('layouts/footer');
 	}
-
 	
-	public function store() {
+	public function store()
+	{
 		$mes_inicio = $this->input->post('mes-inicio');
 		$mes_cierre = $this->input->post('mes-cierre');
 		$year = $this->input->post('year-periodo');
 
+		// Reglas declaradas para la validación de formularios
+		// integrada en CodeIgniter
 		$this->form_validation->set_rules('mes-inicio', 'Mes de Inicio', 'required|is_unique[periodo.mes_inicio_periodo]');
 		$this->form_validation->set_rules('mes-cierre', 'Mes de Cierre', 'required|is_unique[periodo.mes_cierre_periodo]');
 		$this->form_validation->set_rules('year-periodo', 'Año', 'required|is_unique[periodo.year_periodo]');
 		
-		if($this->form_validation->run()) {
+		if($this->form_validation->run())
+		{
 			$data = array (
 				'mes_inicio_periodo' => $mes_inicio,
 				'mes_cierre_periodo' => $mes_cierre,
 				'year_periodo' => $year
 			);
 	
-			if($this->Periodos_model->save($data)) {
+			if($this->Periodos_model->save($data))
+			{
 				redirect(base_url().'gestion/periodos');
-			} else {
+			}
+			else
+			{
 				$this->session->set_flashdata('error', 'No se pudo agregar el Período.');
 				redirect(base_url().'gestion/periodos/add');
 			}
-		} else {
+		} 
+		else
+		{
 			$this->add();
 		}
 		
