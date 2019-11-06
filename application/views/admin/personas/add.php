@@ -29,12 +29,13 @@
                             <div class="row form-group">
                                 <div class="col-md-5">                                
                                     <label for="cedula-persona">Cédula:</label>
-                                    <input type="text" class="form-control" id="cedula-persona" name="cedula-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" id="cedula-persona" name="cedula-persona">
+                                    <?php echo form_error('cedula-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-5">                                
                                     <label for="nacimiento-persona">Fecha de Nacimiento:</label>
-                                    <input type="date" class="form-control" name="nacimiento-persona" required>
+                                    <input type="date" class="form-control" name="nacimiento-persona">
                                 </div>
                             </div>
 

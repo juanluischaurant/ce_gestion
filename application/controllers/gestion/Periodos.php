@@ -31,12 +31,12 @@ class Periodos extends CI_Controller {
 		$mes_cierre = $this->input->post('mes-cierre');
 		$year = $this->input->post('year-periodo');
 
-		// Reglas declaradas para la validación de formularios
-		// integrada en CodeIgniter
-		$this->form_validation->set_rules('mes-inicio', 'Mes de Inicio', 'required|is_unique[periodo.mes_inicio_periodo]');
-		$this->form_validation->set_rules('mes-cierre', 'Mes de Cierre', 'required|is_unique[periodo.mes_cierre_periodo]');
-		$this->form_validation->set_rules('year-periodo', 'Año', 'required|is_unique[periodo.year_periodo]');
+		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
+		$this->form_validation->set_rules('mes-inicio', 'Mes de Inicio', 'required');
+		$this->form_validation->set_rules('mes-cierre', 'Mes de Cierre', 'required');
+		$this->form_validation->set_rules('year-periodo', 'Año', 'required');
 		
+		// Si la validación es correcta
 		if($this->form_validation->run())
 		{
 			$data = array (
