@@ -32,8 +32,29 @@ class Personas extends CI_Controller {
         $this->load->view('admin/personas/add');
         $this->load->view('layouts/footer');
     }
-    
-    public function store() {
+	
+	/**
+	 * Estructura la vista que será mostrada cuando se llame
+	 * al método
+	 * 
+	 * El método está diseñado para ser llamado por medio del método
+	 * AJAX.
+	 *
+	 * @return void
+	 */
+	public function view()
+	{
+		$idParticipante = $this->input->post("id_persona");
+
+		$data = array(
+			"persona" => $this->Personas_model->getPersona($idParticipante),
+		);
+
+		$this->load->view("admin/personas/view", $data);
+	}
+	
+	public function store() 
+	{
 
 		$cedula = $this->input->post("cedula-persona");
 		$nombres = $this->input->post('nombre-persona');
@@ -55,21 +76,19 @@ class Personas extends CI_Controller {
 
 		);
 
-		if($this->Personas_model->save($data_persona)) { 
-
+		if($this->Personas_model->save($data_persona))
+		{ 
 			// Carga en una variable el id del último registro creado
 			$id_ultimo_registro = $this->Personas_model->lastID();
 
 			// Redirige a la vista "success" dentro de este controlador
             redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
-
-		} else {
-
+		}
+		else
+		{
 			$this->session->set_flashdata('error', 'No se pudo guardar la información');
 			redirect(base_url().'gestion/personas/add');	
-
 		}
-
     }
     
     public function success($ultimo_id = 'no_id') {

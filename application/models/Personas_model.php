@@ -26,15 +26,14 @@ class Personas_model extends CI_Model {
      * sobre la persona con el ID indicado
      *
      * @param int $id
-     * @return void
+     * @return array
      */
-    public function getPersona($id) {
-
+    public function getPersona($id)
+    {
         $resultado = $this->db->where('persona_id', $id)
         ->get('persona');
 
         return $resultado->row();
-
     }
     
     public function save($data) {
