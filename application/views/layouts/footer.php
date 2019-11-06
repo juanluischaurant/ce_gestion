@@ -44,7 +44,7 @@
 
         let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
         // http://localhost/ce_gestion/
-        
+
         // =============================================
         // JS para DataTables
         // =============================================
@@ -147,12 +147,6 @@
         // =============================================
         // JS para Clientes
         // =============================================
-
-        // if($('#fk-id-persona').val() !== '') {
-        //     // Si hay alguna persona seleccionada para ser instanciada, 
-        //     // remueve el atributo 'disabled' del botón
-        //     $('#guardar-participante').removeAttr('disabled');
-        // }
 
         $(document).on('click', '.btn-check-cliente', function() {
             let cliente = $(this).val();
@@ -382,7 +376,8 @@
             }
         });
 
-        $(document).on('click', '.btn-check-participante-inscripcion', function() {
+        $(document).on('click', '.btn-check-participante-inscripcion', function()
+        {
             let participante = $(this).val(); // Almacena el valor almacenado en el atributo value del botón clickeado
             let infoParticipante = participante.split('*'); // divide la información en un array
 
@@ -394,7 +389,11 @@
             $('#id_participante').val(idParticipante);
             $('#nombre_participante').val(nombreCompletoParticipante);
 
+            // Oculta ventana modal
             $('#modal-default').modal('hide');
+
+            // Activa campo para agregar Instancia
+            $('#producto').removeAttr('disabled');
         });
 
         // =============================================
@@ -552,8 +551,8 @@
             let data = $(this).val(); // Almacena los datos del atributo "value" del boton clickeado
 
             // Comprobar si la variable "data" está vacia o no
-            if(data != '') {
-
+            if(data != '') 
+            {
                 let datosCurso = data.split('*');
 
                 console.table(datosCurso);
@@ -561,12 +560,16 @@
                 let cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por curso
                 cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por curso
 
-                if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
+                // Si la cantidad de cupos totales es menor a la de cupos ocupados
+                if(parseInt(cupos_totales) <= parseInt(cupos_ocupados))
+                {
+                    // Evita que el curso sea agregado
                     alert('El curso está lleno, por favor seleccione otro');
-                    $('#producto').val('');
+                    $('#producto').val(''); // Vacía el elemento #producto
                 } 
                 else 
                 {
+                    // De lo contrario (cupos ocupados < cupos totales)
                     $.ajax({
                         type: 'post',
                         url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
@@ -594,7 +597,7 @@
 
                             if(existe)
                             {
-                                alert('El participante ya está registrado en esta instancia.')
+                                alert('El participante ya está registrado en esta instancia.');
                             }
                             else if(!existe) 
                             {    
@@ -613,6 +616,9 @@
                                 // Verifica el estado del atributo "disabled" del botón clickeado 
                                 switchGuardarInscripcion();
 
+                                // Vacía al elemento Producto
+                                $('#producto').val('');
+
                                 sumar();
 
                             }
@@ -621,71 +627,23 @@
                             console.log( errorThrown );
                         }
                     }); 
-
                 }
-
-            } else {
+            }
+            else
+            {
                 alert('Seleccione un curso');
             }
-        })
-        .on('click', function(event) {
-            console.log($(this).attr('data-id-curso'))
-            // Solocitud AJAX realizada para obtener de la base de datos
-            // una lista de participantes inscritos en determinado curso
-            // $.ajax({
-            //     type: 'post',
-            //     url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
-            //     dataType: 'json',
-            //     data: {
-            //         id: $(this).attr('data-id-curso')
-            //     },
-            //     success: function( data, textStatus, jQxhr )
-            //     {
-            //         let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
-            //         existe = false; // Al encontrar al participante cambia a TRUE
-
-            //         // Itera sobre cada OBJETO obtenido durante la llamada AJAX
-            //         for(let i = 0; i < data.length; i++)
-            //         {
-            //             let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
-                        
-            //             if(idParticipanteInscrito == idParticipante)
-            //             {
-            //                 // alert(idParticipanteInscrito);
-            //                 existe = true; // Cambia estado de la variable "existe"
-            //                 break; // Anula el ciclo FOR
-            //             }
-            //         }
-
-            //         if(existe)
-            //         {
-            //             alert('El participante ya está registrado en esta instancia.')
-            //         }
-            //     },
-            //     error: function( jqXhr, textStatus, errorThrown ) {
-            //         console.log( errorThrown );
-            //     }
-            // });
-
-        });
-
-        $(document).on('click', '.btn-remove-curso', function() {
-        $(this).closest('tr').remove();
-
-        if($('#tbventas tr').length <= 1) {
-            $('#guardar-inscripcion').attr('disabled', true);
-        }
-
-        sumar();
         });
 
         $(document).on('click', '.btn-remove-curso', function() {
             $(this).closest('tr').remove();
 
-            if($('#tbventas tr').length <= 1) {
+            // Verifica que el contenido del nodo <tr> tenga contenido
+            if($('#tbventas tr').length <= 1) 
+            {
                 $('#guardar-inscripcion').attr('disabled', true);
             }
-            
+
             sumar();
         });
 

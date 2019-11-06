@@ -21,7 +21,7 @@
                             <div class="form-group">
 
                                 <div class="col-md-5">
-                                    <label for="">Buscar Pago:</label>
+                                    <label for="numero-de-operacion">Buscar Pago:</label>
                                     <input type="text" class="form-control" id="numero-de-operacion">
                                 </div>
 
@@ -61,14 +61,14 @@
                                     </div><!-- /input-group -->
                                 </div> 
                                 <div class="col-md-3">
-                                    <label for="">Fecha de Inscripción:</label>
-                                    <input type="date" class="form-control" name="fecha-inscripcion" required>
+                                    <label for="fecha-inscripcion">Fecha de Inscripción:</label>
+                                    <input type="date" class="form-control" id="fecha-inscripcion" name="fecha-inscripcion" required>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="">Buscar Producto:</label>
-                                    <input type="text" class="form-control" id="producto">
+                                    <input type="text" class="form-control" id="producto" disabled="disabled">
                                 </div>
                                 <div class="col-md-2">
                                     <label for="">&nbsp;</label>

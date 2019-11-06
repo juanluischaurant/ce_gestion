@@ -39,3 +39,9 @@ JOIN `inscripcion` as `i` ON `i`.`id_inscripcion` = `ic`.`fk_id_inscripcion_1`
 
 WHERE `instancia`.`id_instancia` = 1
 
+-- Usuarios de la base de datos
+the_data_architect
+car-dark-knight
+
+the_admin_here
+car-red-ranger
