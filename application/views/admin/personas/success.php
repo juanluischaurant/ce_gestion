@@ -4,8 +4,8 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Participantes
-        <small>Editar</small>
+        Personas
+        <small>Escoja una opción</small>
         </h1>
     </section>
     <!-- Main content -->
