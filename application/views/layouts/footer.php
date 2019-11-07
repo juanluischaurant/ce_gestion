@@ -440,8 +440,14 @@
             let curso = $(this).val();
             let infoCurso = curso.split('*');
 
+            let vecesInstanciado = infoCurso[3],
+            nombreCurso = infoCurso[1];
+
+            let prefijo = nombreCurso.substring(0, 3);
+            $('#serial-instancia').val(prefijo+'-'+generarNumero(vecesInstanciado));
+
             $('#id-curso-instanciado').val(infoCurso[0]);
-            $('#nombre-curso-instanciado').val(infoCurso[1]);
+            $('#nombre-curso-instanciado').val(nombreCurso);
 
             $('#modal-default').modal('hide');
         });
@@ -729,6 +735,7 @@
 
     });
 
+    // Función utilizada para generar un número en el rango de 1 a 999999
     function generarNumero(numero) {
         if(numero >= 99999 && numero < 999999) {
             return Number(numero)+1;

@@ -9,7 +9,8 @@ class Cursos_model extends CI_Model {
              'cu.id_curso,
              cu.nombre_curso,
              cu.estado_curso,
-             cu.descripcion_curso'
+             cu.descripcion_curso,
+             cu.veces_instanciado'
             )
          ->from('curso cu')
          ->where('cu.estado_curso', '1')
@@ -34,4 +35,23 @@ class Cursos_model extends CI_Model {
         $this->db->where('id_curso', $id);
         $this->db->update('curso', $data);
     } 
+
+    /**
+     * Actualiza un campo en la tabla curso que sirve como
+     * contador. En base a este contador se genera un serial 
+     * único para cada curso
+     *
+     * @param integer $id_curso
+     * @return void
+     */
+    public function actualizar_conteo_instancia($id_curso)
+	{
+		$curso = $this->getCurso($id_curso);
+        
+        $data = array(
+            'veces_instanciado' => $curso->veces_instanciado + 1
+        );
+        
+        $this->update($id_curso, $data);
+	}
 }
