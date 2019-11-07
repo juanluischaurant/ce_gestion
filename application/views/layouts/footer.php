@@ -57,10 +57,13 @@
             "order": [[ 1, "desc" ]]
         });
 
+        // Cambia el estado de un registro dado
+        // Este botón funciona de manera similar en distintos formularios
         $('.btn-remove').on('click', function(e) {
             // Código para el botón de eliminar en las tablas
             e.preventDefault();
             let ruta = $(this).attr('href');
+            alert(ruta);
             $.ajax({
                 url: ruta,
                 type: 'POST',

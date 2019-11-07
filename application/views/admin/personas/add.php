@@ -52,22 +52,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-
-                            </div>
-
-                            <div class="form-group">
-                                
-                            </div>
-
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="genero-persona">Genero:</label>
-                                    <select name="genero-persona" id="genero-persona" class="form-control" required>
+                                    <select name="genero-persona" id="genero-persona" class="form-control <?php echo !empty(form_error('genero-persona'))? 'has-error' : '';?>">
                                         <option value="">Seleccione</option>
                                         <option value="1">Masculino</option>
                                         <option value="2">Femenino</option>                              
                                     </select>
+                                    <?php echo form_error('genero-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-6">

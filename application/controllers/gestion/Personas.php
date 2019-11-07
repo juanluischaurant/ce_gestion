@@ -55,7 +55,6 @@ class Personas extends CI_Controller {
 	
 	public function store() 
 	{
-		
 		$cedula = $this->input->post("cedula-persona");
 		$nombres = $this->input->post('nombre-persona');
 		$apellidos = $this->input->post('apellido-persona');
@@ -73,11 +72,11 @@ class Personas extends CI_Controller {
 			'telefono_persona' => $telefono,
 			'direccion_persona' => $direccion,
 			'estado_persona' => '1'
-
 		);
 
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
 		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|is_unique[persona.cedula_persona]');
+		$this->form_validation->set_rules('genero-persona', 'Genero', 'required');
 		
 		// Si la validación es correcta
 		if($this->form_validation->run())
@@ -163,9 +162,9 @@ class Personas extends CI_Controller {
 
 	public function delete($id) {
 		$data = array(
-			'estado_facilitador' => 0,
+			'estado_persona' => 0,
 		);
-		$this->Facilitadores_model->update($id, $data);
+		$this->Personas_model->update($id, $data);
 		echo 'gestion/personas';
 	}
 }
