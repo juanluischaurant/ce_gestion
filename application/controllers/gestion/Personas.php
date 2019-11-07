@@ -55,7 +55,6 @@ class Personas extends CI_Controller {
 	
 	public function store() 
 	{
-
 		$cedula = $this->input->post("cedula-persona");
 		$nombres = $this->input->post('nombre-persona');
 		$apellidos = $this->input->post('apellido-persona');
@@ -63,7 +62,7 @@ class Personas extends CI_Controller {
 		$genero = $this->input->post('genero-persona');
 		$telefono = $this->input->post('telefono-persona');
 		$direccion = $this->input->post('direccion-persona');
-
+		
 		$data_persona = array(
 			'cedula_persona' => $cedula,
 			'nombres_persona' => $nombres,
@@ -73,22 +72,36 @@ class Personas extends CI_Controller {
 			'telefono_persona' => $telefono,
 			'direccion_persona' => $direccion,
 			'estado_persona' => '1'
-
 		);
 
-		if($this->Personas_model->save($data_persona))
-		{ 
-			// Carga en una variable el id del último registro creado
-			$id_ultimo_registro = $this->Personas_model->lastID();
-
-			// Redirige a la vista "success" dentro de este controlador
-            redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
+		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
+		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|is_unique[persona.cedula_persona]');
+		$this->form_validation->set_rules('genero-persona', 'Genero', 'required');
+		
+		// Si la validación es correcta
+		if($this->form_validation->run())
+		{
+			// Procede a guardar los datos
+			if($this->Personas_model->save($data_persona))
+			{ 
+				// Carga en una variable el id del último registro creado
+				$id_ultimo_registro = $this->Personas_model->lastID();
+	
+				// Redirige a la vista "success" dentro de este controlador
+				redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo guardar la información');
+				redirect(base_url().'gestion/personas/add');	
+			}
 		}
 		else
 		{
-			$this->session->set_flashdata('error', 'No se pudo guardar la información');
-			redirect(base_url().'gestion/personas/add');	
+			// $this hace referencia al módulo donde es invocado
+			$this->add();
 		}
+		
     }
     
     public function success($ultimo_id = 'no_id') {
@@ -149,9 +162,9 @@ class Personas extends CI_Controller {
 
 	public function delete($id) {
 		$data = array(
-			'estado_facilitador' => 0,
+			'estado_persona' => 0,
 		);
-		$this->Facilitadores_model->update($id, $data);
+		$this->Personas_model->update($id, $data);
 		echo 'gestion/personas';
 	}
 }

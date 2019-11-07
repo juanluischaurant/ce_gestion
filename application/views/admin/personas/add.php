@@ -29,12 +29,13 @@
                             <div class="row form-group">
                                 <div class="col-md-5">                                
                                     <label for="cedula-persona">Cédula:</label>
-                                    <input type="text" class="form-control" id="cedula-persona" name="cedula-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" id="cedula-persona" name="cedula-persona">
+                                    <?php echo form_error('cedula-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-5">                                
                                     <label for="nacimiento-persona">Fecha de Nacimiento:</label>
-                                    <input type="date" class="form-control" name="nacimiento-persona" required>
+                                    <input type="date" class="form-control" name="nacimiento-persona">
                                 </div>
                             </div>
 
@@ -51,22 +52,15 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-
-                            </div>
-
-                            <div class="form-group">
-                                
-                            </div>
-
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="genero-persona">Genero:</label>
-                                    <select name="genero-persona" id="genero-persona" class="form-control" required>
+                                    <select name="genero-persona" id="genero-persona" class="form-control <?php echo !empty(form_error('genero-persona'))? 'has-error' : '';?>">
                                         <option value="">Seleccione</option>
                                         <option value="1">Masculino</option>
                                         <option value="2">Femenino</option>                              
                                     </select>
+                                    <?php echo form_error('genero-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-6">

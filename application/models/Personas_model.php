@@ -16,6 +16,7 @@ class Personas_model extends CI_Model {
             p.direccion_persona,
             p.estado_persona')
             ->from('persona as p') 
+            ->where('estado_persona', 1)
             ->get(); 
     
             return $resultados->result();
