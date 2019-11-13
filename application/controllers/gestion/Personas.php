@@ -85,8 +85,7 @@ class Personas extends CI_Controller {
 			// Procede a guardar los datos
 			if($this->Personas_model->save($data_persona))
 			{ 
-				// Carga en una variable el id del último registro creado
-				$id_ultimo_registro = $this->Personas_model->lastID();
+				$id_ultimo_registro = $this->Personas_model->lastID(); // id del último registro creado
 
 				$fk_id_usuario = $this->session->userdata('id_usuario');
 				$fk_id_tipo_accion = 2;
