@@ -14,6 +14,7 @@ class Personas extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Personas_model');  
+        $this->load->model('Acciones_model');  
     }
 
     public function index() {
@@ -84,8 +85,14 @@ class Personas extends CI_Controller {
 			// Procede a guardar los datos
 			if($this->Personas_model->save($data_persona))
 			{ 
-				// Carga en una variable el id del último registro creado
-				$id_ultimo_registro = $this->Personas_model->lastID();
+				$id_ultimo_registro = $this->Personas_model->lastID(); // id del último registro creado
+
+				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				$fk_id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
+				$descripcion_accion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
+				$tabla_afectada = "PERSONA"; // Tabla afectada
+
+				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
 				// Redirige a la vista "success" dentro de este controlador
 				redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);

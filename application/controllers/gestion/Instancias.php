@@ -30,9 +30,10 @@ class Instancias extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function store() {
-
+	public function store()
+	{
         $id_curso_instanciado = $this->input->post('id-curso-instanciado');   // fk_id_curso_1
+        $serial_instancia = $this->input->post('serial-instancia');   // serial_instancia
         $id_profesor_instancia = $this->input->post('id-profesor-instancia'); // fk_id_facilitador
         $id_periodo_instancia = $this->input->post('id-periodo-instancia');   // fk_id_periodo_1
         $id_locacion_instancia = $this->input->post('id-locacion-instancia'); // fk_id_locacion_1
@@ -42,7 +43,8 @@ class Instancias extends CI_Controller {
 		$descripcion_instancia = $this->input->post('descripcion-instancia'); // descripcion_instancia
 		
         $data = array (
-            'fk_id_curso_1' => $id_curso_instanciado,
+			'fk_id_curso_1' => $id_curso_instanciado,
+			'serial_instancia' => $serial_instancia,
             'precio_instancia' => $precio_instancia,
             'fk_id_facilitador_1' => $id_profesor_instancia,
             'fk_id_periodo_1' => $id_periodo_instancia,
@@ -52,9 +54,13 @@ class Instancias extends CI_Controller {
 			'descripcion_instancia' => $descripcion_instancia
         );
 
-		if($this->Instancias_model->save($data)) {
+		if($this->Instancias_model->save($data))
+		{
+			$this->Cursos_model->actualizar_conteo_instancia($id_curso_instanciado);
 			redirect(base_url().'gestion/instancias');
-		} else {
+		}
+		else
+		{
 			$this->session->set_flashdata('error', 'No se pudo registrar la instancia.');
 			redirect(base_url().'gestion/instancias/add');
 		}

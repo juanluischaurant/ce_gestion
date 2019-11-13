@@ -34,6 +34,7 @@
                                     <div class="input-group">
                                         <input type="text" class="form-control" disabled="disabled" id="nombre-curso-instanciado">
                                         <input type="hidden" name="id-curso-instanciado" id="id-curso-instanciado">
+                                        <input type="hidden" name="serial-instancia" id="serial-instancia">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
                                         </span>
@@ -145,7 +146,7 @@
                                 <td><?php echo $curso->id_curso; ?></td>
                                 <td><?php echo $curso->nombre_curso; ?></td>
                                 <td><?php echo $curso->descripcion_curso; ?></td>
-                                <?php $dataCurso = $curso->id_curso.'*'.$curso->nombre_curso.'*'.$curso->estado_curso; ?>
+                                <?php $dataCurso = $curso->id_curso.'*'.$curso->nombre_curso.'*'.$curso->estado_curso.'*'.$curso->veces_instanciado; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-curso-instanciado' value='<?php echo $dataCurso; ?>'><span class="fa fa-check"></span></button>
                                 </td>

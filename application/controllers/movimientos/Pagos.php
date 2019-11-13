@@ -9,7 +9,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Pagos extends CI_Controller {
 
 	public function __construct() {
-		parent::__construct();
+        parent::__construct();
+        
+        // Si el usuario no está logeado
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+
 		$this->load->model("Pagos_model");
 		
     }
@@ -56,12 +64,15 @@ class Pagos extends CI_Controller {
                 'fecha_operacion' => $fecha_de_operacion
             );
     
-            if($this->Pagos_model->save($data)) {
+            if($this->Pagos_model->save($data))
+            {
                 $id_ultimo_pago = $this->Pagos_model->lastID();
                 $this->updateConteoOperaciones($id_tipo_de_pago);
                 $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
                 redirect(base_url().'movimientos/pagos/');    
-            } else {
+            }
+            else
+            {
                 $this->session->set_flashdata('error', 'No se pudo guardar la información.');
                 redirect(base_url().'movimientos/pagos/add');
             }
@@ -70,9 +81,6 @@ class Pagos extends CI_Controller {
             $this->session->set_flashdata('error', 'No se pudo guardar la información.');
             $this->add();
         }
-
-
-
     }
 
     /**
@@ -81,11 +89,14 @@ class Pagos extends CI_Controller {
      * @param integer $id_tipo_operacion
      * @return void
      */
-    protected function updateConteoOperaciones($id_tipo_operacion) {
+    protected function updateConteoOperaciones($id_tipo_operacion)
+    {
         $conteoActual = $this->Pagos_model->getTipoDeOperacion($id_tipo_operacion);
+        
         $data = array(
             'conteo_operaciones' => $conteoActual->conteo_operaciones + 1
         );
+        
         $this->Pagos_model->updateConteoOperaciones($id_tipo_operacion, $data);
     }
     
