@@ -9,7 +9,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Pagos extends CI_Controller {
 
 	public function __construct() {
-		parent::__construct();
+        parent::__construct();
+        
+        // Si el usuario no está logeado
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+
 		$this->load->model("Pagos_model");
 		
     }
