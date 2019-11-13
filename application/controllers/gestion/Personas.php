@@ -87,10 +87,10 @@ class Personas extends CI_Controller {
 			{ 
 				$id_ultimo_registro = $this->Personas_model->lastID(); // id del último registro creado
 
-				$fk_id_usuario = $this->session->userdata('id_usuario');
-				$fk_id_tipo_accion = 2;
-				$descripcion_accion = "PERSONA ID: " . $id_ultimo_registro;
-				$tabla_afectada = "PERSONA";
+				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				$fk_id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
+				$descripcion_accion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
+				$tabla_afectada = "PERSONA"; // Tabla afectada
 
 				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
