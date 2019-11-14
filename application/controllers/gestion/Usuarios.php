@@ -7,8 +7,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
  */
-class Usuarios extends CI_Controller {
-
+class Usuarios extends CI_Controller
+{
     public function __construct()
     {
         parent::__construct();
@@ -25,3 +25,5 @@ class Usuarios extends CI_Controller {
             $this->load->model("Pagos_model");
         }
     }
+
+}
