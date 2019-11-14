@@ -8,7 +8,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Pagos extends CI_Controller {
 
-	public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
         
         // Si el usuario no está logeado
@@ -17,9 +18,11 @@ class Pagos extends CI_Controller {
 			// redirigelo al inicio de la aplicación
             redirect(base_url());
         }
-
-		$this->load->model("Pagos_model");
-		
+        else
+        {
+            // Carga el controlador
+            $this->load->model("Pagos_model");
+        }
     }
 
     public function index() {
