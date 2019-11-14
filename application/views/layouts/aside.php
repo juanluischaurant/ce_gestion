@@ -54,6 +54,7 @@
                             <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Titular</a></li>
                             <li><a href="<?php echo base_url(); ?>reportes/cursos"><i class="fa fa-circle-o"></i> Cursos</a></li>
                             <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Ventas</a></li>
+                            <li><a href="<?php echo base_url(); ?>reportes/acciones"><i class="fa fa-circle-o"></i> Acciones</a></li>
                         </ul>
                     </li>
                     <li class="treeview">

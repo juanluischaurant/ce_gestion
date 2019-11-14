@@ -29,12 +29,6 @@ class Clientes_model extends CI_Model {
 
     }
 
-    public function getParticipante($id) {
-        $this->db->where('id_cliente', $id);
-        $resultado = $this->db->get('participante');
-        return $resultado->row();
-    }
-
     public function save($data) {
         return $this->db->insert('cliente', $data);
     }
