@@ -103,8 +103,15 @@ class Inscripciones_model extends CI_Model {
         return $resultado->result();
     }
 
-    public function updateIdInscripcion($id_pago,$data) {
-        // Actualiza la clave foránea fk_id_inscripcion 
+    /**
+	 * Actualiza la clave foránea fk_id_inscripcion 
+	 *
+	 * @param integer $id_pago
+	 * @param integer $id_ultima_inscripcion
+	 * @return void
+	 */
+    public function updateIdInscripcion($id_pago,$data)
+    {
         $this->db->where("id_pago",$id_pago);
         $this->db->update("pago_de_inscripcion",$data);
     }

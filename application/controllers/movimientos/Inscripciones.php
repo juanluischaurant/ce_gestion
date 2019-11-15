@@ -100,6 +100,7 @@ class Inscripciones extends CI_Controller {
 	 */
 	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago)
 	{
+		// Itera sobre un array con IDs de 1 o más cursos seleccionados
 		for($i=0; $i < count($idcursos); $i++)
 		{ 
 			$data  = array(
@@ -114,12 +115,17 @@ class Inscripciones extends CI_Controller {
 			$this->actualiza_cupos_ocupados($idcursos[$i],$cupos_curso[$i]);
 		}
 
+		// Itera sobre un array con IDs de 1 o más pagos seleccionados
 		for($j = 0; $j < count($ids_pago); $j++)
 		{
 			$data  = array(
 				'fk_id_inscripcion' => $id_ultima_inscripcion
 			);
+
+			// Asigna ID de inscripción al pago 
 			$this->updateIdInscripcion($ids_pago[$j], $data);
+
+			// Actualiza el estado del pago a Usado
 			$this->actualiza_estado_pago($ids_pago[$j]);
 		} 
 
@@ -143,7 +149,15 @@ class Inscripciones extends CI_Controller {
 		$this->Instancias_model->update($idcurso,$data);
 	}
 
-	protected function updateIdInscripcion($id_pago, $id_ultima_inscripcion) {
+	/**
+	 * Actualiza la clave foránea fk_id_inscripcion 
+	 *
+	 * @param integer $id_pago
+	 * @param integer $id_ultima_inscripcion
+	 * @return void
+	 */
+	protected function updateIdInscripcion($id_pago, $id_ultima_inscripcion)
+	{
 		$this->Inscripciones_model->updateIdInscripcion($id_pago, $id_ultima_inscripcion);
 	}
 
