@@ -62,7 +62,7 @@ class Pagos_model extends CI_Model {
     // Métodos utilizadas para el pluggin AUTOCOMPLETE
     
     /**
-     * obtén titulares
+     * Obtén titulares
      * 
      * Se encarga de consultar la tabla titular para obtener una lista de personas registradas
      * actualmente como titulares de pago.
