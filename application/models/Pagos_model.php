@@ -46,7 +46,8 @@ class Pagos_model extends CI_Model {
       $this->db->update("tipo_de_operacion",$data);
     }
 
-    public function updateIdInscripcion($id_pago) {
+    public function actualiza_estado_pago($id_pago)
+    {
       $data = array(
         'estado_pago' => 2
       );

@@ -42,8 +42,8 @@ class Inscripciones extends CI_Controller {
 		$this->load->view('layouts/footer');		
 	}
 	
-	public function store() {
-
+	public function store()
+	{
 		$fk_id_participante_1 = $this->input->post('id_participante');
 		// $fk_id_estatus_1 = ; <- Configurado automáticamente en 1
 		// $fk_id_pago_inscripcion_1 = ; <. No utilizado para almacenar en la tabla `inscripcion`
@@ -61,7 +61,7 @@ class Inscripciones extends CI_Controller {
 		$fk_id_tipo_operacion = $this->input->post('fk_id_tipo_operacion');
 		$fk_id_curso = $this->input->post('idcursos');
 		$cupos_curso = $this->input->post('cuposcursos');
-		$ids_pago = $this->input->post('id_pago');
+		$ids_pago = $this->input->post('id-pago');
 
 		$data = Array(
 			'fk_id_participante_1' => $fk_id_participante_1,
@@ -72,14 +72,18 @@ class Inscripciones extends CI_Controller {
 			'precio_final' => $precio_final
 		);
 	
-		if ($this->Inscripciones_model->save($data)) {
+		// Almacenar datos en la tabla "inscripcion"
+		if ($this->Inscripciones_model->save($data))
+		{
 			$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
 		
 			// Guarda los detalles de la inscripción
 			$this->saveInscripcionCurso($fk_id_curso, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
 
 			redirect(base_url()."movimientos/inscripciones");
-		} else{ 
+		}
+		else
+		{ 
 			redirect(base_url()."movimientos/inscripciones/add");
 		}
 
@@ -94,9 +98,10 @@ class Inscripciones extends CI_Controller {
 	 * @param array $ids_pago
 	 * @return void
 	 */
-	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago) {
-	
-		for ($i=0; $i < count($idcursos); $i++) { 
+	protected function saveInscripcionCurso($idcursos,$id_ultima_inscripcion, $cupos_curso, $ids_pago)
+	{
+		for($i=0; $i < count($idcursos); $i++)
+		{ 
 			$data  = array(
 				'fk_id_inscripcion_1' => $id_ultima_inscripcion,
 				'fk_id_curso_1' => $idcursos[$i]
@@ -107,15 +112,15 @@ class Inscripciones extends CI_Controller {
 
 			// Actualiza el conteo de cupos disponibles en el curso
 			$this->updateCuposCurso($idcursos[$i],$cupos_curso[$i]);
-			
 		}
 
-		for($j = 0; $j < count($ids_pago); $j++) {
+		for($j = 0; $j < count($ids_pago); $j++)
+		{
 			$data  = array(
 				'fk_id_inscripcion' => $id_ultima_inscripcion
 			);
 			$this->updateIdInscripcion($ids_pago[$j], $data);
-			$this->updateEstadoPago($ids_pago[$j]);
+			$this->actualiza_estado_pago($ids_pago[$j]);
 		} 
 
 	}
@@ -133,14 +138,19 @@ class Inscripciones extends CI_Controller {
 	}
 
 	/**
-	 * Actualiza el campo estado_pago en la tabla pago_de_inscripcion
+	 * Actualiza estado_pago
+	 * 
+	 * Actualiza el campo estado_pago en la tabla pago_de_inscripcion, el estado_pago
+	 * permite controlar que un pago se utilize una sola vez dentro del sistema. Esta
+	 * función es llamada al momento de almacenar la inscripción.
 	 *
 	 * @param integer $id_pago
 	 * @return void
 	 */
-	protected function updateEstadoPago($id_pago) {		
+	protected function actualiza_estado_pago($id_pago)
+	{		
 		// Considera cambiar el nombre de este método que fué renombrado incorrectamente
-		$this->Pagos_model->updateIdInscripcion($id_pago);
+		$this->Pagos_model->actualiza_estado_pago($id_pago);
 	}
 
 	/**
@@ -172,9 +182,9 @@ class Inscripciones extends CI_Controller {
 	 *
 	 * @return void
 	 */
-	public function getPagosJSON() {
+	public function get_pagos_json() {
 		$valor = $this->input->post('query');
-		$pagos = $this->Inscripciones_model->getPagosJSON($valor);
+		$pagos = $this->Inscripciones_model->get_pagos_json($valor);
 		echo json_encode($pagos);
 	}
 	

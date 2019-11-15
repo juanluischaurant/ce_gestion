@@ -178,23 +178,30 @@ class Inscripciones_model extends CI_Model {
         return $resultados->result_array();
     } 
     
-    public function getPagosJSON($valor) {
-        // Nuevo código
-        $this->db->select('pi.id_pago, 
-            pi.serial_pago, 
-            pi.numero_operacion, 
+    /**
+     * Obtén lista de pagos realizados 
+     *
+     * @param integer $valor
+     * @return array
+     */
+    public function get_pagos_json($valor)
+    {            
+        $this->db->select(
+            'pi.serial_pago,
+            pi.numero_operacion,
             pi.estado_pago,
-            pi.monto_operacion, 
+            pi.monto_operacion,
+            pi.id_pago,
             pi.estado_pago,
             pi.fk_id_tipo_operacion,
-            concat(pi.numero_operacion, " - ", pe.nombres_persona, " ", pe.apellidos_persona) as label, 
-            concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_cliente, 
-            pe.cedula_persona')
+            concat(pi.numero_operacion, " - ", pe.nombres_persona, " ", pe.apellidos_persona) as label,
+            concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_cliente,
+            pe.cedula_persona'
+            )
         ->from('pago_de_inscripcion as pi')
-        ->join('cliente as c', 'c.id_cliente = pi.fk_id_cliente')
-        ->join('persona as pe', 'pe.persona_id = c.fk_id_persona_1')
-        ->where('pi.estado_pago', 1);
-        
+        ->join('titular as c', 'c.id_cliente = pi.fk_id_cliente')
+        ->join('persona as pe', 'pe.persona_id = c.fk_id_persona_1');
+                
         if($valor != '')
         {
             $this->db->like('pi.numero_operacion', $valor);

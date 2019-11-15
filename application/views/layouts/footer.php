@@ -349,7 +349,7 @@
         $('#numero-de-operacion').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/inscripciones/getPagosJSON',
+                    url: base_url+'movimientos/inscripciones/get_pagos_json',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -361,25 +361,37 @@
                 });
             }, minLength: 1,
             select: function(event, ui) {
-                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_persona+'*'+ui.item.id_pago+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
+                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_persona+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
         });
 
-        $('#btn-agregar-pago').on('click', function() {
+        $('#btn-agregar-pago').on('click', function()
+        {
             data = $(this).val();
 
-            if(data != '') {
+            if(data != '')
+            {
+                let datosPago = data.split('*');
 
-                datosPago = data.split('*');
+                let serial_pago = datosPago[0],
+                numero_operacion = datosPago[1],
+                monto_operacion = datosPago[2],
+                nombre_cliente = datosPago[3],
+                cedula_cliente = datosPago[4],
+                id_pago = datosPago[5],
+                fk_id_tipo_operacion = datosPago[6],
+                estado_pago = datosPago[7];        
 
-                if(datosPago[8] == 1) {
+                console.table(datosPago);
 
+                if(estado_pago == 1)
+                {
                     html = '<tr>';
-                    html += '<td><input type="hidden" name="serial-pago[]" value="'+datosPago[0]+'">'+datosPago[0]+'</td>';
-                    html += '<td><input type="hidden" name="numero-operacion[]" value="'+datosPago[1]+'">'+datosPago[1]+'</td>';
-                    html += '<td><input type="hidden" name="monto-operacion[]" value="'+datosPago[2]+'">'+datosPago[2]+'<input type="hidden" name="id_pago[]" value="'+datosPago[6]+'"></td>';
-                    html += '<td><input type="hidden" name="nombre_cliente[]" value="'+datosPago[3]+'">'+datosPago[4]+'<input type="hidden" name="fk_id_tipo_operacion[]" value="'+datosPago[7]+'">'+'</td>';
+                    html += '<td><input type="hidden" name="id-pago[]" value="'+id_pago+'">'+serial_pago+'</td>';
+                    html += '<td><input type="hidden" name="numero-operacion[]" value="'+numero_operacion+'">'+numero_operacion+'</td>';
+                    html += '<td><input type="hidden" name="monto-operacion[]" value="'+monto_operacion+'">'+monto_operacion+'<input type="hidden" name="id_pago[]" value="'+datosPago[6]+'"></td>';
+                    html += '<td><input type="hidden" name="cedula-cliente[]" value="'+cedula_cliente+'">'+cedula_cliente+'<input type="hidden" name="fk_id_tipo_operacion[]" value="'+datosPago[7]+'">'+'</td>';
 
                     html += '<td><button type="button" class="btn btn-danger btn-remove-pago"><span class="fa fa-remove"></span></button></td>'
                     html += '</tr>';
@@ -390,19 +402,20 @@
 
                     $('#numero-de-operacion').val('');
 
-                } else if(datosPago[8] == 0) {
-
+                }
+                else if(estado_pago == 0)
+                {
                     alert('Pago no disponible');
                     $('#numero-de-operacion').val('');
-
-                } else if(datosPago[8] == 2) {
-
+                } else if(estado_pago == 2)
+                {
                     alert('Pago ya ha sido utilizado');
                     $('#numero-de-operacion').val('');
-
                 }
                 
-            } else {
+            }
+            else
+            {
                 alert('seleccione un pago');
             }
         });
