@@ -19,22 +19,22 @@
                         <?php if($this->session->flashdata("error")):?>
                             <div class="alert alert-danger alert-dismissible">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>
-                                
-                             </div>
+                                <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>     
+                            </div>
                         <?php endif;?>
 
                         <form action="<?php echo base_url();?>gestion/usuarios/store" method="POST">
 
                             <div class="row form-group">
-                                <div class="col-md-4">
+                                <div class="col-md-4 <?php echo !empty(form_error('username-usuario')) ? 'has-error' : ''; ?>">
                                     <label for="username-usuario">Username:</label>
-                                    <input type="text" class="form-control" id="username-usuario" name="username-usuario">
+                                    <input type="text" class="form-control" id="username-usuario" name="username-usuario" value="<?php echo set_value('username-usuario'); ?>">
+                                    <?php echo form_error('username-usuario', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-6">                                
                                     <label for="password-usuario">Contraseña:</label>
-                                    <input type="text" class="form-control" id="password-usuario" name="password-usuario">
+                                    <input type="password" class="form-control" id="password-usuario" name="password-usuario">
                                 </div>
                             </div>
 
@@ -68,7 +68,7 @@
 
                                 <div class="col-md-6">
                                     <label for="email-usuario">Email:</label>
-                                    <input type="text" class="form-control" id="email-usuario" name="email-usuario">
+                                    <input type="email" class="form-control" id="email-usuario" name="email-usuario">
                                 </div>
                             </div>
 

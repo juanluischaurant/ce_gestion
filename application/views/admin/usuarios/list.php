@@ -7,8 +7,17 @@
         <small>Lista General</small>
         </h1>
     </section>
+    
     <!-- Main content -->
     <section class="content">
+
+        <?php if($this->session->flashdata("success")):?>
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <p><i class="icon fa fa-check"></i><?php echo $this->session->flashdata("success"); ?></p>
+            </div>
+        <?php endif;?>
+
         <!-- Default box -->
         <div class="box box-solid">
             <div class="box-body">

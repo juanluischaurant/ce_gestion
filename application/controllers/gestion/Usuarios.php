@@ -71,13 +71,23 @@ class Usuarios extends CI_Controller {
             'email_usuario' => $email_usuario
         );
 
-        if($this->Usuarios_model->save($data))
+        $this->form_validation->set_rules('username-usuario', 'Username', 'required|is_unique[usuario.username_usuario]|min_length[6]|max_length[25]'); 
+
+        if($this->form_validation->run())
         {
-            redirect(base_url().'gestion/usuarios');
+            if($this->Usuarios_model->save($data))
+            {
+                $this->session->set_flashdata('success', 'Usuario '.$username_usuario.' agregado correctamente.');
+                redirect(base_url().'gestion/usuarios');
+            }
+            else
+            {
+                redirect(base_url().'gestion/usuarios/add');
+            }
         }
         else
         {
-            redirect(base_url().'gestion/usuarios/add');
+            $this->add();
         }
     }
 
