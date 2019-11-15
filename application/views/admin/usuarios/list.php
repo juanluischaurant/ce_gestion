@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/participantes/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Participante</a>
+                        <a href="<?php echo base_url(); ?>gestion/usuarios/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Usuario</a>
                     </div>
                 </div>
                 
@@ -28,25 +28,27 @@
                                     <th>#</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>Teléfono</th>
-                                    <th>Cédula</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>Rol</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($participantes)): ?>
-                                <?php foreach($participantes as $participante): ?>
+                                <?php if(!empty($usuarios)): ?>
+                                <?php foreach($usuarios as $usuario): ?>
                                     <tr>
-                                        <td><?php echo $participante->persona_id; ?></td>
-                                        <td><?php echo $participante->nombres_persona; ?></td>
-                                        <td><?php echo $participante->apellidos_persona; ?></td>
-                                        <td><?php echo $participante->telefono_persona; ?></td>
-                                        <td><?php echo $participante->cedula_persona; ?></td>
-                                        <?php $dataParticipante = $participante->persona_id.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula_persona; ?>
+                                        <td><?php echo $usuario->id_usuario; ?></td>
+                                        <td><?php echo $usuario->nombres_usuario; ?></td>
+                                        <td><?php echo $usuario->apellidos_usuario; ?></td>
+                                        <td><?php echo $usuario->email_usuario; ?></td>
+                                        <td><?php echo $usuario->username_usuario; ?></td>
+                                        <td><small class="label label-success"><?php echo $usuario->rol; ?></small></td>
+                                        <?php $dataUsuario = $usuario->id_usuario.'*'.$usuario->nombres_usuario.'*'.$usuario->apellidos_usuario.'*'.$usuario->email_usuario.'*'.$usuario->username_usuario; ?>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataParticipante?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>gestion/participantes/edit/<?php echo $participante->persona_id; ?>" .
+                                                <button type='button' class="btn btn-info btn-view-usuario" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataUsuario?>'><span class="fa fa-eye"></span></button>
+                                                <a href="<?php echo base_url() ?>gestion/usuarios/edit/<?php echo $usuario->id_usuario; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
@@ -75,7 +77,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Informacion del Participante</h4>
+        <h4 class="modal-title">Informacion del Usuario</h4>
       </div>
       <div class="modal-body">
         
