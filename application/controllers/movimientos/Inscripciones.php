@@ -111,7 +111,7 @@ class Inscripciones extends CI_Controller {
 			$this->Pagos_model->saveInscripcionCurso($data);
 
 			// Actualiza el conteo de cupos disponibles en el curso
-			$this->updateCuposCurso($idcursos[$i],$cupos_curso[$i]);
+			$this->actualiza_cupos_ocupados($idcursos[$i],$cupos_curso[$i]);
 		}
 
 		for($j = 0; $j < count($ids_pago); $j++)
@@ -125,7 +125,17 @@ class Inscripciones extends CI_Controller {
 
 	}
 
-	protected function updateCuposCurso($idcurso, $cupos_curso) {
+	/**
+	 * Actualiza Cupos Ocupados
+	 * 
+	 * Actualiza el conteo de cupos en determinado curso luego de almacenar los datos de inscripción.
+	 *
+	 * @param integer $idcurso
+	 * @param integer $cupos_curso
+	 * @return void
+	 */
+	protected function actualiza_cupos_ocupados($idcurso, $cupos_curso)
+	{
 		$cursoActual = $this->Instancias_model->getInstancia($idcurso);
 		$data = array(
 			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 
