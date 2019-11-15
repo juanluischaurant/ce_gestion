@@ -10,17 +10,30 @@ class Auth extends CI_Controller {
     
 	public function index()
 	{
-        if($this->session->userdata('login')) {
+        if($this->session->userdata('login'))
+        {
             redirect(base_url().'dashboard');
-        } else { 
+        }
+        else
+        { 
             $this->load->view('admin/login');
         }
 		
     }
+
+    /**
+     * Inicio de sesión
+     * 
+     * Esta función se llama al momento de iniciar sesión, se encarga de configurar los datos
+     * de sesión y verificar en la base de datos que los datos proveidos sean correctos.
+     */
     public function login()
     {
+        // Datos obtenidos a través del formulario de inicio de sesión
         $username = $this->input->post('username');
         $password = $this->input->post('password');
+
+        // Consulta al modelo Usuarios
         $res = $this->Usuarios_model->login($username, sha1($password));
         
         if(!$res)
@@ -33,18 +46,25 @@ class Auth extends CI_Controller {
             $data = array(
                 'id_usuario' => $res->id_usuario,
                 'nombre' => $res->nombres_usuario,
-                'rol' => $res->fk_rol_id,
+                'rol' => $res->fk_rol_id_1,
                 'login' => TRUE
-
             );
 
+            // Almacena los datos de usuario en los datos de sesión
             $this->session->set_userdata($data);
             
             redirect(base_url().'dashboard');
         }
     }
 
-    public function logout() {
+    /**
+     * Cierre de sesión, esta función es llamada al momento en que el usuario desea cerrar sesión,
+     * eliminando los datos de sesión almacenados temporalmente durante el inicio de sesión.
+     *
+     * @return void
+     */
+    public function logout()
+    {
         $this->session->sess_destroy();
         redirect(base_url());
     }
