@@ -3,27 +3,27 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
  * Esta clase contiene funciones utilizadas a lo largo de CE_Gestión 
- * donde sea necesario consultar información relacionada a clientes (titulares)
+ * donde sea necesario consultar información relacionada a titulares.
  * 
  * @package CE_gestion
  * @subpackage Personas
  * @category Controladores
  */
-class Clientes extends CI_Controller {
+class Titulares extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
         $this->load->model('Personas_model');  
-        $this->load->model('Clientes_model');  
+        $this->load->model('Titulares_model');  
     }
 
     public function index() {
 		$data = array(
-			'clientes' => $this->Clientes_model->getClientes(),
+			'titulares' => $this->Titulares_model->get_titulares(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/clientes/list', $data);
+		$this->load->view('admin/titulares/list', $data);
 		$this->load->view('layouts/footer');
     }
     
@@ -37,7 +37,7 @@ class Clientes extends CI_Controller {
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/clientes/add', $data_persona); 
+			$this->load->view('admin/titulares/add', $data_persona); 
 			$this->load->view('layouts/footer');
 		
 		} elseif($id_persona = 'new') {
@@ -48,15 +48,15 @@ class Clientes extends CI_Controller {
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/clientes/add', $data_persona);
+			$this->load->view('admin/titulares/add', $data_persona);
 			$this->load->view('layouts/footer');
 		
 		}
 		
     }
     
-    public function store() {
-
+	public function store()
+	{
 		$fk_id_persona_1 = $this->input->post('fk-id-persona');
 
 		// $cedula = $this->input->post("cedula");
@@ -71,26 +71,23 @@ class Clientes extends CI_Controller {
 			'fk_id_persona_1' => $fk_id_persona_1,
 		);
 
-		if($this->Clientes_model->evitaClienteDuplicado($fk_id_persona_1) === true) {
-
-			if($this->Clientes_model->save($data_cliente)) {
-
-				redirect(base_url().'gestion/clientes');
-	
-			} else {
-	
-				$this->session->set_flashdata('error', 'No se pudo guardar la información');
-				redirect(base_url().'gestion/clientes/add');	
-	
+		if($this->Titulares_model->duplicidad_persona($fk_id_persona_1) === TRUE)
+		{
+			if($this->Titulares_model->save($data_cliente))
+			{
+				redirect(base_url().'gestion/titulares');
 			}
-
-		} else {
-
-			$this->session->set_flashdata('error', 'Esta persona ya está registrada como cliente.');
-			redirect(base_url().'gestion/clientes/add');	
-
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo guardar la información');
+				redirect(base_url().'gestion/titulares/add');	
+			}
 		}
-
-
+		else
+		{
+			$this->session->set_flashdata('error', 'Esta persona ya está registrada como Titular.');
+			redirect(base_url().'gestion/titulares/add');	
+		}
 	}
+
 }

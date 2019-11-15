@@ -59,7 +59,9 @@ class Auth extends CI_Controller {
     }
 
     /**
-     * Cierre de sesión, esta función es llamada al momento en que el usuario desea cerrar sesión,
+     * Cierre de sesión
+     * 
+     * Esta función es llamada al momento en que el usuario desea cerrar sesión,
      * eliminando los datos de sesión almacenados temporalmente durante el inicio de sesión.
      *
      * @return void

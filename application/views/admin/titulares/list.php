@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Clientes
+        Titulares
         <small>Lista General</small>
         </h1>
     </section>
@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/clientes/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Cliente</a>
+                        <a href="<?php echo base_url(); ?>gestion/titulares/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Titular</a>
                     </div>
                 </div>
                 
@@ -34,19 +34,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($clientes)): ?>
-                                <?php foreach($clientes as $cliente): ?>
+                                <?php if(!empty($titulares)): ?>
+                                <?php foreach($titulares as $titular): ?>
                                     <tr>
-                                        <td><?php echo $cliente->persona_id; ?></td>
-                                        <td><?php echo $cliente->nombres_persona; ?></td>
-                                        <td><?php echo $cliente->apellidos_persona; ?></td>
-                                        <td><?php echo $cliente->telefono_persona; ?></td>
-                                        <td><?php echo $cliente->cedula_persona; ?></td>
-                                        <?php $dataCliente = $cliente->persona_id.'*'.$cliente->nombres_persona.'*'.$cliente->apellidos_persona.'*'.$cliente->telefono_persona.'*'.$cliente->cedula_persona; ?>
+                                        <td><?php echo $titular->persona_id; ?></td>
+                                        <td><?php echo $titular->nombres_persona; ?></td>
+                                        <td><?php echo $titular->apellidos_persona; ?></td>
+                                        <td><?php echo $titular->telefono_persona; ?></td>
+                                        <td><?php echo $titular->cedula_persona; ?></td>
+                                        <?php $dataTitular = $titular->persona_id.'*'.$titular->nombres_persona.'*'.$titular->apellidos_persona.'*'.$titular->telefono_persona.'*'.$titular->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-cliente" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataCliente?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>gestion/clientes/edit/<?php echo $cliente->persona_id; ?>" .
+                                                <button type='button' class="btn btn-info btn-view-titular" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataTitular?>'><span class="fa fa-eye"></span></button>
+                                                <a href="<?php echo base_url() ?>gestion/titulares/edit/<?php echo $titular->persona_id; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
@@ -75,7 +75,7 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Informacion del Cliente</h4>
+        <h4 class="modal-title">Informacion del Titular</h4>
       </div>
       <div class="modal-body">
         

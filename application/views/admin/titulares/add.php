@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Clientes
+        Titulares
         <small>Nuevo</small>
         </h1>
     </section>
@@ -25,14 +25,14 @@
                              </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/clientes/store" method="POST">
+                        <form action="<?php echo base_url();?>gestion/titulares/store" method="POST">
 
                             <div class="form-group">
-                                <label for="">Seleccionar Cliente:</label>
+                                <label for="">Seleccionar Titular:</label>
                                 <div class="input-group">
                                     <input type="text" class="form-control" disabled="disabled" id="cedula-persona">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" id="busca-cliente" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
+                                        <button class="btn btn-primary" id="busca-titular" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
@@ -40,22 +40,21 @@
                             <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->persona_id : ''; ?>">
                             
                             <div class="form-group">
-                                <label for="nombre-cliente">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres-cliente" name="nombre-cliente" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <label for="nombre-titular">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres-titular" name="nombre-titular" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-cliente">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos-cliente" name="apellido-cliente" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <label for="apellido-titular">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos-titular" name="apellido-titular" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="nacimiento-cliente">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" id="nacimiento-cliente" name="nacimiento-cliente" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
+                                <label for="nacimiento-titular">Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" id="nacimiento-titular" name="nacimiento-titular" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="genero-cliente">Genero:</label>
                                 <?php
                                     $lista_generos = array(
                                         '' => 'Seleccione',
@@ -64,7 +63,7 @@
                                     );
 
                                     // Atributos para la entidad HTML a crear con el método form_label()
-                                    $atributos = array('class' => 'form-control', 'id' => 'genero-cliente', 'required' => 'required');
+                                    $atributos = array('class' => 'form-control', 'id' => 'genero-titular', 'required' => 'required');
                                     
                                     // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
                                     // Verifica si se encuentra asignada (isset) la variable $persona
@@ -74,22 +73,22 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
-                                    echo form_dropdown('genero-cliente', $lista_generos, $value, $atributos);
+                                    echo form_dropdown('genero-titular', $lista_generos, $value, $atributos);
                                 ?>
                             </div>
 
                             <div class="form-group">
-                                <label for="telefono-cliente">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-cliente" name="telefono-cliente" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
+                                <label for="telefono-titular">Número de Teléfono:</label>
+                                <input type="text" class="form-control" id="telefono-titular" name="telefono-titular" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="direccion-cliente">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-cliente" name="direccion-cliente" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
+                                <label for="direccion-titular">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion-titular" name="direccion-titular" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" disabled id="guardar-cliente" class="btn btn-success btn-flat">Guardar</button>
+                                <button type="submit" disabled id="guardar-titular" class="btn btn-success btn-flat">Guardar</button>
                             </div>
 
                         </form>
@@ -106,7 +105,7 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal para lista de clientes -->
+<!-- Modal para lista de titulares -->
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -136,7 +135,7 @@
                                 <td><?php echo $persona->cedula_persona; ?></td>
                                 <?php $dataPersona = $persona->persona_id.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula_persona.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
                                 <td>
-                                    <button type='button' class='btn btn-success btn-check-cliente' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
+                                    <button type='button' class='btn btn-success btn-check-titular' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

@@ -176,40 +176,40 @@
 
 
         // =============================================
-        // JS para Clientes
+        // JS para Titulares
         // =============================================
 
-        $(document).on('click', '.btn-check-cliente', function() {
-            let cliente = $(this).val();
-            let informacionCliente = cliente.split('*');
+        $(document).on('click', '.btn-check-titular', function() {
+            let titular = $(this).val();
+            let informacionTitular = titular.split('*');
 
-            let personaId = informacionCliente[0],
-            nombresPersona = informacionCliente[1],
-            apellidosPersona = informacionCliente[2],
-            telefonoPersona = informacionCliente[3],
-            cedulaPersona = informacionCliente[4],
-            fechaNacimientoPersona = informacionCliente[5],
-            generoPersona = informacionCliente[6];
-            direccionPersona = informacionCliente[7];
+            let personaId = informacionTitular[0],
+            nombresPersona = informacionTitular[1],
+            apellidosPersona = informacionTitular[2],
+            telefonoPersona = informacionTitular[3],
+            cedulaPersona = informacionTitular[4],
+            fechaNacimientoPersona = informacionTitular[5],
+            generoPersona = informacionTitular[6];
+            direccionPersona = informacionTitular[7];
 
-            $('#nacimiento-cliente').val(fechaNacimientoPersona);
+            $('#nacimiento-titular').val(fechaNacimientoPersona);
             $('#fk-id-persona').val(personaId);
-            $('#genero-cliente').val(generoPersona);
-            $('#nombres-cliente').val(nombresPersona);
-            $('#apellidos-cliente').val(apellidosPersona);
-            $('#telefono-cliente').val(telefonoPersona);
-            $('#direccion-cliente').val(direccionPersona);
+            $('#genero-titular').val(generoPersona);
+            $('#nombres-titular').val(nombresPersona);
+            $('#apellidos-titular').val(apellidosPersona);
+            $('#telefono-titular').val(telefonoPersona);
+            $('#direccion-titular').val(direccionPersona);
 
 
             // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
-            $('#guardar-cliente').removeAttr('disabled');
+            $('#guardar-titular').removeAttr('disabled');
 
             // Oculta ventana modal
             $('#modal-default').modal('hide');
         });
 
         // =============================================
-        // Fin de JS para Clientes
+        // Fin de JS para Titulares
         // =============================================
 
 
@@ -296,10 +296,10 @@
             }
         });
 
-        $('#cedula-cliente').autocomplete({
+        $('#cedula-titular').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/Pagos/getClientesJSON',
+                    url: base_url+'movimientos/pagos/get_titulares_json',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -312,10 +312,10 @@
             }, minLength: 1,
             select: function(event, ui) {
                 // Considera eliminar esta variable `data` no utilizada aquí
-                data = ui.item.id_cliente+'*'+ui.item.label;
+                data = ui.item.id_titular+'*'+ui.item.label;
 
-                $('#nombre-cliente').val(ui.item.nombre_cliente);
-                $('#id-cliente').val(ui.item.id_cliente);
+                $('#nombre-titular').val(ui.item.nombre_cliente);
+                $('#id-titular').val(ui.item.id_cliente);
             }
         });
 

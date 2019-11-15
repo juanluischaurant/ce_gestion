@@ -19,26 +19,26 @@
 
                         <div class="row">
                         <div class="col-md-6">
-                        <div class="box box-solid">
-                            <div class="box-header with-border">
-                            <i class="fa fa-text-width"></i>
+                            <div class="box box-solid">
+                                <div class="box-header with-border">
+                                <i class="fa fa-text-width"></i>
 
-                            <h3 class="box-title">Éxito</h3>
-                            </div>
-                            <!-- /.box-header -->
-                            <div class="box-body">
-                            <blockquote>
-                                <p>El registro se ha guardado de manera correcta. ¿Qué rol tendrá <?php echo $persona->nombres_persona;?>?</p>
-                                <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
-                                <div class="row">
-                                    <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/participantes/add/<?php echo $persona->persona_id;?>">Participante</a></div>                                    
-                                    <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/clientes/add/<?php echo $persona->persona_id;?>">Titular</a></div>                                    
-                                    <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/facilitadores/add/<?php echo $persona->persona_id;?>">Facilitador</a></div>                                    
+                                <h3 class="box-title">Éxito</h3>
                                 </div>
-                            </blockquote>
+                                <!-- /.box-header -->
+                                <div class="box-body">
+                                <blockquote>
+                                    <p>¿Qué rol tendrá <b><?php echo $persona->nombres_persona;?></b>?</p>
+                                    <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+                                    <div class="row">
+                                        <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/participantes/add/<?php echo $persona->persona_id;?>">Participante</a></div>                                    
+                                        <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/titulares/add/<?php echo $persona->persona_id;?>">Titular</a></div>                                    
+                                        <div class="col-md-4"><a href="<?php echo base_url(); ?>gestion/facilitadores/add/<?php echo $persona->persona_id;?>">Facilitador</a></div>                                    
+                                    </div>
+                                </blockquote>
+                                </div>
+                                <!-- /.box-body -->
                             </div>
-                            <!-- /.box-body -->
-                        </div>
                         <!-- /.box -->
                         </div>
                         <!-- ./col -->

@@ -48,7 +48,7 @@ class Pagos extends CI_Controller {
     public function store() {
         $id_banco_operacion = $this->input->post('id-banco-de-operacion');
         $id_tipo_de_pago = $this->input->post('id-tipo-de-pago');
-        $id_cliente = $this->input->post('id-cliente');
+        $id_cliente = $this->input->post('id-titular');
         $serial_de_pago = $this->input->post('serial-de-pago');
         $numero_de_operacion = $this->input->post('numero-de-operacion-unico');
         $monto_de_operacion = $this->input->post('monto-de-operacion');
@@ -104,9 +104,10 @@ class Pagos extends CI_Controller {
     }
     
     // Métodos utilizados para el pluggin AUTOCOMPLETE
-    public function getClientesJSON() {
+    
+	public function get_titulares_json() {
         $valor = $this->input->post('query');
-		$clientes = $this->Pagos_model->getClientesJSON($valor);
+		$clientes = $this->Pagos_model->get_titulares_json($valor);
 		echo json_encode($clientes);
     }
 

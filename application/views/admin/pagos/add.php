@@ -51,14 +51,14 @@
 
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    <label for="">Cédula del Cliente:</label>
-                                    <input type="text" class="form-control" id="cedula-cliente" name='cedula-cliente'>
+                                    <label for="">Cédula del Titular:</label>
+                                    <input type="text" class="form-control" id="cedula-titular" name='cedula-titular'>
                                 </div>
          
                                 <div class="col-md-6">
-                                    <label for="">Nombre:</label>
-                                    <input type="text" class="form-control" name="nombre-cliente" id='nombre-cliente' readonly>
-                                    <input type="hidden" id="id-cliente" name="id-cliente">   
+                                    <label for="">Nombre del Titular:</label>
+                                    <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' readonly>
+                                    <input type="hidden" id="id-titular" name="id-titular">   
                                 </div>
                             </div>
 

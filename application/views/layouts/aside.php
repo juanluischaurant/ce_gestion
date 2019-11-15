@@ -21,7 +21,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>gestion/personas"><i class="fa fa-circle-o"></i> Personas</a></li>
-                            <li><a href="<?php echo base_url(); ?>gestion/clientes"><i class="fa fa-circle-o"></i> Titular</a></li>
+                            <li><a href="<?php echo base_url(); ?>gestion/titulares"><i class="fa fa-circle-o"></i> Titular</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/facilitadores"><i class="fa fa-circle-o"></i> Facilitadores</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/participantes"><i class="fa fa-circle-o"></i> Participantes</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/locaciones"><i class="fa fa-circle-o"></i> Locaciones</a></li>

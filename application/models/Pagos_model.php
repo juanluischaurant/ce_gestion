@@ -14,7 +14,7 @@ class Pagos_model extends CI_Model {
       per.cedula_persona'
     )
     ->from('pago_de_inscripcion as pdi')
-    ->join('cliente as cli', 'cli.id_cliente = pdi.fk_id_cliente')
+    ->join('titular as cli', 'cli.id_cliente = pdi.fk_id_cliente')
     ->join('persona as per', 'per.persona_id = cli.fk_id_persona_1')
     // ->where('instancia.estado_instancia', '1')
     ->get();
@@ -60,13 +60,24 @@ class Pagos_model extends CI_Model {
 
 
     // Métodos utilizadas para el pluggin AUTOCOMPLETE
-    public function getClientesJSON($valor) {
+    
+    /**
+     * obtén titulares
+     * 
+     * Se encarga de consultar la tabla titular para obtener una lista de personas registradas
+     * actualmente como titulares de pago.
+     *
+     * @param integer $valor
+     * @return array
+     */
+    public function get_titulares_json($valor)
+    {
       $resultados = $this->db->select(
         'cli.id_cliente, 
         concat(per.nombres_persona, " ", per.apellidos_persona) as nombre_cliente, 
         per.cedula_persona as label'
       )
-        ->from('cliente as cli')
+        ->from('titular as cli')
         ->join('persona as per', 'per.persona_id = cli.fk_id_persona_1')
 
         ->like('per.cedula_persona', $valor)
