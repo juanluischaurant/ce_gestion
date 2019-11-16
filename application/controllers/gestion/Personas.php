@@ -124,7 +124,8 @@ class Personas extends CI_Controller {
 		
     }
 
-	public function update() {
+	public function update() 
+	{
 		$persona_id = $this->input->post('id-persona');
 
 		$cedula = $this->input->post('cedula-persona');
@@ -134,8 +135,6 @@ class Personas extends CI_Controller {
 		$fecha_nacimiento = $this->input->post('nacimiento-persona');
 		$telefono = $this->input->post('telefono-persona');
 		$direccion = $this->input->post('direccion-persona');
-
-		// $estado_facilitador; <- Aún no utilizada
 
 		$data = array(
 			'cedula_persona' => $cedula,
@@ -147,9 +146,12 @@ class Personas extends CI_Controller {
 			'direccion_persona' => $direccion
 		);
 
-		if($this->Personas_model->update($persona_id, $data)) {
+		if($this->Personas_model->update($persona_id, $data))
+		{
 			redirect(base_url().'gestion/personas');
-		} else {
+		}
+		else
+		{
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
 			redirect(base_url().'gestion/personas/edit'.$persona_id);
 		}
