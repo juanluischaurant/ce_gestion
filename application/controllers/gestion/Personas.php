@@ -153,16 +153,33 @@ class Personas extends CI_Controller {
 			'direccion_persona' => $direccion
 		);
 
-		if($this->Personas_model->update($persona_id, $data))
+		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
+		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|trim|min_length[2]|max_length[10]');
+		$this->form_validation->set_rules('nombre-persona', 'Nombres', 'required|trim|min_length[2]|max_length[45]');
+		$this->form_validation->set_rules('apellido-persona', 'Apellidos', 'required|trim|min_length[2]|max_length[45]');
+		$this->form_validation->set_rules('genero-persona', 'Genero', 'required');
+		$this->form_validation->set_rules('telefono-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[12]');
+		$this->form_validation->set_rules('direccion-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[95]');
+		
+
+		// Si la validación es correcta
+		if($this->form_validation->run())
 		{
-			redirect(base_url().'gestion/personas');
+			if($this->Personas_model->update($persona_id, $data))
+			{
+				redirect(base_url().'gestion/personas');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
+				redirect(base_url().'gestion/personas/edit'.$persona_id);
+			}
 		}
 		else
 		{
-			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-			redirect(base_url().'gestion/personas/edit'.$persona_id);
-		}
-		
+			// $this hace referencia al módulo donde es invocado
+			$this->edit($persona_id);
+		}		
 	}
 
 	public function edit($id)

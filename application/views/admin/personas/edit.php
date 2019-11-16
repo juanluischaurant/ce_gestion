@@ -30,7 +30,8 @@
 
                             <div class="form-group">
                                 <label for="cedula-persona">Cédula:</label>
-                                <input type="text" class="form-control" id="cedula-persona" name="cedula-persona" value='<?php echo $persona->cedula_persona; ?>'>
+                                <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" disabled id="cedula-persona" name="cedula-persona" value='<?php echo $persona->cedula_persona; ?>'>
+                                <?php echo form_error('cedula-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">
