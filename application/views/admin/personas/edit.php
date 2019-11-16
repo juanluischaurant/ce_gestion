@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Participantes
+        Personas
         <small>Editar</small>
         </h1>
     </section>
@@ -24,43 +24,51 @@
                              </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url();?>gestion/facilitadores/update" method="POST">
-                            <input type="hidden" name="id-facilitador" value="<?php echo $facilitador->id_facilitador;?>">
-                            <input type="hidden" name="fk-id-persona" value="<?php echo $facilitador->fk_id_persona_3;?>">
+                        <form action="<?php echo base_url();?>gestion/personas/update" method="POST">
+
+                            <input type="hidden" name="id-persona" value="<?php echo $persona->persona_id;?>">
 
                             <div class="form-group">
-                                <label for="cedula-facilitador">Cédula:</label>
-                                <input type="text" class="form-control" id="cedula-facilitador" name="cedula-facilitador" value='<?php echo $facilitador->cedula_persona; ?>'>
+                                <label for="cedula-persona">Cédula:</label>
+                                <input type="text" class="form-control" id="cedula-persona" name="cedula-persona" value='<?php echo $persona->cedula_persona; ?>'>
                             </div>
 
                             <div class="form-group">
-                                <label for="nombre-facilitador">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-facilitador" name="nombre-facilitador" value="<?php echo $facilitador->nombres_persona; ?>" required>
+                                <label for="nombre-persona">Nombres:</label>
+                                <input type="text" class="form-control" id="nombre-persona" name="nombre-persona" value="<?php echo $persona->nombres_persona; ?>" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-facilitador">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-facilitador" name="apellido-facilitador" value="<?php echo $facilitador->apellidos_persona; ?>" required>
+                                <label for="apellido-persona">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellido-persona" name="apellido-persona" value="<?php echo $persona->apellidos_persona; ?>" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="nacimiento-facilitador">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="nacimiento-facilitador" value="<?php echo $facilitador->fecha_nacimiento_persona; ?>" required>
+                                <label for="nacimiento-persona">Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" name="nacimiento-persona" value="<?php echo $persona->fecha_nacimiento_persona; ?>" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="genero-facilitador">Genero:</label>
-                                <input type="text" class="form-control" name="genero-facilitador" value="<?php echo $facilitador->genero_persona; ?>" required>
+                            <?php
+                                $atributos = array('class' => 'form-control', 'reqiored' =>'required');
+                                // Genera la etiquera
+                                echo form_label('Genero:');
+
+                                // Genera el elemento "select"
+                                // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos
+                                echo form_dropdown('genero-persona', $lista_generos, $persona->genero_persona, $atributos);
+                            ?>
+                            <!-- Fin del campo -->    
                             </div>
 
                             <div class="form-group">
-                                <label for="telefono-facilitador">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-facilitador" name="telefono-facilitador" value="<?php echo $facilitador->telefono_persona; ?>">
+                                <label for="telefono-persona">Número de Teléfono:</label>
+                                <input type="text" class="form-control" id="telefono-persona" name="telefono-persona" value="<?php echo $persona->telefono_persona; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="direccion-facilitador">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-facilitador" name="direccion-facilitador" value="<?php echo $facilitador->direccion_persona; ?>">
+                                <label for="direccion-persona">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion-persona" name="direccion-persona" value="<?php echo $persona->direccion_persona; ?>">
                             </div>
 
                             <div class="form-group">

@@ -42,13 +42,24 @@ class Personas_model extends CI_Model {
         return $this->db->insert('persona', $data);
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         $this->db->where('persona_id', $id);
         return $this->db->update('persona', $data);
     }
 
     public function lastID() {
 		return $this->db->insert_id();
-    }    
+    }
+
+    public function generos_dropdown()
+    {
+        $array = array(
+            1 => 'Masculino',
+            2 => 'Femenino'
+        );
+
+        return $array;
+    }
 
 }

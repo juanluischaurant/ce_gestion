@@ -47,8 +47,8 @@ class Instancias_model extends CI_Model {
      *
      * @return array
      */
-    public function turnos_dropdown() {
-
+    public function turnos_dropdown()
+    {
         $query = $this->db->from('turno_instancia')
         ->get();
 
