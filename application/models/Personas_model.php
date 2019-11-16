@@ -55,6 +55,7 @@ class Personas_model extends CI_Model {
     public function generos_dropdown()
     {
         $array = array(
+            '' => 'Seleccione',
             1 => 'Masculino',
             2 => 'Femenino'
         );

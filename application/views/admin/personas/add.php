@@ -29,13 +29,13 @@
                             <div class="row form-group">
                                 <div class="col-md-5">                                
                                     <label for="cedula-persona">Cédula:</label>
-                                    <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" id="cedula-persona" name="cedula-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" id="cedula-persona" name="cedula-persona" value="<?php echo set_value('cedula-persona');?>">
                                     <?php echo form_error('cedula-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-5">                                
                                     <label for="nacimiento-persona">Fecha de Nacimiento:</label>
-                                    <input type="date" class="form-control" name="nacimiento-persona">
+                                    <input type="date" class="form-control" name="nacimiento-persona" value="<?php echo set_value('nacimiento-persona');?>">
                                 </div>
                             </div>
 
@@ -43,12 +43,15 @@
 
                                 <div class="col-md-4">
                                     <label for="nombre-persona">Nombres:</label>
-                                    <input type="text" class="form-control" id="nombre-persona" name="nombre-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('nombre-persona'))? 'has-error' : '';?>" id="nombre-persona" name="nombre-persona" value="<?php echo set_value('nombre-persona');?>">
+                                    <?php echo form_error('nombre-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-6">                                
                                     <label for="apellido-persona">Apellidos:</label>
-                                    <input type="text" class="form-control" id="apellido-persona" name="apellido-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('apellido-persona'))? 'has-error' : '';?>" id="apellido-persona" name="apellido-persona" value="<?php echo set_value('apellido-persona');?>">
+                                    <?php echo form_error('apellido-persona', '<span class="help-block">', '</span>'); ?>
+
                                 </div>
                             </div>
 
@@ -65,14 +68,16 @@
 
                                 <div class="col-md-6">
                                     <label for="telefono-persona">Número de Teléfono:</label>
-                                    <input type="text" class="form-control" id="telefono-persona" name="telefono-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('telefono-persona'))? 'has-error' : '';?>" id="telefono-persona" name="telefono-persona" value="<?php echo set_value('telefono-persona');?>">
+                                    <?php echo form_error('telefono-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
                             </div>
 
                             <div class="row form-group">
                                 <div class="col-md-10">
                                     <label for="direccion-persona">Dirección:</label>
-                                    <input type="text" class="form-control" id="direccion-persona" name="direccion-persona">
+                                    <input type="text" class="form-control <?php echo !empty(form_error('direccion-persona'))? 'has-error' : '';?>" id="direccion-persona" name="direccion-persona" value="<?php echo set_value('direccion-persona');?>">
+                                    <?php echo form_error('direccion-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
                             </div>
 

@@ -50,7 +50,7 @@
 
                             <div class="form-group">
                             <?php
-                                $atributos = array('class' => 'form-control', 'reqiored' =>'required');
+                                $atributos = array('class' => 'form-control', 'required' =>'required');
                                 // Genera la etiquera
                                 echo form_label('Genero:');
 

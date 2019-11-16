@@ -28,9 +28,12 @@ class Personas extends CI_Controller {
     }
     
     public function add() {
+		$data = array(
+			'lista_generos' => $this->Personas_model->generos_dropdown()
+		);
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/personas/add');
+        $this->load->view('admin/personas/add', $data);
         $this->load->view('layouts/footer');
     }
 	
@@ -76,8 +79,12 @@ class Personas extends CI_Controller {
 		);
 
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
-		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|is_unique[persona.cedula_persona]');
+		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|is_unique[persona.cedula_persona]|trim|min_length[2]|max_length[10]');
+		$this->form_validation->set_rules('nombre-persona', 'Nombres', 'required|trim|min_length[2]|max_length[45]');
+		$this->form_validation->set_rules('apellido-persona', 'Apellidos', 'required|trim|min_length[2]|max_length[45]');
 		$this->form_validation->set_rules('genero-persona', 'Genero', 'required');
+		$this->form_validation->set_rules('telefono-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[12]');
+		$this->form_validation->set_rules('direccion-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[95]');
 		
 		// Si la validación es correcta
 		if($this->form_validation->run())
