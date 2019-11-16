@@ -3,8 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Personas_model extends CI_Model {
 
-    public function getPersonas() {
-
+    public function getPersonas()
+    {
         $resultados = $this->db->select(
             'p.persona_id,
             p.cedula_persona,
@@ -14,12 +14,13 @@ class Personas_model extends CI_Model {
             p.fecha_nacimiento_persona,
             p.telefono_persona,
             p.direccion_persona,
-            p.estado_persona')
+            p.estado_persona,
+            p.fecha_registro_persona')
             ->from('persona as p') 
             ->where('estado_persona', 1)
             ->get(); 
     
-            return $resultados->result();
+        return $resultados->result();
     }
 
     /**
