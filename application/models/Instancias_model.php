@@ -3,7 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Instancias_model extends CI_Model {
 
-    public function getInstancias() {
+    /**
+     * Returna una lista de instancias
+     *
+     * @return array
+     */
+    public function getInstancias()
+    {
         // Obtén una lista de cursos instanciados
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
@@ -13,11 +19,13 @@ class Instancias_model extends CI_Model {
         ti.id_turno,
         ti.descripcion_turno,
         curso.nombre_curso,
-        concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico')
+        concat(mi.nombre_mes, " ", mc.nombre_mes, "-", periodo.year_periodo) as periodo_academico')
         ->from('instancia')
         ->join('turno_instancia as ti', 'instancia.fk_id_turno_instancia_1 = ti.id_turno')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
+        ->join('mes as mi', 'periodo.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'periodo.mes_cierre_periodo = mc.id_mes') 
         ->where('instancia.estado_instancia', '1')
         ->get();
 
@@ -65,14 +73,19 @@ class Instancias_model extends CI_Model {
     }
 
     
-    public function getPeriodosJSON($valor) {
+    public function getPeriodosJSON($valor) 
+    {
         // Obtén los registros de instancia de los cursos
         $resultados = $this->db->select(
             'p.id_periodo, 
-            concat(p.mes_inicio_periodo, "-", p.mes_cierre_periodo, " ", p.year_periodo) as label'
+            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as label'
         )
-        ->from('periodo p')
-        ->like('mes_inicio_periodo', $valor)
+        ->from('periodo as p')
+        ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
+        ->like('mi.nombre_mes', $valor)
+        ->or_like('mc.nombre_mes', $valor)
+        ->or_like('p.year_periodo', $valor)
         ->get();
 
         return $resultados->result_array();

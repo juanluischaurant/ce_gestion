@@ -9,7 +9,8 @@ class Instancias extends CI_Controller {
         $this->load->model('Cursos_model');  
     }
 
-	public function index() {
+	public function index() 
+	{
 		$data = array(
 			'instancias' => $this->Instancias_model->getInstancias(),
 		);
@@ -99,7 +100,8 @@ class Instancias extends CI_Controller {
 	// Métodos utilizados para el pluggin AUTOCOMPLETE
     // =======================================================
     
-    public function getPeriodosJSON() {
+	public function getPeriodosJSON()
+	{
 		$valor = $this->input->post('query');
 		$periodos = $this->Instancias_model->getPeriodosJSON($valor);
 		echo json_encode($periodos);
