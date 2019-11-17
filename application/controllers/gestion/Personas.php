@@ -11,13 +11,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Personas extends CI_Controller {
 
-    public function __construct() {
-        parent::__construct();
-        $this->load->model('Personas_model');  
-        $this->load->model('Acciones_model');  
+	public function __construct()
+	{
+		parent::__construct();	
+		
+        // Si el usuario no ha iniciado sesión
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+        else
+        {
+            // Carga el controlador
+			$this->load->model('Personas_model');  
+			$this->load->model('Acciones_model');  
+        }
     }
 
-    public function index() {
+	public function index()
+	{
 		$data = array(
 			'personas' => $this->Personas_model->getPersonas(),
 		);
@@ -77,17 +90,10 @@ class Personas extends CI_Controller {
 			'direccion_persona' => $direccion,
 			'estado_persona' => '1'
 		);
-
-		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
-		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|is_unique[persona.cedula_persona]|trim|min_length[2]|max_length[10]');
-		$this->form_validation->set_rules('nombre-persona', 'Nombres', 'required|trim|min_length[2]|max_length[45]');
-		$this->form_validation->set_rules('apellido-persona', 'Apellidos', 'required|trim|min_length[2]|max_length[45]');
-		$this->form_validation->set_rules('genero-persona', 'Genero', 'required');
-		$this->form_validation->set_rules('telefono-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[12]');
-		$this->form_validation->set_rules('direccion-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[95]');
 		
+		// Reglas declaradas para la validación de formularios en el directorio config/form_validation.php
 		// Si la validación es correcta
-		if($this->form_validation->run())
+		if($this->form_validation->run('agregar_persona'))
 		{
 			// Procede a guardar los datos
 			if($this->Personas_model->save($data_persona))
@@ -177,16 +183,24 @@ class Personas extends CI_Controller {
 		}		
 	}
 
-	public function edit($id)
+	public function edit($id = NULL)
 	{
-		$data = array(
-			'persona' => $this->Personas_model->getPersona($id),
-			'lista_generos' => $this->Personas_model->generos_dropdown()
-		);
-		$this->load->view('layouts/header');
-		$this->load->view('layouts/aside');
-		$this->load->view('admin/personas/edit', $data);
-		$this->load->view('layouts/footer');
+		//  ¿$id es nulo?
+		if(!isset($id))
+		{
+			redirect(base_url().'gestion/personas/');
+		}
+		else
+		{
+			$data = array(
+				'persona' => $this->Personas_model->getPersona($id),
+				'lista_generos' => $this->Personas_model->generos_dropdown()
+			);
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/personas/edit', $data);
+			$this->load->view('layouts/footer');
+		}
 	}
 
 	public function delete($id) {

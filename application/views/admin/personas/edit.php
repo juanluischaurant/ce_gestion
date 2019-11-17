@@ -36,25 +36,28 @@
 
                             <div class="form-group">
                                 <label for="nombre-persona">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-persona" name="nombre-persona" value="<?php echo $persona->nombres_persona; ?>">
+                                <input type="text" class="form-control <?php echo !empty(form_error('nombre-persona'))? 'has-error' : '';?>" id="nombre-persona" name="nombre-persona" value="<?php echo $persona->nombres_persona; ?>">
+                                <?php echo form_error('nombre-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido-persona">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-persona" name="apellido-persona" value="<?php echo $persona->apellidos_persona; ?>">
+                                <input type="text" class="form-control <?php echo !empty(form_error('apellido-persona'))? 'has-error' : '';?>" id="apellido-persona" name="apellido-persona" value="<?php echo $persona->apellidos_persona; ?>">
+                                <?php echo form_error('apellido-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">
                                 <label for="nacimiento-persona">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="nacimiento-persona" value="<?php echo $persona->fecha_nacimiento_persona; ?>">
+                                <input type="date" class="form-control <?php echo !empty(form_error('nacimiento-persona'))? 'has-error' : '';?>" name="nacimiento-persona" value="<?php echo $persona->fecha_nacimiento_persona; ?>">
+                                <?php echo form_error('nacimiento-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">
                                 <?php
-                                    // Verifica si hay un valor seleccionado en la lista
+                                    // Verifica si hay un valor seleccionado en la lista, si no, imprime el valor 'has-error'
                                     $error = !empty(form_error('genero-persona'))? 'has-error' : '';
 
-                                    // Estructura el atributo class
+                                    // Estructura el atributo class y concatena el valor anterior
                                     $atributos = array('class' => 'form-control '.$error);
 
                                     // Genera la etiquera
@@ -71,12 +74,14 @@
 
                             <div class="form-group">
                                 <label for="telefono-persona">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-persona" name="telefono-persona" value="<?php echo $persona->telefono_persona; ?>">
+                                <input type="text" class="form-control <?php echo !empty(form_error('telefono-persona'))? 'has-error' : '';?>" id="telefono-persona" name="telefono-persona" value="<?php echo $persona->telefono_persona; ?>">
+                                <?php echo form_error('telefono-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">
                                 <label for="direccion-persona">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-persona" name="direccion-persona" value="<?php echo $persona->direccion_persona; ?>">
+                                <input type="text" class="form-control <?php echo !empty(form_error('direccion-persona'))? 'has-error' : '';?>" id="direccion-persona" name="direccion-persona" value="<?php echo $persona->direccion_persona; ?>">
+                                <?php echo form_error('direccion-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">

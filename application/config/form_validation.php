@@ -45,6 +45,41 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[95]'
         ),
     ),
+    'agregar_persona' => array(
+        array(
+            'field' => 'cedula-persona',
+            'label' => 'Cédula',
+            'rules' => 'required|trim|min_length[2]|max_length[10]|is_unique[persona.cedula_persona]',
+            'errors' => array(
+                'edit_unique_cedula' => 'Cédula en uso. Por favor intenta de nuevo'
+            )
+        ),
+        array(
+            'field' => 'nombre-persona',
+            'label' => 'Nombres',
+            'rules' => 'required|trim|min_length[2]|max_length[45]'
+        ),
+        array(
+            'field' => 'apellido-persona',
+            'label' => 'Apellidos',
+            'rules' => 'required|trim|min_length[2]|max_length[45]'
+        ),
+        array(
+            'field' => 'genero-persona',
+            'label' => 'Género',
+            'rules' => 'required'
+        ),
+        array(
+            'field' => 'telefono-persona',
+            'label' => 'Número de Teléfono',
+            'rules' => 'trim|min_length[6]|max_length[12]'
+        ),
+        array(
+            'field' => 'direccion-persona',
+            'label' => 'Dirección',
+            'rules' => 'trim|min_length[6]|max_length[95]'
+        ),
+    )
 );
 
 

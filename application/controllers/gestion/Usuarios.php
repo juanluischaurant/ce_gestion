@@ -15,7 +15,7 @@ class Usuarios extends CI_Controller {
     {
         parent::__construct();
         
-        // Si el usuario no está logeado
+        // Si el usuario no ha iniciado sesión
 		if(!$this->session->userdata('login'))
 		{
 			// redirigelo al inicio de la aplicación
