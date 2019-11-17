@@ -275,7 +275,7 @@
             $('#direccion-titular').val(direccionPersona);
 
 
-            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+            // Al seleccionar un titular de la lista, activa el botón "Guardar"
             $('#guardar-titular').removeAttr('disabled');
 
             // Oculta ventana modal

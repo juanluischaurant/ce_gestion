@@ -40,7 +40,8 @@ class Personas extends CI_Controller {
 		$this->load->view('layouts/footer');
     }
     
-    public function add() {
+	public function add()
+	{
 		$data = array(
 			'lista_generos' => $this->Personas_model->generos_dropdown()
 		);
@@ -69,6 +70,45 @@ class Personas extends CI_Controller {
 
 		$this->load->view("admin/personas/view", $data);
 	}
+
+	public function edit($id = NULL)
+	{
+		//  ¿$id es nulo?
+		if(!isset($id))
+		{
+			redirect(base_url().'gestion/personas/');
+		}
+		else
+		{
+			$data = array(
+				'persona' => $this->Personas_model->getPersona($id),
+				'lista_generos' => $this->Personas_model->generos_dropdown()
+			);
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/personas/edit', $data);
+			$this->load->view('layouts/footer');
+		}
+	}
+
+	/**
+	 * Carga en la vista una pantalla que permite al usuario escoger un rol
+	 * para el registro Persona recien almacenado.
+	 *
+	 * @param string $ultimo_id
+	 * @return void
+	 */
+	public function success($ultimo_id = 'no_id')
+	{
+        $data_persona = array(
+			'persona' => $this->Personas_model->getPersona($ultimo_id),
+		);
+		
+        $this->load->view('layouts/header');
+        $this->load->view('layouts/aside');
+        $this->load->view('admin/personas/success', $data_persona);
+		$this->load->view('layouts/footer');	
+    }
 	
 	public function store() 
 	{
@@ -123,20 +163,7 @@ class Personas extends CI_Controller {
 		}
 		
     }
-    
-    public function success($ultimo_id = 'no_id') {
-
-        $data_persona = array(
-			'persona' => $this->Personas_model->getPersona($ultimo_id),
-		);
-		
-        $this->load->view('layouts/header');
-        $this->load->view('layouts/aside');
-        $this->load->view('admin/personas/success', $data_persona);
-		$this->load->view('layouts/footer');
-		
-    }
-
+	
 	public function update() 
 	{
 		$persona_id = $this->input->post('id-persona');
@@ -190,32 +217,23 @@ class Personas extends CI_Controller {
 		}		
 	}
 
-	public function edit($id = NULL)
+	public function delete($persona_id)
 	{
-		//  ¿$id es nulo?
-		if(!isset($id))
-		{
-			redirect(base_url().'gestion/personas/');
-		}
-		else
-		{
-			$data = array(
-				'persona' => $this->Personas_model->getPersona($id),
-				'lista_generos' => $this->Personas_model->generos_dropdown()
-			);
-			$this->load->view('layouts/header');
-			$this->load->view('layouts/aside');
-			$this->load->view('admin/personas/edit', $data);
-			$this->load->view('layouts/footer');
-		}
-	}
-
-	public function delete($id) {
 		$data = array(
 			'estado_persona' => 0,
 		);
-		$this->Personas_model->update($id, $data);
-		echo 'gestion/personas';
+		
+		if($this->Personas_model->update($persona_id, $data))
+		{
+			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+			$descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
+			$tabla_afectada = "PERSONA"; // Tabla afectada
+
+			$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+
+			echo 'gestion/personas';
+		};
 	}
 
 	/**
