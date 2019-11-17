@@ -17,13 +17,13 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="export-cursos" class="table table-bordered btn-hover">
+                        <table id="export-acciones" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Acción</th>
                                     <th>Usuario</th>
                                     <th>Descripción</th>
-                                    <th>Fecha</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -31,9 +31,9 @@
                                 <?php foreach($acciones as $accion): ?>
                                     <tr>
                                         <td><?php echo $accion->id_accion; ?></td>
+                                        <td><?php echo $accion->fecha_creacion; ?></td>
                                         <td><?php echo $accion->username_usuario; ?></td>
                                         <td><?php echo $accion->nombre_tipo_accion . ' ' .$accion->descripcion_accion; ?></td>
-                                        <td><?php echo $accion->fecha_creacion; ?></td>
                                     </tr>
                                  <?php endforeach; ?>
                                 <?php endif; ?>

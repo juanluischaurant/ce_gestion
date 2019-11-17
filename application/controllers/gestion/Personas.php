@@ -168,6 +168,13 @@ class Personas extends CI_Controller {
 		{
 			if($this->Personas_model->update($persona_id, $data))
 			{
+				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				$fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+				$descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
+				$tabla_afectada = "PERSONA"; // Tabla afectada
+
+				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+	
 				redirect(base_url().'gestion/personas');
 			}
 			else

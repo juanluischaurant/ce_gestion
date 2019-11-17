@@ -34,6 +34,11 @@ class Usuarios_model extends CI_Model {
         }
     }
 
+    /**
+     * Obtén lista de usuarios registrados en el sistema
+     *
+     * @return array
+     */
     public function get_usuarios()
     {
         $resultados = $this->db->select(

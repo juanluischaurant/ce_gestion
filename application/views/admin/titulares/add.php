@@ -88,7 +88,7 @@
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" disabled id="guardar-titular" class="btn btn-success btn-flat">Guardar</button>
+                                <button type="submit" id="guardar-titular" class="btn btn-success btn-flat">Guardar</button>
                             </div>
 
                         </form>
