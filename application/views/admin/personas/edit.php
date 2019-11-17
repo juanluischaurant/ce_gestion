@@ -30,35 +30,42 @@
 
                             <div class="form-group">
                                 <label for="cedula-persona">Cédula:</label>
-                                <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" disabled id="cedula-persona" name="cedula-persona" value='<?php echo $persona->cedula_persona; ?>'>
+                                <input type="text" class="form-control <?php echo !empty(form_error('cedula-persona'))? 'has-error' : '';?>" id="cedula-persona" name="cedula-persona" value='<?php echo $persona->cedula_persona; ?>'>
                                 <?php echo form_error('cedula-persona', '<span class="help-block">', '</span>'); ?>
                             </div>
 
                             <div class="form-group">
                                 <label for="nombre-persona">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-persona" name="nombre-persona" value="<?php echo $persona->nombres_persona; ?>" required>
+                                <input type="text" class="form-control" id="nombre-persona" name="nombre-persona" value="<?php echo $persona->nombres_persona; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido-persona">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-persona" name="apellido-persona" value="<?php echo $persona->apellidos_persona; ?>" required>
+                                <input type="text" class="form-control" id="apellido-persona" name="apellido-persona" value="<?php echo $persona->apellidos_persona; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="nacimiento-persona">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="nacimiento-persona" value="<?php echo $persona->fecha_nacimiento_persona; ?>" required>
+                                <input type="date" class="form-control" name="nacimiento-persona" value="<?php echo $persona->fecha_nacimiento_persona; ?>">
                             </div>
 
                             <div class="form-group">
-                            <?php
-                                $atributos = array('class' => 'form-control', 'required' =>'required');
-                                // Genera la etiquera
-                                echo form_label('Genero:');
+                                <?php
+                                    // Verifica si hay un valor seleccionado en la lista
+                                    $error = !empty(form_error('genero-persona'))? 'has-error' : '';
 
-                                // Genera el elemento "select"
-                                // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos
-                                echo form_dropdown('genero-persona', $lista_generos, $persona->genero_persona, $atributos);
-                            ?>
+                                    // Estructura el atributo class
+                                    $atributos = array('class' => 'form-control '.$error);
+
+                                    // Genera la etiquera
+                                    echo form_label('Genero:');
+
+                                    // Genera el elemento "select" (LA VARIABLE $lista_generos viene desde el controlador)
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos
+                                    echo form_dropdown('genero-persona', $lista_generos, $persona->genero_persona, $atributos);
+                                ?>
+                                <?php echo form_error('genero-persona', '<span class="help-block">', '</span>'); ?>
+
                             <!-- Fin del campo -->    
                             </div>
 

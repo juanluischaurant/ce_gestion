@@ -154,16 +154,11 @@ class Personas extends CI_Controller {
 		);
 
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
-		$this->form_validation->set_rules('cedula-persona', 'Cédula', 'required|trim|min_length[2]|max_length[10]');
-		$this->form_validation->set_rules('nombre-persona', 'Nombres', 'required|trim|min_length[2]|max_length[45]');
-		$this->form_validation->set_rules('apellido-persona', 'Apellidos', 'required|trim|min_length[2]|max_length[45]');
-		$this->form_validation->set_rules('genero-persona', 'Genero', 'required');
-		$this->form_validation->set_rules('telefono-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[12]');
-		$this->form_validation->set_rules('direccion-persona', 'Número de Teléfono', 'trim|min_length[6]|max_length[95]');
-		
+		// $this->form_validation->set_rules();
+
 
 		// Si la validación es correcta
-		if($this->form_validation->run())
+		if($this->form_validation->run('editar_persona'))
 		{
 			if($this->Personas_model->update($persona_id, $data))
 			{
@@ -200,5 +195,30 @@ class Personas extends CI_Controller {
 		);
 		$this->Personas_model->update($id, $data);
 		echo 'gestion/personas';
+	}
+
+	/**
+	 * Editar Cédula
+	 * 
+	 * Este método se declara para ser utilizado como regla de validación de formulario
+	 * personalizada. El método actualmente se llama desde el directorio personalizado 
+	 * config/form_validation.php
+	 *
+	 * @param integer $cedula
+	 * @return boolean
+	 */
+	public function edit_unique_cedula($cedula)
+	{
+		$this->db->where_not_in('persona_id', $this->input->post('id-persona'));
+		$this->db->where('cedula_persona', $cedula);
+
+		if($this->db->count_all_results('persona') > 0)
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
 	}
 }
