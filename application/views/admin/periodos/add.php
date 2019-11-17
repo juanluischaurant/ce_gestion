@@ -28,16 +28,40 @@
 
                         <form action="<?php echo base_url(); ?>gestion/periodos/store" method="post">
 
-                            <div class="form-group <?php echo !empty(form_error('mes-inicio'))? 'has-error' : '';?>">
-                                <label for="nombre">Mes de Inicio: </label>
-                                <input type="text" name="mes-inicio" id="mes-inicio" class="form-control" value="<?php echo set_value('mes-inicio');?>">
+                            <div class="form-group <?php echo !empty(form_error('mes-inicio'))? 'has-error' : ''; ?>">
+                                <?php
+                                    // Estructura el atributo class y concatena el valor anterior
+                                    $atributos = array('class' => 'form-control');
+
+                                    // Genera la etiquera
+                                    echo form_label('Mes de Inicio:');
+
+                                    // Genera el elemento "select" (LA VARIABLE $lista_meses viene desde el controlador)
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos HTML
+                                    echo form_dropdown('mes-inicio', $lista_meses, '', $atributos);
+                                ?>
                                 <?php echo form_error('mes-inicio', '<span class="help-block">', '</span>'); ?>
+
+                                <!-- Fin del campo -->  
                             </div>
 
-                            <div class="form-group <?php echo !empty(form_error('mes-cierre'))? 'has-error' : '';?>">
-                                <label for="nombre">Mes de Cierre: </label>
-                                <input type="text" name="mes-cierre" id="mes-cierre" class="form-control" value="<?php echo set_value('mes-cierre');?>">
+                            <div class="form-group <?php echo !empty(form_error('mes-cierre'))? 'has-error' : ''; ?>">
+                                <?php
+                                    // Verifica si hay un valor seleccionado en la lista, si no, imprime el valor 'has-error'
+
+                                    // Estructura el atributo class y concatena el valor anterior
+                                    $atributos = array('class' => 'form-control');
+
+                                    // Genera la etiquera
+                                    echo form_label('Mes de Cierre:');
+
+                                    // Genera el elemento "select" (LA VARIABLE $lista_meses viene desde el controlador)
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos HTML
+                                    echo form_dropdown('mes-cierre', $lista_meses, '', $atributos);
+                                ?>
+
                                 <?php echo form_error('mes-cierre', '<span class="help-block">', '</span>'); ?>
+                                <!-- Fin del campo -->  
                             </div>
   
                             <div class="form-group <?php echo !empty(form_error('year-periodo'))? 'has-error' : '';?>">

@@ -54,7 +54,8 @@ class Instancias_model extends CI_Model {
 
         $array[''] = 'Selecciona';
 
-        foreach($query->result() as $row) {
+        foreach($query->result() as $row)
+        {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
             $array[$row->id_turno] = $row->nombre_turno;

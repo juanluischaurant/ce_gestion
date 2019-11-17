@@ -39,6 +39,28 @@ JOIN `inscripcion` as `i` ON `i`.`id_inscripcion` = `ic`.`fk_id_inscripcion_1`
 
 WHERE `instancia`.`id_instancia` = 1
 
+-- Tabla mes
+CREATE TABLE `mes` (
+  `id_mes` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `nombre_mes`VARCHAR(13) NOT NULL COMMENT 'Meses del año' 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+
+INSERT INTO `mes`(`id_mes`, `nombre_mes`) VALUES (1, 'Enero'),
+(2, 'Febrero'),
+(3, 'Marzo'),
+(4, 'Abril'),
+(5, 'Mayo'),
+(6, 'Junio'),
+(7, 'Julio'),
+(8, 'Agosto'),
+(9, 'Septiembre'),
+(10, 'Octubre'),
+(11, 'Noviembre'),
+(12, 'Diciembre')
+
+
+--
+
 -- Usuarios de la base de datos
 the_data_architect
 car-dark-knight

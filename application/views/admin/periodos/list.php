@@ -26,6 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombre Período</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -36,6 +37,7 @@
                                     <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $periodo->id_periodo; ?></td>
+                                        <td><?php echo $periodo->fecha_creacion; ?></td>
                                         <td><?php echo $periodo->nombre_periodo; ?></td>                                 
                                         <td>
                                             <div class="btn-group">

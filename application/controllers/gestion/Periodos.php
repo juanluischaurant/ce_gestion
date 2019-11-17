@@ -8,7 +8,8 @@ class Periodos extends CI_Controller {
         $this->load->model('Periodos_model');  
     }
 
-    public function index() {
+	public function index()
+	{
 		$data = array(
 			'periodos' => $this->Periodos_model->getPeriodos(),
 		);
@@ -18,10 +19,14 @@ class Periodos extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function add() {
+	public function add()
+	{
+		$data = array(
+			'lista_meses' => $this->Periodos_model->meses_dropdown(),
+		);
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/periodos/add');
+        $this->load->view('admin/periodos/add', $data);
         $this->load->view('layouts/footer');
 	}
 	
@@ -34,7 +39,7 @@ class Periodos extends CI_Controller {
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
 		$this->form_validation->set_rules('mes-inicio', 'Mes de Inicio', 'required');
 		$this->form_validation->set_rules('mes-cierre', 'Mes de Cierre', 'required');
-		$this->form_validation->set_rules('year-periodo', 'Año', 'required');
+		$this->form_validation->set_rules('year-periodo', 'Año', 'required|numeric|exact_length[4]');
 		
 		// Si la validación es correcta
 		if($this->form_validation->run())
