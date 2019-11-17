@@ -26,6 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Creación</th>
                                     <th>Nombre Período</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -36,6 +37,7 @@
                                     <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $locacion->id_locacion; ?></td>
+                                        <td><?php echo $locacion->fecha_creacion; ?></td>
                                         <td><?php echo $locacion->nombre_locacion; ?></td>                                 
                                         <td>
                                             <div class="btn-group">
