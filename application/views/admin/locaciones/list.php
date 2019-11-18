@@ -26,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Fecha de Creación</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombre Período</th>
                                     <th>Opciones</th>
                                 </tr>

@@ -26,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Hora de Registro</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>

@@ -26,6 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombre</th>
                                     <th>Turno</th>
                                     <th>Cupos</th>
@@ -38,6 +39,7 @@
                                     <?php// print_r($instancia); ?> 
                                     <tr>
                                         <td><?php echo $instancia->id_instancia; ?></td>
+                                        <td><?php echo $instancia->fecha_creacion; ?></td>
                                         <td><?php echo $instancia->nombre_curso . " " . $instancia->periodo_academico; ?></td>
                                         <td><?php echo $instancia->nombre_turno; ?></td>
                                         <td><?php echo $instancia->total_cupos; ?></td>
