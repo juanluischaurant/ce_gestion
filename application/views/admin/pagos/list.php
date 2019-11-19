@@ -26,10 +26,10 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Regisro</th>
                                     <th>Número de Operación</th>
                                     <th>Monto</th>
                                     <th>Cédula Cliente</th>
-                                    <th>Operación Registrada</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -39,10 +39,10 @@
                                     <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $pago->id_pago; ?></td>
+                                        <td><?php echo $pago->fecha_registro_operacion; ?></td>
                                         <td><?php echo $pago->numero_operacion; ?></td>
                                         <td><?php echo $pago->monto_operacion; ?></td>
                                         <td><?php echo $pago->cedula_persona; ?></td>
-                                        <td><?php echo $pago->fecha_registro_operacion; ?></td>
                                         <td>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>

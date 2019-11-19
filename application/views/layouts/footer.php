@@ -799,19 +799,20 @@
             $('#modal-default .modal-body').html(html);
         });
 
-        $(document).on('click', '.btn-view-inscripcion', function() {
+        $(document).on('click', '.btn-view-inscripcion', function()
+        {
             dataInscripcion = $(this).val();
             datosInscripcion = dataInscripcion.split('*');
 
             id_curso_inscripcion = datosInscripcion[0];
-            id_inscripcion = datosInscripcion[1];
+            id_inscripcion = datosInscripcion[0];
 
             $.ajax({
                 url: base_url + 'movimientos/inscripciones/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {
-                    id_curso_inscripcion: id_curso_inscripcion,
+                    // id_curso_inscripcion: id_curso_inscripcion,
                     id_inscripcion: id_inscripcion
                     },
                 success: function(data) {

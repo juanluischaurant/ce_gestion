@@ -28,9 +28,11 @@ class Inscripciones_model extends CI_Model {
      */   
     public function getInscripciones() {
         $resultados = $this->db->select(
-            'inscripcion_curso.fk_id_inscripcion_1, 
+            'inscripcion_curso.fk_id_inscripcion_1,
+            inscripcion_curso.fk_id_curso_1, 
             inscripcion.hora_inscripcion, 
-            concat(curso.nombre_curso, " ", p.mes_inicio_periodo, "-", p.mes_cierre_periodo, " ", p.year_periodo) as nombre_completo_instancia,
+            concat(curso.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_completo_instancia,
+            concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_completo_participante,
             pe.cedula_persona,
             inscripcion_curso.id_inscripcion_curso')
         ->from('inscripcion_curso')
@@ -47,33 +49,47 @@ class Inscripciones_model extends CI_Model {
 
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
 
+        ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
+
         ->get();
 
         return $resultados->result();
     }
 
-    public function getInscripcion($id_inscripcion) {
-        // Obtén todas las inscripciones realizadas
-        // Método utilizado principalmente para generar la ficha de inscripción
+    /**
+     * Obtén un registro determinado de la tabla "inscripcion"
+     * 
+     * Método utilizado principalmente para generar la ficha de inscripción. Recibe
+     * un parámetro que es el ID de la inscripción.
+     *
+     * @param integer $id_inscripcion
+     * @return array
+     */
+    public function get_inscripcion($id_inscripcion)
+    {
         $resultado = $this->db->select(
-            'inscripcion.hora_inscripcion, 
-            inscripcion.monto_pagado,
-            inscripcion.precio_total,
-            inscripcion.descuento,
-            inscripcion.precio_final,
-            cliente.cedula_cliente,
-            concat(cliente.nombres_cliente, " ", cliente.apellidos_cliente) as nombre_completo_cliente,
-            cliente.direccion_cliente,
-            cliente.telefono_cliente')
-        ->from('inscripcion')
-        ->join('cliente', 'cliente.id_cliente = inscripcion.fk_id_participante_1')
-        ->where('inscripcion.id_inscripcion', $id_inscripcion)
+            'i.hora_inscripcion,
+            i.fecha_inscripcion,
+            i.monto_pagado,
+            i.precio_total,
+            i.descuento,
+            i.precio_final,
+            p.cedula_persona,
+            concat(p.nombres_persona, " ", p.apellidos_persona) as nombre_completo_participante,
+            p.direccion_persona,
+            p.telefono_persona')
+        ->from('inscripcion as i')
+        ->join('participante as par', 'par.id_participante = fk_id_participante_1')
+        ->join('persona as p', 'p.persona_id = par.fk_id_persona_2')
+        ->where('i.id_inscripcion', $id_inscripcion)
         ->get();
 
         return $resultado->row();
     }
     
-    public function getInscripcionCurso($id) {
+    public function getInscripcionCurso($id)
+    {
         // Obtén los cursos comprados en una inscripción
         // Método utilizado principalmente para generar la ficha de inscripción
         $resultado = $this->db->select(

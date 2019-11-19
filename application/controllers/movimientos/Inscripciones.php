@@ -182,12 +182,13 @@ class Inscripciones extends CI_Controller {
 	 *
 	 * @return void
 	 */
-	public function view() {
-		$id_inscripcion_curso = $this->input->post('id_curso_inscripcion');
+	public function view()
+	{
+		// $id_inscripcion_curso = $this->input->post('id_curso_inscripcion');
 		$id_inscripcion = $this->input->post('id_inscripcion');
 
 		$data = array(
-			'inscripcion' => $this->Inscripciones_model->getInscripcion($id_inscripcion),
+			'inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
 			'inscripciones_cursos' => $this->Inscripciones_model->getInscripcionCurso($id_inscripcion),
 			'pagos_de_inscripcion' => $this->Inscripciones_model->getPagoInscripcion($id_inscripcion)
 		);

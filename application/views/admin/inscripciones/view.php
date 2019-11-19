@@ -1,19 +1,17 @@
 
 <div class="row">
 	<div class="col-xs-12 text-center">
-		<b>CECAL Simón Rodriguez</b><br>
-		El Tigre, estado Anzoátegui<br>
-		0283-800.40.32 <br>
-		cecal@gmail.com
-	</div>
+		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
+        Persona registrada el día: <?php echo $inscripcion->fecha_inscripcion; ?>
+    </div>
 </div> <br>
 <div class="row">
 	<div class="col-xs-6">	
 		<b>PARTICIPANTE</b><br>
-		<b>Participante:</b> <?php echo $inscripcion->nombre_completo_cliente; ?> <br>
-		<b>Cédula:</b> <?php echo $inscripcion->cedula_cliente; ?><br>
-		<b>Teléfono:</b> <?php echo $inscripcion->telefono_cliente; ?> <br>
-		<b>Dirección:</b> <?php echo $inscripcion->direccion_cliente; ?><br>
+		<b>Participante:</b> <?php echo $inscripcion->nombre_completo_participante; ?> <br>
+		<b>Cédula:</b> <?php echo $inscripcion->cedula_persona; ?><br>
+		<b>Teléfono:</b> <?php echo $inscripcion->telefono_persona; ?> <br>
+		<b>Dirección:</b> <?php echo $inscripcion->direccion_persona; ?><br>
 	</div>	
 	<?php foreach($pagos_de_inscripcion as $pago_de_inscripcion): ?>
 	<div class="col-xs-6">	
@@ -22,9 +20,9 @@
 		<b>Serial Operación:</b> <?php echo $pago_de_inscripcion->serial_pago; ?><br>
 		<b># de Operación:</b> 001<br>
 		<b>Fecha de Operación:</b> 000001<br>
-		<b>Fecha de Pago:</b> 17/12/1990
-		<b>Cliente:</b> 17/12/1990
-		<b>Cédula:</b> 17/12/1990
+		<b>Fecha de Pago:</b> 17/12/1990<br>
+		<b>Cliente:</b> 17/12/1990<br>
+		<b>Cédula:</b> 17/12/1990<br>
 	</div>	
 	<?php endforeach; ?>
 </div>

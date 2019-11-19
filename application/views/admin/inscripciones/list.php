@@ -25,9 +25,10 @@
                         <table id="example1" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th># Inscripción</th>
-                                    <th>Hora Inscripción</th>
+                                    <th>#</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Instancia</th>
+                                    <th>Nombre Participante</th>
                                     <th>Cédula Participante</th>
                                     <th>Opciones</th>
                    
@@ -41,14 +42,14 @@
                                         <td><?php echo $inscripcion->fk_id_inscripcion_1; ?></td>
                                         <td><?php echo $inscripcion->hora_inscripcion; ?></td>
                                         <td><?php echo $inscripcion->nombre_completo_instancia; ?></td>
+                                        <td><?php echo $inscripcion->nombre_completo_participante; ?></td>
                                         <td><?php echo $inscripcion->cedula_persona; ?></td>
+                                        <?php $dataInscripcion =  $inscripcion->fk_id_curso_1; ?>
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
+                                                <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'><span class="fa fa-eye"></span></button>
                                                 <a href="<?php echo base_url() ?>gestion/participantes/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-
-                                                <button class="btn btn-info btn-view-inscripcion" value="<?php echo $inscripcion->id_inscripcion_curso.'*'.$inscripcion->fk_id_inscripcion_1; ?>" data-toggle="modal" data-target="#modal-default"><span class="fa fa-search"></span></button>
                                             </div>
                                         </td>
                                     </tr>
