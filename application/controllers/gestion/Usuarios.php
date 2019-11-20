@@ -27,7 +27,6 @@ class Usuarios extends CI_Controller {
             $this->load->model("Usuarios_model");
         }
     }
-
     
     public function index()
     {
@@ -89,6 +88,17 @@ class Usuarios extends CI_Controller {
         {
             $this->add();
         }
+    }
+
+    public function view()
+    {
+		$id_usuario = $this->input->post('id_inscripcion');
+
+		$data = array(
+			'usuario' => $this->Usuarios_model->get_usuario($id_usuario),
+		);
+
+		$this->load->view('admin/usuarios/view', $data);
     }
 
 }

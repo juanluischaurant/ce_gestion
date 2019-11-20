@@ -54,6 +54,23 @@ class Usuarios_model extends CI_Model {
     }
 
     /**
+     * Obtén los datos de un usuario en específico
+     *
+     * @return void
+     */
+    public function get_usuario($id_usuario)
+    {
+        $resultado = $this->db->select(
+            'u.*,
+            r.nombre_rol')
+        ->from('usuario as u')
+        ->join('rol as r', 'r.rol_id = u.fk_rol_id_1')
+        ->get();
+
+        return $resultado->row();
+    }
+
+    /**
      * Consulta la BD y obtiene una lista de todos los turnos disponibles
      * para luego almacenrla en un array que es retornado
      *
