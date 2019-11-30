@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1>
         Usuarios
-        <small>Nuevo</small>
+        <small>Editar</small>
         </h1>
     </section>
     <!-- Main content -->
@@ -23,30 +23,31 @@
                             </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/usuarios/store" method="POST" autocomplete="off">
+                        <form action="<?php echo base_url();?>gestion/usuarios/update" method="POST" autocomplete="off">
 
+                            <input type="hidden" class="form-control" id="id-usuario" name="id-usuario" value="<?php echo $usuario->id_usuario; ?>">
+                            
                             <div class="row form-group">
-                                <div class="col-md-4 <?php echo !empty(form_error('username-usuario')) ? 'has-error' : ''; ?>">
+                                <div class="col-md-4">
                                     <label for="username-usuario">Username:</label>
-                                    <input type="text" class="form-control" id="username-usuario" name="username-usuario" value="<?php echo set_value('username-usuario'); ?>">
-                                    <?php echo form_error('username-usuario', '<span class="help-block">', '</span>'); ?>
+                                    <input type="text" class="form-control" id="username-usuario" name="username-usuario" value="<?php echo $usuario->username_usuario; ?>">
                                 </div>
 
                                 <div class="col-md-6">                                
                                     <label for="password-usuario">Contraseña:</label>
-                                    <input type="password" class="form-control" id="password-usuario" name="password-usuario" autocomplete="new-password">
+                                    <input type="password" class="form-control" id="password-usuario" name="password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password_usuario ?>">
                                 </div>
                             </div>
 
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="nombre-usuario">Nombres:</label>
-                                    <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario">
+                                    <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario" value="<?php echo $usuario->nombres_usuario; ?>">
                                 </div>
 
                                 <div class="col-md-6">                                
                                     <label for="apellido-usuario">Apellidos:</label>
-                                    <input type="text" class="form-control" id="apellido-usuario" name="apellido-usuario">
+                                    <input type="text" class="form-control" id="apellido-usuario" name="apellido-usuario" value="<?php echo $usuario->apellidos_usuario; ?>">
                                 </div>
                             </div>
 
@@ -60,15 +61,15 @@
                                         echo form_label('Rol:');
 
                                         // Genera el elemento "select"
-                                        // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos
-                                        echo form_dropdown('rol-usuario', $roles_usuario, '', $atributos);
+                                        // Parámetros de form_dropdown: atributo name, valores de la lista, atributo a seleccionar para selected, atributos
+                                        echo form_dropdown('rol-usuario', $roles_usuario, $usuario->fk_rol_id_1, $atributos);
                                     ?>
                                     <!-- Fin del campo -->
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="email-usuario">Email:</label>
-                                    <input type="email" class="form-control" id="email-usuario" name="email-usuario">
+                                    <input type="email" class="form-control" id="email-usuario" name="email-usuario" value="<?php echo $usuario->email_usuario; ?>">
                                 </div>
                             </div>
 

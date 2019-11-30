@@ -52,6 +52,27 @@ class Usuarios extends CI_Controller {
 		$this->load->view('layouts/footer');
     }
     
+    
+	public function edit($id = NULL)
+	{
+		//  ¿$id es nulo?
+		if(!isset($id))
+		{
+			redirect(base_url().'gestion/usuarios/');
+		}
+		else
+		{
+			$data = array(
+				'usuario' => $this->Usuarios_model->get_usuario($id),
+				'roles' => $this->Usuarios_model->roles_dropdown()
+			);
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/usuarios/edit', $data);
+			$this->load->view('layouts/footer');
+		}
+	}
+
     public function store()
     {
         $nombres_usuario = $this->input->post('nombre-usuario');
@@ -92,7 +113,7 @@ class Usuarios extends CI_Controller {
 
     public function view()
     {
-		$id_usuario = $this->input->post('id_inscripcion');
+		$id_usuario = $this->input->post('id_usuario');
 
 		$data = array(
 			'usuario' => $this->Usuarios_model->get_usuario($id_usuario),
@@ -100,5 +121,77 @@ class Usuarios extends CI_Controller {
 
 		$this->load->view('admin/usuarios/view', $data);
     }
+
+    
+	public function update() 
+	{
+		$id_usuario = $this->input->post('id-usuario');
+
+		// $cedula = $this->input->post('cedula-usuario');
+		$nombres_usuario = $this->input->post('nombre-usuario');
+		$apellidos_usuario = $this->input->post('apellido-usuario');
+		$email_usuario = $this->input->post('email-usuario');
+		$username_usuario = $this->input->post('username-usuario');
+		$password_usuario = $this->input->post('nacimiento-usuario');
+		$rol_usuario = $this->input->post('rol-usuario');
+		$estado_usuario = $this->input->post('nacimiento-usuario');
+
+		$data = array(
+			'nombres_usuario' => $nombres_usuario,
+            'apellidos_usuario' => $apellidos_usuario,
+            'username_usuario' => $username_usuario,
+            // 'password_usuario' => sha1($password_usuario),
+            'fk_rol_id_1' => $rol_usuario,
+            'email_usuario' => $email_usuario
+		);
+
+		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
+		// $this->form_validation->set_rules();
+
+		// Si la validación es correcta
+		if($this->form_validation->run('editar_usuario'))
+		{
+			if($this->Usuarios_model->update($id_usuario, $data))
+			{
+				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+				// $descripcion_accion = "PERSONA ID: " . $usuario_id; // Texto de descripción de acción
+				// $tabla_afectada = "PERSONA"; // Tabla afectada
+
+				// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+	
+				redirect(base_url().'gestion/usuarios');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
+				redirect(base_url().'gestion/usuarios/edit'.$id_usuario);
+			}
+		}
+		else
+		{
+			// $this hace referencia al módulo donde es invocado
+			$this->edit($id_usuario);
+		}		
+	}
+
+    public function delete($id_usuario)
+	{
+		$data = array(
+			'estado_usuario' => 0,
+		);
+		
+		if($this->Usuarios_model->update($id_usuario, $data))
+		{
+			// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+			// $fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+			// $descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
+			// $tabla_afectada = "PERSONA"; // Tabla afectada
+
+			// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+
+			echo 'gestion/usuarios';
+		};
+	}
 
 }

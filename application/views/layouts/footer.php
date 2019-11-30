@@ -823,18 +823,14 @@
 
         $(document).on('click', '.btn-view-usuario', function()
         {
-            dataUsuario = $(this).val();
-            datosUsuario = dataUsuario.split('*');
-
-            id_usuario = datosUsuario[0];
-
+            id_usuario = $(this).val();
             $.ajax({
                 url: base_url + 'gestion/usuarios/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {
                     id_usuario: id_usuario
-                    },
+                },
                 success: function(data) {
                     $('#modal-default .modal-body').html(data);
                 }

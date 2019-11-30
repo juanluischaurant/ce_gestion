@@ -237,7 +237,8 @@ class Personas extends CI_Controller {
 	}
 
 	/**
-	 * Editar Cédula
+	 * Permite que al momento de actualizar la cédula de determinada persona, se verifique
+	 * que esta sea única o no al momento de realizar la edición.
 	 * 
 	 * Este método se declara para ser utilizado como regla de validación de formulario
 	 * personalizada. El método actualmente se llama desde el directorio personalizado 

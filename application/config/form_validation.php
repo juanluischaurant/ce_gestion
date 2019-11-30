@@ -78,8 +78,15 @@ $config = array(
             'field' => 'direccion-persona',
             'label' => 'Dirección',
             'rules' => 'trim|min_length[6]|max_length[95]'
-        ),
-    )
+        )
+    ),
+    'editar_usuario' => array(
+        array(
+            'field' => 'nombre-usuario',
+            'label' => 'Nombres',
+            'rules' => 'trim|min_length[2]|max_length[95]'
+        )
+    ),
 );
 
 

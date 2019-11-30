@@ -65,6 +65,7 @@ class Usuarios_model extends CI_Model {
             r.nombre_rol')
         ->from('usuario as u')
         ->join('rol as r', 'r.rol_id = u.fk_rol_id_1')
+        ->where('u.id_usuario', $id_usuario)
         ->get();
 
         return $resultado->row();
@@ -83,7 +84,8 @@ class Usuarios_model extends CI_Model {
 
         $array[''] = 'Selecciona';
 
-        foreach($query->result() as $row) {
+        foreach($query->result() as $row)
+        {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
             $array[$row->rol_id] = $row->nombre_rol;
@@ -96,5 +98,12 @@ class Usuarios_model extends CI_Model {
     {
         return $this->db->insert('usuario', $data);
     }
+
+    public function update($id, $data)
+    {
+        $this->db->where('id_usuario', $id);
+        return $this->db->update('usuario', $data);
+    }
+
 
 }

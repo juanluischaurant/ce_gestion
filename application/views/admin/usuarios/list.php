@@ -53,13 +53,13 @@
                                         <td><?php echo $usuario->email_usuario; ?></td>
                                         <td><?php echo $usuario->username_usuario; ?></td>
                                         <td><small class="label label-success"><?php echo $usuario->rol; ?></small></td>
-                                        <?php $dataUsuario = $usuario->id_usuario.'*'.$usuario->nombres_usuario.'*'.$usuario->apellidos_usuario.'*'.$usuario->email_usuario.'*'.$usuario->username_usuario; ?>
+                                        <?php $dataUsuario = $usuario->id_usuario; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-usuario" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataUsuario?>'><span class="fa fa-eye"></span></button>
                                                 <a href="<?php echo base_url() ?>gestion/usuarios/edit/<?php echo $usuario->id_usuario; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/usuarios/delete/<?php echo $usuario->id_usuario; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>
