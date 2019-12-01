@@ -80,7 +80,6 @@ $db['default'] = array(
 	'username' => 'root',
 	'password' => '',
 	'database' => '30_11_2019_ce_gestion',
-	// 'database' => 'ce_gestion_3',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

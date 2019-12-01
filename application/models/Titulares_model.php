@@ -6,7 +6,7 @@ class Titulares_model extends CI_Model {
     public function get_titulares()
     {
         $resultados = $this->db->select(
-            'per.persona_id,
+            'per.id_persona,
             per.cedula_persona,
             per.nombres_persona,
             per.apellidos_persona,
@@ -15,13 +15,13 @@ class Titulares_model extends CI_Model {
             per.telefono_persona,
             per.direccion_persona,
             per.estado_persona,
-            c.id_cliente,
+            c.id_titular,
             c.estado_cliente,
             c.fecha_registro_cliente,
             c.fk_id_persona_1,
             c.estado_cliente')
             ->from('persona as per')
-            ->join('titular as c', 'c.fk_id_persona_1 = per.persona_id')
+            ->join('titular as c', 'c.fk_id_persona_1 = per.id_persona')
             ->where('c.estado_cliente', '1') 
             ->get(); 
     
@@ -35,7 +35,7 @@ class Titulares_model extends CI_Model {
 
     public function update($id, $data)
     {
-        $this->db->where('id_cliente', $id);
+        $this->db->where('id_titular', $id);
         return $this->db->update('participante', $data);
     }
     
