@@ -34,7 +34,6 @@
                             <tbody>
                                 <?php if(!empty($locaciones)): ?>
                                 <?php foreach($locaciones as $locacion): ?>
-                                    <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $locacion->id_locacion; ?></td>
                                         <td><?php echo $locacion->fecha_creacion; ?></td>

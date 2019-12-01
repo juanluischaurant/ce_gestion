@@ -26,7 +26,7 @@
 
                         <form action="<?php echo base_url();?>gestion/personas/update" method="POST">
 
-                            <input type="hidden" name="id-persona" value="<?php echo $persona->persona_id;?>">
+                            <input type="hidden" name="id-persona" value="<?php echo $persona->id_persona;?>">
 
                             <div class="form-group">
                                 <label for="cedula-persona">Cédula:</label>

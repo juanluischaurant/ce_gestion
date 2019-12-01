@@ -29,7 +29,6 @@
                             <tbody>
                                 <?php if(!empty($cursos)): ?>
                                 <?php foreach($cursos as $curso): ?>
-                                    <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $curso->id_curso; ?></td>
                                         <td><?php echo $curso->nombre_curso; ?></td>

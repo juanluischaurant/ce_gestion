@@ -34,7 +34,6 @@
                             <tbody>
                                 <?php if(!empty($periodos)): ?>
                                 <?php foreach($periodos as $periodo): ?>
-                                    <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $periodo->id_periodo; ?></td>
                                         <td><?php echo $periodo->fecha_creacion; ?></td>

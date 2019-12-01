@@ -38,21 +38,21 @@
                                 <?php if(!empty($personas)): ?>
                                 <?php foreach($personas as $persona): ?>
                                     <tr>
-                                        <td><?php echo $persona->persona_id; ?></td>
+                                        <td><?php echo $persona->id_persona; ?></td>
                                         <td><?php echo $persona->fecha_registro_persona; ?></td>
                                         <td><?php echo $persona->nombres_persona; ?></td>
                                         <td><?php echo $persona->apellidos_persona; ?></td>
                                         <td><?php echo $persona->telefono_persona; ?></td>
                                         <td><?php echo $persona->cedula_persona; ?></td>
-                                        <?php $dataPersona = $persona->persona_id; ?>
+                                        <?php $dataPersona = $persona->id_persona; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
 
-                                                <a href="<?php echo base_url() ?>gestion/personas/edit/<?php echo $persona->persona_id; ?>" .
+                                                <a href="<?php echo base_url() ?>gestion/personas/edit/<?php echo $persona->id_persona; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
 
-                                                <a href="<?php echo base_url() ?>gestion/personas/delete/<?php echo $persona->persona_id; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/personas/delete/<?php echo $persona->id_persona; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>

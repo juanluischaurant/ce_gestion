@@ -36,7 +36,6 @@
                             <tbody>
                                 <?php if(!empty($instancias)): ?>
                                 <?php foreach($instancias as $instancia): ?>
-                                    <?php// print_r($instancia); ?> 
                                     <tr>
                                         <td><?php echo $instancia->id_instancia; ?></td>
                                         <td><?php echo $instancia->fecha_creacion; ?></td>

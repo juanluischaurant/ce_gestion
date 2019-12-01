@@ -36,7 +36,6 @@
                             <tbody>
                                 <?php if(!empty($pagos)): ?>
                                 <?php foreach($pagos as $pago): ?>
-                                    <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $pago->id_pago; ?></td>
                                         <td><?php echo $pago->fecha_registro_operacion; ?></td>

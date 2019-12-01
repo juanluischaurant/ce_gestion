@@ -6,7 +6,7 @@ class Personas_model extends CI_Model {
     public function getPersonas()
     {
         $resultados = $this->db->select(
-            'p.persona_id,
+            'p.id_persona,
             p.cedula_persona,
             p.nombres_persona,
             p.apellidos_persona,
@@ -32,7 +32,7 @@ class Personas_model extends CI_Model {
      */
     public function getPersona($id)
     {
-        $resultado = $this->db->where('persona_id', $id)
+        $resultado = $this->db->where('id_persona', $id)
         ->get('persona');
 
         return $resultado->row();
@@ -44,7 +44,7 @@ class Personas_model extends CI_Model {
 
     public function update($id, $data)
     {
-        $this->db->where('persona_id', $id);
+        $this->db->where('id_persona', $id);
         return $this->db->update('persona', $data);
     }
 
