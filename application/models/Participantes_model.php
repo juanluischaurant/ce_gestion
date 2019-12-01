@@ -6,7 +6,7 @@ class Participantes_model extends CI_Model {
 	public function getParticipantes() {
 
         $resultados = $this->db->select(
-            'per.persona_id,
+            'per.id_persona,
             per.cedula_persona,
             per.nombres_persona,
             per.apellidos_persona,
@@ -21,7 +21,7 @@ class Participantes_model extends CI_Model {
             par.fk_id_persona_2,
             par.estado_participante')
             ->from('persona as per')
-            ->join('participante as par', 'par.fk_id_persona_2 = per.persona_id')
+            ->join('participante as par', 'par.fk_id_persona_2 = per.id_persona')
             ->where('par.estado_participante', '1') 
             ->get(); 
     

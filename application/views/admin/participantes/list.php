@@ -37,16 +37,16 @@
                                 <?php if(!empty($participantes)): ?>
                                 <?php foreach($participantes as $participante): ?>
                                     <tr>
-                                        <td><?php echo $participante->persona_id; ?></td>
+                                        <td><?php echo $participante->id_persona; ?></td>
                                         <td><?php echo $participante->nombres_persona; ?></td>
                                         <td><?php echo $participante->apellidos_persona; ?></td>
                                         <td><?php echo $participante->telefono_persona; ?></td>
                                         <td><?php echo $participante->cedula_persona; ?></td>
-                                        <?php $dataParticipante = $participante->persona_id.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula_persona; ?>
+                                        <?php $dataParticipante = $participante->id_persona.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataParticipante?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>gestion/participantes/edit/<?php echo $participante->persona_id; ?>" .
+                                                <a href="<?php echo base_url() ?>gestion/participantes/edit/<?php echo $participante->id_persona; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
