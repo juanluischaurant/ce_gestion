@@ -18,10 +18,11 @@ class Inscripciones extends CI_Controller {
 	 *
 	 * @return void
 	 */
-    public function index() {
+	public function index()
+	{
 		// Almacena en el array $data una lista de inscripciones obtenida de la base de datos
 		$data = array(
-			"inscripciones" => $this->Inscripciones_model->getInscripciones() 
+			"inscripciones" => $this->Inscripciones_model->get_inscripciones() 
 		);
 
 		// Ensambla la vista y carga la información
@@ -189,8 +190,8 @@ class Inscripciones extends CI_Controller {
 
 		$data = array(
 			'inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
-			'inscripciones_cursos' => $this->Inscripciones_model->getInscripcionCurso($id_inscripcion),
-			'pagos_de_inscripcion' => $this->Inscripciones_model->getPagoInscripcion($id_inscripcion)
+			'inscripciones_cursos' => $this->Inscripciones_model->get_inscripcion_curso($id_inscripcion),
+			'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
 		);
 
 		$this->load->view('admin/inscripciones/view', $data);
@@ -226,6 +227,15 @@ class Inscripciones extends CI_Controller {
 		echo json_encode($participantes);
 	}
 
+	/**
+     * Método invocado al momento de agregar una instancia a la ficha de inscripción
+     * 
+     * Permite verificar que el participante seleccionado no se encuentre registrado en
+     * el curso seleccionado
+     *
+     * @param integer $id_instancia
+     * @return void
+     */
 	public function getParticipantesJSON() {
 		$valor = $this->input->post('id');
 		$participantes = $this->Inscripciones_model->getParticipantesJSON($valor);

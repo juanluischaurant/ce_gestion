@@ -670,8 +670,8 @@
         });
 
         // Al presionar este botón, imprimir en la vista los datos consultados
-        $('#btn-agregar-curso').on('click', function() {
-
+        $('#btn-agregar-curso').on('click', function()
+        {
             let data = $(this).val(); // Almacena los datos del atributo "value" del boton clickeado
 
             // Comprobar si la variable "data" está vacia o no

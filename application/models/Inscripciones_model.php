@@ -8,7 +8,8 @@ class Inscripciones_model extends CI_Model {
      *
      * @return void
      */
-    public function lastID() {
+    public function lastID()
+    {
         return $this->db->insert_id();
     }
     
@@ -18,7 +19,8 @@ class Inscripciones_model extends CI_Model {
      * @param array $data
      * @return void
      */
-    public function save($data) {
+    public function save($data)
+    {
 		return $this->db->insert("inscripcion",$data);
     }
 
@@ -26,24 +28,25 @@ class Inscripciones_model extends CI_Model {
      * Realiza consulta que retorna una lista de inscripciones realizadas
      * @return array
      */   
-    public function getInscripciones() {
+    public function get_inscripciones()
+    {
         $resultados = $this->db->select(
-            'inscripcion_curso.fk_id_inscripcion_1,
-            inscripcion_curso.fk_id_curso_1, 
-            inscripcion.hora_inscripcion, 
+            'ii.fk_id_inscripcion_1,
+            ii.fk_id_instancia_1,
+            ii.id_inscripcion_instancia, 
+            in.hora_inscripcion, 
             concat(curso.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_completo_instancia,
             concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_completo_participante,
-            pe.cedula_persona,
-            inscripcion_curso.id_inscripcion_curso')
-        ->from('inscripcion_curso')
+            pe.cedula_persona')
+        ->from('inscripcion_instancia as ii')
 
-        ->join('inscripcion', 'inscripcion.id_inscripcion = inscripcion_curso.fk_id_inscripcion_1')
+        ->join('inscripcion as in', 'in.id_inscripcion = ii.fk_id_inscripcion_1')
 
-        ->join('participante as par', 'par.id_participante = inscripcion.fk_id_participante_1')
+        ->join('participante as par', 'par.id_participante = in.fk_id_participante_1')
 
-        ->join('persona as pe', 'pe.persona_id = par.fk_id_persona_2')
+        ->join('persona as pe', 'pe.id_persona = par.fk_id_persona_2')
 
-        ->join('instancia', 'instancia.id_instancia = inscripcion_curso.fk_id_curso_1')
+        ->join('instancia', 'instancia.id_instancia = ii.fk_id_instancia_1')
 
         ->join('periodo as p', 'id_periodo = instancia.fk_id_periodo_1')
 
@@ -81,35 +84,49 @@ class Inscripciones_model extends CI_Model {
             p.telefono_persona')
         ->from('inscripcion as i')
         ->join('participante as par', 'par.id_participante = fk_id_participante_1')
-        ->join('persona as p', 'p.persona_id = par.fk_id_persona_2')
+        ->join('persona as p', 'p.id_persona = par.fk_id_persona_2')
         ->where('i.id_inscripcion', $id_inscripcion)
         ->get();
 
         return $resultado->row();
     }
     
-    public function getInscripcionCurso($id)
+    /**
+     * Obtén los cursos comprados en una inscripción
+     * 
+     * Método utilizado principalmente para generar la ficha de inscripción mostrada al presionar el botón
+     * de ver Inscripción
+     *
+     * @param integer $id
+     * @return void
+     */
+    public function get_inscripcion_curso($id_inscripcion)
     {
-        // Obtén los cursos comprados en una inscripción
-        // Método utilizado principalmente para generar la ficha de inscripción
         $resultado = $this->db->select(
-            'inscripcion_curso.fk_id_inscripcion_1, 
+            'ii.fk_id_inscripcion_1,
+            ii.id_inscripcion_instancia,
             concat(curso.nombre_curso, " ", mes_inicio_periodo, "-", mes_cierre_periodo, " ", periodo.year_periodo) as nombre_completo_instancia,
-            instancia.precio_instancia,
-            inscripcion_curso.id_inscripcion_curso')
-        ->from('inscripcion_curso')
-        ->join('instancia', 'instancia.id_instancia = inscripcion_curso.fk_id_curso_1')
+            instancia.precio_instancia')
+        ->from('inscripcion_instancia as ii')
+        ->join('instancia', 'instancia.id_instancia = ii.fk_id_instancia_1')
         ->join('periodo', 'id_periodo = instancia.fk_id_periodo_1')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
-        ->where('inscripcion_curso.fk_id_inscripcion_1 ', $id)
+        ->where('ii.fk_id_inscripcion_1 ', $id_inscripcion)
         ->get();
 
         return $resultado->result();
     }
 
-    public function getPagoInscripcion($id_inscripcion) {
-        // Obtén los pagos realizados en una inscripción
-        // Método utilizado principalmente para generar la ficha de inscripción
+    /**
+     * Obtén los pagos realizados en una inscripción
+     * 
+     * Método utilizado principalmente para generar la ficha de inscripción
+     *
+     * @param integer $id_inscripcion
+     * @return void
+     */
+    public function get_pago_inscripcion($id_inscripcion)
+    {
         $resultado = $this->db->select(
             'pago_de_inscripcion.*')
         ->from('pago_de_inscripcion')
@@ -135,17 +152,20 @@ class Inscripciones_model extends CI_Model {
     /**
      * Para comprobar si un participante está o no inscrito en un curso,
      * regresa una lista de todos los cursos donde el participante se encuentra registrado
+     * 
+     * Método llamado antes de almacenar la inscripción.
      */
-    public function participante_curso($id_curso) {
+    public function participante_curso($id_curso)
+    {
         $resultados = $this->db->select('pa.id_participante, 
         pe.nombres_persona, 
         cu.id_curso,
         cu.nombre_curso')
         ->from('participante as pa')
-        ->join('persona as pe', 'pe.persona_id = pa.fk_id_persona_2')
+        ->join('persona as pe', 'pe.id_persona = pa.fk_id_persona_2')
         ->join('inscripcion as in', 'in.fk_id_participante_1 = pa.id_participante')
-        ->join('inscripcion_curso as ic', 'ic.fk_id_inscripcion_1 = in.id_inscripcion')
-        ->join('instancia as it', 'it.id_instancia = ic.fk_id_curso_1')
+        ->join('inscripcion_curso as ii', 'ii.fk_id_inscripcion_1 = in.id_inscripcion')
+        ->join('instancia as it', 'it.id_instancia = ii.fk_id_instancia_1')
         ->join('curso as cu', 'cu.id_curso = it.fk_id_curso_1')
         ->where('pa.id_participante', $id_curso)
         ->get();
@@ -164,7 +184,8 @@ class Inscripciones_model extends CI_Model {
      * @param string $valor
      * @return array
      */
-    public function getInstanciasJSON($valor) {
+    public function getInstanciasJSON($valor)
+    {
         $resultados = $this->db->select(
             'instancia.id_instancia, 
             instancia.cupos_instancia, 
@@ -184,7 +205,17 @@ class Inscripciones_model extends CI_Model {
         return $resultados->result_array();
     } 
 
-    public function getParticipantesJSON($valor) {
+    /**
+     * Método invocado al momento de agregar una instancia a la ficha de inscripción
+     * 
+     * Permite verificar que el participante seleccionado no se encuentre registrado en
+     * el curso seleccionado
+     *
+     * @param integer $id_instancia
+     * @return void
+     */
+    public function getParticipantesJSON($id_instancia)
+    {
         $resultados = $this->db->select(
             'curso.nombre_curso,
             i.fk_id_participante_1'
@@ -193,9 +224,9 @@ class Inscripciones_model extends CI_Model {
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
         // Para consultar una lista de participantes inscritos en determinado curso
-        ->join('inscripcion_curso as ic', 'ic.fk_id_curso_1 = instancia.id_instancia')
-        ->join('inscripcion as i', 'i.id_inscripcion = ic.fk_id_inscripcion_1')
-        ->where('instancia.id_instancia',  $valor)
+        ->join('inscripcion_instancia as ii', 'ii.fk_id_instancia_1 = instancia.id_instancia')
+        ->join('inscripcion as i', 'i.id_inscripcion = ii.fk_id_inscripcion_1')
+        ->where('instancia.id_instancia',  $id_instancia)
         ->get();
 
         return $resultados->result_array();
@@ -222,8 +253,8 @@ class Inscripciones_model extends CI_Model {
             pe.cedula_persona'
             )
         ->from('pago_de_inscripcion as pi')
-        ->join('titular as c', 'c.id_cliente = pi.fk_id_cliente')
-        ->join('persona as pe', 'pe.persona_id = c.fk_id_persona_1');
+        ->join('titular as c', 'c.id_titular = pi.fk_id_titular')
+        ->join('persona as pe', 'pe.id_persona = c.fk_id_persona_1');
                 
         if($valor != '')
         {

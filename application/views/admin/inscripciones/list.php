@@ -44,7 +44,7 @@
                                         <td><?php echo $inscripcion->nombre_completo_instancia; ?></td>
                                         <td><?php echo $inscripcion->nombre_completo_participante; ?></td>
                                         <td><?php echo $inscripcion->cedula_persona; ?></td>
-                                        <?php $dataInscripcion =  $inscripcion->fk_id_curso_1; ?>
+                                        <?php $dataInscripcion =  $inscripcion->fk_id_instancia_1; ?>
 
                                         <td>
                                             <div class="btn-group">
