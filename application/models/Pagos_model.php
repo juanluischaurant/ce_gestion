@@ -10,12 +10,12 @@ class Pagos_model extends CI_Model {
       pdi.numero_operacion, 
       pdi.monto_operacion, 
       pdi.fecha_registro_operacion, 
-      cli.id_cliente,
+      ti.id_titular,
       per.cedula_persona'
     )
     ->from('pago_de_inscripcion as pdi')
-    ->join('titular as cli', 'cli.id_cliente = pdi.fk_id_cliente')
-    ->join('persona as per', 'per.persona_id = cli.fk_id_persona_1')
+    ->join('titular as ti', 'ti.id_titular = pdi.fk_id_titular')
+    ->join('persona as per', 'per.id_persona = ti.fk_id_persona_1')
     // ->where('instancia.estado_instancia', '1')
     ->get();
 
@@ -37,26 +37,29 @@ class Pagos_model extends CI_Model {
 		return $this->db->insert("pago_de_inscripcion",$data);
 	}
 
-	public function lastID() {
+  public function lastID()
+  {
 		return $this->db->insert_id();
-    }
+  }
     
-    public function updateConteoOperaciones($idOperacion,$data) {
-      $this->db->where("id_tipo_de_operacion",$idOperacion);
-      $this->db->update("tipo_de_operacion",$data);
-    }
+  public function updateConteoOperaciones($idOperacion,$data)
+  {
+    $this->db->where("id_tipo_de_operacion",$idOperacion);
+    $this->db->update("tipo_de_operacion",$data);
+  }
 
-    public function actualiza_estado_pago($id_pago)
-    {
-      $data = array(
-        'estado_pago' => 2
-      );
-      $this->db->where("id_pago",$id_pago);
-      $this->db->update("pago_de_inscripcion", $data);
-    }
+  public function actualiza_estado_pago($id_pago)
+  {
+    $data = array(
+      'estado_pago' => 2
+    );
+    $this->db->where("id_pago",$id_pago);
+    $this->db->update("pago_de_inscripcion", $data);
+  }
     
-    public function saveInscripcionCurso($data){
-		$this->db->insert("inscripcion_curso",$data);
+  public function saveInscripcionCurso($data)
+  {
+    $this->db->insert("inscripcion_curso",$data);
 	}
 
 
@@ -74,12 +77,12 @@ class Pagos_model extends CI_Model {
     public function get_titulares_json($valor)
     {
       $resultados = $this->db->select(
-        'cli.id_cliente, 
-        concat(per.nombres_persona, " ", per.apellidos_persona) as nombre_cliente, 
+        'ti.id_titular, 
+        concat(per.nombres_persona, " ", per.apellidos_persona) as nombre_titular, 
         per.cedula_persona as label'
       )
-        ->from('titular as cli')
-        ->join('persona as per', 'per.persona_id = cli.fk_id_persona_1')
+        ->from('titular as ti')
+        ->join('persona as per', 'per.id_persona = ti.fk_id_persona_1')
 
         ->like('per.cedula_persona', $valor)
 

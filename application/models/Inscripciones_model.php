@@ -37,7 +37,8 @@ class Inscripciones_model extends CI_Model {
             in.hora_inscripcion, 
             concat(curso.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_completo_instancia,
             concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_completo_participante,
-            pe.cedula_persona')
+            pe.cedula_persona'
+        )
         ->from('inscripcion_instancia as ii')
 
         ->join('inscripcion as in', 'in.id_inscripcion = ii.fk_id_inscripcion_1')
@@ -100,17 +101,20 @@ class Inscripciones_model extends CI_Model {
      * @param integer $id
      * @return void
      */
-    public function get_inscripcion_curso($id_inscripcion)
+    public function get_inscripcion_instancia($id_inscripcion)
     {
         $resultado = $this->db->select(
             'ii.fk_id_inscripcion_1,
             ii.id_inscripcion_instancia,
-            concat(curso.nombre_curso, " ", mes_inicio_periodo, "-", mes_cierre_periodo, " ", periodo.year_periodo) as nombre_completo_instancia,
-            instancia.precio_instancia')
+            concat(cu.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_completo_instancia,
+            instancia.precio_instancia'
+        )
         ->from('inscripcion_instancia as ii')
         ->join('instancia', 'instancia.id_instancia = ii.fk_id_instancia_1')
-        ->join('periodo', 'id_periodo = instancia.fk_id_periodo_1')
-        ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
+        ->join('curso as cu', 'cu.id_curso = instancia.fk_id_curso_1')
+        ->join('periodo as p', 'id_periodo = instancia.fk_id_periodo_1')
+        ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes')
+        ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
         ->where('ii.fk_id_inscripcion_1 ', $id_inscripcion)
         ->get();
 

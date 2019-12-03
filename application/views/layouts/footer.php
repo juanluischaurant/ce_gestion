@@ -356,11 +356,14 @@
 
                 $('#id-tipo-de-pago').val(infoTipoDePago[0]);
 
-                if(tipoDePago === 'Efectivo') {
+                if(tipoDePago === 'Efectivo')
+                {
                     $('#serial-de-pago').val('efe-'+generarNumero(infoTipoDePago[1]));
-                } else if(tipoDePago === 'Transferencia') {
+                } else if(tipoDePago === 'Transferencia')
+                {
                     $('#serial-de-pago').val('tra-'+generarNumero(infoTipoDePago[1]));
-                } else if(tipoDePago === 'Exonerado') {
+                } else if(tipoDePago === 'Exonerado')
+                {
                     $('#serial-de-pago').val('exo-'+generarNumero(infoTipoDePago[1]));
                 }
 
@@ -388,8 +391,8 @@
                 // Considera eliminar esta variable `data` no utilizada aquí
                 data = ui.item.id_titular+'*'+ui.item.label;
 
-                $('#nombre-titular').val(ui.item.nombre_cliente);
-                $('#id-titular').val(ui.item.id_cliente);
+                $('#nombre-titular').val(ui.item.nombre_titular);
+                $('#id-titular').val(ui.item.id_titular);
             }
         });
 
@@ -812,9 +815,8 @@
                 type: 'POST',
                 dataType: 'html',
                 data: {
-                    // id_curso_inscripcion: id_curso_inscripcion,
                     id_inscripcion: id_inscripcion
-                    },
+                },
                 success: function(data) {
                     $('#modal-default .modal-body').html(data);
                 }

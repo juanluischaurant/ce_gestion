@@ -60,7 +60,7 @@ class Pagos extends CI_Controller {
             $data = array(
                 'fk_id_banco' => $id_banco_operacion,
                 'fk_id_tipo_operacion' => $id_tipo_de_pago,
-                'fk_id_cliente' => $id_cliente,
+                'fk_id_titular' => $id_cliente,
                 'serial_pago' => $serial_de_pago,
                 'numero_operacion' => $numero_de_operacion,
                 'monto_operacion' => $monto_de_operacion,
@@ -117,6 +117,5 @@ class Pagos extends CI_Controller {
 		echo json_encode($bancos);
     }
     // Fin: Métodos utilizados para el pluggin AUTOCOMPLETE
-
 
 }
