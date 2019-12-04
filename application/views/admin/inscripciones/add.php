@@ -38,8 +38,7 @@
                                         <th>Número de Operación</th>
                                         <th>Monto de Operación</th>
                                         <th>Cédula</th>
-                                        <th>Monto</th>
-                                        <th></th>
+                                        <th>Opciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -65,6 +64,7 @@
                                     <input type="date" class="form-control" id="fecha-inscripcion" name="fecha-inscripcion" required>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="">Buscar Producto:</label>

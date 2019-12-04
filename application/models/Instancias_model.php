@@ -38,7 +38,7 @@ class Instancias_model extends CI_Model {
         // Obtén la instancia de un curso en específico
         $this->db->where('id_instancia', $idInstancia);
         $resultado = $this->db->get('instancia');
-        return $resultado->row(); 
+        return $resultado->row();
     }
 
     public function save($data) {

@@ -49,7 +49,7 @@
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>gestion/participantes/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <a href="<?php echo base_url() ?>movimientos/inscripciones/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                             </div>
                                         </td>
                                     </tr>

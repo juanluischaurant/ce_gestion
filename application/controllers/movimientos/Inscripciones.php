@@ -91,7 +91,35 @@ class Inscripciones extends CI_Controller {
 		{ 
 			redirect(base_url()."movimientos/inscripciones/add");
 		}
+	}
 
+	public function edit($id_inscripcion)
+	{
+		$data = array(
+			'data_instancias' => $this->Inscripciones_model->get_editar_instancia($id_inscripcion)
+		);
+		$this->load->view('layouts/header');
+		$this->load->view('layouts/aside');
+		$this->load->view('admin/inscripciones/edit', $data);
+		$this->load->view('layouts/footer');
+	}
+
+	/**
+	 * Carga la información específica de una inscripción
+	 *
+	 * @return void
+	 */
+	public function view()
+	{
+		$id_inscripcion = $this->input->post('id_inscripcion');
+
+		$data = array(
+			'inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
+			'inscripciones_cursos' => $this->Inscripciones_model->get_inscripcion_instancia($id_inscripcion),
+			'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
+		);
+
+		$this->load->view('admin/inscripciones/view', $data);
 	}
 
 	/**
@@ -181,23 +209,6 @@ class Inscripciones extends CI_Controller {
 		$this->Pagos_model->actualiza_estado_pago($id_pago);
 	}
 
-	/**
-	 * Carga la información específica de una inscripción
-	 *
-	 * @return void
-	 */
-	public function view()
-	{
-		$id_inscripcion = $this->input->post('id_inscripcion');
-
-		$data = array(
-			'inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
-			'inscripciones_cursos' => $this->Inscripciones_model->get_inscripcion_instancia($id_inscripcion),
-			'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
-		);
-
-		$this->load->view('admin/inscripciones/view', $data);
-	}
 
 	// =======================================================
 	// Métodos utilizados para el pluggin AUTOCOMPLETE

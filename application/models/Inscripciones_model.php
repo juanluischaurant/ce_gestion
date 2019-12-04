@@ -24,6 +24,29 @@ class Inscripciones_model extends CI_Model {
 		return $this->db->insert("inscripcion", $data);
     }
 
+    public function get_editar_instancia($id_inscripcion)
+    {
+        $resultados = $this->db->select(
+            'int.id_instancia,
+            int.cupos_instancia,
+            int.cupos_instancia_ocupados,
+            concat(cur.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", per.year_periodo) as nombre_completo_instancia,
+            int.precio_instancia'
+        )
+        ->from('inscripcion as insc')
+        ->join('inscripcion_instancia as ini', 'ini.fk_id_inscripcion_1 = insc.id_inscripcion')
+        ->join('instancia as int', 'int.id_instancia = ini.fk_id_instancia_1')
+        ->join('curso as cur', 'cur.id_curso = int.fk_id_curso_1')
+        ->join('periodo as per', 'id_periodo = int.fk_id_periodo_1')
+        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
+        ->where('insc.id_inscripcion', $id_inscripcion)
+
+        ->get();
+
+        return $resultados->result();
+    }
+
     /**
      * Realiza consulta que retorna una lista de inscripciones realizadas
      * @return array
