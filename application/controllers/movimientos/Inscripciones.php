@@ -32,7 +32,15 @@ class Inscripciones extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function add() {
+	/**
+	 * Añadir
+	 * 
+	 * Carga la vista que permite añadir una nueva inscripción
+	 *
+	 * @return void
+	 */
+	public function add()
+	{
 		$data = array(
 			"tiposPago" => $this->Pagos_model->getTiposDeOperacion(),
 			"participantes" => $this->Participantes_model->getParticipantes()
@@ -46,25 +54,20 @@ class Inscripciones extends CI_Controller {
 	public function store()
 	{
 		$fk_id_participante_1 = $this->input->post('id_participante');
-		// $fk_id_estatus_1 = ; <- Configurado automáticamente en 1
-		// $fk_id_pago_inscripcion_1 = ; <. No utilizado para almacenar en la tabla `inscripcion`
-		// $fk_id_usuario_1 = ; <= aur por configurar
 		$fecha_inscripcion = $this->input->post('fecha-inscripcion');
-		// $hora_inscripcion = ; <- Es calculada automátimamente a nivel de BD
-		// $hora_cancelada = ; <- No utilizada para esta operación
 		$monto_pagado = $this->input->post('monto-pagado');
 		$precio_total = $this->input->post('subtotal');
 		$descuento = $this->input->post('descuento');
 		$precio_final = $this->input->post('total');
-		// $activa = ; <- valor por defecto 1
 
-		// Llaves utilizadas para almacenar en la tabla inscripcion_curso
+		// Llaves utilizadas para almacenar en la tabla inscripcion_instancia
 		$fk_id_tipo_operacion = $this->input->post('fk_id_tipo_operacion');
 		$fk_id_curso = $this->input->post('idcursos');
 		$cupos_curso = $this->input->post('cuposcursos');
 		$ids_pago = $this->input->post('id-pago');
 
-		$data = Array(
+		// Datos a ser almacenados en la tabla Inscripcion
+		$data_inscripcion = Array(
 			'fk_id_participante_1' => $fk_id_participante_1,
 			'fecha_inscripcion' => $fecha_inscripcion,
 			'monto_pagado' => $monto_pagado,
@@ -73,9 +76,10 @@ class Inscripciones extends CI_Controller {
 			'precio_final' => $precio_final
 		);
 	
-		// Almacenar datos en la tabla "inscripcion"
-		if ($this->Inscripciones_model->save($data))
+		// Almacena datos en la tabla "inscripcion"
+		if ($this->Inscripciones_model->save($data_inscripcion))
 		{
+			// Obtén el ID de la última inscripción realizada
 			$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
 		
 			// Guarda los detalles de la inscripción
@@ -174,7 +178,6 @@ class Inscripciones extends CI_Controller {
 	 */
 	protected function actualiza_estado_pago($id_pago)
 	{		
-		// Considera cambiar el nombre de este método que fué renombrado incorrectamente
 		$this->Pagos_model->actualiza_estado_pago($id_pago);
 	}
 

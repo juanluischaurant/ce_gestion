@@ -21,7 +21,7 @@ class Inscripciones_model extends CI_Model {
      */
     public function save($data)
     {
-		return $this->db->insert("inscripcion",$data);
+		return $this->db->insert("inscripcion", $data);
     }
 
     /**
@@ -40,19 +40,12 @@ class Inscripciones_model extends CI_Model {
             pe.cedula_persona'
         )
         ->from('inscripcion_instancia as ii')
-
         ->join('inscripcion as in', 'in.id_inscripcion = ii.fk_id_inscripcion_1')
-
         ->join('participante as par', 'par.id_participante = in.fk_id_participante_1')
-
         ->join('persona as pe', 'pe.id_persona = par.fk_id_persona_2')
-
         ->join('instancia', 'instancia.id_instancia = ii.fk_id_instancia_1')
-
         ->join('periodo as p', 'id_periodo = instancia.fk_id_periodo_1')
-
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
-
         ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
         ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
 
@@ -124,7 +117,8 @@ class Inscripciones_model extends CI_Model {
     /**
      * Obtén los pagos realizados en una inscripción
      * 
-     * Método utilizado principalmente para generar la ficha de inscripción
+     * Método utilizado principalmente para generar la ficha de inscripción dentro de la vista
+     * "Generar Inscripción" al presionar el botón de ver detalles
      *
      * @param integer $id_inscripcion
      * @return void
