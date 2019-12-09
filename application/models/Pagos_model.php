@@ -57,9 +57,9 @@ class Pagos_model extends CI_Model {
     $this->db->update("pago_de_inscripcion", $data);
   }
     
-  public function saveInscripcionCurso($data)
+  public function save_inscripcion_instancia($data)
   {
-    $this->db->insert("inscripcion_curso",$data);
+    $this->db->insert("inscripcion_instancia",$data);
 	}
 
 

@@ -187,8 +187,6 @@ class Personas extends CI_Controller {
 		);
 
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
-		// $this->form_validation->set_rules();
-
 
 		// Si la validación es correcta
 		if($this->form_validation->run('editar_persona'))

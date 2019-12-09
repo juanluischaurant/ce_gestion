@@ -692,7 +692,8 @@
                 {
                     // Evita que el curso sea agregado
                     alert('El curso está lleno, por favor seleccione otro');
-                    $('#producto').val(''); // Vacía el elemento #producto
+                    // Vacía el elemento #producto
+                    $('#producto').val(''); 
                 } 
                 else 
                 {
@@ -702,6 +703,8 @@
                         url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
                         dataType: 'json',
                         data: {
+                            // "data-id-curso" es un atributo personalizado de HTML que almacena
+                            // el ID de la instnacia seleccionada
                             id: $(this).attr('data-id-curso')
                         },
                         success: function( data, textStatus, jQxhr )
@@ -758,7 +761,7 @@
             }
             else
             {
-                alert('Seleccione un curso');
+                alert('Seleccione una instancia');
             }
         });
 

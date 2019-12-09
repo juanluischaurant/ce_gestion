@@ -24,6 +24,16 @@ class Inscripciones_model extends CI_Model {
 		return $this->db->insert("inscripcion", $data);
     }
 
+    /**
+     * Obtén instancia inscrita
+     * 
+     * El presente método permite obtener la información de la instancia
+     * relacionada a la inscripción, esta data será mostrada al momento de
+     * cargar la vista de edición de inscripción.
+     *
+     * @param integer $id_inscripcion
+     * @return array
+     */
     public function get_editar_instancia($id_inscripcion)
     {
         $resultados = $this->db->select(
@@ -135,6 +145,24 @@ class Inscripciones_model extends CI_Model {
         ->get();
 
         return $resultado->result();
+    }
+
+    public function update_inscripcion_instancia($id_inscripcion_instancia, $data)
+    {
+        $this->db->where('id_inscripcion_instancia', $id_inscripcion_instancia);
+        return $this->db->update('inscripcion_instancia', $data);
+    }
+
+    public function get_id_inscripcion_instancia($id_inscripcion)
+    {
+        $resultado = $this->db->select(
+            'ii.id_inscripcion_instancia')
+        ->from('inscripcion as i')
+        ->join('inscripcion_instancia as ii', 'i.id_inscripcion = ii.fk_id_inscripcion_1')
+        ->where('ii.fk_id_inscripcion_1', $id_inscripcion)
+        ->get();
+
+        return $resultado->row();
     }
 
     /**

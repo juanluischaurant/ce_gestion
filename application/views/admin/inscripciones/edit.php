@@ -26,11 +26,13 @@
                         </div>
                         <?php endif; ?>
 
-                        <form action="" class="form-horizontal">
+                        <form action="<?php echo base_url();?>movimientos/inscripciones/update" method="POST" class="form-horizontal">
+                            <input type="hidden" name="id-inscripcion-instancia" value="<?php echo $data_inscripcion_instancia->id_inscripcion_instancia; ?>">
+                            
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="">Buscar Producto:</label>
-                                    <input type="text" class="form-control" id="producto" disabled="disabled">
+                                    <input type="text" class="form-control" id="producto">
                                 </div>
                                 <div class="col-md-2">
                                     <label for="">&nbsp;</label>
@@ -66,6 +68,12 @@
                                     <?php endif; ?>
                                 </tbody>
                             </table>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" id='actualizar-inscripcion' class="btn btn-success btn-flat">Guardar</button>
+                                </div>
+                                
+                            </div>
                         </form>
 
                     </div>
