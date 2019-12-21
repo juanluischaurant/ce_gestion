@@ -14,6 +14,11 @@
 <!-- jQuery UI -->
 <script src="<?php echo base_url();?>assets/template/jquery-ui/jquery-ui.js"></script>
 
+<!-- Highcharts -->
+<script src="<?php echo base_url();?>assets/template/highcharts/highcharts.js"></script>
+<script src="<?php echo base_url();?>assets/template/highcharts/exporting.js"></script>
+
+
 <!-- Bootstrap 3.3.7 -->
 <script src="<?php echo base_url();?>assets/template/bootstrap/js/bootstrap.min.js"></script>
 <!-- SlimScroll -->
@@ -45,9 +50,20 @@
         let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
         // URL base actual (Sujeto a cambios dependiendo de
         // la dirección real):http://localhost/ce_gestion/
-
         
         $('.sidebar-menu').tree(); // Menú lateral
+
+        // Invoca a la función encargada de generar el gráfico
+        let year_actual = (new Date).getFullYear();
+        grafico_inscripciones_mes(base_url, year_actual);
+
+        $('#year').on('change', function() {
+            let year_seleccionado = $this.val();
+
+            // Invoca a la función encargada de generar el gráfico
+            grafico_inscripciones_mes(base_url, year_seleccionado);
+        
+        })
 
         // =============================================
         // JS para DataTables
@@ -905,6 +921,86 @@
         }
 
     }
+
+    // Highcharts
+    
+    function grafico_inscripciones_mes(base_url, year)
+    {
+        let nombres_mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
+
+        $.ajax({
+            url: base_url + "dashboard/getData",
+            type: 'POST',
+            data: {year_inscripcion: year},
+            dataType: 'json',
+            success: function(data)
+            {
+                let meses_inscripciones = new Array(),
+                montos_generados = new Array();
+
+                $.each(data, function(key, value) {
+                    meses_inscripciones.push(nombres_mes[value.mes_inscripcion - 1]);
+                    let valor = Number(value.monto_generado);
+                    montos_generados.push(valor);
+                });
+                graficar(meses_inscripciones, montos_generados, year);
+            }
+        })
+    }
+
+    function graficar(meses_inscripciones, montos_generados, year)
+    {
+        Highcharts.chart('container', {
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Inscripciones por mes'
+            },
+            subtitle: {
+                text: 'Inscripciones ' + year
+            },
+            xAxis: {
+                categories: meses_inscripciones,
+                crosshair: true
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Participantes'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} participantes</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                },
+                series: {
+                    dataLabels: {
+                        enabled: true,
+                        formatter: function() {
+                            return Highcharts.numberFormat(this.y, 2)
+                        }
+                    }
+                }
+            },
+            series: [{
+                name: 'Participantes Inscritos',
+                data: montos_generados
+
+            }]
+        });
+    }
+
+
 
 </script>
 

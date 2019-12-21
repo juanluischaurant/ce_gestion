@@ -147,6 +147,13 @@ class Inscripciones_model extends CI_Model {
         return $resultado->result();
     }
 
+    /**
+     * Utilizada para actualizar datos de inscripción
+     *
+     * @param integer $id_inscripcion_instancia
+     * @param array $data
+     * @return void
+     */
     public function update_inscripcion_instancia($id_inscripcion_instancia, $data)
     {
         $this->db->where('id_inscripcion_instancia', $id_inscripcion_instancia);
@@ -280,6 +287,43 @@ class Inscripciones_model extends CI_Model {
 
         return $resultados->result_array();
     } 
+
+    /**
+     * Obtiene lista de los años correspondientes a las inscripciones registradas
+     * en la tabla "inscripcion".
+     *
+     * @return void
+     */
+    public function inscripcion_years()
+    {
+        $resultados = $this->db->select('YEAR(i.fecha_inscripcion) as year')
+        ->from('inscripcion as i')
+        ->group_by('year')
+        ->order_by('year', 'desc')
+        ->get();
+
+        return $resultados->result();
+    }
+    
+    /**
+     * Consulta en la base de datos el monto de ingresos generados por concepto
+     * de inscripciones, organizados por mes
+     *
+     * @param integer $year
+     * @return void
+     */
+    public function inscripcion_montos($year)
+    {
+        $resultados = $this->db->select('MONTH(i.fecha_inscripcion) as mes_inscripcion, SUM(i.monto_pagado) as monto_generado')
+        ->from('inscripcion as i')
+        ->where('fecha_inscripcion >=', $year.'-01-01')
+        ->where('fecha_inscripcion <=', $year.'-12-31')
+        ->group_by('mes_inscripcion')
+        ->order_by('mes_inscripcion')
+        ->get();
+
+        return $resultados->result(); 
+    }
     
     /**
      * Obtén lista de pagos realizados 
