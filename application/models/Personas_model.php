@@ -3,6 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Personas_model extends CI_Model {
 
+    
     public function getPersonas()
     {
         $resultados = $this->db->select(

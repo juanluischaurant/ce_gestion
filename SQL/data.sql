@@ -21,8 +21,8 @@ where participante.id_participante = 3
 
 
 
--- Participantes registrados en instancia
-SELECT `curso`.`nombre_curso`, `i`.`fk_id_participante_1`, 
+-- Titulares que pagaron en determinado curso
+SELECT `curso`.`nombre_curso`, `i`.`fk_id_participante_1`, tt.fk_id_persona_1,  p.nombres_persona 
 FROM `instancia` 
 
 JOIN `curso` 
@@ -46,7 +46,31 @@ ON tt.id_titular = pdi.fk_id_titular
 JOIN persona AS p
 ON p.id_persona = tt.fk_id_persona_1
 
-WHERE `instancia`.`id_instancia` = 1
+WHERE `instancia`.`id_instancia` = 2
+
+-- Participantes registrados en instancia
+SELECT `curso`.`nombre_curso`, `i`.`fk_id_participante_1`, par.fk_id_persona_2,  p.nombres_persona 
+FROM `instancia` 
+
+JOIN `curso` 
+ON `curso`.`id_curso` = `instancia`.`fk_id_curso_1` 
+
+JOIN `periodo` 
+ON `periodo`.`id_periodo` = `instancia`.`fk_id_periodo_1` 
+
+JOIN `inscripcion_instancia` as `ii` 
+ON `ii`.`fk_id_instancia_1` = `instancia`.`id_instancia` 
+
+JOIN `inscripcion` as `i` 
+ON `i`.`id_inscripcion` = `ii`.`fk_id_inscripcion_1` 
+
+JOIN participante as par
+ON par.id_participante = i.fk_id_participante_1
+
+JOIN persona AS p
+ON p.id_persona = par.fk_id_persona_2
+
+WHERE `instancia`.`id_instancia` = 2
 
 
 

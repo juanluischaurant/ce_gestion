@@ -20,7 +20,29 @@ class Instancias extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function add() {
+	/**
+	 * Estructura la vista que será mostrada cuando se llame
+	 * al método
+	 * 
+	 * El método está diseñado para ser llamado por medio del método
+	 * AJAX.
+	 *
+	 * @return void
+	 */
+	public function view()
+	{
+		$id_instancia = $this->input->post("id_instancia");
+
+		$data = array(
+			"participantes_inscritos" => $this->Instancias_model->get_participantes_inscritos($id_instancia),
+			'datos_instancia' => $this->Instancias_model->getInstancia($id_instancia)
+		);
+
+		$this->load->view("admin/instancias/view", $data);
+	}
+
+	public function add()
+	{
         $data = array(
 			'cursos' => $this->Cursos_model->getCursos(),
 			'lista_turnos' =>  $this->Instancias_model->turnos_dropdown()

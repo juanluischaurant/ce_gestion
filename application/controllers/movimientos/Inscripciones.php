@@ -274,7 +274,8 @@ class Inscripciones extends CI_Controller {
      * @param integer $id_instancia
      * @return void
      */
-	public function getParticipantesJSON() {
+	public function getParticipantesJSON()
+	{
 		$valor = $this->input->post('id');
 		$participantes = $this->Inscripciones_model->getParticipantesJSON($valor);
 		echo json_encode($participantes);

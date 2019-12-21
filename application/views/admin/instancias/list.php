@@ -44,7 +44,10 @@
                                         <td><?php echo $instancia->total_cupos; ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
+                                                <button type='button' class="btn btn-info btn-view-instancia" data-toggle='modal' data-target='#modal-default' value='<?php echo $instancia->id_instancia; ?>'>
+                                                    <span class="fa fa-eye"></span>
+                                                </button>
+                                                
                                                 <a href="<?php echo base_url() ?>gestion/instancias/edit/<?php echo $instancia->id_instancia; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
@@ -65,3 +68,24 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title text-center">Información de Instancia</h4>
+      </div>
+      <div class="modal-body">
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger center-block" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

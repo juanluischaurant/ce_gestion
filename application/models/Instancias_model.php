@@ -33,12 +33,25 @@ class Instancias_model extends CI_Model {
         return $resultados->result();
     }
 
+    /**
+     * Obtén datos relacionados a la instancia especificada
+     *
+     * @param integer $idInstancia
+     * @return array
+     */
     public function getInstancia($idInstancia)
     {
         // Obtén la instancia de un curso en específico
-        $this->db->where('id_instancia', $idInstancia);
-        $resultado = $this->db->get('instancia');
-        return $resultado->row();
+        $resultados = $this->db->select(
+            'ins.cupos_instancia_ocupados,
+            cur.nombre_curso'
+        )
+        ->from('instancia as ins')
+        ->join('curso as cur', 'cur.id_curso = ins.fk_id_curso_1')
+        ->where('ins.id_instancia', $idInstancia)
+        ->get('instancia');
+
+        return $resultados->row();
     }
 
     public function save($data) {
@@ -73,6 +86,35 @@ class Instancias_model extends CI_Model {
         return $array;
     }
 
+    
+    /**
+     * Permite realizar una consulta a la base de datos para obterner toda la información 
+     * sobre la persona con el ID indicado
+     *
+     * @param int $id_instancia
+     * @return array
+     */
+    public function get_participantes_inscritos($id_instancia)
+    {
+        $resultado = $this->db->select(
+            'in.id_instancia,
+            cu.nombre_curso,
+            insc.fecha_inscripcion,
+            per.nombres_persona,
+            per.cedula_persona'
+        )
+        ->from('instancia as in')
+        ->join('curso as cu', 'cu.id_curso = in.fk_id_curso_1')
+        ->join('periodo as pe', 'pe.id_periodo = in.fk_id_periodo_1')
+        ->join('inscripcion_instancia as ii', 'ii.fk_id_instancia_1 = in.id_instancia')
+        ->join('inscripcion as insc', 'insc.id_inscripcion = ii.fk_id_inscripcion_1')
+        ->join('participante as par', 'par.id_participante = insc.fk_id_participante_1')
+        ->join('persona as per', 'per.id_persona = par.fk_id_persona_2')
+        ->where('in.id_instancia', $id_instancia) 
+        ->get();
+
+        return $resultado->result();
+    }
     
     public function getPeriodosJSON($valor) 
     {

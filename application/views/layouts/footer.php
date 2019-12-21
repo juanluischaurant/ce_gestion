@@ -200,7 +200,7 @@
             }
         });
 
-        $('#export-inscripciones').DataTable( {
+        $('#export-inscripciones').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 {
@@ -851,6 +851,22 @@
                 dataType: 'html',
                 data: {
                     id_usuario: id_usuario
+                },
+                success: function(data) {
+                    $('#modal-default .modal-body').html(data);
+                }
+            });
+        });
+
+        $(document).on('click', '.btn-view-instancia', function()
+        {
+            let id_instancia = $(this).val();
+            $.ajax({
+                url: base_url + 'gestion/instancias/view',
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    id_instancia: id_instancia
                 },
                 success: function(data) {
                     $('#modal-default .modal-body').html(data);

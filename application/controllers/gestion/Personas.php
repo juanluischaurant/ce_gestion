@@ -73,7 +73,7 @@ class Personas extends CI_Controller {
 
 	public function edit($id = NULL)
 	{
-		//  ¿$id es nulo?
+		// ¿$id es nulo?
 		if(!isset($id))
 		{
 			redirect(base_url().'gestion/personas/');
