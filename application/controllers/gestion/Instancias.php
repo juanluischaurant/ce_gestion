@@ -113,7 +113,8 @@ class Instancias extends CI_Controller {
 		echo json_encode($locaciones);
     }
     
-    public function getFacilitadoresJSON() {
+	public function getFacilitadoresJSON()
+	{
 		$valor = $this->input->post('query');
 		$facilitadores = $this->Instancias_model->getFacilitadoresJSON($valor);
 		echo json_encode($facilitadores);

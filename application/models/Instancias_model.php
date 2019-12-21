@@ -106,18 +106,19 @@ class Instancias_model extends CI_Model {
         return $resultados->result_array();
     }
 
-    public function getFacilitadoresJSON($valor) {
-         // Obtén los registros de instancia de los profeores
+    public function getFacilitadoresJSON($valor)
+    {
+         // Obtén los registros de instancia de los profesores
          $resultados = $this->db->select(
             'f.id_facilitador,
             f.fk_id_persona_3,
-            p.persona_id,
+            p.id_persona,
             p.nombres_persona,
             p.apellidos_persona,
             concat(p.nombres_persona, " ", p.apellidos_persona) as label'
         )
         ->from('facilitador f')
-        ->join('persona as p', 'p.persona_id = f.fk_id_persona_3')
+        ->join('persona as p', 'p.id_persona = f.fk_id_persona_3')
         ->where('f.estado_facilitador', '1') 
         ->like('p.nombres_persona', $valor)
         ->or_like('p.apellidos_persona', $valor)

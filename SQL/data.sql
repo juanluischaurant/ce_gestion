@@ -1,25 +1,18 @@
--- Tabla persona
-INSERT INTO `persona`(`cedula_persona`, `nombres_persona`, `apellidos_persona`, `genero_persona`, `fecha_nacimiento_persona`, `telefono_persona`, `direccion_persona`, `estado_persona`) VALUES (22574648, 'Juan Luis', 'Chaurant', 'masculino', '1993-12-13', '04248900840', 'El Tigre, edo. Anzoátegui', 1)
-
--- Tabla facilitador
-INSERT INTO `facilitador`(`estado_facilitador`, `fecha_registro_facilitador`, `fk_id_persona_3`) VALUES (1, '2018-07-19', 1)
-
-
-
+-- Consulta los cursos en que está inscrito un participante 
 SELECT participante.id_participante, persona.nombres_persona, curso.nombre_curso
 FROM participante
 
 JOIN persona ON
-persona.persona_id = participante.fk_id_persona_2
+persona.id_persona = participante.fk_id_persona_2
 
 JOIN inscripcion ON
 inscripcion.fk_id_participante_1 = participante.id_participante
 
-JOIN inscripcion_curso ON
-inscripcion_curso.fk_id_inscripcion_1 = inscripcion.id_inscripcion
+JOIN inscripcion_instancia ON
+inscripcion_instancia.fk_id_inscripcion_1 = inscripcion.id_inscripcion
 
 JOIN instancia ON 
-instancia.id_instancia = inscripcion_curso.fk_id_curso_1
+instancia.id_instancia = inscripcion_instancia.fk_id_instancia_1
 
 JOIN curso ON
 curso.id_curso = instancia.fk_id_curso_1
@@ -29,15 +22,35 @@ where participante.id_participante = 3
 
 
 -- Participantes registrados en instancia
-SELECT `curso`.`nombre_curso`, `i`.`fk_id_participante_1` 
+SELECT `curso`.`nombre_curso`, `i`.`fk_id_participante_1`, 
 FROM `instancia` 
 
-JOIN `curso` ON `curso`.`id_curso` = `instancia`.`fk_id_curso_1` 
-JOIN `periodo` ON `periodo`.`id_periodo` = `instancia`.`fk_id_periodo_1` 
-JOIN `inscripcion_curso` as `ic` ON `ic`.`fk_id_curso_1` = `instancia`.`id_instancia` 
-JOIN `inscripcion` as `i` ON `i`.`id_inscripcion` = `ic`.`fk_id_inscripcion_1` 
+JOIN `curso` 
+ON `curso`.`id_curso` = `instancia`.`fk_id_curso_1` 
+
+JOIN `periodo` 
+ON `periodo`.`id_periodo` = `instancia`.`fk_id_periodo_1` 
+
+JOIN `inscripcion_instancia` as `ii` 
+ON `ii`.`fk_id_instancia_1` = `instancia`.`id_instancia` 
+
+JOIN `inscripcion` as `i` 
+ON `i`.`id_inscripcion` = `ii`.`fk_id_inscripcion_1` 
+
+JOIN pago_de_inscripcion AS pdi
+ON pdi.fk_id_inscripcion = i.id_inscripcion
+
+JOIN titular AS tt
+ON tt.id_titular = pdi.fk_id_titular
+
+JOIN persona AS p
+ON p.id_persona = tt.fk_id_persona_1
 
 WHERE `instancia`.`id_instancia` = 1
+
+
+
+
 
 -- Tabla mes
 CREATE TABLE `mes` (
