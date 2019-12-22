@@ -52,7 +52,6 @@ class Usuarios extends CI_Controller {
 		$this->load->view('layouts/footer');
     }
     
-    
 	public function edit($id = NULL)
 	{
 		//  ¿$id es nulo?, de ser verdad, redirecciona a la vista de lista
@@ -89,17 +88,17 @@ class Usuarios extends CI_Controller {
 		$apellidos_usuario = $this->input->post('apellido-usuario');
 		$email_usuario = $this->input->post('email-usuario');
 		$username_usuario = $this->input->post('username-usuario');
-		$password_usuario = $this->input->post('nacimiento-usuario');
+		$password_usuario = $this->input->post('password-usuario');
 		$rol_usuario = $this->input->post('rol-usuario');
-		$estado_usuario = $this->input->post('nacimiento-usuario');
+		$estado_usuario = $this->input->post('estado-usuario');
 
 		$data = array(
 			'nombres_usuario' => $nombres_usuario,
             'apellidos_usuario' => $apellidos_usuario,
+            'email_usuario' => $email_usuario,
             'username_usuario' => $username_usuario,
-            // 'password_usuario' => sha1($password_usuario),
-            'fk_rol_id_1' => $rol_usuario,
-            'email_usuario' => $email_usuario
+            'password_usuario' => sha1($password_usuario),
+            'fk_rol_id_1' => $rol_usuario
 		);
 
 		// Reglas declaradas para la validación de formularios en el directorio 
@@ -194,15 +193,41 @@ class Usuarios extends CI_Controller {
 		
 		if($this->Usuarios_model->update($id_usuario, $data))
 		{
-			// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-			// $fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-			// $descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
-			// $tabla_afectada = "PERSONA"; // Tabla afectada
+			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 1 = Desactivar) 
+			$descripcion_accion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
+			$tabla_afectada = "Usuario"; // Tabla afectada
 
-			// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+			$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 
 			echo 'gestion/usuarios';
 		};
+	}
+
+	/**
+	 * Permite que al momento de actualizar el nombre único de determinado usuario, se verifique
+	 * que esta sea único o no, al momento de realizar la edición.
+	 * 
+	 * Este método se declara para ser utilizado como regla de validación de formulario
+	 * personalizada. El método actualmente se llama desde el directorio personalizado 
+	 * application/config/form_validation.php
+	 *
+	 * @param integer $username
+	 * @return boolean
+	 */
+	public function edit_unique_usuario($username)
+	{
+		$this->db->where_not_in('id_usuario', $this->input->post('id-usuario'));
+		$this->db->where('username_usuario', $username);
+
+		if($this->db->count_all_results('usuario') > 0)
+		{
+			return false; // No se valida el campo
+		}
+		else
+		{
+			return true;
+		}
 	}
 
 }

@@ -6,8 +6,8 @@
             <!-- Content Header (Page header) -->
             <section class="content-header">
                 <h1>
-                Categoria
-                <small>Editar</small>
+                Principal
+                <small>Información</small>
                 </h1>
             </section>
             <!-- Main content -->

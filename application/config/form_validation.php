@@ -45,6 +45,8 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[95]'
         ),
     ),
+    // Usada en el controlador:
+    // gestion/personas/store
     'agregar_persona' => array(
         array(
             'field' => 'cedula-persona',
@@ -85,8 +87,11 @@ $config = array(
     'editar_usuario' => array(
         array(
             'field' => 'username-usuario',
-            'label' => 'Nombres',
-            'rules' => 'trim|min_length[2]|max_length[95]'
+            'label' => 'Nombre de Usuario',
+            'rules' => 'required|trim|min_length[2]|max_length[95]|callback_edit_unique_usuario',
+            'errors' => array(
+                'edit_unique_usuario' => 'Usuario existente. Por favor intenta de nuevo'
+            )
         ),
         array(
             'field' => 'password-usuario',

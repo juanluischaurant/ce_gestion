@@ -110,6 +110,11 @@ class Personas extends CI_Controller {
 		$this->load->view('layouts/footer');	
     }
 	
+	/**
+	 * Método invocado al presionar el botón de guardado en el formulario correspondiente
+	 *
+	 * @return void
+	 */
 	public function store() 
 	{
 		$cedula = $this->input->post("cedula-persona");
@@ -236,23 +241,23 @@ class Personas extends CI_Controller {
 
 	/**
 	 * Permite que al momento de actualizar la cédula de determinada persona, se verifique
-	 * que esta sea única o no al momento de realizar la edición.
+	 * que esta sea única o no, al momento de realizar la edición.
 	 * 
 	 * Este método se declara para ser utilizado como regla de validación de formulario
 	 * personalizada. El método actualmente se llama desde el directorio personalizado 
-	 * config/form_validation.php
+	 * application/config/form_validation.php
 	 *
 	 * @param integer $cedula
 	 * @return boolean
 	 */
 	public function edit_unique_cedula($cedula)
 	{
-		$this->db->where_not_in('persona_id', $this->input->post('id-persona'));
+		$this->db->where_not_in('id_persona', $this->input->post('id-persona'));
 		$this->db->where('cedula_persona', $cedula);
 
 		if($this->db->count_all_results('persona') > 0)
 		{
-			return false;
+			return false; // No se valida el campo
 		}
 		else
 		{
