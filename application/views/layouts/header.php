@@ -29,7 +29,7 @@
        <link rel="stylesheet" href="<?php echo base_url();?>assets/template/jquery-ui/jquery-ui.css">  
     
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">
     <!-- Site wrapper -->
     <div class="wrapper">
         <header class="main-header">

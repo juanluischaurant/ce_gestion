@@ -26,6 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>
@@ -38,6 +39,7 @@
                                 <?php foreach($participantes as $participante): ?>
                                     <tr>
                                         <td><?php echo $participante->id_persona; ?></td>
+                                        <td><?php echo $participante->fecha_registro_participante; ?></td>
                                         <td><?php echo $participante->nombres_persona; ?></td>
                                         <td><?php echo $participante->apellidos_persona; ?></td>
                                         <td><?php echo $participante->telefono_persona; ?></td>

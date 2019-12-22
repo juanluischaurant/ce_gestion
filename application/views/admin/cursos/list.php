@@ -34,6 +34,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombre</th>
                                     <th>Descripción</th>
                                     <th>Opciones</th>
@@ -45,6 +46,7 @@
                                     <?php// print_r($curso); ?> 
                                     <tr>
                                         <td><?php echo $curso->id_curso; ?></td>
+                                        <td><?php echo $curso->fecha_registro_curso; ?></td>
                                         <td><?php echo $curso->nombre_curso; ?></td>
                                         <td><?php echo $curso->descripcion_curso; ?></td>
                                         <td>

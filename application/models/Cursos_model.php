@@ -10,7 +10,8 @@ class Cursos_model extends CI_Model {
              cu.nombre_curso,
              cu.estado_curso,
              cu.descripcion_curso,
-             cu.veces_instanciado'
+             cu.veces_instanciado,
+             cu.fecha_registro_curso'
             )
          ->from('curso cu')
          ->where('cu.estado_curso', '1')

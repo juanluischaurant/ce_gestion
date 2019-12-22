@@ -35,6 +35,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Email</th>
@@ -48,6 +49,7 @@
                                 <?php foreach($usuarios as $usuario): ?>
                                     <tr>
                                         <td><?php echo $usuario->id_usuario; ?></td>
+                                        <td><?php echo $usuario->fecha_creacion; ?></td>
                                         <td><?php echo $usuario->nombres_usuario; ?></td>
                                         <td><?php echo $usuario->apellidos_usuario; ?></td>
                                         <td><?php echo $usuario->email_usuario; ?></td>
