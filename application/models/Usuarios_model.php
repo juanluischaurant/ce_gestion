@@ -73,7 +73,8 @@ class Usuarios_model extends CI_Model {
 
     /**
      * Consulta la BD y obtiene una lista de todos los turnos disponibles
-     * para luego almacenrla en un array que es retornado
+     * para luego almacenrla en un array que es retornado, el método se 
+     * utiliza para generar un elemento DROPDOWN HTML
      *
      * @return array
      */

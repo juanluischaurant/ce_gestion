@@ -28,14 +28,23 @@
                             <input type="hidden" class="form-control" id="id-usuario" name="id-usuario" value="<?php echo $usuario->id_usuario; ?>">
                             
                             <div class="row form-group">
-                                <div class="col-md-4">
+
+                                <div class="form-group col-md-4 <?php echo !empty(form_error('username-usuario')) ? 'has-error' : ''; ?>">
                                     <label for="username-usuario">Username:</label>
                                     <input type="text" class="form-control" id="username-usuario" name="username-usuario" value="<?php echo $usuario->username_usuario; ?>">
+                                    <?php echo form_error('username-usuario', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
-                                <div class="col-md-6">                                
+                                <div class="form-group col-md-6 <?php echo !empty(form_error('password-usuario')) ? 'has-error' : ''; ?>">                                
                                     <label for="password-usuario">Contraseña:</label>
                                     <input type="password" class="form-control" id="password-usuario" name="password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password_usuario ?>">
+                                    <?php echo form_error('password-usuario', '<span class="help-block">', '</span>'); ?>
+                                </div>
+
+                                <div class="form-group col-md-6 <?php echo !empty(form_error('confirmar-password-usuario')) ? 'has-error' : ''; ?>">                                
+                                    <label for="confirmar-password-usuario">Confirmar Contraseña:</label>
+                                    <input type="password" class="form-control" id="confirmar-password-usuario" name="confirmar-password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password_usuario ?>">
+                                    <?php echo form_error('confirmar-password-usuario', '<span class="help-block">', '</span>'); ?>
                                 </div>
                             </div>
 

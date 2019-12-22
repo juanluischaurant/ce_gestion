@@ -55,7 +55,7 @@ class Usuarios extends CI_Controller {
     
 	public function edit($id = NULL)
 	{
-		//  ¿$id es nulo?
+		//  ¿$id es nulo?, de ser verdad, redirecciona a la vista de lista
 		if(!isset($id))
 		{
 			redirect(base_url().'gestion/usuarios/');
@@ -73,6 +73,70 @@ class Usuarios extends CI_Controller {
 		}
 	}
 
+	 /**
+	  * Actualiza un usuario
+	  *
+	  * Método llamado al momento de presionar el botón de guardar en el módulo de edición
+	  *
+	  * @return void
+	  */ 
+	public function update() 
+	{
+		$id_usuario = $this->input->post('id-usuario');
+
+		// $cedula = $this->input->post('cedula-usuario');
+		$nombres_usuario = $this->input->post('nombre-usuario');
+		$apellidos_usuario = $this->input->post('apellido-usuario');
+		$email_usuario = $this->input->post('email-usuario');
+		$username_usuario = $this->input->post('username-usuario');
+		$password_usuario = $this->input->post('nacimiento-usuario');
+		$rol_usuario = $this->input->post('rol-usuario');
+		$estado_usuario = $this->input->post('nacimiento-usuario');
+
+		$data = array(
+			'nombres_usuario' => $nombres_usuario,
+            'apellidos_usuario' => $apellidos_usuario,
+            'username_usuario' => $username_usuario,
+            // 'password_usuario' => sha1($password_usuario),
+            'fk_rol_id_1' => $rol_usuario,
+            'email_usuario' => $email_usuario
+		);
+
+		// Reglas declaradas para la validación de formularios en el directorio 
+		// application/config/form_validation.php
+		if($this->form_validation->run('editar_usuario')) // Si la validación es correcta
+		{
+			if($this->Usuarios_model->update($id_usuario, $data))
+			{
+				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+				// $descripcion_accion = "PERSONA ID: " . $usuario_id; // Texto de descripción de acción
+				// $tabla_afectada = "PERSONA"; // Tabla afectada
+
+				// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+	
+				redirect(base_url().'gestion/usuarios');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
+				redirect(base_url().'gestion/usuarios/edit'.$id_usuario);
+			}
+		}
+		else
+		{
+			// $this hace referencia al módulo donde es invocado
+			$this->edit($id_usuario);
+		}		
+	}
+
+	/**
+	 * Almacenar un usuario
+	 * 
+	 * Método llamado al momento de presionar el botón de guardado en el formulario correspondiente
+	 *
+	 * @return void
+	 */
     public function store()
     {
         $nombres_usuario = $this->input->post('nombre-usuario');
@@ -121,59 +185,6 @@ class Usuarios extends CI_Controller {
 
 		$this->load->view('admin/usuarios/view', $data);
     }
-
-    
-	public function update() 
-	{
-		$id_usuario = $this->input->post('id-usuario');
-
-		// $cedula = $this->input->post('cedula-usuario');
-		$nombres_usuario = $this->input->post('nombre-usuario');
-		$apellidos_usuario = $this->input->post('apellido-usuario');
-		$email_usuario = $this->input->post('email-usuario');
-		$username_usuario = $this->input->post('username-usuario');
-		$password_usuario = $this->input->post('nacimiento-usuario');
-		$rol_usuario = $this->input->post('rol-usuario');
-		$estado_usuario = $this->input->post('nacimiento-usuario');
-
-		$data = array(
-			'nombres_usuario' => $nombres_usuario,
-            'apellidos_usuario' => $apellidos_usuario,
-            'username_usuario' => $username_usuario,
-            // 'password_usuario' => sha1($password_usuario),
-            'fk_rol_id_1' => $rol_usuario,
-            'email_usuario' => $email_usuario
-		);
-
-		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
-		// $this->form_validation->set_rules();
-
-		// Si la validación es correcta
-		if($this->form_validation->run('editar_usuario'))
-		{
-			if($this->Usuarios_model->update($id_usuario, $data))
-			{
-				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-				// $descripcion_accion = "PERSONA ID: " . $usuario_id; // Texto de descripción de acción
-				// $tabla_afectada = "PERSONA"; // Tabla afectada
-
-				// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
-	
-				redirect(base_url().'gestion/usuarios');
-			}
-			else
-			{
-				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'gestion/usuarios/edit'.$id_usuario);
-			}
-		}
-		else
-		{
-			// $this hace referencia al módulo donde es invocado
-			$this->edit($id_usuario);
-		}		
-	}
 
     public function delete($id_usuario)
 	{

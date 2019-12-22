@@ -131,7 +131,7 @@ class Personas extends CI_Controller {
 			'estado_persona' => '1'
 		);
 		
-		// Reglas declaradas para la validación de formularios en el directorio config/form_validation.php
+		// Reglas declaradas para la validación de formularios en el directorio application/config/form_validation.php
 		// Si la validación es correcta
 		if($this->form_validation->run('agregar_persona'))
 		{

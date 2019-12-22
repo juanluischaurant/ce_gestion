@@ -3,9 +3,9 @@
 /**
  * Este archivo fué creado para almacenar reglas de validación a raíz de una investigación
  * en búsqueda de un método para crear validaciones personalizadas.
- * 
+ *
  * Enlaces de Interés:
- * 
+ *
  * https://stackoverflow.com/questions/27621250/is-unique-in-codeigniter-for-edit-function
  */
 
@@ -80,12 +80,24 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[95]'
         )
     ),
+    // Usada en: Editar Usuario
     'editar_usuario' => array(
         array(
-            'field' => 'nombre-usuario',
+            'field' => 'username-usuario',
             'label' => 'Nombres',
             'rules' => 'trim|min_length[2]|max_length[95]'
-        )
+        ),
+        array(
+            'field' => 'password-usuario',
+            'label' => 'Contraseña',
+            'rules' => 'trim|min_length[2]|max_length[15]'
+        ),
+        array(
+            'field' => 'confirmar-password-usuario',
+            'label' => 'Comfirm Contraseña',
+            'rules' => 'matches[password-usuario]|min_length[2]|max_length[15]'
+        ),
+
     ),
 );
 
