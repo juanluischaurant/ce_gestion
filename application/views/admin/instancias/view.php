@@ -21,9 +21,10 @@
 			</thead>
 			<tbody>
 				<?php if(!empty($participantes_inscritos)): ?>
+					<?php $contador = 1; ?>
 					<?php foreach($participantes_inscritos as $participante_inscrito): ?>
 					<tr>
-						<td></td>
+						<td><?php echo $contador++; ?></td>
 						<td><?php echo $participante_inscrito->fecha_inscripcion; ?></td>
 						<td><?php echo $participante_inscrito->nombres_persona; ?></td>
 						<td><?php echo $participante_inscrito->cedula_persona; ?></td>

@@ -6,7 +6,8 @@ class Instancias extends CI_Controller {
 	public function __construct() {
         parent::__construct();
         $this->load->model('Instancias_model');  
-        $this->load->model('Cursos_model');  
+		$this->load->model('Cursos_model');  
+		include APPPATH . 'third_party/fpdf/lista_asistencia.class.php';
     }
 
 	public function index() 
@@ -146,5 +147,55 @@ class Instancias extends CI_Controller {
 	// Métodos utilizados para el pluggin AUTOCOMPLETE
 	// =======================================================
 	
+	/**
+	 * Genera lista de asistencia en formato pdf lista para ser impresa
+	 * 
+	 * Este método utliza la librería FPDF, que se almacena en el directorio:
+	 * application/third_party/fpdf
+	 *
+	 * @param integer $id_instancia
+	 * @return void
+	 */
+	public function generate_pdf($id_instancia)
+	{
+		$instancia = $this->Instancias_model->getInstancia($id_instancia);
+
+		// Instancia la clase PDF
+		$pdf = new PDF('L', 'mm', 'A4');
+		
+		// Setter que permite pasar el valor de $id_curso a la función Header()
+		// de fpdf antes de que la página pdf sea renderizada
+		$pdf->set_id_instancia($id_instancia);
+
+		$pdf->set_datos_instancia($instancia->nombre_curso, $instancia->periodo, $instancia->locacion_instancia);
+		
+		// Renderiza la página pdf
+		$pdf->AddPage();
+		
+		$participantes = $this->Instancias_model->get_participantes_inscritos($id_instancia);
+		// $participantes = json_decode($participantes, true);
+		$i = 1;
+
+		foreach($participantes as $participante)
+		{
+			if($participante->estado_participante == '2')
+			{
+				continue;
+			}
+			else
+			{
+				$pdf->Cell(6, 6, $i++, 1, 0, 'C');
+				$pdf->Cell(69,6, utf8_decode($participante->nombres_persona) . " " . utf8_decode($participante->apellidos_persona), 1, 0, 'C');
+				$pdf->Cell(28,6, $participante->cedula_persona,1,0,'C');
+				$pdf->Cell(34,6,'',1,0,'C');
+				$pdf->Cell(34,6,'',1,0,'C');
+				$pdf->Cell(34,6,'',1,0,'C');
+				$pdf->Cell(34,6,'',1,0,'C');
+				$pdf->Cell(34,6,'',1,1,'C');
+			}
+		}
+
+		$pdf->Output();
+	}
 
 }

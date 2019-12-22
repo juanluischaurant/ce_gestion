@@ -47,8 +47,12 @@
                                                 <button type='button' class="btn btn-info btn-view-instancia" data-toggle='modal' data-target='#modal-default' value='<?php echo $instancia->id_instancia; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                
-                                                <a href="<?php echo base_url() ?>gestion/instancias/edit/<?php echo $instancia->id_instancia; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/instancias/edit/<?php echo $instancia->id_instancia; ?>" class="btn btn-warning">
+                                                    <span class="fa fa-pencil"></span>
+                                                </a>
+                                                <a href="<?php echo base_url() ?>gestion/instancias/generate_pdf/<?php echo $instancia->id_instancia; ?>" class="btn btn-primary btn-print" target="_blank">
+                                                    <span class="fa fa-print"> </span>
+                                                </a>  
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
@@ -82,7 +86,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger center-block" data-dismiss="modal">Cerrar</button>
-      </div>
+    </div>
     </div>
     <!-- /.modal-content -->
   </div>

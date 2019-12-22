@@ -44,10 +44,14 @@ class Instancias_model extends CI_Model {
         // Obtén la instancia de un curso en específico
         $resultados = $this->db->select(
             'ins.cupos_instancia_ocupados,
-            cur.nombre_curso'
+            cur.nombre_curso,
+            concat(per.mes_inicio_periodo, " - ", per.mes_cierre_periodo, " ", per.year_periodo) as periodo,
+            loc.nombre_locacion as locacion_instancia'
         )
         ->from('instancia as ins')
         ->join('curso as cur', 'cur.id_curso = ins.fk_id_curso_1')
+        ->join('periodo as per', 'per.id_periodo = ins.fk_id_periodo_1')
+        ->join('locacion as loc', 'loc.id_locacion = ins.fk_id_locacion_1')
         ->where('ins.id_instancia', $idInstancia)
         ->get('instancia');
 
@@ -100,7 +104,9 @@ class Instancias_model extends CI_Model {
             'in.id_instancia,
             cu.nombre_curso,
             insc.fecha_inscripcion,
+            par.estado_participante,
             per.nombres_persona,
+            per.apellidos_persona,
             per.cedula_persona'
         )
         ->from('instancia as in')
