@@ -80,7 +80,8 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[95]'
         )
     ),
-    // Usada en: Editar Usuario
+    // Usada en el controlador:
+    // gestion/usuarios/update
     'editar_usuario' => array(
         array(
             'field' => 'username-usuario',

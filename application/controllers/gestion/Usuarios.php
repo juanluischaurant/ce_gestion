@@ -15,16 +15,16 @@ class Usuarios extends CI_Controller {
     {
         parent::__construct();
         
-        // Si el usuario no ha iniciado sesión
-		if(!$this->session->userdata('login'))
+		if(!$this->session->userdata('login')) // Si el usuario no ha iniciado sesión
 		{
 			// redirigelo al inicio de la aplicación
             redirect(base_url());
         }
         else
         {
-            // Carga el controlador
+            // Carga el modélo
             $this->load->model("Usuarios_model");
+            $this->load->model("Acciones_model");
         }
     }
     
@@ -108,12 +108,12 @@ class Usuarios extends CI_Controller {
 		{
 			if($this->Usuarios_model->update($id_usuario, $data))
 			{
-				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-				// $descripcion_accion = "PERSONA ID: " . $usuario_id; // Texto de descripción de acción
-				// $tabla_afectada = "PERSONA"; // Tabla afectada
+				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión activa
+				$fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3 = modificar) 
+				$descripcion_accion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
+				$tabla_afectada = "Usuario"; // Tabla afectada
 
-				// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
 				redirect(base_url().'gestion/usuarios');
 			}
@@ -123,7 +123,7 @@ class Usuarios extends CI_Controller {
 				redirect(base_url().'gestion/usuarios/edit'.$id_usuario);
 			}
 		}
-		else
+		else // la validación no es correcta
 		{
 			// $this hace referencia al módulo donde es invocado
 			$this->edit($id_usuario);
