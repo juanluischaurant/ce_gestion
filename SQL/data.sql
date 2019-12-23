@@ -112,6 +112,11 @@ CREATE TABLE menu(
   `enlace_menu` varchar(250) COLLATE latin1_general_ci NOT NULL COMMENT 'Controlador al que se relaciona este menú'
 )
 
+INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Usuarios', 'administrador/usuarios');
+INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Permisos', 'administrador/permisos')
+INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Personas', 'gestion/personas')
+
+
 CREATE TABLE permiso(
   `id_permiso` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la tabla',
   `fk_id_menu_1` int,

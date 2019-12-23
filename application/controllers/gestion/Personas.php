@@ -11,9 +11,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Personas extends CI_Controller {
 
+	private $permisos;
+
 	public function __construct()
 	{
 		parent::__construct();	
+
+		// El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
 		
         // Si el usuario no ha iniciado sesión
 		if(!$this->session->userdata('login'))
@@ -32,6 +38,7 @@ class Personas extends CI_Controller {
 	public function index()
 	{
 		$data = array(
+			'permisos' => $this->permisos,
 			'personas' => $this->Personas_model->getPersonas(),
 		);
 		$this->load->view('layouts/header');

@@ -10,10 +10,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
  */
 class Permisos extends CI_Controller {
+    
+    private $permisos;
 
     public function __construct()
     {
         parent::__construct();
+
+		// El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
         
 		if(!$this->session->userdata('login')) // Si el usuario no ha iniciado sesión
 		{

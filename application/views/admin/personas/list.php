@@ -12,11 +12,15 @@
         <!-- Default box -->
         <div class="box box-solid">
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/personas/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Persona</a>
+                <?php if($permisos->insert == 1): ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="<?php echo base_url(); ?>gestion/personas/add" class="btn btn-primary btn-flat">
+                                <span class="fa fa-plus"></span> Agregar Persona
+                            </a>
+                        </div>
                     </div>
-                </div>
+                <?php endif; ?>
                 
                 <hr>
 
@@ -49,10 +53,18 @@
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
 
-                                                <a href="<?php echo base_url() ?>gestion/personas/edit/<?php echo $persona->id_persona; ?>" .
-                                                class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <?php if($permisos->update == 1): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/personas/edit/<?php echo $persona->id_persona; ?>" .
+                                                class="btn btn-warning">
+                                                        <span class="fa fa-pencil"></span>
+                                                    </a>
+                                                <?php endif; ?>  
 
-                                                <a href="<?php echo base_url() ?>gestion/personas/delete/<?php echo $persona->id_persona; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
+                                                <?php if($permisos->delete == 1): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/personas/delete/<?php echo $persona->id_persona; ?>" class="btn btn-danger btn-remove">
+                                                        <span class="fa fa-remove"></span>
+                                                    </a>
+                                                <?php endif; ?>  
                                             </div>
                                         </td>
                                     </tr>
