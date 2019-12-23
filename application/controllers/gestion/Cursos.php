@@ -3,12 +3,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Cursos extends CI_Controller {
 
-	public function __construct() {
-        parent::__construct();
+	private $permisos;
+
+	public function __construct()
+	{
+		parent::__construct();
+
+		// El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
+
         $this->load->model('Cursos_model');  
     }
 
-	public function index() {
+	public function index()
+	{
 		$data = array(
 			'cursos' => $this->Cursos_model->getCursos(),
 		);
