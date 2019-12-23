@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 23, 2019 at 02:58 AM
+-- Generation Time: Dec 24, 2019 at 12:24 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -81,7 +81,19 @@ INSERT INTO `accion` (`id_accion`, `fk_id_usuario`, `fk_id_tipo_accion`, `descri
 (28, 1, 1, 'Usuario ID: 5', 'Usuario', '2019-12-22 20:24:54'),
 (29, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 22:52:59'),
 (30, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 22:53:10'),
-(31, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 22:53:31');
+(31, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 22:53:31'),
+(32, 1, 3, 'Usuario ID: 1', 'Usuario', '2019-12-23 03:54:07'),
+(33, 5, 3, 'Usuario ID: 4', 'Usuario', '2019-12-23 04:45:24'),
+(34, 4, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 04:47:43'),
+(35, 5, 3, 'Usuario ID: 1', 'Usuario', '2019-12-23 04:55:46'),
+(36, 1, 3, 'Usuario ID: 4', 'Usuario', '2019-12-23 05:01:12'),
+(37, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 13:49:56'),
+(38, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:10:15'),
+(39, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:12:35'),
+(40, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:13:01'),
+(41, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:14:20'),
+(42, 1, 3, 'Usuario ID: 4', 'Usuario', '2019-12-23 14:15:06'),
+(43, 1, 3, 'Usuario ID: 1', 'Usuario', '2019-12-23 14:38:54');
 
 -- --------------------------------------------------------
 
@@ -296,7 +308,11 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`id_menu`, `nombre_menu`, `enlace_menu`) VALUES
-(1, 'Inicio', 'dashboard');
+(1, 'Inicio', 'dashboard'),
+(2, 'Cursos', 'gestion/cursos'),
+(3, 'Usuarios', 'administrador/usuarios'),
+(4, 'Permisos', 'administrador/permisos'),
+(5, 'Personas', 'gestion/personas');
 
 -- --------------------------------------------------------
 
@@ -427,7 +443,13 @@ CREATE TABLE `permiso` (
 --
 
 INSERT INTO `permiso` (`id_permiso`, `fk_id_menu_1`, `fk_id_rol_2`, `read`, `insert`, `update`, `delete`) VALUES
-(3, 1, 3, 1, 0, 1, 0);
+(3, 2, 3, 1, 0, 0, 0),
+(4, 2, 1, 1, 1, 1, 1),
+(5, 2, 2, 1, 1, 1, 0),
+(6, 3, 1, 1, 1, 1, 1),
+(7, 4, 1, 1, 1, 1, 1),
+(8, 5, 3, 1, 0, 0, 0),
+(9, 5, 1, 1, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -613,11 +635,11 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`id_usuario`, `nombres_usuario`, `apellidos_usuario`, `email_usuario`, `username_usuario`, `password_usuario`, `fk_rol_id_1`, `estado_usuario`, `fecha_creacion`, `fecha_modificacion`) VALUES
-(1, 'Johan', 'Basil', 'johan@cecal.com', 'johan-1213', '98ce34038035debf9af5d5482829aeddfb543f7e', 1, 1, '2019-11-14 15:57:18', '2019-11-14 18:07:39'),
+(1, 'Johan', 'Basil', 'johan@cecal.com', 'johan-1213', '98ce34038035debf9af5d5482829aeddfb543f7e', 3, 1, '2019-11-14 15:57:18', '2019-12-23 00:55:46'),
 (2, 'Jesús', 'Blanco', 'jesusb@cecal.com', 'jesus_dx2', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 2, 1, '2019-11-14 20:45:32', '2019-12-22 18:53:10'),
 (3, 'José Luis', 'José', 'josejose1@cecal.com', 'jose-jose15', 'da39a3ee5e6b4b0d3255bfef95601890afd80709', 2, 1, '2019-11-14 22:09:53', '2019-12-22 16:10:08'),
-(4, 'Carmen', 'San Diego', 'carmen@cecal.com', 'Carmen-sandiego', '98ce34038035debf9af5d5482829aeddfb543f7e', 2, 0, '2019-11-14 22:31:18', '2019-11-21 16:46:11'),
-(5, 'Alicia', 'Zamora', 'alicia@cecal.com', 'alicia-mar', '5e915c3f9376943c76bfdc374ec88b6e9a5c7168', 1, 0, '2019-12-22 15:55:05', '2019-12-22 16:24:53');
+(4, 'Carmen', 'San Diego', 'carmen@cecal.com', 'Carmen-sandiego', '5e915c3f9376943c76bfdc374ec88b6e9a5c7168', 2, 1, '2019-11-14 22:31:18', '2019-12-23 10:14:42'),
+(5, 'Alicia', 'Zamora', 'alicia@cecal.com', 'alicia-mar', '5e915c3f9376943c76bfdc374ec88b6e9a5c7168', 1, 1, '2019-12-22 15:55:05', '2019-12-23 10:13:00');
 
 --
 -- Indexes for dumped tables
@@ -789,7 +811,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT for table `accion`
 --
 ALTER TABLE `accion`
-  MODIFY `id_accion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=32;
+  MODIFY `id_accion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `banco`
@@ -843,7 +865,7 @@ ALTER TABLE `locacion`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=2;
+  MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `mes`
@@ -873,7 +895,7 @@ ALTER TABLE `periodo`
 -- AUTO_INCREMENT for table `permiso`
 --
 ALTER TABLE `permiso`
-  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=4;
+  MODIFY `id_permiso` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `persona`
