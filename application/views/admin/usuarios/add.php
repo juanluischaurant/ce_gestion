@@ -23,7 +23,7 @@
                             </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/usuarios/store" method="POST" autocomplete="off">
+                        <form action="<?php echo base_url();?>administrador/usuarios/store" method="POST" autocomplete="off">
 
                             <div class="row form-group">
                                 <div class="col-md-4 <?php echo !empty(form_error('username-usuario')) ? 'has-error' : ''; ?>">

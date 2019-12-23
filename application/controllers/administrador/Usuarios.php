@@ -57,7 +57,7 @@ class Usuarios extends CI_Controller {
 		//  ¿$id es nulo?, de ser verdad, redirecciona a la vista de lista
 		if(!isset($id))
 		{
-			redirect(base_url().'gestion/usuarios/');
+			redirect(base_url().'administrador/usuarios/');
 		}
 		else
 		{
@@ -114,12 +114,12 @@ class Usuarios extends CI_Controller {
 
 				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
-				redirect(base_url().'gestion/usuarios');
+				redirect(base_url().'administrador/usuarios');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'gestion/usuarios/edit'.$id_usuario);
+				redirect(base_url().'administrador/usuarios/edit'.$id_usuario);
 			}
 		}
 		else // la validación no es correcta
@@ -161,11 +161,11 @@ class Usuarios extends CI_Controller {
             if($this->Usuarios_model->save($data))
             {
                 $this->session->set_flashdata('success', 'Usuario '.$username_usuario.' agregado correctamente.');
-                redirect(base_url().'gestion/usuarios');
+                redirect(base_url().'administrador/usuarios');
             }
             else
             {
-                redirect(base_url().'gestion/usuarios/add');
+                redirect(base_url().'administrador/usuarios/add');
             }
         }
         else
@@ -200,7 +200,7 @@ class Usuarios extends CI_Controller {
 
 			$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 
-			echo 'gestion/usuarios';
+			echo 'administrador/usuarios';
 		};
 	}
 

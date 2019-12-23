@@ -23,7 +23,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/usuarios/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Usuario</a>
+                        <a href="<?php echo base_url(); ?>administrador/usuarios/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Usuario</a>
                     </div>
                 </div>
                 
@@ -59,9 +59,9 @@
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-usuario" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataUsuario?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>gestion/usuarios/edit/<?php echo $usuario->id_usuario; ?>" .
+                                                <a href="<?php echo base_url() ?>administrador/usuarios/edit/<?php echo $usuario->id_usuario; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/usuarios/delete/<?php echo $usuario->id_usuario; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>administrador/usuarios/delete/<?php echo $usuario->id_usuario; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>

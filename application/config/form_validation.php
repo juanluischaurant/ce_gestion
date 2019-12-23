@@ -83,7 +83,7 @@ $config = array(
         )
     ),
     // Usada en el controlador:
-    // gestion/usuarios/update
+    // administrador/usuarios/update
     'editar_usuario' => array(
         array(
             'field' => 'username-usuario',

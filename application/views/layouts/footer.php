@@ -846,7 +846,7 @@
         {
             id_usuario = $(this).val();
             $.ajax({
-                url: base_url + 'gestion/usuarios/view',
+                url: base_url + 'administrador/usuarios/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {

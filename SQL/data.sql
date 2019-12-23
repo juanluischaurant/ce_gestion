@@ -104,3 +104,27 @@ car-dark-knight
 
 the_admin_here
 car-red-ranger
+
+
+CREATE TABLE menu(
+  `id_menu` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la tabla'
+  `nombre_menu` varchar(45) COLLATE latin1_general_ci NOT NULL COMMENT 'Nombre del menú'
+  `enlace_menu` varchar(250) COLLATE latin1_general_ci NOT NULL COMMENT 'Controlador al que se relaciona este menú'
+)
+
+CREATE TABLE permiso(
+  `id_permiso` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la tabla',
+  `fk_id_menu_1` int,
+  `fk_id_rol_2` int,
+  `read` int(11) NULL COMMENT 'lectura',
+  `insert` int(11) NULL COMMENT 'insertar',
+  `update` int(11) NULL COMMENT 'actualizar',
+  `delete` int(11) NULL COMMENT 'borrar',
+  CONSTRAINT `accion_fk_id_menu_1` 
+   FOREIGN KEY (`fk_id_menu_1`) 
+   REFERENCES `menu` (`id_menu`),
+  CONSTRAINT `accion_fk_id_rol_2` 
+   FOREIGN KEY (`fk_id_rol_2`) 
+   REFERENCES `rol` (`rol_id`),
+)
+
