@@ -19,7 +19,6 @@ class Auth extends CI_Controller {
         { 
             $this->load->view('admin/login');
         }
-		
     }
 
     /**
@@ -35,7 +34,7 @@ class Auth extends CI_Controller {
         $password = $this->input->post('password');
 
         // Consulta al modelo Usuarios
-        $res = $this->Usuarios_model->login($username, sha1($password));
+        $res = $this->Usuarios_model->login($username, $password);
         
         if(!$res)
         {

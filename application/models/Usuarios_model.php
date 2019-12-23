@@ -18,7 +18,7 @@ class Usuarios_model extends CI_Model {
     public function login($username, $password)
     {
         $this->db->where('username_usuario', $username);
-        $this->db->where('password_usuario', $password);
+        $this->db->where('password_usuario', sha1($password));
 
         // Consulta BD
         $resultados = $this->db->get('usuario');

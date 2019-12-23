@@ -94,12 +94,18 @@ class Usuarios extends CI_Controller {
 
 		$data = array(
 			'nombres_usuario' => $nombres_usuario,
-            'apellidos_usuario' => $apellidos_usuario,
-            'email_usuario' => $email_usuario,
-            'username_usuario' => $username_usuario,
-            'password_usuario' => sha1($password_usuario),
-            'fk_rol_id_1' => $rol_usuario
+			'apellidos_usuario' => $apellidos_usuario,
+			'email_usuario' => $email_usuario,
+			'username_usuario' => $username_usuario,
+			'fk_rol_id_1' => $rol_usuario
 		);
+
+		// Verifica si el campo de contraseña está vacío o no
+		if($password_usuario !== '')
+		{
+			// Si el usuario ingresó datos, añadelos al array especificado 
+			$data['password_usuario'] = sha1($password_usuario);
+		}
 
 		// Reglas declaradas para la validación de formularios en el directorio 
 		// application/config/form_validation.php
