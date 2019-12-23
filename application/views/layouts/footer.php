@@ -658,6 +658,21 @@
             $('#modal-default').modal('hide');
         });
 
+        $(document).on("click",".btn-view-participante",function() {
+            let id_participante = $(this).val(); // ID de la persona
+            $.ajax({
+                url: base_url + "gestion/participantes/view",
+                type:"POST",
+                dataType:"html",
+                data:{
+                    id_participante: id_participante
+                },
+                success:function(data) {
+                    $("#modal-default .modal-body").html(data);
+                }
+            });
+        });
+
         // =============================================
         // Fin de JS para Participantes
         // =============================================
@@ -807,19 +822,20 @@
         //     importe = cantidad * precio
         // });
 
-        $('.btn-view-participante').on('click', function() {
-            let participante = $(this).val(); // Almacena datos del participante previamente almacenados en el atributo "value" del botón clickeado
-            let infoParticipante = participante.split('*'); // Divide y convierte en array la cadena de texto almacenada en "participante"
+        // Borrar esto
+        // $('.btn-view-participante').on('click', function() {
+        //     let participante = $(this).val(); // Almacena datos del participante previamente almacenados en el atributo "value" del botón clickeado
+        //     let infoParticipante = participante.split('*'); // Divide y convierte en array la cadena de texto almacenada en "participante"
 
-            // Estructura el html a renderizar
-            let html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
-            html += '<p><strong>Apellidos: </strong>'+infoParticipante[2]+'</p>'
-            html += '<p><strong>Teléfono: </strong>'+infoParticipante[3]+'</p>'
-            html += '<p><strong>Cédula: </strong>'+infoParticipante[4]+'</p>';
+        //     // Estructura el html a renderizar
+        //     let html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
+        //     html += '<p><strong>Apellidos: </strong>'+infoParticipante[2]+'</p>'
+        //     html += '<p><strong>Teléfono: </strong>'+infoParticipante[3]+'</p>'
+        //     html += '<p><strong>Cédula: </strong>'+infoParticipante[4]+'</p>';
 
-            // Renderiza el código html en el lugar indicado
-            $('#modal-default .modal-body').html(html);
-        });
+        //     // Renderiza el código html en el lugar indicado
+        //     $('#modal-default .modal-body').html(html);
+        // });
 
         $(document).on('click', '.btn-view-inscripcion', function()
         {

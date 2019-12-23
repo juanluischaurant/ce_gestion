@@ -72,9 +72,36 @@ ON p.id_persona = par.fk_id_persona_2
 
 WHERE `instancia`.`id_instancia` = 2
 
+-- ==============================================================
+-- Instancias en las que se ha registrado un participante
+SELECT 
+cur.nombre_curso, 
+par.fk_id_persona_2,
+per.nombres_persona
+FROM participante AS par
 
+JOIN persona AS per
+ON per.id_persona = par.fk_id_persona_2
 
+JOIN inscripcion AS ins
+ON ins.fk_id_participante_1 = par.id_participante
 
+-- Esta podría ser útil mas adelante
+JOIN pago_de_inscripcion AS pdi
+ON pdi.fk_id_inscripcion = ins.id_inscripcion 
+
+JOIN inscripcion_instancia AS ins_inst
+ON ins_inst.fk_id_inscripcion_1 = ins.id_inscripcion
+
+JOIN instancia AS inst
+ON inst.id_instancia = ins_inst.fk_id_instancia_1
+
+JOIN curso AS cur
+ON cur.id_curso = inst.fk_id_curso_1
+
+WHERE par.id_participante = 2
+-- Fin de la consulta
+-- ==============================================================
 
 -- Tabla mes
 CREATE TABLE `mes` (
