@@ -12,9 +12,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Participantes extends CI_Controller {
 
 	public function __construct() {
-        parent::__construct();
-        $this->load->model('Personas_model');  
-        $this->load->model('Participantes_model');  
+		parent::__construct();
+		
+		// Si el usuario no ha iniciado sesión
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+        else
+        {
+            // Carga el controlador
+			$this->load->model('Personas_model');  
+			$this->load->model('Participantes_model');  
+		}
+		
     }
 
     public function index() {
