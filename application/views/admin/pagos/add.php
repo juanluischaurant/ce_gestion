@@ -27,6 +27,8 @@
                         
                         <form action="<?php echo base_url();?>movimientos/pagos/store" method="POST" class="form-horizontal">
                             
+                            <input type="hidden" name="modulo-actual" value="pagos">
+
                             <div class="form-group">
                                 <div class="col-md-3">
                                     <!-- Campo select rellenado con data de la BD -->
@@ -94,9 +96,9 @@
                                 <div class="col-md-12">
                                     <button type="submit" class="btn btn-success btn-flat">Guardar</button>
                                 </div>
-                                
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -105,5 +107,6 @@
         <!-- /.box -->
     </section>
     <!-- /.content -->
+    
 </div>
 <!-- /.content-wrapper -->

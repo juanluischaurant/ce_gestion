@@ -333,7 +333,7 @@ class Inscripciones_model extends CI_Model {
      */
     public function get_pagos_json($valor)
     {            
-        $this->db->select(
+        $resultados = $this->db->select(
             'pi.serial_pago,
             pi.numero_operacion,
             pi.estado_pago,
@@ -344,20 +344,28 @@ class Inscripciones_model extends CI_Model {
             concat(pi.numero_operacion, " - ", pe.nombres_persona, " ", pe.apellidos_persona) as label,
             concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_cliente,
             pe.cedula_persona'
-            )
+        )
         ->from('pago_de_inscripcion as pi')
         ->join('titular as c', 'c.id_titular = pi.fk_id_titular')
         ->join('persona as pe', 'pe.id_persona = c.fk_id_persona_1');
                 
         if($valor != '')
         {
-            $this->db->like('pi.numero_operacion', $valor);
-			$this->db->or_like('pe.nombres_persona', $valor);
-			$this->db->or_like('pe.apellidos_persona', $valor);
+            // Para realizar esta consulta, se utilizó como referencia este
+            // hilo de StackOverflow:
+            // https://stackoverflow.com/questions/41113805/codeigniter-like-or-like-doesnt-work-with-where
+            $resultados->where('pi.estado_pago', 1)
+            ->like('pi.numero_operacion', $valor)
+            
+            ->or_where('pi.estado_pago', 1)
+            ->like('pe.nombres_persona', $valor)
+            
+            ->or_where('pi.estado_pago', 1)
+            ->like('pe.apellidos_persona', $valor);
         }
 
-        $valor=$this->db->get();
-        return $valor->result_array();
+        $resultados=$this->db->get();
+        return $resultados->result_array();
     }
 
 }

@@ -3,12 +3,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Inscripciones extends CI_Controller {
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
-		$this->load->model("Inscripciones_model");
-		$this->load->model("Pagos_model");
-		$this->load->model("Participantes_model");
-		$this->load->model('Instancias_model');
+
+		// Si el usuario no ha iniciado sesión
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+        else
+        {
+            // Carga el controlador
+			$this->load->model("Inscripciones_model");
+			$this->load->model("Pagos_model");
+			$this->load->model("Participantes_model");
+			$this->load->model('Instancias_model');
+        }
     }
 
 	/**
@@ -42,8 +54,8 @@ class Inscripciones extends CI_Controller {
 	public function add()
 	{
 		$data = array(
-			"tiposPago" => $this->Pagos_model->getTiposDeOperacion(),
-			"participantes" => $this->Participantes_model->getParticipantes()
+			'tipos_de_operacion' => $this->Pagos_model->get_tipos_de_operacion(),
+			"participantes" => $this->Participantes_model->getParticipantes(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -80,7 +92,7 @@ class Inscripciones extends CI_Controller {
 
 		$this->load->view('admin/inscripciones/view', $data);
 	}
-	
+
 	public function store()
 	{
 		$fk_id_participante_1 = $this->input->post('id_participante');
@@ -115,6 +127,7 @@ class Inscripciones extends CI_Controller {
 			// Guarda los detalles de la inscripción
 			$this->save_inscripcion_instancia($fk_id_instancia, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
 
+			
 			redirect(base_url()."movimientos/inscripciones");
 		}
 		else
@@ -246,7 +259,8 @@ class Inscripciones extends CI_Controller {
 	 *
 	 * @return void
 	 */
-	public function get_pagos_json() {
+	public function get_pagos_json()
+	{
 		$valor = $this->input->post('query');
 		$pagos = $this->Inscripciones_model->get_pagos_json($valor);
 		echo json_encode($pagos);

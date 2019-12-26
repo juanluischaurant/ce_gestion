@@ -3,10 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Instancias extends CI_Controller {
 
-	public function __construct() {
+	public function __construct()
+	{
         parent::__construct();
         $this->load->model('Instancias_model');  
 		$this->load->model('Cursos_model');  
+		// Carga la librería de generación de PDF 
 		include APPPATH . 'third_party/fpdf/lista_asistencia.class.php';
     }
 

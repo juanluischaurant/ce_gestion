@@ -364,29 +364,58 @@
         // =============================================
 
         $('#tipo-de-pago').on('change', function() {
-            let option = $(this).val();
+            let idTipoDeOperacion = $(this).val();
 
-            if(option != '') {
-                let infoTipoDePago = option.split('*');
-                let tipoDePago = infoTipoDePago[2];
+            if(idTipoDeOperacion != '') {
+                $.ajax({
+                    url: base_url + "movimientos/pagos/get_tipo_de_operacion_ajax",
+                    type:"POST",
+                    dataType:"html",
+                    data:{
+                        id_tipo_operacion: idTipoDeOperacion
+                    },
+                    success:function(data) {
 
-                $('#id-tipo-de-pago').val(infoTipoDePago[0]);
+                        let a = JSON.parse(data);
 
-                if(tipoDePago === 'Efectivo')
-                {
-                    $('#serial-de-pago').val('efe-'+generarNumero(infoTipoDePago[1]));
-                } else if(tipoDePago === 'Transferencia')
-                {
-                    $('#serial-de-pago').val('tra-'+generarNumero(infoTipoDePago[1]));
-                } else if(tipoDePago === 'Exonerado')
-                {
-                    $('#serial-de-pago').val('exo-'+generarNumero(infoTipoDePago[1]));
-                }
+                        let conteoDeOperaciones = a.conteo_operaciones,
+                        tipoDeOperacion = a.tipo_de_operacion;
+                        
+                        // Almacena el id único del tipo de pago en un elemento HTML oculto
+                        $('#id-tipo-de-pago').val(idTipoDeOperacion);
 
+                        if(tipoDeOperacion === 'Efectivo')
+                        {
+                            $('#serial-de-pago').val('efe-'+generarNumero(conteoDeOperaciones));
+                        } else if(tipoDeOperacion === 'Transferencia')
+                        {
+                            $('#serial-de-pago').val('tra-'+generarNumero(conteoDeOperaciones));
+                        } else if(tipoDeOperacion === 'Exonerado')
+                        {
+                            $('#serial-de-pago').val('exo-'+generarNumero(conteoDeOperaciones));
+                        }
+                    }
+                });
             } else {
+                // Vacía el valor de las siguentes entidades HTML:
                 $('#id-tipo-de-pago').val(null);
                 $('#serial-de-pago').val(null);
             }
+        });
+
+        $(document).on("click",".btn-view-pago",function() {
+            let id_pago = $(this).val(); // ID del elemento a consultar
+            $.ajax({
+                url: base_url + "movimientos/pagos/view",
+                type:"POST",
+                dataType:"html",
+                data:{
+                    id_pago: id_pago
+                },
+                success:function(data) {
+                    $("#modal-default .modal-body").html(data);
+                }
+            });
         });
 
         $('#cedula-titular').autocomplete({
@@ -531,6 +560,46 @@
 
             // Activa campo para agregar Instancia
             $('#producto').removeAttr('disabled');
+        });
+
+        // Función encargada de almacenar los datos de pago de manera 
+        // asincrona
+        $(document).on('click', '#btn-guardar-inscripcion-pago', function() {
+            let exito = false; // Do you need it?
+
+            let id_banco_operacion = $('#id-banco-de-operacion').val(),
+            fk_id_tipo_operacion = $('#id-tipo-de-pago').val(),
+            id_cliente = $('#id-titular').val(),
+            serial_de_pago = $('#serial-de-pago').val(),
+            numero_de_operacion = $('#numero-de-operacion-unico').val(),
+            monto_de_operacion = $('#monto-de-operacion').val(),
+            fecha_de_operacion = $('#fecha-operacion').val();
+
+            $.ajax({
+                url: base_url+'movimientos/pagos/store_ajax',
+                type: 'POST',
+                dataType: 'JSON',
+                data: {
+                    id_banco_operacion: id_banco_operacion,
+                    fk_id_tipo_operacion: fk_id_tipo_operacion,
+                    id_cliente: id_cliente,
+                    serial_de_pago: serial_de_pago,
+                    numero_de_operacion: numero_de_operacion,
+                    monto_de_operacion: monto_de_operacion,
+                    fecha_de_operacion: fecha_de_operacion
+                },
+                success: function(data) {
+                    // Oculta ventana modal
+                    $('#modal-info').modal('hide');
+
+                    $('option:selected').prop('selected', false);
+                    $('#serial-de-pago').val(null);
+
+                    exito = true; 
+                }
+            }); 
+
+            return exito;           
         });
 
         // =============================================

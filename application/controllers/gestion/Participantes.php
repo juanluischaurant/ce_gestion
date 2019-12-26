@@ -60,7 +60,6 @@ class Participantes extends CI_Controller {
 		$this->load->view("admin/participantes/view", $data);
 	}
 
-
 	public function add($id_persona = 'new') {
 		
 		if($id_persona !== 'new') {

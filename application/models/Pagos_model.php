@@ -16,25 +16,59 @@ class Pagos_model extends CI_Model {
     ->from('pago_de_inscripcion as pdi')
     ->join('titular as ti', 'ti.id_titular = pdi.fk_id_titular')
     ->join('persona as per', 'per.id_persona = ti.fk_id_persona_1')
-    // ->where('instancia.estado_instancia', '1')
     ->get();
 
     return $resultados->result();
   }
 
-	public function getTiposDeOperacion() {
-        $resultados = $this->db->get('tipo_de_operacion'); 
-        return $resultados->result();
+  public function get_pago($id_pago)
+  {
+    $resultados = $this->db->select(
+      'pdi.id_pago, 
+      pdi.numero_operacion, 
+      pdi.monto_operacion, 
+      pdi.fecha_registro_operacion, 
+      pdi.estado_pago,
+      pdi.fecha_operacion,
+      b.nombre_banco,
+      ti.id_titular,
+      per.cedula_persona,
+      per.nombres_persona,
+      per.apellidos_persona'
+    )
+    ->from('pago_de_inscripcion as pdi')
+    ->join('banco as b', 'b.id_banco = pdi.fk_id_banco')
+    ->join('titular as ti', 'ti.id_titular = pdi.fk_id_titular')
+    ->join('persona as per', 'per.id_persona = ti.fk_id_persona_1')
+    ->where('pdi.id_pago', $id_pago)
+    ->get();
+
+    return $resultados->row();
   }
 
-    public function getTipoDeOperacion($id) {
-      $this->db->where("id_tipo_de_operacion", $id);
-		  $resultado = $this->db->get("tipo_de_operacion");
-		  return $resultado->row();
-    }
+  /**
+   * Obtén los distintos tipos de pago registrados en la base de datos.
+   * Esta función es utilizada principalmente para poblar la lista desplegable
+   * en formularios que requieran una lista de tipos de pago
+   *
+   * @return void
+   */
+  public function get_tipos_de_operacion()
+  {
+    $resultados = $this->db->get('tipo_de_operacion'); 
+    return $resultados->result();
+  }
 
-    public function save($data) {
-		return $this->db->insert("pago_de_inscripcion",$data);
+  public function get_tipo_de_operacion($id)
+  {
+    $this->db->where("id_tipo_de_operacion", $id);
+    $resultado = $this->db->get("tipo_de_operacion");
+    return $resultado->row();
+  }
+
+  public function save($data)
+  {
+    return $this->db->insert("pago_de_inscripcion",$data);
 	}
 
   public function lastID()
@@ -42,7 +76,7 @@ class Pagos_model extends CI_Model {
 		return $this->db->insert_id();
   }
     
-  public function updateConteoOperaciones($idOperacion,$data)
+  public function actualizar_conteo_operaciones($idOperacion,$data)
   {
     $this->db->where("id_tipo_de_operacion",$idOperacion);
     $this->db->update("tipo_de_operacion",$data);
