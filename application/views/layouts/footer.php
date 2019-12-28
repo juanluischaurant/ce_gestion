@@ -56,6 +56,7 @@
         // Invoca a la función encargada de generar el gráfico
         let year_actual = (new Date).getFullYear();
         grafico_inscripciones_mes(base_url, year_actual);
+  
 
         $('#year').on('change', function() {
 
