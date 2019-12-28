@@ -27,8 +27,10 @@
                         <?php endif; ?>
 
                         <form action="<?php echo base_url();?>movimientos/inscripciones/update" method="POST" class="form-horizontal">
+                            <!-- ID De la inscripción de instancia bajo edición -->
                             <input type="hidden" name="id-inscripcion-instancia" value="<?php echo $data_inscripcion_instancia->id_inscripcion_instancia; ?>">
-                            
+                            <input type="hidden" name="id-instancia-actual" value="<?php echo  $data_inscripcion_instancia->id_instancia; ?>">
+                            <input type="hidden" name="id_participante" id="id_participante" value="<?php echo  $data_inscripcion_instancia->id_participante; ?>">
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="">Buscar Producto:</label>
@@ -51,30 +53,39 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php if(!empty($data_instancias)): ?>
-                                    <?php foreach($data_instancias as $data_instancia): ?>
-                                        <tr>
-                                            <td><?php echo $data_instancia->id_instancia; ?></td>
-                                            <td><?php echo $data_instancia->nombre_completo_instancia; ?></td>
-                                            <td><?php echo $data_instancia->cupos_instancia; ?></td>
-                                            <td><?php echo $data_instancia->cupos_instancia_ocupados; ?></td>
-                                            <td><?php echo $data_instancia->precio_instancia; ?></td>
-                                            <td>
-                                                <button type="button" class="btn btn-danger btn-remove-pago"><span class="fa fa-remove"></span></button>
-                                            </td>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                    <?php endif; ?>
+                                    
                                 </tbody>
                             </table>
+
                             <div class="form-group">
+
                                 <div class="col-md-12">
-                                    <button type="submit" id='actualizar-inscripcion' class="btn btn-success btn-flat">Guardar</button>
+                                    <button type="submit" id='actualizar-inscripcion' class="btn btn-success btn-flat">
+                                        Guardar
+                                    </button>
                                 </div>
                                 
                             </div>
+
                         </form>
+
+                        <div>
+                            <?php if(!empty($data_instancias)): ?>
+                                <?php foreach($data_instancias as $data_instancia): ?>
+                                    <tr>
+                                        <td><?php echo $data_instancia->id_instancia; ?></td>
+                                        <td><?php echo $data_instancia->nombre_completo_instancia; ?></td>
+                                        <td><?php echo $data_instancia->cupos_instancia; ?></td>
+                                        <td><?php echo $data_instancia->cupos_instancia_ocupados; ?></td>
+                                        <td><?php echo $data_instancia->precio_instancia; ?></td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger btn-remove-pago"><span class="fa fa-remove"></span></button>
+                                        </td>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                                <?php endif; ?>
+                        </div>
 
                     </div>
                 </div>

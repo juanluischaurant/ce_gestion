@@ -159,10 +159,12 @@ class Inscripciones_model extends CI_Model {
     public function get_id_inscripcion_instancia($id_inscripcion)
     {
         $resultado = $this->db->select(
-            'ii.id_inscripcion_instancia,
+            'par.id_participante,
+            ii.id_inscripcion_instancia,
             inst.id_instancia'
             )
         ->from('inscripcion as i')
+        ->join('participante as par', 'par.id_participante = i.fk_id_participante_1')
         ->join('inscripcion_instancia as ii', 'i.id_inscripcion = ii.fk_id_inscripcion_1')
         ->join('instancia as inst', 'ii.fk_id_instancia_1 = inst.id_instancia')
         ->where('ii.fk_id_inscripcion_1', $id_inscripcion)
@@ -176,7 +178,7 @@ class Inscripciones_model extends CI_Model {
      * 
      * Verifica los cupos disponibles en determinada instancia, de ser
      * cupos_disponibles < cupos_ocupados retorna: verdadero
-     * cupos_disponibles > cupos_ocupados retorna: falso
+     * cupos_disponibles >= cupos_ocupados retorna: falso
      *
      * @param [type] $id_instancia
      * @return void

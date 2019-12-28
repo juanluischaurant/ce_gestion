@@ -248,30 +248,39 @@ class Inscripciones extends CI_Controller {
 		} 
 	}
 
-	// public function update()
-	// {
-	// 	$id_instancias = $this->input->post('idcursos');
-	// 	$id_inscripcion_instancia = $this->input->post('id-inscripcion-instancia'); 
+	public function update()
+	{
+		$id_instancias = $this->input->post('idcursos');
+		$id_instancia_actual = $this->input->post('id-instancia-actual');
+		$id_inscripcion_instancia = $this->input->post('id-inscripcion-instancia'); 
 
-	// 	echo 'hi';
-	// 	print_r($_POST);
+		for($i=0; $i < count($id_instancias); $i++)
+		{
+			$id_instancia = $id_instancias[$i];
 
-	// 	for($i=0; $i < count($id_instancias); $i++)
-	// 	{ 
-	// 		// $data  = array(
-	// 		// 	'fk_id_inscripcion_1' => $id_ultima_inscripcion,
-	// 		// 	'fk_id_instancia_1' => $idcursos[$i]
-	// 		// );
+			if($this->Inscripciones_model->verificar_cupos_disponibles($id_instancia))
+			{
+				$data = array(
+					'fk_id_instancia_1' => $id_instancia,
+				);
 
-			
-	// 		$data = array(
-	// 			'fk_id_instancia_1' => $id_instancias[$i],
-	// 		);
+				if($this->Inscripciones_model->update_inscripcion_instancia($id_inscripcion_instancia, $data))
+				{
+					$this->Inscripciones_model->sumar_cupo_instancia($id_instancia);
+					$this->Inscripciones_model->restar_cupo_instancia($id_instancia_actual);
+					$this->session->set_flashdata('success', 'Cambio de instancia exitoso.');
+					redirect(base_url().'movimientos/inscripciones/');
+				}
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'Instancia no tiene cupos disponibles.');
+				redirect(base_url().'movimientos/inscripciones/');
+				// redirect(base_url().'movimientos/inscripciones/edit'.$id_inscripcion);
+			}
+		}
 
-	// 		$this->Inscripciones_model->update_inscripcion_instancia($id_inscripcion_instancia, $data);
-	// 	}
-
-	// }
+	}
 
 	/**
 	 * Actualiza Cupos Ocupados
