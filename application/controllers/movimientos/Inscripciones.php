@@ -54,6 +54,7 @@ class Inscripciones extends CI_Controller {
 	public function add()
 	{
 		$data = array(
+			'pagos' => $this->Pagos_model->get_pagos_activos(),
 			'tipos_de_operacion' => $this->Pagos_model->get_tipos_de_operacion(),
 			"participantes" => $this->Participantes_model->getParticipantes(),
 		);
@@ -127,12 +128,82 @@ class Inscripciones extends CI_Controller {
 			// Guarda los detalles de la inscripción
 			$this->save_inscripcion_instancia($fk_id_instancia, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
 
-			
 			redirect(base_url()."movimientos/inscripciones");
 		}
 		else
 		{ 
 			redirect(base_url()."movimientos/inscripciones/add");
+		}
+	}
+
+	/**
+	 * Desactivar inscripción
+	 * 
+	 * Método utilizado al momento de presionar el botón de desactivar inscripción, para
+	 * su correcto funcionamiento este método requiere dos parámetros: $id_inscripcion e
+	 * $id_instancia, que son pasados a través de la variable global POST.
+	 *
+	 * @param integer $id_inscripcion
+	 * @param integer $id_instancia
+	 * @return void
+	 */
+	public function deactivate_inscripcion($id_inscripcion, $id_instancia)
+	{
+		$data = array(
+			'activa' => 0,
+		);
+
+		// Esta primera consulta cambia el estado de la inscripción
+		if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data))
+		{			
+			// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
+			$data = array( 'estado_pago' => 3,);
+			$this->Inscripciones_model->update_estado_pago($id_inscripcion, $data);
+
+				// $id_instancia = $this->Inscripciones_model->get_id_inscripcion_instancia($id_inscripcion)->id_instancia;
+
+				$this->restar_cupo_instancia($id_instancia);
+
+				// Esta cadena de texto se concatena al resto de un enlace obetnido
+				// durante la llamada AJAX con jQuery para redireccionar la página
+				echo 'movimientos/inscripciones';
+		};
+	}
+
+	/**
+	 * Desactivar inscripción
+	 * 
+	 * Método utilizado al momento de presionar el botón de desactivar inscripción, para
+	 * su correcto funcionamiento este método requiere dos parámetros: $id_inscripcion e
+	 * $id_instancia, que son pasados a través de la variable global POST.
+	 *
+	 * @param integer $id_inscripcion
+	 * @param integer $id_instancia
+	 * @return void
+	 */
+	public function activate_inscripcion($id_inscripcion, $id_instancia)
+	{
+		// Verificar que la instancia tenga cupos disponibles
+		if($this->Inscripciones_model->verificar_cupos_disponibles($id_instancia))
+		{
+			// Esta primera consulta cambia el estado de la inscripción
+			$data = array( 'activa' => 1, );
+			if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data))
+			{
+				// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
+				$data = array( 'estado_pago' => 2,);
+				$this->Inscripciones_model->update_estado_pago($id_inscripcion, $data);
+	
+					$this->sumar_cupo_instancia($id_instancia);
+	
+					// Esta cadena de texto se concatena al resto de un enlace obetnido
+					// durante la llamada AJAX con jQuery para redireccionar la página
+					echo 'movimientos/inscripciones';
+			};
+		} 
+		else
+		{
+			echo 'movimientos/inscripciones';
 		}
 	}
 
@@ -177,30 +248,30 @@ class Inscripciones extends CI_Controller {
 		} 
 	}
 
-	public function update()
-	{
-		$id_instancias = $this->input->post('idcursos');
-		$id_inscripcion_instancia = $this->input->post('id-inscripcion-instancia'); 
+	// public function update()
+	// {
+	// 	$id_instancias = $this->input->post('idcursos');
+	// 	$id_inscripcion_instancia = $this->input->post('id-inscripcion-instancia'); 
 
-		echo 'hi';
-		print_r($_POST);
+	// 	echo 'hi';
+	// 	print_r($_POST);
 
-		for($i=0; $i < count($id_instancias); $i++)
-		{ 
-			// $data  = array(
-			// 	'fk_id_inscripcion_1' => $id_ultima_inscripcion,
-			// 	'fk_id_instancia_1' => $idcursos[$i]
-			// );
+	// 	for($i=0; $i < count($id_instancias); $i++)
+	// 	{ 
+	// 		// $data  = array(
+	// 		// 	'fk_id_inscripcion_1' => $id_ultima_inscripcion,
+	// 		// 	'fk_id_instancia_1' => $idcursos[$i]
+	// 		// );
 
 			
-			$data = array(
-				'fk_id_instancia_1' => $id_instancias[$i],
-			);
+	// 		$data = array(
+	// 			'fk_id_instancia_1' => $id_instancias[$i],
+	// 		);
 
-			$this->Inscripciones_model->update_inscripcion_instancia($id_inscripcion_instancia, $data);
-		}
+	// 		$this->Inscripciones_model->update_inscripcion_instancia($id_inscripcion_instancia, $data);
+	// 	}
 
-	}
+	// }
 
 	/**
 	 * Actualiza Cupos Ocupados
@@ -211,17 +282,47 @@ class Inscripciones extends CI_Controller {
 	 * @param integer $cupos_curso
 	 * @return void
 	 */
-	protected function actualiza_cupos_ocupados($idcurso, $cupos_curso)
+	protected function actualiza_cupos_ocupados($id_instancia, $cupos_curso)
 	{
-		$cursoActual = $this->Instancias_model->getInstancia($idcurso);
+		$cursoActual = $this->Instancias_model->getInstancia($id_instancia);
+
 		$data = array(
 			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 
 		);
-		$this->Instancias_model->update($idcurso,$data);
+		$this->Instancias_model->update($id_instancia, $data);
 	}
 
 	/**
-	 * Actualiza la clave foránea fk_id_inscripcion 
+	 * Resta 1 cupo a la instancia seleccionada
+	 * 
+	 * Este método es invocado al momento de desactivar una inscripción.
+	 *
+	 * @param integer $id_inscripcion
+	 * @return void
+	 */
+	public function restar_cupo_instancia($id_instancia)
+	{
+		$this->Inscripciones_model->restar_cupo_instancia($id_instancia);
+	}
+
+	/**
+	 * Suma 1 cupo a la instancia seleccionada
+	 * 
+	 * Este método es invocado al momento de activar una inscripción.
+	 *
+	 * @param integer $id_inscripcion
+	 * @return void
+	 */
+	public function sumar_cupo_instancia($id_instancia)
+	{
+		$this->Inscripciones_model->sumar_cupo_instancia($id_instancia);
+	}
+
+	/**
+	 * Actualiza la clave foránea fk_id_inscripcion en la tabla 'pago_de_inscripcion'
+	 * 
+	 * Recibe como parámetros dos valores, el id del pago asociado y el id de la inscripción
+	 * relacionada al pago.
 	 *
 	 * @param integer $id_pago
 	 * @param integer $id_ultima_inscripcion
@@ -253,20 +354,6 @@ class Inscripciones extends CI_Controller {
 	// =======================================================
 
 	/**
-	 * Consulta el pago indicado
-	 * 
-	 * Este método se invoca a través de una llamada AJAX realizada con jQuery
-	 *
-	 * @return void
-	 */
-	public function get_pagos_json()
-	{
-		$valor = $this->input->post('query');
-		$pagos = $this->Inscripciones_model->get_pagos_json($valor);
-		echo json_encode($pagos);
-	}
-	
-	/**
 	 * Consulta el curso indicado
 	 * 
 	 * Este método se invoca a través de una llamada AJAX realizada con jQuery
@@ -292,6 +379,7 @@ class Inscripciones extends CI_Controller {
 	{
 		$valor = $this->input->post('id');
 		$participantes = $this->Inscripciones_model->getParticipantesJSON($valor);
+
 		echo json_encode($participantes);
 	}
 	

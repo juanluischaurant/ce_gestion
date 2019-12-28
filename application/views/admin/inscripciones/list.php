@@ -28,6 +28,7 @@
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
                                     <th>Instancia</th>
+                                    <th>Estado Inscripción</th>
                                     <th>Nombre Participante</th>
                                     <th>Cédula Participante</th>
                                     <th>Opciones</th>
@@ -37,19 +38,52 @@
                             <tbody>
                                 <?php if(!empty($inscripciones)): ?>
                                 <?php foreach($inscripciones as $inscripcion): ?>
-                                    <?php // print_r($inscripcion); echo'<br>'; ?> 
+                                    
+                                    <?php $inscripcion_activa = $inscripcion->activa; ?>
                                     <tr>
                                         <td><?php echo $inscripcion->fk_id_inscripcion_1; ?></td>
                                         <td><?php echo $inscripcion->hora_inscripcion; ?></td>
                                         <td><?php echo $inscripcion->nombre_completo_instancia; ?></td>
+
+                                        <td>
+                                            <?php if($inscripcion_activa== 1): ?>
+                                                <small class="label label-success">
+                                                    <i class="fa fa-clock-o"></i> Activa
+                                                </small>
+                                            <?php endif; ?> 
+                                            <?php if($inscripcion_activa == 0): ?>
+                                                <small class="label label-danger">
+                                                    <i class="fa fa-clock-o"></i> Inactiva
+                                                </small>
+                                            <?php endif; ?> 
+                                        </td>
+
                                         <td><?php echo $inscripcion->nombre_completo_participante; ?></td>
                                         <td><?php echo $inscripcion->cedula_persona; ?></td>
                                         <?php $dataInscripcion =  $inscripcion->fk_id_instancia_1; ?>
 
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>movimientos/inscripciones/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'>
+                                                    <span class="fa fa-eye"></span>
+                                                </button>
+                                                <a href="<?php echo base_url() ?>movimientos/inscripciones/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>" class="btn btn-warning">
+                                                    <span class="fa fa-pencil"></span>
+                                                </a>
+
+                                                <!-- Botón para activar/desactivar Inscripción -->
+                                                <?php if($inscripcion_activa == 1): ?>
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/deactivate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $dataInscripcion; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                        <span class="fa fa-toggle-off"></span>
+                                                    </a>
+                                                <?php endif; ?> 
+                                                <?php if($inscripcion_activa == 0): ?>
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/activate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $dataInscripcion; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                        <span class="fa fa-toggle-on"></span>
+                                                    </a>
+                                                <?php endif; ?> 
+                                                <!-- Fin: Botón para activar/desactivar Inscripción -->
+
                                             </div>
                                         </td>
                                     </tr>

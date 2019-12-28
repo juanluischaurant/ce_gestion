@@ -58,12 +58,12 @@
         grafico_inscripciones_mes(base_url, year_actual);
 
         $('#year').on('change', function() {
+
             let year_seleccionado = $this.val();
 
             // Invoca a la función encargada de generar el gráfico
             grafico_inscripciones_mes(base_url, year_seleccionado);
-        
-        })
+        });
 
         // =============================================
         // JS para DataTables
@@ -363,10 +363,16 @@
         // JS para Pagos
         // =============================================
 
+        /**
+          * Detecta cuando el tipo de pago es seleccionado, y responde en base a la opción
+          * seleccionada.
+          */
         $('#tipo-de-pago').on('change', function() {
+
             let idTipoDeOperacion = $(this).val();
 
             if(idTipoDeOperacion != '') {
+
                 $.ajax({
                     url: base_url + "movimientos/pagos/get_tipo_de_operacion_ajax",
                     type:"POST",
@@ -380,30 +386,102 @@
 
                         let conteoDeOperaciones = a.conteo_operaciones,
                         tipoDeOperacion = a.tipo_de_operacion;
-                        
+
                         // Almacena el id único del tipo de pago en un elemento HTML oculto
                         $('#id-tipo-de-pago').val(idTipoDeOperacion);
 
-                        if(tipoDeOperacion === 'Efectivo')
-                        {
-                            $('#serial-de-pago').val('efe-'+generarNumero(conteoDeOperaciones));
-                        } else if(tipoDeOperacion === 'Transferencia')
-                        {
+                        configurarTipoOperacion(tipoDeOperacion, conteoDeOperaciones);
+
+                        if(tipoDeOperacion === 'Efectivo') {
+
+                            $('#serial-de-pago').val('efe-'+generarNumero(conteoDeOperaciones));   
+                        } else if(tipoDeOperacion === 'Transferencia') {
+
                             $('#serial-de-pago').val('tra-'+generarNumero(conteoDeOperaciones));
-                        } else if(tipoDeOperacion === 'Exonerado')
-                        {
+                        } else if(tipoDeOperacion === 'Exonerado') {
+
                             $('#serial-de-pago').val('exo-'+generarNumero(conteoDeOperaciones));
                         }
                     }
                 });
             } else {
+
                 // Vacía el valor de las siguentes entidades HTML:
                 $('#id-tipo-de-pago').val(null);
                 $('#serial-de-pago').val(null);
             }
         });
 
+        function configurarTipoOperacion(tipoOperacion, conteoDeOperaciones) {
+
+           switch(tipoOperacion) { 
+               case 'Efectivo':
+                    // HTML Elements return NULL when disabled
+                    $('#banco-de-operacion')
+                        .prop('readonly', true)
+                        .val('No aplica');
+
+                    $('#id-banco-de-operacion')
+                        .val('4');
+
+                    $('#numero-de-operacion-unico')
+                        .prop('readonly', true)
+                        .val('EFE'+generarNumero(conteoDeOperaciones));
+
+                    $('#monto-de-operacion')
+                        .prop('readonly', false)
+                        .val('');
+                    break;
+                
+                case 'Exonerado':
+                    $('#banco-de-operacion')
+                        .prop('readonly', true)
+                        .val('No aplica');
+
+                    $('#id-banco-de-operacion')
+                        .val('4');
+
+                    $('#numero-de-operacion-unico')
+                        .prop('readonly', true)
+                        .val('EXO'+generarNumero(conteoDeOperaciones));
+
+                    $('#monto-de-operacion')
+                        .prop('readonly', true)
+                        .val('0.00');
+                    break;
+
+                case 'Transferencia':
+                    $('#banco-de-operacion')
+                        .prop('readonly', false)
+                        .val('');
+
+                    $('#numero-de-operacion-unico')
+                        .prop('readonly', false)
+                        .val('');
+
+                    $('#monto-de-operacion')
+                        .prop('readonly', false)
+                        .val('')
+                    break;
+
+                default:
+                    $('#banco-de-operacion')
+                        .prop('readonly', true)
+                        .val('No aplica');
+
+                    $('#numero-de-operacion-unico')
+                        .prop('readonly', true)
+                        .val('');
+                    
+                    $('#monto-de-operacion')
+                        .prop('readonly', false)
+                        .val('');
+                        break;
+           }       
+        }
+  
         $(document).on("click",".btn-view-pago",function() {
+            
             let id_pago = $(this).val(); // ID del elemento a consultar
             $.ajax({
                 url: base_url + "movimientos/pagos/view",
@@ -468,12 +546,14 @@
         // =============================================
         // JS para Inscripciones
         // =============================================
+
         $('#numero-de-operacion').autocomplete({
+
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/inscripciones/get_pagos_json',
+                    url: base_url+'movimientos/pagos/get_pagos_json',
                     type: 'POST',
-                    dataType: 'json',
+                    dataType: 'JSON',
                     data: {
                         query: request.term
                     },
@@ -481,8 +561,10 @@
                         response(data)
                     }
                 });
-            }, minLength: 1,
+            },
+            minLength: 1,
             select: function(event, ui) {
+
                 data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_persona+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
@@ -507,7 +589,7 @@
 
                 console.table(datosPago);
 
-                if(estado_pago == 1)
+                if(estado_pago == 1 || estado_pago == 3)
                 {
                     html = '<tr>';
                     html += '<td><input type="hidden" name="id-pago[]" value="'+id_pago+'">'+serial_pago+'</td>';
@@ -600,6 +682,27 @@
             }); 
 
             return exito;           
+        });
+
+        // Cambia el estado de un registro dado
+        // Este botón funciona de manera similar en distintos formularios
+        $('.btn-deactivate-inscripcion').on('click', function(e) {
+
+            // Código para el botón de eliminar en las tablas
+            e.preventDefault();
+            let tr_element = $(this).closest('tr');
+            let ruta = $(this).attr('href');
+
+            alert(ruta);
+
+            $.ajax({
+                url: ruta,
+                type: 'POST',
+                success: function(response) {
+                    window.location.href = base_url+response;
+                    // tr_element.remove();
+                }
+            });
         });
 
         // =============================================
@@ -780,6 +883,7 @@
             // Comprobar si la variable "data" está vacia o no
             if(data != '') 
             {
+
                 let datosCurso = data.split('*');
 
                 console.table(datosCurso);
@@ -797,18 +901,22 @@
                 } 
                 else 
                 {
+
                     // De lo contrario (cupos ocupados < cupos totales)
                     $.ajax({
-                        type: 'post',
+
+                        type: 'POST',
                         url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
-                        dataType: 'json',
+                        dataType: 'JSON',
                         data: {
+
                             // "data-id-curso" es un atributo personalizado de HTML que almacena
-                            // el ID de la instnacia seleccionada
+                            // el ID de la instancia seleccionada
                             id: $(this).attr('data-id-curso')
                         },
                         success: function( data, textStatus, jQxhr )
                         {
+
                             let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
                             existe = false; // Al encontrar al participante cambia a TRUE
 
@@ -861,9 +969,12 @@
             }
             else
             {
+
                 alert('Seleccione una instancia');
             }
         });
+
+
 
         $(document).on('click', '.btn-remove-curso', function() {
             $(this).closest('tr').remove();

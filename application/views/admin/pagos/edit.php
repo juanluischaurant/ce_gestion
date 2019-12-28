@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1>
         Pago
-        <small>Nuevo</small>
+        <small>Editar</small>
         </h1>
     </section>
     <!-- Main content -->
@@ -15,29 +15,20 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-
-                    <?php if($this->session->flashdata("error")):?>
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>
+                                                    
+                        <form action="<?php echo base_url();?>movimientos/pagos/update" method="POST" class="form-horizontal">
                             
-                        </div>
-                    <?php endif;?>
-                            
-                        
-                        <form action="<?php echo base_url();?>movimientos/pagos/store" method="POST" class="form-horizontal">
-                            
-                            <input type="hidden" name="modulo-actual" value="pagos">
+                            <input type="hidden" value="<?php echo $pago->id_pago; ?>" id="id-pago" name="id-pago">
 
                             <div class="form-group">
                                 <div class="col-md-3">
                                     <!-- Campo select rellenado con data de la BD -->
                                     <label for="">Tipo de Pago:</label>
-                                    <select name="tipo-de-pago" id="tipo-de-pago" class="form-control" required>
+                                    <select name="tipo-de-pago" id="tipo-de-pago" class="form-control" disabled>
                                         <option value="">Seleccione...</option>
                                         <?php foreach($tipos_de_operacion as $tipo_de_operacion) : ?>
-                                            <?php $id_tipo_operacion = $tipo_de_operacion->id_tipo_de_operacion; ?>
-                                            <option value="<?php echo $id_tipo_operacion; ?>"><?php echo $tipo_de_operacion->tipo_de_operacion ?></option>
+                                            <?php $dataTipoOperacion = $tipo_de_operacion->id_tipo_de_operacion.'*'.$tipo_de_operacion->conteo_operaciones.'*'.$tipo_de_operacion->tipo_de_operacion ?>
+                                            <option value="<?php echo $dataTipoOperacion; ?>"><?php echo $tipo_de_operacion->tipo_de_operacion ?></option>
                                         <?php endforeach; ?>
                                     </select>
                                     <input type="hidden" id="id-tipo-de-pago" name="id-tipo-de-pago">
@@ -45,7 +36,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <label for="">Serial de Pago:</label>
-                                    <input type="text" class="form-control" id="serial-de-pago" name='serial-de-pago' readonly>
+                                    <input type="text" value="<?php echo $pago->serial_pago; ?>" class="form-control" id="serial-de-pago" name='serial-de-pago' readonly>
                                 </div>
                             </div>
 
@@ -59,37 +50,35 @@
          
                                 <div class="col-md-6">
                                     <label for="">Nombre del Titular:</label>
-                                    <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' readonly>
-                                    <input type="hidden" id="id-titular" name="id-titular">   
+                                    <?php $nombre =  $pago->nombres_persona . " " . $pago->apellidos_persona; ?>
+                                    <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' value="<?php echo $nombre; ?>" readonly>
+                                    <input type="hidden" id="id-titular" name="id-titular" value="<?php echo $pago->id_titular; ?>">   
                                 </div>
                             </div>
 
                             <hr>
 
                             <div class="form-group">
-
                                 <div class="col-md-4">
                                     <label for="">Monto de Operación:</label>
-                                    <input type="text" class="form-control" id="monto-de-operacion" name="monto-de-operacion" value="<?php echo set_value('monto-de-operacion'); ?>">
+                                    <input type="text" value="<?php echo $pago->monto_operacion; ?>" class="form-control" name="monto-de-operacion">
                                 </div>
-
                                 <div class="col-md-4">
                                     <label for="">Fecha de Operación:</label>
-                                    <input type="date" class="form-control" name="fecha-operacion" required>
+                                    <input type="date" value="<?php echo $pago->fecha_operacion; ?>" class="form-control" name="fecha-operacion" required>
                                 </div>
-                                
                             </div>
 
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="">Banco de Operación:</label>
-                                    <input type="text" class="form-control" id="banco-de-operacion" name="banco-de-operacion">
-                                    <input type="hidden" id="id-banco-de-operacion" name="id-banco-de-operacion">  
+                                    <input type="text" value="<?php echo $pago->nombre_banco; ?>" class="form-control" id="banco-de-operacion" name="banco-de-operacion">
+                                    <input type="hidden" value="<?php echo $pago->id_banco; ?>" id="id-banco-de-operacion" name="id-banco-de-operacion">  
                                 </div>
 
                                 <div class="col-md-4 <?php echo !empty(form_error('numero-de-operacion-unico')) ? 'has-error' : ''; ?>">
                                     <label for="">Número de Operación:</label>
-                                    <input type="text" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" value="<?php echo set_value('numero-de-operacion-unico'); ?>">
+                                    <input type="text" value="<?php echo $pago->numero_operacion; ?>" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" value="<?php echo set_value('numero-de-operacion-unico'); ?>" readonly>
                                     <?php echo form_error('numero-de-operacion-unico', '<span class="help-block">', '</span>'); ?>
                                 </div>
 

@@ -117,6 +117,7 @@ class Instancias_model extends CI_Model {
         ->join('participante as par', 'par.id_participante = insc.fk_id_participante_1')
         ->join('persona as per', 'per.id_persona = par.fk_id_persona_2')
         ->where('in.id_instancia', $id_instancia) 
+        ->where('insc.activa', 1)
         ->get();
 
         return $resultado->result();

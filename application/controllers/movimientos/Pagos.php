@@ -28,7 +28,7 @@ class Pagos extends CI_Controller {
     public function index()
     {
         $data = array(
-			'pagos' => $this->Pagos_model->getPagos(),
+			'pagos' => $this->Pagos_model->get_pagos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -59,39 +59,43 @@ class Pagos extends CI_Controller {
         $monto_de_operacion = $this->input->post('monto-de-operacion');
         $fecha_de_operacion = $this->input->post('fecha-operacion');
 
-        $this->form_validation->set_rules('numero-de-operacion-unico', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
+        $data = array(
+            'fk_id_banco' => $id_banco_operacion,
+            'fk_id_tipo_operacion' => $id_tipo_de_pago,
+            'fk_id_titular' => $id_cliente,
+            'serial_pago' => $serial_de_pago,
+            'numero_operacion' => $numero_de_operacion,
+            'monto_operacion' => $monto_de_operacion,
+            'fecha_operacion' => $fecha_de_operacion
+        );
 
-        if($this->form_validation->run())
+        if($id_tipo_de_pago == 1 || $id_tipo_de_pago == 2 || $id_tipo_de_pago == 3)
         {
-            $data = array(
-                'fk_id_banco' => $id_banco_operacion,
-                'fk_id_tipo_operacion' => $id_tipo_de_pago,
-                'fk_id_titular' => $id_cliente,
-                'serial_pago' => $serial_de_pago,
-                'numero_operacion' => $numero_de_operacion,
-                'monto_operacion' => $monto_de_operacion,
-                'fecha_operacion' => $fecha_de_operacion
-            );
-    
-            if($this->Pagos_model->save($data))
+            $this->form_validation->set_rules('numero-de-operacion-unico', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
+            
+            if($this->form_validation->run())
             {
-                $id_ultimo_pago = $this->Pagos_model->lastID();
-                $this->actualizar_conteo_operaciones($id_tipo_de_pago);
-                $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
-
-                redirect(base_url().'movimientos/pagos/');    
+                if($this->Pagos_model->save($data))
+                {
+                    $id_ultimo_pago = $this->Pagos_model->lastID();
+                    $this->actualizar_conteo_operaciones($id_tipo_de_pago);
+                    $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
+    
+                    redirect(base_url().'movimientos/pagos/');    
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'No se pudo guardar la información.');
+                    redirect(base_url().'movimientos/pagos/add');
+                }
             }
             else
             {
                 $this->session->set_flashdata('error', 'No se pudo guardar la información.');
-                redirect(base_url().'movimientos/pagos/add');
+                $this->add();
             }
         }
-        else
-        {
-            $this->session->set_flashdata('error', 'No se pudo guardar la información.');
-            $this->add();
-        }
+
     }
 
     /**
@@ -108,8 +112,6 @@ class Pagos extends CI_Controller {
         $numero_de_operacion = $this->input->post('numero_de_operacion');
         $monto_de_operacion = $this->input->post('monto_de_operacion');
         $fecha_de_operacion = $this->input->post('fecha_de_operacion');
-
-        $this->form_validation->set_rules('numero_de_operacion', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
         
         $data = array(
             'fk_id_banco' => $id_banco_operacion,
@@ -120,22 +122,47 @@ class Pagos extends CI_Controller {
             'monto_operacion' => $monto_de_operacion,
             'fecha_operacion' => $fecha_de_operacion
         );
-    
-        if($this->form_validation->run())
-        {
-            $resultados = $this->Pagos_model->save($data);
-            
-            if($resultados == TRUE)
-            {
-                $id_ultimo_pago = $this->Pagos_model->lastID();
-                
-                $this->actualizar_conteo_operaciones($id_tipo_de_pago);
 
-                echo json_encode($resultados);
+        if($id_tipo_de_pago == 1)
+        {
+            $this->form_validation->set_rules('numero-de-operacion-unico', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
+            
+            if($this->form_validation->run())
+            {
+                $resultados = $this->Pagos_model->save($data);
+
+                if($resultados == TRUE)
+                {
+                    $id_ultimo_pago = $this->Pagos_model->lastID();
+                
+                    $this->actualizar_conteo_operaciones($id_tipo_de_pago);
+    
+                    echo json_encode($resultados);  
+                }
             }
         }
+        else if($id_tipo_de_pago == 2 || $id_tipo_de_pago == 3)
+        {
+            $resultados = $this->Pagos_model->save($data);
+
+                if($resultados == TRUE)
+                {
+                    $id_ultimo_pago = $this->Pagos_model->lastID();
+                
+                    $this->actualizar_conteo_operaciones($id_tipo_de_pago);
+    
+                    echo json_encode($resultados);  
+                }
+        }
+    
     }
 
+    /**
+     * Método diseñado para funcionar con una llamada AJAX que cargará 
+     * la vista correspondiente en una ventana modal
+     *
+     * @return void
+     */
     public function view()
     {
         $id_pago = $this->input->post("id_pago");
@@ -146,6 +173,86 @@ class Pagos extends CI_Controller {
 
 		$this->load->view("admin/pagos/view", $data);
     }
+
+    public function edit($id_pago = NULL)
+    {
+        // ¿$id es nulo?
+		if(!isset($id_pago))
+		{
+			redirect(base_url().'movimientos/pagos/');
+		}
+		else
+		{
+            $estado_pago = $this->Pagos_model->get_estado_pago($id_pago);
+
+            // Verifica el estado actual del pago. Un pago ya utilizado
+            // NO se debe editar.
+            if($estado_pago->estado_pago == 1)
+            {
+                $data = array(
+                    'pago' => $this->Pagos_model->get_pago($id_pago),
+                    'tipos_de_operacion' => $this->Pagos_model->get_tipos_de_operacion()
+                );
+                $this->load->view('layouts/header');
+                $this->load->view('layouts/aside');
+                $this->load->view('admin/pagos/edit', $data);
+                $this->load->view('layouts/footer');
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'Pago ya en uso, no puedes editarlo.');
+                redirect(base_url().'movimientos/pagos/');
+            }
+		}
+    }
+
+    
+	public function update() 
+	{
+		$id_pago = $this->input->post('id-pago');
+
+		$id_titular = $this->input->post('id-titular');
+        $monto_operacion = $this->input->post('monto-de-operacion');
+        $fecha_operacion = $this->input->post('fecha-operacion');
+        $id_banco = $this->input->post('id-banco-de-operacion');
+        $numero_operacion = $this->input->post('numero-de-operacion-unico');
+
+		$data = array(
+            'fk_id_titular' => $id_titular,
+            'monto_operacion' => $monto_operacion,
+            'fecha_operacion' => $fecha_operacion,
+            'fk_id_banco' => $id_banco,
+            'numero_operacion' => $numero_operacion,			
+		);
+
+		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
+
+		// Si la validación es correcta
+		if($this->form_validation->run('editar_pago'))
+		{
+			if($this->Pagos_model->update($id_pago, $data))
+			{
+				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+				// $descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
+				// $tabla_afectada = "PERSONA"; // Tabla afectada
+
+				// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+	
+				redirect(base_url().'movimientos/pagos');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
+				redirect(base_url().'movimientos/pagos/edit/'.$id_pago);
+			}
+		}
+		else
+		{
+			// $this hace referencia al módulo donde es invocado
+			$this->edit($id_pago);
+		}		
+	}
 
     public function get_tipo_de_operacion_ajax()
     {
@@ -175,6 +282,22 @@ class Pagos extends CI_Controller {
     
     // Métodos utilizados para el pluggin AUTOCOMPLETE
     
+
+	/**
+	 * Consulta el pago indicado
+	 * 
+	 * Este método se invoca a través de una llamada AJAX realizada con jQuery
+	 *
+	 * @return void
+	 */
+	public function get_pagos_json()
+	{
+		$valor = $this->input->post('query');
+		$pagos = $this->Pagos_model->get_pagos_json($valor);
+		echo json_encode($pagos);
+	}
+	
+
 	public function get_titulares_json() {
         $valor = $this->input->post('query');
 		$clientes = $this->Pagos_model->get_titulares_json($valor);

@@ -29,7 +29,7 @@
                             <tbody>
                                 <?php if(!empty($inscripciones)): ?>
                                 <?php foreach($inscripciones as $inscripcion): ?>
-                                    <?php // print_r($inscripcion); echo'<br>'; ?> 
+
                                     <tr>
                                         <td><?php echo $inscripcion->fk_id_inscripcion_1; ?></td>
                                         <td><?php echo $inscripcion->hora_inscripcion; ?></td>
