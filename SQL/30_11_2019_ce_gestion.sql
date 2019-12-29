@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 24, 2019 at 12:24 AM
+-- Generation Time: Dec 29, 2019 at 07:39 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -114,7 +114,8 @@ CREATE TABLE `banco` (
 INSERT INTO `banco` (`id_banco`, `nombre_banco`, `detalles_banco`) VALUES
 (1, 'Banco de Venezuela', 'El banco de Venezuela'),
 (2, 'Bancaribe', 'El banco de Venezuela y el Caribe'),
-(3, 'Mercantil', 'Banco mercantil');
+(3, 'Mercantil', 'Banco mercantil'),
+(4, 'Sin Banco', 'Valor seleccionado cuando no hay banco intermediario');
 
 -- --------------------------------------------------------
 
@@ -199,7 +200,7 @@ CREATE TABLE `inscripcion` (
   `precio_total` decimal(10,2) DEFAULT NULL COMMENT 'Monto de dinero total por los cursos adquiridos',
   `descuento` decimal(10,2) DEFAULT NULL COMMENT 'Cantidad de descuento ofertada al cliente al momento de realizar la inscripción',
   `precio_final` decimal(10,2) DEFAULT NULL COMMENT 'Monto total a cobrar al cliente',
-  `activa` tinyint(1) DEFAULT '1' COMMENT 'Estado de la inscripción, usado para "eliminar el registro"'
+  `activa` tinyint(1) DEFAULT '1' COMMENT 'Estado de la inscripción, usado para "desactivar el registro". 1 = Activo, 0 = Inactivo'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -211,7 +212,10 @@ INSERT INTO `inscripcion` (`id_inscripcion`, `fk_id_participante_1`, `fk_id_esta
 (2, 2, 1, NULL, '2019-11-15', '2019-11-15 18:50:14', NULL, '60000.00', '60000.00', '0.00', '60000.00', 1),
 (3, 3, 1, NULL, '2019-11-18', '2019-11-18 14:38:26', NULL, '60000.00', '60000.00', '0.00', '60000.00', 1),
 (4, 4, 1, NULL, '2019-12-20', '2019-12-20 22:05:35', NULL, '100000.00', '60000.00', '0.00', '60000.00', 1),
-(5, 5, 1, NULL, '2019-12-21', '2019-12-21 12:45:39', NULL, '75000.00', '60000.00', '0.00', '60000.00', 1);
+(5, 5, 1, NULL, '2019-12-21', '2019-12-21 12:45:39', NULL, '75000.00', '60000.00', '0.00', '60000.00', 1),
+(6, 1, 1, NULL, '2019-12-24', '2019-12-24 12:21:03', NULL, '75000.00', '60000.00', '0.00', '60000.00', 1),
+(7, 3, 1, NULL, '2019-12-25', '2019-12-25 13:42:24', NULL, '75000.00', '60000.00', '0.00', '60000.00', 1),
+(8, 4, 1, NULL, '0000-00-00', '2019-12-26 19:09:25', NULL, '0.00', '100000.00', '0.00', '100000.00', 1);
 
 -- --------------------------------------------------------
 
@@ -234,7 +238,10 @@ INSERT INTO `inscripcion_instancia` (`id_inscripcion_instancia`, `fk_id_inscripc
 (2, 2, 2),
 (3, 3, 2),
 (4, 4, 2),
-(5, 5, 2);
+(5, 5, 2),
+(6, 6, 2),
+(7, 7, 1),
+(8, 8, 3);
 
 -- --------------------------------------------------------
 
@@ -264,9 +271,9 @@ CREATE TABLE `instancia` (
 --
 
 INSERT INTO `instancia` (`id_instancia`, `serial_instancia`, `fk_id_curso_1`, `fk_id_facilitador_1`, `fk_id_periodo_1`, `fk_id_locacion_1`, `fk_id_turno_instancia_1`, `cupos_instancia`, `precio_instancia`, `estado_instancia`, `descripcion_instancia`, `cupos_instancia_ocupados`, `fecha_creacion`, `fecha_modificacion`) VALUES
-(1, 'Ref-000002', 4, 1, 2, 1, 4, 15, '60000.00', 1, 'Refrigeración dictado en IRFA', 1, '2019-11-15 14:00:00', '2019-11-17 18:36:36'),
-(2, 'Inf-000002', 1, 2, 2, 1, 3, 12, '60000.00', 1, 'Ofimática y lógica', 4, '2019-11-15 10:38:19', '2019-12-21 12:45:39'),
-(3, 'Rep-000001', 2, 2, 2, 1, 4, 12, '100000.00', 1, 'Instancia inicial', 0, '2019-12-21 12:18:07', '2019-12-21 12:18:07');
+(1, 'Ref-000002', 4, 1, 2, 1, 4, 15, '60000.00', 1, 'Refrigeración dictado en IRFA', 2, '2019-11-15 14:00:00', '2019-12-29 01:51:16'),
+(2, 'Inf-000002', 1, 2, 2, 1, 3, 12, '60000.00', 1, 'Ofimática y lógica', 5, '2019-11-15 10:38:19', '2019-12-27 23:34:11'),
+(3, 'Rep-000001', 2, 2, 2, 1, 4, 12, '100000.00', 1, 'Instancia inicial', 1, '2019-12-21 12:18:07', '2019-12-28 20:51:08');
 
 -- --------------------------------------------------------
 
@@ -360,7 +367,7 @@ CREATE TABLE `pago_de_inscripcion` (
   `monto_operacion` decimal(10,2) DEFAULT NULL,
   `fecha_operacion` date NOT NULL,
   `fecha_registro_operacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Captura hora de registro de la operación',
-  `estado_pago` int(11) NOT NULL DEFAULT '1' COMMENT 'Registra si un pago ha sido utilizado o eliminado. 1 = Nuevo, 0 = Elliminado, 2 = Utilizado'
+  `estado_pago` int(11) NOT NULL DEFAULT '1' COMMENT 'Registra si un pago ha sido utilizado o desactivado: 0 =  Desactivado, 1 = Nuevo, 2 = Utilizado'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
 
 --
@@ -372,7 +379,14 @@ INSERT INTO `pago_de_inscripcion` (`id_pago`, `fk_id_inscripcion`, `fk_id_banco`
 (2, 2, 3, 1, 2, 'tra-000040', '010523423243', '60000.00', '2019-11-15', '2019-11-15 18:49:40', 2),
 (3, 3, 3, 1, 2, 'tra-000041', '010542434637', '60000.00', '2019-11-17', '2019-11-18 14:28:55', 2),
 (4, 5, 1, 1, 4, 'tra-000042', '0102345343456543', '75000.00', '2019-12-02', '2019-12-01 22:42:16', 2),
-(5, 4, 1, 1, 5, 'tra-000043', '010224322324', '100000.00', '2019-12-20', '2019-12-20 22:04:37', 2);
+(5, 4, 1, 1, 5, 'tra-000043', '010224322324', '100000.00', '2019-12-20', '2019-12-20 22:04:37', 2),
+(6, 6, 2, 1, 1, 'tra-000044', '0103243243243135', '75000.00', '2019-12-24', '2019-12-24 12:19:52', 2),
+(7, 7, 1, 1, 4, 'tra-000045', '010224322932', '75000.00', '2019-12-24', '2019-12-24 17:09:14', 2),
+(11, NULL, 1, 1, 1, 'tra-000049', '0102034342225443', '100000.00', '2019-12-25', '2019-12-25 13:08:15', 1),
+(47, 8, 4, 3, 5, 'exo-000001', '9543', '0.00', '2019-12-26', '2019-12-26 18:33:25', 2),
+(53, NULL, 4, 2, 5, 'efe-000016', 'EFE000016', '100000.00', '2019-12-27', '2019-12-27 00:52:25', 1),
+(54, 8, 4, 3, 5, 'exo-000006', 'EXO000006', '0.00', '2019-12-27', '2019-12-27 01:02:00', 2),
+(55, 8, 4, 3, 4, 'exo-000007', 'EXO000007', '0.00', '2019-12-27', '2019-12-27 01:16:21', 2);
 
 -- --------------------------------------------------------
 
@@ -562,9 +576,9 @@ CREATE TABLE `tipo_de_operacion` (
 --
 
 INSERT INTO `tipo_de_operacion` (`id_tipo_de_operacion`, `tipo_de_operacion`, `conteo_operaciones`) VALUES
-(1, 'Transferencia', 43),
-(2, 'Efectivo', 11),
-(3, 'Exonerado', 0);
+(1, 'Transferencia', 65),
+(2, 'Efectivo', 16),
+(3, 'Exonerado', 7);
 
 -- --------------------------------------------------------
 
@@ -817,7 +831,7 @@ ALTER TABLE `accion`
 -- AUTO_INCREMENT for table `banco`
 --
 ALTER TABLE `banco`
-  MODIFY `id_banco` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del banco de operación', AUTO_INCREMENT=4;
+  MODIFY `id_banco` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID del banco de operación', AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `curso`
@@ -841,13 +855,13 @@ ALTER TABLE `facilitador`
 -- AUTO_INCREMENT for table `inscripcion`
 --
 ALTER TABLE `inscripcion`
-  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la entidad, autogenerado', AUTO_INCREMENT=6;
+  MODIFY `id_inscripcion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la entidad, autogenerado', AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `inscripcion_instancia`
 --
 ALTER TABLE `inscripcion_instancia`
-  MODIFY `id_inscripcion_instancia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_inscripcion_instancia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `instancia`
@@ -877,7 +891,7 @@ ALTER TABLE `mes`
 -- AUTO_INCREMENT for table `pago_de_inscripcion`
 --
 ALTER TABLE `pago_de_inscripcion`
-  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_pago` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT for table `participante`
