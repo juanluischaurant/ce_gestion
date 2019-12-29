@@ -566,6 +566,14 @@
             minLength: 1,
             select: function(event, ui) {
 
+                // Verifica si el ítem que se intenta seleccionar ya ha sido seleccionado
+                if($('#'+ui.item.id_pago).length !== 0) {
+
+                    $('#numero-de-operacion').val('');
+                    alert('¡Ya seleccionaste este ítem!');
+                    return;
+                }
+
                 data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_persona+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
@@ -588,11 +596,9 @@
                 fk_id_tipo_operacion = datosPago[6],
                 estado_pago = datosPago[7];        
 
-                console.table(datosPago);
-
                 if(estado_pago == 1 || estado_pago == 3)
                 {
-                    html = '<tr>';
+                    html = '<tr id="'+ id_pago + '">';
                     html += '<td><input type="hidden" name="id-pago[]" value="'+id_pago+'">'+serial_pago+'</td>';
                     html += '<td><input type="hidden" name="numero-operacion[]" value="'+numero_operacion+'">'+numero_operacion+'</td>';
                     html += '<td><input type="hidden" name="monto-operacion[]" value="'+monto_operacion+'">'+monto_operacion+'<input type="hidden" name="id_pago[]" value="'+datosPago[6]+'"></td>';
@@ -610,6 +616,7 @@
                 }
                 else if(estado_pago == 0)
                 {
+
                     alert('Pago no disponible');
                     $('#numero-de-operacion').val('');
                 } else if(estado_pago == 2)
@@ -704,6 +711,28 @@
                     // tr_element.remove();
                 }
             });
+        });
+
+        /**
+         * Método utilizado al momento de remover un pago asignado a determinada
+         * inscripción en el módulo de edición de inscripción.
+         */
+        $('.btn-remove-inscripcion-pago').on('click', function() {
+
+            // Cuenta el numero de elementos <tr> dentro de la tabla
+            let table_rows_count = $('#tabla-pagos tr').length - 1,
+            // Cuenta el numero de elementos <tr> dentro de la tabla con la clase dada
+           count_pagos_registrados = $('.pago-registrado').length;
+
+           console.log(table_rows_count)
+       
+            if(count_pagos_registrados > 1 && table_rows_count > 1) {
+
+                alert('yup')
+                $(this).closest('tr').remove();
+            }
+            // sumar();
+
         });
 
         // =============================================

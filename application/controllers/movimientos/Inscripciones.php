@@ -64,16 +64,25 @@ class Inscripciones extends CI_Controller {
 		$this->load->view('layouts/footer');		
 	}
 
-	public function edit($id_inscripcion)
+	public function edit($id_inscripcion, $estado_inscripcion)
 	{
-		$data = array(
-			'data_instancias' => $this->Inscripciones_model->get_editar_instancia($id_inscripcion),
-			'data_inscripcion_instancia' => $this->Inscripciones_model->get_id_inscripcion_instancia($id_inscripcion)
-		);
-		$this->load->view('layouts/header');
-		$this->load->view('layouts/aside');
-		$this->load->view('admin/inscripciones/edit', $data);
-		$this->load->view('layouts/footer');
+		if($estado_inscripcion == 1)
+		{
+			$data = array(
+				'data_instancias' => $this->Inscripciones_model->get_editar_instancia($id_inscripcion),
+				'data_inscripcion_instancia' => $this->Inscripciones_model->get_id_inscripcion_instancia($id_inscripcion),
+				'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
+			);
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/inscripciones/edit', $data);
+			$this->load->view('layouts/footer');
+		}
+		elseif($estado_inscripcion == 0)
+		{
+			$this->session->set_flashdata('alert', 'La inscripción debe estar activa para editarla.');
+					redirect(base_url().'movimientos/inscripciones/');
+		}
 	}
 
 	/**
@@ -171,9 +180,9 @@ class Inscripciones extends CI_Controller {
 	}
 
 	/**
-	 * Desactivar inscripción
+	 * Activar inscripción
 	 * 
-	 * Método utilizado al momento de presionar el botón de desactivar inscripción, para
+	 * Método utilizado al momento de presionar el botón de activar inscripción, para
 	 * su correcto funcionamiento este método requiere dos parámetros: $id_inscripcion e
 	 * $id_instancia, que son pasados a través de la variable global POST.
 	 *
@@ -279,7 +288,27 @@ class Inscripciones extends CI_Controller {
 				// redirect(base_url().'movimientos/inscripciones/edit'.$id_inscripcion);
 			}
 		}
+	}
 
+	public function update_inscripcion_pago()
+	{
+		$id_pagos = $this->input->post('id-pago');
+		$id_inscripcion = $this->input->post('id-inscripcion-actual');
+
+		for($i=0; $i < count($id_pagos); $i++)
+		{
+			$id_pago = $id_pagos[$i];
+
+			$data = array(
+				'fk_id_inscripcion' => $id_inscripcion, 
+				'estado_pago' =>  2
+			);
+
+			$this->Pagos_model->update($id_pago, $data);
+
+		}
+
+		print_r($id_pagos);
 	}
 
 	/**
@@ -356,6 +385,8 @@ class Inscripciones extends CI_Controller {
 	{		
 		$this->Pagos_model->actualiza_estado_pago($id_pago);
 	}
+
+
 
 
 	// =======================================================

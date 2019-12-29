@@ -20,6 +20,14 @@
                 
                 <hr>
 
+                <?php if($this->session->flashdata('alert')): ?>
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-pencil"></i> ¡Alerta!</h4>
+                        <?php echo $this->session->flashdata('alert'); ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="row">
                     <div class="col-md-12">
                         <table id="example1" class="table table-bordered btn-hover">
@@ -67,7 +75,7 @@
                                                 <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>movimientos/inscripciones/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>movimientos/inscripciones/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion_activa; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
 

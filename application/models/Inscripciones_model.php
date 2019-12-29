@@ -159,7 +159,8 @@ class Inscripciones_model extends CI_Model {
     public function get_id_inscripcion_instancia($id_inscripcion)
     {
         $resultado = $this->db->select(
-            'par.id_participante,
+            'i.id_inscripcion,
+            par.id_participante,
             ii.id_inscripcion_instancia,
             inst.id_instancia'
             )
@@ -214,11 +215,11 @@ class Inscripciones_model extends CI_Model {
     }
     
     /**
-     * Obtén instancia inscrita
+     * Obtén datos de instancia inscrita
      * 
      * El presente método permite obtener la información de la instancia
-     * relacionada a la inscripción, esta data será mostrada al momento de
-     * cargar la vista de edición de inscripción.
+     * relacionada a determinada inscripción, función usada principalmente 
+     * al momento de cargar la vista de edición de inscripción.
      *
      * @param integer $id_inscripcion
      * @return array
@@ -249,8 +250,8 @@ class Inscripciones_model extends CI_Model {
     /**
      * Obtén los cursos comprados en una inscripción
      * 
-     * Método utilizado principalmente para generar la ficha de inscripción mostrada al presionar el botón
-     * de ver Inscripción
+     * Método utilizado principalmente al momento de generar la ficha de inscripción 
+     * mostrada al presionar el botón de ver Inscripción.
      *
      * @param integer $id
      * @return void
@@ -278,8 +279,9 @@ class Inscripciones_model extends CI_Model {
     /**
      * Obtén los pagos realizados en una inscripción
      * 
-     * Método utilizado principalmente para generar la ficha de inscripción dentro de la vista
-     * "Generar Inscripción" al presionar el botón de ver detalles
+     * Método utilizado principalmente para generar la ficha de inscripción 
+     * dentro de la vista "Generar Inscripción" al presionar el botón de ver detalles 
+     * y en el módulo de editar inscripciones.
      *
      * @param integer $id_inscripcion
      * @return void
@@ -287,9 +289,14 @@ class Inscripciones_model extends CI_Model {
     public function get_pago_inscripcion($id_inscripcion)
     {
         $resultado = $this->db->select(
-            'pago_de_inscripcion.*')
-        ->from('pago_de_inscripcion')
-        ->where('fk_id_inscripcion', $id_inscripcion)
+            'pdi.*,
+            pers.cedula_persona'
+            )
+        ->from('pago_de_inscripcion as pdi')
+        ->join('inscripcion as insc', 'insc.id_inscripcion = pdi.fk_id_inscripcion')
+        ->join('participante as part', 'part.id_participante = insc.fk_id_participante_1')
+        ->join('persona as pers', 'pers.id_persona = part.fk_id_persona_2')
+        ->where('pdi.fk_id_inscripcion', $id_inscripcion)
         ->get();
 
         return $resultado->result();

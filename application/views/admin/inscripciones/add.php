@@ -75,7 +75,7 @@
 
                     </div>
 
-                    <p>Buscar Producto:</p>
+                    <p>Seleccionar Instancia:</p>
                     <div class="input-group margin col-md-5">
 
                         <input type="text" class="form-control" id="producto" disabled="disabled">
