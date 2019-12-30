@@ -53,7 +53,7 @@ class Inscripciones_model extends CI_Model {
             i.fecha_inscripcion,
             i.monto_pagado,
             i.precio_total,
-            i.descuento,
+            i.deuda,
             i.precio_final,
             p.cedula_persona,
             concat(p.nombres_persona, " ", p.apellidos_persona) as nombre_completo_participante,
@@ -160,6 +160,7 @@ class Inscripciones_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'i.id_inscripcion,
+            i.deuda,
             par.id_participante,
             ii.id_inscripcion_instancia,
             inst.id_instancia'
@@ -290,7 +291,8 @@ class Inscripciones_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'pdi.*,
-            pers.cedula_persona'
+            pers.cedula_persona,
+            pers.cedula_persona as cedula_titular_pago'
             )
         ->from('pago_de_inscripcion as pdi')
         ->join('inscripcion as insc', 'insc.id_inscripcion = pdi.fk_id_inscripcion')

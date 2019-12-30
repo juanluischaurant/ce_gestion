@@ -57,8 +57,8 @@
 					<td><?php echo $inscripcion->precio_total; ?></td>
 				</tr>
 				<tr>
-					<td colspan="4" class="text-right"><strong>Descuento:</strong></td>
-					<td><?php echo $inscripcion->descuento; ?></td>
+					<td colspan="4" class="text-right"><strong>Deuda:</strong></td>
+					<td><?php echo $inscripcion->deuda; ?></td>
 				</tr>
 				<tr>
 					<td colspan="4" class="text-right"><strong>Total:</strong></td>

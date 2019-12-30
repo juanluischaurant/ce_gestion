@@ -579,8 +579,8 @@
             }
         });
 
-        $('#btn-agregar-pago').on('click', function()
-        {
+        $('#btn-agregar-pago').on('click', function() {
+
             data = $(this).val();
 
             if(data != '')
@@ -601,7 +601,7 @@
                     html = '<tr id="'+ id_pago + '">';
                     html += '<td><input type="hidden" name="id-pago[]" value="'+id_pago+'">'+serial_pago+'</td>';
                     html += '<td><input type="hidden" name="numero-operacion[]" value="'+numero_operacion+'">'+numero_operacion+'</td>';
-                    html += '<td><input type="hidden" name="monto-operacion[]" value="'+monto_operacion+'">'+monto_operacion+'<input type="hidden" name="id_pago[]" value="'+datosPago[6]+'"></td>';
+                    html += '<td><input type="hidden" name="monto-operacion[]" value="'+monto_operacion+'">'+monto_operacion+'</td>';
                     html += '<td><input type="hidden" name="cedula-cliente[]" value="'+cedula_cliente+'">'+cedula_cliente+'<input type="hidden" name="fk_id_tipo_operacion[]" value="'+datosPago[7]+'">'+'</td>';
 
                     html += '<td><button type="button" class="btn btn-danger btn-remove-pago"><span class="fa fa-remove"></span></button></td>'
@@ -632,7 +632,7 @@
             }
         });
 
-        $(document).on('click', '.btn-check-participante-inscripcion', function()
+        $(document).on('click', '.btn-check-participante-inscripcion', function() 
         {
             let participante = $(this).val(); // Almacena el valor almacenado en el atributo value del botón clickeado
             let infoParticipante = participante.split('*'); // divide la información en un array
@@ -652,9 +652,9 @@
             $('#producto').removeAttr('disabled');
         });
 
-        // Función encargada de almacenar los datos de pago de manera 
-        // asincrona
+        // Función encargada de almacenar los datos de pago de manera asincrona
         $(document).on('click', '#btn-guardar-inscripcion-pago', function() {
+
             let exito = false; // Do you need it?
 
             let id_banco_operacion = $('#id-banco-de-operacion').val(),
@@ -701,8 +701,6 @@
             let tr_element = $(this).closest('tr');
             let ruta = $(this).attr('href');
 
-            alert(ruta);
-
             $.ajax({
                 url: ruta,
                 type: 'POST',
@@ -717,22 +715,32 @@
          * Método utilizado al momento de remover un pago asignado a determinada
          * inscripción en el módulo de edición de inscripción.
          */
-        $('.btn-remove-inscripcion-pago').on('click', function() {
+        $('.btn-remove-inscripcion-pago').on('click', function(e) {
 
             // Cuenta el numero de elementos <tr> dentro de la tabla
             let table_rows_count = $('#tabla-pagos tr').length - 1,
             // Cuenta el numero de elementos <tr> dentro de la tabla con la clase dada
            count_pagos_registrados = $('.pago-registrado').length;
-
-           console.log(table_rows_count)
        
             if(count_pagos_registrados > 1 && table_rows_count > 1) {
 
-                alert('yup')
-                $(this).closest('tr').remove();
-            }
-            // sumar();
+                // Código para el botón de eliminar en las tablas
+                e.preventDefault();
+                let tr_element = $(this).closest('tr'),
+                ruta = $(this).attr('href');
 
+                $.ajax({
+                    url: ruta,
+                    type: 'POST',
+                    success: function(response) {
+
+                        tr_element.remove();
+                        sumar();
+                    }
+                });
+                
+                
+            }
         });
 
         // =============================================
@@ -880,6 +888,7 @@
         // =============================================
 
         $('#producto').autocomplete({
+
             source: function(request, response) {
                 $.ajax({
                     url: base_url+'movimientos/inscripciones/getInstanciasJSON',
@@ -892,8 +901,16 @@
                         response(data)
                     }
                 });
-            }, minLength: 3,
+            }, minLength: 2,
             select: function(event, ui) {
+
+                let table_rows_count = $('#tabla-instancias tr').length - 1;
+
+                if(table_rows_count >= 1) {
+
+                    alert('¡No puedes seleccionar más de 1 curso!');
+                    return;
+                }
                 // Almacena en una variable los datos recogidos con la consulta SQL realizada previamente
                 let data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia+'*'+ui.item.cupos_instancia_ocupados;
                 
@@ -914,23 +931,18 @@
             if(data != '') 
             {
 
-                let datosCurso = data.split('*');
-
-                console.table(datosCurso);
-
-                let cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por curso
+                let datosCurso = data.split('*'),
+                cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por curso
                 cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por curso
 
                 // Si la cantidad de cupos totales es menor a la de cupos ocupados
-                if(parseInt(cupos_totales) <= parseInt(cupos_ocupados))
-                {
+                if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
+
                     // Evita que el curso sea agregado
                     alert('El curso está lleno, por favor seleccione otro');
                     // Vacía el elemento #producto
-                    $('#producto').val(''); 
-                } 
-                else 
-                {
+                    $('#producto').val('');
+                } else {
 
                     // De lo contrario (cupos ocupados < cupos totales)
                     $.ajax({
@@ -944,8 +956,7 @@
                             // el ID de la instancia seleccionada
                             id: $(this).attr('data-id-curso')
                         },
-                        success: function( data, textStatus, jQxhr )
-                        {
+                        success: function( data, textStatus, jQxhr ) {
 
                             let idParticipante = $('#id_participante').val(), // Almacena el ID del participante a inscribir
                             existe = false; // Al encontrar al participante cambia a TRUE
@@ -953,18 +964,20 @@
                             // Itera sobre cada OBJETO obtenido durante la llamada AJAX
                             for(let i = 0; i < data.length; i++)
                             {
+
                                 let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
                                 
                                 if(idParticipanteInscrito == idParticipante)
                                 {
+
                                     // alert(idParticipanteInscrito);
                                     existe = true; // Cambia estado de la variable "existe"
                                     break; // Anula el ciclo FOR
                                 }
                             }
 
-                            if(existe)
-                            {
+                            if(existe) {
+
                                 alert('El participante ya está registrado en esta instancia.');
                             }
                             else if(!existe) 
@@ -979,7 +992,7 @@
                                 html += '<td><button type="button" class="btn btn-danger btn-remove-curso"><span class="fa fa-remove"></span></button></td>'
                                 html += '</tr>';
 
-                                $('#tbventas tbody').append(html);
+                                $('#tabla-instancias tbody').append(html);
 
                                 // Verifica el estado del atributo "disabled" del botón clickeado 
                                 switchGuardarInscripcion();
@@ -1004,13 +1017,12 @@
             }
         });
 
-
-
         $(document).on('click', '.btn-remove-curso', function() {
+
             $(this).closest('tr').remove();
 
             // Verifica que el contenido del nodo <tr> tenga contenido
-            if($('#tbventas tr').length <= 1) 
+            if($('#tabla-instancias tr').length <= 1) 
             {
                 $('#guardar-inscripcion').attr('disabled', true);
             }
@@ -1019,32 +1031,17 @@
         });
 
         $(document).on('click', '.btn-remove-pago', function() {
+            
             $(this).closest('tr').remove();
             sumar();
-
         });
 
         // NO OLVIDES PROGRAMAR ESTO
         // ¿Es realmente necesario?
-        // $(document).on('keyup', '#tbventas input.cantidades', function() {
+        // $(document).on('keyup', '#tabla-instancias input.cantidades', function() {
         //     cantidad = $(this).val();
         //     precio = $(this).closest('tr').find('td:eq(2)');
         //     importe = cantidad * precio
-        // });
-
-        // Borrar esto
-        // $('.btn-view-participante').on('click', function() {
-        //     let participante = $(this).val(); // Almacena datos del participante previamente almacenados en el atributo "value" del botón clickeado
-        //     let infoParticipante = participante.split('*'); // Divide y convierte en array la cadena de texto almacenada en "participante"
-
-        //     // Estructura el html a renderizar
-        //     let html = '<p><strong>Nombres: </strong>'+infoParticipante[1]+'</p>'
-        //     html += '<p><strong>Apellidos: </strong>'+infoParticipante[2]+'</p>'
-        //     html += '<p><strong>Teléfono: </strong>'+infoParticipante[3]+'</p>'
-        //     html += '<p><strong>Cédula: </strong>'+infoParticipante[4]+'</p>';
-
-        //     // Renderiza el código html en el lugar indicado
-        //     $('#modal-default .modal-body').html(html);
         // });
 
         $(document).on('click', '.btn-view-inscripcion', function()
@@ -1130,26 +1127,42 @@
     }
 
     function sumar() {
+
         // Calcula el total cada vez que se llama esta función
-        subtotal = 0;
+        let total = 0,
         monto_pagado = 0;
 
         // -------------
         $('#tabla-pagos tbody tr').each(function() {
+
             monto_pagado = monto_pagado + Number($(this).find('td:eq(2)').text());
         });
-        $('input[name=monto-pagado]').val(monto_pagado.toFixed(2));
 
+        $('input[name=monto-pagado]').val(monto_pagado.toFixed(2));
         // --------------
 
-        $('#tbventas tbody tr').each(function() {
-            subtotal = subtotal + Number($(this).find('td:eq(4)').text());
+        $('#tabla-instancias tbody tr').each(function() {
+
+            total = total + Number($(this).find('td:eq(4)').text());
         });
-        $('input[name=subtotal]').val(subtotal.toFixed(2));
 
-        descuento = $('input[name=descuento]').val();
+        let deuda = total - monto_pagado;
 
-        total = subtotal - descuento;
+            if(deuda !== 0 && deuda > 0) {
+                
+                $('input[name=deuda]').val(deuda);
+                $('input[name=subtotal]').val('');
+            }
+            if(deuda == 0) {
+                $('input[name=deuda]').val('');
+                $('input[name=subtotal]').val('');
+            }
+            if(deuda < 0) {
+                $('input[name=deuda]').val('');
+                $('input[name=subtotal]').val(deuda*1);
+            }
+
+    
 
         $('input[name=total]').val(total.toFixed(2));
     }
@@ -1159,9 +1172,9 @@
         let theAttribute = $('#guardar-inscripcion').attr('disabled');
 
         if(typeof theAttribute !== typeof undefined && theAttribute !== false) {
+
             $('#guardar-inscripcion').removeAttr('disabled');
         }
-
     }
 
     // Highcharts

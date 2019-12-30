@@ -28,6 +28,14 @@
                     </div>
                 <?php endif; ?>
 
+                <?php if($this->session->flashdata('success')): ?>
+                    <div class="alert alert-success alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-pencil"></i> ¡Éxito!</h4>
+                        <?php echo $this->session->flashdata('success'); ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="row">
                     <div class="col-md-12">
                         <table id="example1" class="table table-bordered btn-hover">

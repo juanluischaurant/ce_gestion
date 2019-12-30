@@ -89,7 +89,7 @@
                         </span>
                     </div>
 
-                    <table id="tbventas" class="table table-bordered table-striped table-hover">
+                    <table id="tabla-instancias" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -121,8 +121,8 @@
                         </div>
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-addon">Descuento:</span>
-                                <input type="text" class="form-control" placeholder="0.00" name="descuento" value="0.00" readonly="readonly">
+                                <span class="input-group-addon">Deuda:</span>
+                                <input type="text" class="form-control" placeholder="0.00" name="deuda" value="0.00" readonly="readonly">
                             </div>
                         </div>
                         <div class="col-md-3">

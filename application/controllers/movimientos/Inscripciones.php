@@ -109,7 +109,7 @@ class Inscripciones extends CI_Controller {
 		$fecha_inscripcion = $this->input->post('fecha-inscripcion');
 		$monto_pagado = $this->input->post('monto-pagado');
 		$precio_total = $this->input->post('subtotal');
-		$descuento = $this->input->post('descuento');
+		$deuda = $this->input->post('deuda');
 		$precio_final = $this->input->post('total');
 
 		// Llaves utilizadas para almacenar en la tabla inscripcion_instancia
@@ -124,7 +124,7 @@ class Inscripciones extends CI_Controller {
 			'fecha_inscripcion' => $fecha_inscripcion,
 			'monto_pagado' => $monto_pagado,
 			'precio_total' => $precio_total,
-			'descuento' => $descuento,
+			'deuda' => $deuda,
 			'precio_final' => $precio_final
 		);
 	
@@ -290,26 +290,57 @@ class Inscripciones extends CI_Controller {
 		}
 	}
 
+	/**
+	 * Actualizar datos de pago de inscripción
+	 *	 *
+	 * @return void
+	 */
 	public function update_inscripcion_pago()
 	{
 		$id_pagos = $this->input->post('id-pago');
 		$id_inscripcion = $this->input->post('id-inscripcion-actual');
+		$monto_pagado = $this->input->post('monto-pagado'); 
+		$deuda = $this->input->post('deuda'); // Este campo será eliminado de la base de datos
 
 		for($i=0; $i < count($id_pagos); $i++)
 		{
 			$id_pago = $id_pagos[$i];
 
 			$data = array(
-				'fk_id_inscripcion' => $id_inscripcion, 
+				'fk_id_inscripcion' => $id_inscripcion,
 				'estado_pago' =>  2
 			);
 
+			// Actualiza los datos de pago
 			$this->Pagos_model->update($id_pago, $data);
-
 		}
 
-		print_r($id_pagos);
+		$data_inscripcion = array(
+			'monto_pagado' => $monto_pagado,
+			'deuda' => $deuda,
+		);
+
+		// Actualiza los datos de inscripción
+		if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data_inscripcion))
+		{
+			$this->session->set_flashdata('success', 'Inscripción actualizados exitosamente.');
+			redirect(base_url().'movimientos/inscripciones/');
+		}		
 	}
+
+	
+    public function remove_inscripcion_pago($id_pago)
+    {
+        $data = array(
+            'fk_id_inscripcion' => NULL,
+            'estado_pago' => 1
+        );
+
+        if($this->Pagos_model->update($id_pago, $data))
+        {
+            echo 'movimientos/inscripciones';
+        }
+    }
 
 	/**
 	 * Actualiza Cupos Ocupados

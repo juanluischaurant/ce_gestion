@@ -54,7 +54,7 @@
                                 </span>
                             </div>
 
-                            <table id="tbventas" class="table table-bordered table-striped table-hover">
+                            <table id="tabla-instancias" class="table table-bordered table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>Código</th>
@@ -66,6 +66,26 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+
+                                <?php if(!empty($data_instancias)): ?>
+                                    <?php foreach($data_instancias as $di): ?>
+                                        <tr>
+                                            <td><?php echo $di->id_instancia; ?></td>
+                                            <td><?php echo $di->nombre_completo_instancia; ?></td>
+                                            <td><?php echo $di->cupos_instancia; ?></td>
+                                            <td><?php echo $di->cupos_instancia_ocupados; ?></td>
+                                            <td>
+                                            <input type="hidden" name="precioactualcursos[]" value="<?php echo $di->precio_instancia; ?>">
+                                                <?php echo $di->precio_instancia; ?>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-danger btn-remove-curso">
+                                                    <span class="fa fa-remove"></span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
 
                                 </tbody>
                             </table>
@@ -142,22 +162,74 @@
                                         se le asigna un id único que es tomado del id del pago
                                         y una clase .pago-registrado que le permitirá diferenciarse
                                         de los pagos agregados posteriormente -->
+                                        <?php $total_pagado = 0; ?>
                                         <?php foreach($pagos_de_inscripcion as $pdi): ?>
+                                            <?php $total_pagado +=  $pdi->monto_operacion;?>
                                             <tr id='<?php echo $pdi->id_pago; ?>' class='pago-registrado'>
-                                                <td><?php echo $pdi->serial_pago; ?></td>
-                                                <td><?php echo $pdi->numero_operacion; ?></td>
-                                                <td><?php echo $pdi->monto_operacion; ?></td>
-                                                <td><?php echo $pdi->cedula_persona; ?></td>
                                                 <td>
-                                                    <button type="button" class="btn btn-danger btn-remove-inscripcion-pago">
-                                                        <span class="fa fa-remove"></span>
-                                                    </button>
+                                                    <input type="hidden" name="id-pago[]" value="<?php echo $pdi->id_pago; ?>">
+                                                    <?php echo $pdi->serial_pago; ?>
                                                 </td>
+                                                <td><?php echo $pdi->numero_operacion; ?></td>
+                                                <td>
+                                                    <?php echo $pdi->monto_operacion; ?>
+                                                </td>
+                                                <td><?php echo $pdi->cedula_titular_pago; ?></td>
+                                                <td>
+                                                    <?php $ruta =  base_url().'movimientos/inscripciones/remove_inscripcion_pago/'.$pdi->id_pago; ?>
+                                                    <a href="<?php echo $ruta; ?>" class="btn btn-warning btn-remove-inscripcion-pago">
+                                                        <span class="fa fa-unlock"></span>
+                                                    </a>
+                                                </td>
+                                               
                                             </tr>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
                                     </tbody>
                                 </table>
+
+                                <div class="form-group">
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Monto Pagado:</span>
+                                            <input type="text" class="form-control" value="<?php echo number_format((float)$total_pagado, 2, '.', ''); ?>" placeholder="0.00" name="monto-pagado" id="monto-pagado" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <?php
+                                        $total = 0;
+                                        $deuda = 0;
+
+                                        foreach($data_instancias as $di)
+                                        {
+                                            $total += $di->precio_instancia;
+                                        }
+
+                                        $deuda = $total - $total_pagado;
+                                    ?>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Subtotal:</span>
+                                            <input type="text" class="form-control"  placeholder="0.00" name="subtotal" readonly="readonly">
+                                        </div>
+                                    </div>
+
+                                    <?php
+
+                                    ?>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">Deuda:</span>
+                                            <input type="text" class="form-control" placeholder="0.00" name="deuda" value="<?php echo number_format((float)$deuda, 2, '.', ''); ?>" readonly="readonly">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">A Pagar:</span>
+                                            <input type="text" value="<?php echo number_format((float)$total, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="total" readonly="readonly">
+                                        </div>
+                                    </div>
+                                </div>
 
                             </div>
 
