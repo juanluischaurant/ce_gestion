@@ -717,15 +717,16 @@
          */
         $('.btn-remove-inscripcion-pago').on('click', function(e) {
 
+            // Código para el botón de eliminar en las tablas
+            e.preventDefault();
+
             // Cuenta el numero de elementos <tr> dentro de la tabla
             let table_rows_count = $('#tabla-pagos tr').length - 1,
             // Cuenta el numero de elementos <tr> dentro de la tabla con la clase dada
-           count_pagos_registrados = $('.pago-registrado').length;
+           count_pagos_registrados = $('#tabla-pagos tbody tr.pago-registrado').length;
        
             if(count_pagos_registrados > 1 && table_rows_count > 1) {
 
-                // Código para el botón de eliminar en las tablas
-                e.preventDefault();
                 let tr_element = $(this).closest('tr'),
                 ruta = $(this).attr('href');
 
@@ -738,8 +739,9 @@
                         sumar();
                     }
                 });
-                
-                
+            } else {
+
+                alert('¡Debes tener al menos un pago registrado para eliminar este!');
             }
         });
 

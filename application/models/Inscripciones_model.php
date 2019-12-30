@@ -290,15 +290,16 @@ class Inscripciones_model extends CI_Model {
     public function get_pago_inscripcion($id_inscripcion)
     {
         $resultado = $this->db->select(
-            'pdi.*,
-            pers.cedula_persona,
-            pers.cedula_persona as cedula_titular_pago'
+            'pdins.*,
+            per.cedula_persona,
+            per.cedula_persona as cedula_titular_pago'
             )
-        ->from('pago_de_inscripcion as pdi')
-        ->join('inscripcion as insc', 'insc.id_inscripcion = pdi.fk_id_inscripcion')
-        ->join('participante as part', 'part.id_participante = insc.fk_id_participante_1')
-        ->join('persona as pers', 'pers.id_persona = part.fk_id_persona_2')
-        ->where('pdi.fk_id_inscripcion', $id_inscripcion)
+        ->from('inscripcion as insc')
+        ->join('pago_de_inscripcion as pdins', 'pdins.fk_id_inscripcion = insc.id_inscripcion')
+        ->join('tipo_de_operacion as tdo', 'tdo.id_tipo_de_operacion = pdins.fk_id_tipo_operacion')
+        ->join('titular as tit', 'tit.id_titular = pdins.fk_id_titular')
+        ->join('persona as per', 'per.id_persona = fk_id_persona_1')
+        ->where('insc.id_inscripcion', $id_inscripcion)
         ->get();
 
         return $resultado->result();

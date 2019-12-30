@@ -21,7 +21,9 @@ class Dashboard extends CI_Controller {
 		$data = array(
 			'years' => $this->Inscripciones_model->inscripcion_years(),
 		);
-		$this->load->view('layouts/header');
+		$general['page_title'] = 'Principal';
+		
+		$this->load->view('layouts/header', $general);
 		$this->load->view('layouts/aside');
 		$this->load->view('admin/dashboard', $data);
 		$this->load->view('layouts/footer');

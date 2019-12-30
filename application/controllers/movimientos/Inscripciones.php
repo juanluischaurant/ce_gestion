@@ -58,7 +58,9 @@ class Inscripciones extends CI_Controller {
 			'tipos_de_operacion' => $this->Pagos_model->get_tipos_de_operacion(),
 			"participantes" => $this->Participantes_model->getParticipantes(),
 		);
-		$this->load->view('layouts/header');
+		$general['page_title'] = 'Nueva Inscripcion';
+
+		$this->load->view('layouts/header', $general);
 		$this->load->view('layouts/aside');
 		$this->load->view('admin/inscripciones/add', $data);
 		$this->load->view('layouts/footer');		
@@ -73,7 +75,9 @@ class Inscripciones extends CI_Controller {
 				'data_inscripcion_instancia' => $this->Inscripciones_model->get_id_inscripcion_instancia($id_inscripcion),
 				'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
 			);
-			$this->load->view('layouts/header');
+			$general['page_title'] = 'Editar Inscripción';
+
+			$this->load->view('layouts/header', $general);
 			$this->load->view('layouts/aside');
 			$this->load->view('admin/inscripciones/edit', $data);
 			$this->load->view('layouts/footer');

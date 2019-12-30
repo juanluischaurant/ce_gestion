@@ -197,7 +197,7 @@ class Pagos_model extends CI_Model {
         return $resultados->result_array();
     }
 
-       /**
+    /**
      * Obtén lista de pagos realizados 
      *
      * @param integer $valor

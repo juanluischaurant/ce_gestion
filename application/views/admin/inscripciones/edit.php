@@ -137,10 +137,6 @@
                                         <span class="fa fa-paperclip"></span>
                                     </button>
 
-                                    <button type="button" class="btn btn-info btn-flat" id="btn-registrar-pago-nuevo" data-toggle="modal" data-target="#modal-info">
-                                        <span class="fa fa-plus"></span>
-                                    </button>
-
                                 </span>
                             </div>
 
