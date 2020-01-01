@@ -41,7 +41,8 @@ class Inscripciones_model extends CI_Model {
      * Obtén un registro determinado de la tabla "inscripcion"
      * 
      * Método utilizado principalmente para generar la ficha de inscripción. Recibe
-     * un parámetro que es el ID de la inscripción.
+     * un parámetro que es el ID de la inscripción. Retorna datos de la inscripción
+     * en cuestión y el nombre el participante inscrito.
      *
      * @param integer $id_inscripcion
      * @return array
@@ -54,7 +55,7 @@ class Inscripciones_model extends CI_Model {
             i.monto_pagado,
             i.precio_total,
             i.deuda,
-            i.precio_final,
+            i.costo_de_inscripcion,
             p.cedula_persona,
             concat(p.nombres_persona, " ", p.apellidos_persona) as nombre_completo_participante,
             p.direccion_persona,
@@ -109,7 +110,16 @@ class Inscripciones_model extends CI_Model {
     {
         $this->db->set('instancia.cupos_instancia_ocupados', 'instancia.cupos_instancia_ocupados-1', FALSE);
         $this->db->where('instancia.id_instancia', $id_instancia);
-        $this->db->update('instancia');
+        
+
+        if($this->db->update('instancia'))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
@@ -117,13 +127,21 @@ class Inscripciones_model extends CI_Model {
      *
      * @param integer $id_inscripcion_instancia
      * @param array $data
-     * @return void
+     * @return boolean
      */
     public function sumar_cupo_instancia($id_instancia)
     {
         $this->db->set('instancia.cupos_instancia_ocupados', 'instancia.cupos_instancia_ocupados+1', FALSE);
         $this->db->where('instancia.id_instancia', $id_instancia);
-        $this->db->update('instancia');
+
+        if($this->db->update('instancia'))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     /**
@@ -157,7 +175,7 @@ class Inscripciones_model extends CI_Model {
      * @return void
      */
     public function get_id_inscripcion_instancia($id_inscripcion)
-    {
+    { // Eliminar deuda de aquí
         $resultado = $this->db->select(
             'i.id_inscripcion,
             i.deuda,
@@ -225,7 +243,7 @@ class Inscripciones_model extends CI_Model {
      * @param integer $id_inscripcion
      * @return array
      */
-    public function get_editar_instancia($id_inscripcion)
+    public function get_inscripcion_instancias($id_inscripcion)
     {
         $resultados = $this->db->select(
             'int.id_instancia,
@@ -248,33 +266,38 @@ class Inscripciones_model extends CI_Model {
         return $resultados->result();
     }
 
+     
     /**
-     * Obtén los cursos comprados en una inscripción
-     * 
-     * Método utilizado principalmente al momento de generar la ficha de inscripción 
-     * mostrada al presionar el botón de ver Inscripción.
-     *
-     * @param integer $id
-     * @return void
+     * Obtén datos de la instancia inscrita
+     *     
+     * @param integer $id_inscripcion
+     * @return array
      */
-    public function get_inscripcion_instancia($id_inscripcion)
+    public function get_instancia_inscrita($id_inscripcion)
     {
-        $resultado = $this->db->select(
-            'ii.fk_id_inscripcion_1,
-            ii.id_inscripcion_instancia,
-            concat(cu.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_completo_instancia,
-            instancia.precio_instancia'
+        $resultados = $this->db->select(
+            'int.id_instancia,
+            int.cupos_instancia,
+            int.cupos_instancia_ocupados,
+            int.precio_instancia,
+            insci.fk_id_inscripcion_1,
+            insci.id_inscripcion_instancia,
+            concat(cur.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", per.year_periodo) as nombre_completo_instancia,
+            int.precio_instancia,
+            int.serial_instancia'
         )
-        ->from('inscripcion_instancia as ii')
-        ->join('instancia', 'instancia.id_instancia = ii.fk_id_instancia_1')
-        ->join('curso as cu', 'cu.id_curso = instancia.fk_id_curso_1')
-        ->join('periodo as p', 'id_periodo = instancia.fk_id_periodo_1')
-        ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes')
-        ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
-        ->where('ii.fk_id_inscripcion_1 ', $id_inscripcion)
+        ->from('inscripcion as insc')
+        ->join('inscripcion_instancia as insci', 'insci.fk_id_inscripcion_1 = insc.id_inscripcion')
+        ->join('instancia as int', 'int.id_instancia = insci.fk_id_instancia_1')
+        ->join('curso as cur', 'cur.id_curso = int.fk_id_curso_1')
+        ->join('periodo as per', 'id_periodo = int.fk_id_periodo_1')
+        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
+        ->where('insc.id_inscripcion', $id_inscripcion)
+
         ->get();
 
-        return $resultado->result();
+        return $resultados->row();
     }
 
     /**
@@ -291,11 +314,15 @@ class Inscripciones_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'pdins.*,
+            ban.nombre_banco,
+            tdo.tipo_de_operacion,
             per.cedula_persona,
+            concat(per.nombres_persona, " ", per.apellidos_persona) as nombre_titular,
             per.cedula_persona as cedula_titular_pago'
             )
         ->from('inscripcion as insc')
         ->join('pago_de_inscripcion as pdins', 'pdins.fk_id_inscripcion = insc.id_inscripcion')
+        ->join('banco as ban', 'ban.id_banco = pdins.fk_id_banco')
         ->join('tipo_de_operacion as tdo', 'tdo.id_tipo_de_operacion = pdins.fk_id_tipo_operacion')
         ->join('titular as tit', 'tit.id_titular = pdins.fk_id_titular')
         ->join('persona as per', 'per.id_persona = fk_id_persona_1')

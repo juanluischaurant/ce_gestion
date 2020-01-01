@@ -76,7 +76,7 @@
 
                                         <td><?php echo $inscripcion->nombre_completo_participante; ?></td>
                                         <td><?php echo $inscripcion->cedula_persona; ?></td>
-                                        <?php $dataInscripcion =  $inscripcion->fk_id_instancia_1; ?>
+                                        <?php $dataInscripcion =  $inscripcion->fk_id_instancia_1.'*'.$inscripcion->fk_id_inscripcion_1; ?>
 
                                         <td>
                                             <div class="btn-group">
@@ -89,12 +89,12 @@
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
                                                 <?php if($inscripcion_activa == 1): ?>
-                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/deactivate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $dataInscripcion; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/deactivate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-danger btn-activate-inscripcion">
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                 <?php endif; ?> 
                                                 <?php if($inscripcion_activa == 0): ?>
-                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/activate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $dataInscripcion; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/activate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-success btn-deactivate-inscripcion">
                                                         <span class="fa fa-toggle-on"></span>
                                                     </a>
                                                 <?php endif; ?> 

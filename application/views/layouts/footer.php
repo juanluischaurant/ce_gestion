@@ -714,37 +714,98 @@
         /**
          * Método utilizado al momento de remover un pago asignado a determinada
          * inscripción en el módulo de edición de inscripción.
+         * 
+         * To capture the click event on dinamically generated HTML elements, 
+         * we are using the "DELEGATED EVENTS" approach which can be seen in
+         * this method ".on('click', 'children', function(){ })
          */
-        $('.btn-remove-inscripcion-pago').on('click', function(e) {
+        $('#pagos-asociados tbody').on('click', 'button.btn-remove-inscripcion-pago', function() {
+            
+            let tr_element = $(this).closest('tr').remove().clone(), // Selected row
+            copy_table = $('#pagos-desasociados tbody'); // Table where to paste the selected row
+            
+            tr_element
+                .find('span.fa-lock')
+                .addClass('fa-unlock')
+                .removeClass('fa-lock');
+            
+            copy_table.append(tr_element);
 
-            // Código para el botón de eliminar en las tablas
-            e.preventDefault();
-
-            // Cuenta el numero de elementos <tr> dentro de la tabla
-            let table_rows_count = $('#tabla-pagos tr').length - 1,
-            // Cuenta el numero de elementos <tr> dentro de la tabla con la clase dada
-           count_pagos_registrados = $('#tabla-pagos tbody tr.pago-registrado').length;
+            restar();
        
-            if(count_pagos_registrados > 1 && table_rows_count > 1) {
+            // Cuenta el numero de elementos <tr> dentro de la tabla
+        //     let table_rows_count = $('#tabla-pagos tr').length - 1,
+        //     // Cuenta el numero de elementos <tr> dentro de la tabla con la clase dada
+        //    count_pagos_registrados = $('#tabla-pagos tbody tr.pago-registrado').length;
+       
+            // if(count_pagos_registrados > 1 && table_rows_count > 1) {
 
-                let tr_element = $(this).closest('tr'),
-                ruta = $(this).attr('href');
+            //     let tr_element = $(this).closest('tr'),
+            //     ruta = $(this).attr('href');
 
-                $.ajax({
-                    url: ruta,
-                    type: 'POST',
-                    success: function(response) {
+            //     $.ajax({
+            //         url: ruta,
+            //         type: 'POST',
+            //         success: function(response) {
 
-                        tr_element.remove();
-                        sumar();
-                    }
-                });
-            } else {
+            //             tr_element.remove();
+            //             sumar();
+            //         }
+            //     });
+            // } else {
 
-                alert('¡Debes tener al menos un pago registrado para eliminar este!');
-            }
+            //     alert('¡Debes tener al menos un pago registrado para eliminar este!');
+            // }
         });
 
+        /**
+         * Método utilizado al momento de remover un pago asignado a determinada
+         * inscripción en el módulo de edición de inscripción.
+         * 
+         * To capture the click event on dinamically generated HTML elements, 
+         * we are using the "DELEGATED EVENTS" approach which can be seen in
+         * this method ".on('click', 'children', function(){ })
+         */
+        $('#pagos-desasociados tbody').on('click', 'button.btn-remove-inscripcion-pago', function() {
+            
+            let tr_element = $(this).closest('tr').remove().clone(), // Selected row
+            copy_table = $('#pagos-asociados tbody'); // Table where to paste the selected row
+            
+            tr_element
+                .find('span.fa-unlock')
+                .addClass('fa-lock')
+                .removeClass('fa-unlock');
+            
+            copy_table.append(tr_element);
+
+            restar();
+        });
+
+        // Recordar la pestaña seleccionada en la vista de Edición de Inscripción
+        $("a[data-toggle='tab']").on('show.bs.tab', function(e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+
+        let activeTab = localStorage.getItem('activeTab');
+
+        if(activeTab) {
+            $("#edit-inscripcion-tabs a[href='"+activeTab+"']").tab("show");
+        }
+
+        $('#tab-cambiar-instancia').on('click', function() {
+
+            location.reload();
+        });
+        
+        $('#tab-asociar-pago').on('click', function(e) {
+
+            location.reload();
+        });
+
+        $('#tab-desasociar-pago').on('click', function() {
+
+            location.reload();
+        });
         // =============================================
         // Fin de JS para Inscripciones
         // =============================================
@@ -985,7 +1046,7 @@
                             else if(!existe) 
                             {    
                                 html = '<tr>';
-                                html += '<td><input class="curso-id" type="hidden" name="idcursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
+                                html += '<td><input class="curso-id" type="hidden" name="id-instancias[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
                                 html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
                                 html += '<td><input type="hidden" name="cuposcursos[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
                                 html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
@@ -1029,22 +1090,15 @@
                 $('#guardar-inscripcion').attr('disabled', true);
             }
 
-            sumar();
+            
         });
 
         $(document).on('click', '.btn-remove-pago', function() {
-            
+
             $(this).closest('tr').remove();
+
             sumar();
         });
-
-        // NO OLVIDES PROGRAMAR ESTO
-        // ¿Es realmente necesario?
-        // $(document).on('keyup', '#tabla-instancias input.cantidades', function() {
-        //     cantidad = $(this).val();
-        //     precio = $(this).closest('tr').find('td:eq(2)');
-        //     importe = cantidad * precio
-        // });
 
         $(document).on('click', '.btn-view-inscripcion', function()
         {
@@ -1052,7 +1106,7 @@
             datosInscripcion = dataInscripcion.split('*');
 
             id_curso_inscripcion = datosInscripcion[0];
-            id_inscripcion = datosInscripcion[0];
+            id_inscripcion = datosInscripcion[1];
 
             $.ajax({
                 url: base_url + 'movimientos/inscripciones/view',
@@ -1062,14 +1116,15 @@
                     id_inscripcion: id_inscripcion
                 },
                 success: function(data) {
+
                     $('#modal-default .modal-body').html(data);
                 }
             });
         });
 
-        $(document).on('click', '.btn-view-usuario', function()
-        {
-            id_usuario = $(this).val();
+        $(document).on('click', '.btn-view-usuario', function() {
+
+            let id_usuario = $(this).val();
             $.ajax({
                 url: base_url + 'administrador/usuarios/view',
                 type: 'POST',
@@ -1083,8 +1138,8 @@
             });
         });
 
-        $(document).on('click', '.btn-view-instancia', function()
-        {
+        $(document).on('click', '.btn-view-instancia', function() {
+
             let id_instancia = $(this).val();
             $.ajax({
                 url: base_url + 'gestion/instancias/view',
@@ -1131,42 +1186,60 @@
     function sumar() {
 
         // Calcula el total cada vez que se llama esta función
-        let total = 0,
+        let costo_de_inscripcion = 0,
+        deuda = 0,
         monto_pagado = 0;
 
+       
         // -------------
         $('#tabla-pagos tbody tr').each(function() {
-
-            monto_pagado = monto_pagado + Number($(this).find('td:eq(2)').text());
-        });
-
-        $('input[name=monto-pagado]').val(monto_pagado.toFixed(2));
-        // --------------
-
-        $('#tabla-instancias tbody tr').each(function() {
-
-            total = total + Number($(this).find('td:eq(4)').text());
-        });
-
-        let deuda = total - monto_pagado;
-
-            if(deuda !== 0 && deuda > 0) {
-                
-                $('input[name=deuda]').val(deuda);
-                $('input[name=subtotal]').val('');
-            }
-            if(deuda == 0) {
-                $('input[name=deuda]').val('');
-                $('input[name=subtotal]').val('');
-            }
-            if(deuda < 0) {
-                $('input[name=deuda]').val('');
-                $('input[name=subtotal]').val(deuda*1);
-            }
-
     
+            monto_pagado += Number($(this).find('td:eq(2)').text());
+        });
 
-        $('input[name=total]').val(total.toFixed(2));
+        $('input[name=monto-en-operacion]').val(monto_pagado.toFixed(2));
+
+        // // --------------
+
+        // $('#tabla-instancias tbody tr').each(function() {
+
+        //     total = total + Number($(this).find('td:eq(4)').text());
+        // });
+
+        // deuda = total - monto_pagado;
+
+        // $('input[name=deuda]').val(deuda);
+
+        //     if(deuda !== 0 && deuda > 0) {
+                
+        //         $('input[name=deuda]').val(deuda);
+        //         $('input[name=subtotal]').val('');
+        //     }
+        //     if(deuda == 0) {
+        //         $('input[name=deuda]').val('');
+        //         $('input[name=subtotal]').val('');
+        //     }
+        //     if(deuda < 0) {
+        //         $('input[name=deuda]').val('');
+        //         $('input[name=subtotal]').val(deuda*1);
+        //     }
+
+        // $('input[name=costo-de-inscripcion]').val(total.toFixed(2));
+    }
+
+    function restar() {
+
+        let costo_de_inscripcion = 0,
+        deuda = 0,
+        monto_pagado = 0;
+
+        $('#pagos-desasociados tbody tr').each(function() {
+    
+            monto_pagado += Number($(this).find('td:eq(2)').text());
+        });
+
+        $('input[name=monto-en-operacion]').val(monto_pagado.toFixed(2));
+
     }
 
     function switchGuardarInscripcion() {
