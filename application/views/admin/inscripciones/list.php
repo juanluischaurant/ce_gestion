@@ -62,7 +62,12 @@
                                         <td><?php echo $inscripcion->nombre_completo_instancia; ?></td>
 
                                         <td>
-                                            <?php if($inscripcion_activa== 1): ?>
+                                            <?php if($inscripcion_activa == 1 && $inscripcion->valida_hasta <= date('Y-m-d')): ?>
+                                                <small class="label label-warning">
+                                                    <i class="fa fa-folder-o"></i> Archivada
+                                                </small>
+                                            <?php endif; ?>
+                                            <?php if($inscripcion_activa == 1 && $inscripcion->valida_hasta > date('Y-m-d')): ?>
                                                 <small class="label label-success">
                                                     <i class="fa fa-clock-o"></i> Activa
                                                 </small>

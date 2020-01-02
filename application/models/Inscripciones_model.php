@@ -16,6 +16,7 @@ class Inscripciones_model extends CI_Model {
             ii.id_inscripcion_instancia, 
             in.hora_inscripcion, 
             in.activa,
+            p.mes_cierre_periodo as valida_hasta,
             concat(curso.nombre_curso, "-", mi.nombre_mes, " ", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_completo_instancia,
             concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_completo_participante,
             pe.cedula_persona'
@@ -415,6 +416,44 @@ class Inscripciones_model extends CI_Model {
 
         return $resultados->result_array();
     } 
+
+    /**
+     * Verifica que el período de la instancia a la cuál se encuentra asociada
+     * una inscripción aún no haya expirado.
+     *
+     * @param integer $id_inscripcion
+     * @return boolean
+     */
+    public function verifica_validez_instancia($id_inscripcion) 
+    {
+        $resultado = $this->db->select(
+            'per.id_periodo,
+            per.fecha_inicio_periodo,
+            per.fecha_culminacion_periodo'
+        )
+        ->from('inscripcion as insc')
+        ->join('inscripcion_instancia as insci', 'insci.fk_id_inscripcion_1 = insc.id_inscripcion')
+        ->join('instancia as int', 'int.id_instancia = insci.fk_id_instancia_1')
+        ->join('curso as cur', 'cur.id_curso = int.fk_id_curso_1')
+        ->join('periodo as per', 'id_periodo = int.fk_id_periodo_1')
+        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
+        ->where('insc.id_inscripcion', $id_inscripcion)
+        ->get()
+        ->row();
+
+        // Obtén fecha de hoy del sistema
+        $today = date('Y-m-d');
+
+        if($resultado->fecha_culminacion_periodo >= $today)
+        {
+            return true;
+        }
+        else if($resultado->fecha_inicio_periodo < $today)
+        {
+            return false;
+        }
+    }
 
     // Métodos utilizados por HighCharts
 

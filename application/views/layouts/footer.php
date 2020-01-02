@@ -694,22 +694,22 @@
 
         // Cambia el estado de un registro dado
         // Este botón funciona de manera similar en distintos formularios
-        $('.btn-deactivate-inscripcion').on('click', function(e) {
+        // $('.btn-deactivate-inscripcion').on('click', function(e) {
 
-            // Código para el botón de eliminar en las tablas
-            e.preventDefault();
-            let tr_element = $(this).closest('tr');
-            let ruta = $(this).attr('href');
+        //     // Código para el botón de eliminar en las tablas
+        //     e.preventDefault();
+        //     let tr_element = $(this).closest('tr');
+        //     let ruta = $(this).attr('href');
 
-            $.ajax({
-                url: ruta,
-                type: 'POST',
-                success: function(response) {
-                    window.location.href = base_url+response;
-                    // tr_element.remove();
-                }
-            });
-        });
+        //     $.ajax({
+        //         url: ruta,
+        //         type: 'POST',
+        //         success: function(response) {
+        //             // window.location.href = base_url+response;
+        //             tr_element.remove();
+        //         }
+        //     });
+        // });
 
         /**
          * Método utilizado al momento de remover un pago asignado a determinada

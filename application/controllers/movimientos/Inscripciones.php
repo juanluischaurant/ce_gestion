@@ -68,7 +68,11 @@ class Inscripciones extends CI_Controller {
 
 	public function edit($id_inscripcion, $estado_inscripcion)
 	{
-		if($estado_inscripcion == 1)
+		// Verifica que el período al que está asociado la inscripción
+		// este vigente o no.
+		$fecha_valida = $this->Inscripciones_model->verifica_validez_instancia($id_inscripcion);
+
+		if($estado_inscripcion == 1 && $fecha_valida === TRUE)
 		{
 			$data = array(
 				'data_inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
@@ -83,7 +87,11 @@ class Inscripciones extends CI_Controller {
 			$this->load->view('admin/inscripciones/edit', $data);
 			$this->load->view('layouts/footer');
 		}
-		elseif($estado_inscripcion == 0)
+		else if($fecha_valida === FALSE) {
+			$this->session->set_flashdata('alert', 'Esta inscripción ya exipró, no puede ser editada.');
+					redirect(base_url().'movimientos/inscripciones/');
+		}
+		else if($estado_inscripcion == 0)
 		{
 			$this->session->set_flashdata('alert', 'La inscripción debe estar activa para editarla.');
 					redirect(base_url().'movimientos/inscripciones/');
@@ -163,25 +171,42 @@ class Inscripciones extends CI_Controller {
 	 */
 	public function deactivate_inscripcion($id_inscripcion, $id_instancia)
 	{
+		// Verifica que el período al que está asociado la inscripción
+		// este vigente o no.
+		$fecha_valida = $this->Inscripciones_model->verifica_validez_instancia($id_inscripcion);
+
 		$data = array(
 			'activa' => 0,
 		);
 
-		// Esta primera consulta cambia el estado de la inscripción
-		if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data))
-		{			
-			// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
-			$data = array( 'estado_pago' => 3,);
-			$this->Inscripciones_model->update_estado_pago($id_inscripcion, $data);
-
-				// $id_instancia = $this->Inscripciones_model->get_id_inscripcion_instancia($id_inscripcion)->id_instancia;
+		if($fecha_valida === TRUE)
+		{
+			// Esta primera consulta cambia el estado de la inscripción
+			if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data))
+			{
+				// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
+				$data = array( 'estado_pago' => 3,);
+				$this->Inscripciones_model->update_estado_pago($id_inscripcion, $data);
 
 				$this->restar_cupo_instancia($id_instancia);
 
 				// Esta cadena de texto se concatena al resto de un enlace obetnido
 				// durante la llamada AJAX con jQuery para redireccionar la página
-				echo 'movimientos/inscripciones';
-		};
+				// echo 'movimientos/inscripciones';
+				$this->session->set_flashdata('success', 'Inscripción #' . $id_inscripcion . ' desactivada.');
+				redirect(base_url().'movimientos/inscripciones/');
+			}
+		}
+		else if($fecha_valida === FALSE)
+		{
+			$this->session->set_flashdata('alert', 'Esta inscripción ya exipró, no puede ser desactivada.');
+			redirect(base_url().'movimientos/inscripciones/');
+		}
+		else if($estado_inscripcion == 0)
+		{
+			$this->session->set_flashdata('alert', 'La inscripción debe estar activa para editarla.');
+			redirect(base_url().'movimientos/inscripciones/');
+		}
 	}
 
 	/**
@@ -197,27 +222,43 @@ class Inscripciones extends CI_Controller {
 	 */
 	public function activate_inscripcion($id_inscripcion, $id_instancia)
 	{
-		// Verificar que la instancia tenga cupos disponibles
-		if($this->Inscripciones_model->verificar_cupos_disponibles($id_instancia))
+		if($fecha_valida === TRUE)
 		{
-			// Esta primera consulta cambia el estado de la inscripción
-			$data = array( 'activa' => 1, );
-			if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data))
+			// Verificar que la instancia tenga cupos disponibles
+			if($this->Inscripciones_model->verificar_cupos_disponibles($id_instancia))
 			{
-				// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
-				$data = array( 'estado_pago' => 2,);
-				$this->Inscripciones_model->update_estado_pago($id_inscripcion, $data);
-	
-					$this->sumar_cupo_instancia($id_instancia);
-	
-					// Esta cadena de texto se concatena al resto de un enlace obetnido
-					// durante la llamada AJAX con jQuery para redireccionar la página
-					echo 'movimientos/inscripciones';
-			};
-		} 
-		else
+				// Esta primera consulta cambia el estado de la inscripción
+				$data = array( 'activa' => 1, );
+				if($this->Inscripciones_model->update_inscripcion($id_inscripcion, $data))
+				{
+					// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
+					$data = array( 'estado_pago' => 2,);
+					$this->Inscripciones_model->update_estado_pago($id_inscripcion, $data);
+		
+						$this->sumar_cupo_instancia($id_instancia);
+		
+						// Esta cadena de texto se concatena al resto de un enlace obetnido
+						// durante la llamada AJAX con jQuery para redireccionar la página
+						// echo 'movimientos/inscripciones';
+						$this->session->set_flashdata('success', 'Inscripción #' . $id_inscripcion . ' activada.');
+						redirect(base_url().'movimientos/inscripciones/');
+				}
+			} 
+			else
+			{
+				echo 'movimientos/inscripciones';
+			}
+
+		}
+		else if($fecha_valida === FALSE)
 		{
-			echo 'movimientos/inscripciones';
+			$this->session->set_flashdata('alert', 'Esta inscripción ya exipró, no puede ser desactivada.');
+			redirect(base_url().'movimientos/inscripciones/');
+		}
+		else if($estado_inscripcion == 0)
+		{
+			$this->session->set_flashdata('alert', 'La inscripción debe estar activa para editarla.');
+			redirect(base_url().'movimientos/inscripciones/');
 		}
 	}
 
