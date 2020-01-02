@@ -160,3 +160,33 @@ CREATE TABLE permiso(
    REFERENCES `rol` (`rol_id`),
 )
 
+-- ===================================================================
+-- Obtener conteo re inscripciones asociadas a determinada instanica
+-- ===================================================================
+SELECT 
+curso.nombre_curso, 
+instancia.id_instancia,
+(SELECT COUNT(*) FROM inscripcion_instancia WHERE inscripcion_instancia.fk_id_instancia_1 = instancia.id_instancia) as CuposOcupados
+FROM instancia
+JOIN inscripcion_instancia ON inscripcion_instancia.fk_id_instancia_1 = instancia.id_instancia
+JOIN curso ON curso.id_curso = instancia.fk_id_curso_1
+WHERE instancia.id_instancia = 2 LIMIT 1
+
+-- Otra opción para realizar esta operación
+SELECT 
+curso.nombre_curso, 
+instancia.id_instancia,
+(SELECT COUNT(*) FROM inscripcion_instancia WHERE inscripcion_instancia.fk_id_instancia_1 = instancia.id_instancia) as CuposOcupados
+FROM instancia
+JOIN inscripcion_instancia ON inscripcion_instancia.fk_id_instancia_1 = instancia.id_instancia
+JOIN curso ON curso.id_curso = instancia.fk_id_curso_1
+WHERE instancia.id_instancia = 2
+GROUP BY curso.nombre_curso
+
+-- Conteo de inscripciones activas en determinada instancia
+SELECT 
+	COUNT(inscripcion.activa)
+FROM inscripcion_instancia
+JOIN inscripcion ON inscripcion.id_inscripcion = inscripcion_instancia.fk_id_inscripcion_1
+WHERE inscripcion_instancia.fk_id_instancia_1 = 1
+AND inscripcion.activa = 1

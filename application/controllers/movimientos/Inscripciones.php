@@ -453,7 +453,7 @@ class Inscripciones extends CI_Controller {
 	 */
 	protected function actualiza_cupos_ocupados($id_instancia, $cupos_curso)
 	{
-		$cursoActual = $this->Instancias_model->getInstancia($id_instancia);
+		$cursoActual = $this->Instancias_model->get_instancia($id_instancia);
 
 		$data = array(
 			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 

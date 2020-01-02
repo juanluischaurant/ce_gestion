@@ -60,7 +60,7 @@ class Cursos extends CI_Controller {
 
 	public function edit($id) {
 		$data = array(
-			'curso' => $this->Cursos_model->getCurso($id)
+			'curso' => $this->Cursos_model->get_curso($id)
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');

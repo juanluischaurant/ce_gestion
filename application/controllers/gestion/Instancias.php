@@ -15,7 +15,7 @@ class Instancias extends CI_Controller {
 	public function index() 
 	{
 		$data = array(
-			'instancias' => $this->Instancias_model->getInstancias(),
+			'instancias' => $this->Instancias_model->get_instancias(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -38,7 +38,7 @@ class Instancias extends CI_Controller {
 
 		$data = array(
 			"participantes_inscritos" => $this->Instancias_model->get_participantes_inscritos($id_instancia),
-			'datos_instancia' => $this->Instancias_model->getInstancia($id_instancia)
+			'datos_instancia' => $this->Instancias_model->get_instancia($id_instancia)
 		);
 
 		$this->load->view("admin/instancias/view", $data);
@@ -92,15 +92,42 @@ class Instancias extends CI_Controller {
 		}
 	}
 		
-	public function edit($id)
+	public function edit($id_instancia)
 	{
-		$data = array(
-			'curso' => $this->Cursos_model->getCurso($id)
-		);
-		$this->load->view('layouts/header');
-		$this->load->view('layouts/aside');
-		$this->load->view('admin/cursos/edit', $data);
-		$this->load->view('layouts/footer');
+		// Obtén la fecha de culminación del período asociado a la instancia
+		$fecha_valida = $this->Instancias_model->verificar_periodo_instancia($id_instancia);
+		
+		// Verifica que el período asociado a la instancia sea vigente (no culminado)
+		if($fecha_valida == TRUE)
+		{
+			// Obtén información sobre el estado de la instancia
+			$estado_instancia = $this->Instancias_model->verificar_estado_instancia($id_instancia);
+			
+			// Verifica el estado actual de la instancia (activo o inactivo)
+			if($estado_instancia === TRUE)
+			{
+				// Obtén la información del curso instanciado
+				$data = array(
+					'curso' => $this->Cursos_model->get_curso($id_instancia)
+				);
+				$this->load->view('layouts/header');
+				$this->load->view('layouts/aside');
+				$this->load->view('admin/cursos/edit', $data);
+				$this->load->view('layouts/footer');
+			}
+			else
+			{
+				// La instancia se encuentra en estado: DESACTIVADO
+				$this->session->set_flashdata('error', 'La instancia está desactivada, no puede ser editada.');
+				redirect(base_url().'gestion/instancias/');
+			}
+		}
+		else
+		{
+			// El período asociado a la instancia EXPIRÓ
+			$this->session->set_flashdata('error', 'La instancia ya cerró, no puede ser editada.');
+			redirect(base_url().'gestion/instancias/');
+		}
 	}
 
 	public function update()
@@ -115,13 +142,107 @@ class Instancias extends CI_Controller {
 		);
 
 		
-		if($this->Cursos_model->update($id_curso, $data)) {
+		if($this->Cursos_model->update($id_curso, $data))
+		{
 			redirect(base_url().'gestion/cursos');
-		} else {
-			$this->session->set_flashdata('error', 'No se pudo actualizar el curso.');
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'No se pudo actualizar la instancia.');
 			redirect(base_url().'gestion/cursos/edit/'.$id_curso);
 		}
 	}
+
+	/**
+	 * Desactivar una instancia
+	 * 
+	 * Las instancias pueden ser desactivadas luego de que el período asociado haya expirado.
+	 *
+	 * @param integer $id_instancia
+	 * @return void
+	 */
+	public function deactivate_instancia($id_instancia)
+    {
+		$total_inscripciones = $this
+								->Instancias_model
+								->conteo_inscripciones($id_instancia)
+								->inscripciones_activas;
+
+		// Obtén la fecha de culminación del período asociado a la instancia
+		$fecha_valida = $this->Instancias_model->verificar_periodo_instancia($id_instancia);
+
+		if($fecha_valida == TRUE)
+		{
+			if($total_inscripciones > 0)
+			{
+				$this->session->set_flashdata('error', 'No se pudo desactivar la instancia, hay '. $total_inscripciones . ' <b>INSCRIPCIONES ACTIVAS</b> asociadas.');
+				redirect(base_url().'gestion/instancias/');
+			}
+			else if($total_inscripciones == 0)
+			{
+				$data = array(
+					'estado_instancia' => 0,
+				);
+
+				// Update register if TRUE
+				if($this->Instancias_model->update($id_instancia, $data))
+				{
+					$this->session->set_flashdata('success', 'Se desactivó la instancia.');
+					redirect(base_url().'gestion/instancias/');
+				}
+				else
+				{
+					$this->session->set_flashdata('alert', 'No se realizó ningún cambio en la base de datos.');
+					redirect(base_url().'gestion/instancias/');
+				}	
+
+			}
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'La instancia ya cerró, no puede ser desactivado.');
+			redirect(base_url().'gestion/instancias/');
+		}
+	}
+	
+	/**
+	 * Activar una instancia
+	 * 
+	 * Las instancias pueden ser desactivadas en caso de que se cancele su ejecución.
+	 *
+	 * @param [type] $id_instancia
+	 * @return void
+	 */
+	public function activate_instancia($id_instancia)
+    {
+		// Obtén la fecha de culminación del período asociado a la instancia
+		$fecha_valida = $this->Instancias_model->verificar_periodo_instancia($id_instancia);
+
+		if($fecha_valida == TRUE)
+		{
+	
+			$data = array(
+				'estado_instancia' => 1,
+			);
+
+			// Update register if TRUE
+			if($this->Instancias_model->update($id_instancia, $data))
+			{
+				$this->session->set_flashdata('success', 'Se activó la instancia exitosamente.');
+				redirect(base_url().'gestion/instancias/');
+			}
+			else
+			{
+				$this->session->set_flashdata('alert', 'No se realizó ningún cambio en la base de datos.');
+				redirect(base_url().'gestion/instancias/');
+			}	
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'La instancia ya cerró, no puede ser activada.');
+			redirect(base_url().'gestion/instancias/');
+		}
+    }
 	
     // =======================================================
 	// Métodos utilizados para el pluggin AUTOCOMPLETE
@@ -134,7 +255,8 @@ class Instancias extends CI_Controller {
 		echo json_encode($periodos);
     }
     
-    public function getLocacionesJSON() {
+	public function getLocacionesJSON()
+	{
 		$valor = $this->input->post('query');
 		$locaciones = $this->Instancias_model->getLocacionesJSON($valor);
 		echo json_encode($locaciones);
@@ -148,7 +270,7 @@ class Instancias extends CI_Controller {
     }
     
     // =======================================================
-	// Métodos utilizados para el pluggin AUTOCOMPLETE
+	// Métodos utilizados para el pluggin FPDF
 	// =======================================================
 	
 	/**
@@ -162,7 +284,7 @@ class Instancias extends CI_Controller {
 	 */
 	public function generate_pdf($id_instancia)
 	{
-		$instancia = $this->Instancias_model->getInstancia($id_instancia);
+		$instancia = $this->Instancias_model->get_instancia($id_instancia);
 
 		// Instancia la clase PDF
 		$pdf = new PDF('L', 'mm', 'A4');

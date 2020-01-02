@@ -27,14 +27,19 @@
             <small class="label label-success">
                 <i class="fa fa-clock-o"></i> Disponible
             </small>
-            <br>
         <?php endif; ?> 
         <?php if($pago->estado_pago == 2): ?>
             <small class="label label-danger">
                 <i class="fa fa-clock-o"></i> Usado
             </small>
-            <br>
         <?php endif; ?> 
+		<?php if($pago->estado_pago == 3): ?>
+			<small class="label label-warning">
+				<i class="fa fa-clock-o"></i> Liberado
+			</small>
+		<?php endif; ?>
+		
+        <br>
         <br>
 
 		<?php echo $pago->nombre_banco; ?><br>

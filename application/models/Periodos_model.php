@@ -39,8 +39,6 @@ class Periodos_model extends CI_Model {
 
     public function save($data)
     {
-        
-
         if($this->db->insert("periodo", $data))
         {
             return $this->db->affected_rows();
@@ -49,7 +47,6 @@ class Periodos_model extends CI_Model {
         {
             return FALSE;
         }
-		
     }
 
     public function update($id_periodo, $data)

@@ -176,7 +176,8 @@ class Inscripciones_model extends CI_Model {
      * @return void
      */
     public function get_id_inscripcion_instancia($id_inscripcion)
-    { // Eliminar deuda de aquí
+    { 
+        // Eliminar deuda de aquí
         $resultado = $this->db->select(
             'i.id_inscripcion,
             i.deuda,

@@ -20,7 +20,7 @@ class Cursos_model extends CI_Model {
          return $resultados->result();
     }
 
-    public function getCurso($id) {
+    public function get_curso($id) {
         $this->db->where('id_curso', $id);
         $resultado = $this->db->get('curso');
         return $resultado->row(); 
@@ -47,7 +47,7 @@ class Cursos_model extends CI_Model {
      */
     public function actualizar_conteo_instancia($id_curso)
 	{
-		$curso = $this->getCurso($id_curso);
+		$curso = $this->get_curso($id_curso);
         
         $data = array(
             'veces_instanciado' => $curso->veces_instanciado + 1

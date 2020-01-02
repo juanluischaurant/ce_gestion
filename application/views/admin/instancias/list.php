@@ -9,6 +9,23 @@
     </section>
     <!-- Main content -->
     <section class="content">
+
+        <?php if($this->session->flashdata('error')): ?>
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
+                <?php echo $this->session->flashdata('error'); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if($this->session->flashdata('success')): ?>
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-ban"></i> ¡Éxito!</h4>
+                <?php echo $this->session->flashdata('success'); ?>
+            </div>
+        <?php endif; ?>
+
         <!-- Default box -->
         <div class="box box-solid">
             <div class="box-body">
@@ -28,6 +45,7 @@
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombre</th>
+                                    <th>Estado</th>
                                     <th>Turno</th>
                                     <th>Cupos</th>
                                     <th>Opciones</th>
@@ -39,8 +57,32 @@
                                     <tr>
                                         <td><?php echo $instancia->id_instancia; ?></td>
                                         <td><?php echo $instancia->fecha_creacion; ?></td>
-                                        <td><?php echo $instancia->nombre_curso . " " . $instancia->periodo_academico; ?></td>
-                                        <td><?php echo $instancia->nombre_turno; ?></td>
+                                        <td>
+                                            <?php echo $instancia->nombre_curso . " " . $instancia->periodo_academico; ?>
+                                        </td>
+
+                                        <td>
+                                        <?php $today = date('Y-m-d'); ?>
+                                        <?php if($instancia->estado_instancia == 1 && date($instancia->fecha_culminacion_periodo) >= $today): ?>
+                                            <small class="label label-success">
+                                                <i class="fa fa-clock-o"></i> Activa
+                                            </small>
+                                        <?php endif; ?> 
+                                        <?php if($instancia->estado_instancia == 0): ?>
+                                            <small class="label label-danger">
+                                                <i class="fa fa-clock-o"></i> Cancelada
+                                            </small>
+                                        <?php endif; ?> 
+                                        <?php if(date($instancia->fecha_culminacion_periodo) <= $today): ?>
+                                            <small class="label label-warning">
+                                                <i class="fa fa-clock-o"></i> Archivada
+                                            </small>
+                                        <?php endif; ?> 
+                                        </td>
+
+                                        <td>
+                                            <?php echo $instancia->nombre_turno; ?>
+                                        </td>
                                         <td><?php echo $instancia->total_cupos; ?></td>
                                         <td>
                                             <div class="btn-group">
@@ -53,7 +95,20 @@
                                                 <a href="<?php echo base_url() ?>gestion/instancias/generate_pdf/<?php echo $instancia->id_instancia; ?>" class="btn btn-primary btn-print" target="_blank">
                                                     <span class="fa fa-print"> </span>
                                                 </a>  
-                                                <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+
+                                                <!-- Botón para activar/desactivar Inscripción -->
+                                                <?php if($instancia->estado_instancia == 1): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/instancias/deactivate_instancia/<?php echo $instancia->id_instancia; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                        <span class="fa fa-toggle-off"></span>
+                                                    </a>
+                                                <?php endif; ?> 
+                                                <?php if($instancia->estado_instancia == 0): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/instancias/activate_instancia/<?php echo $instancia->id_instancia; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                        <span class="fa fa-toggle-on"></span>
+                                                    </a>
+                                                <?php endif; ?> 
+                                                <!-- Fin: Botón para activar/desactivar Inscripción -->
+                                                
                                             </div>
                                         </td>
                                     </tr>

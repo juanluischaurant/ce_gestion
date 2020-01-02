@@ -8,26 +8,29 @@ class Instancias_model extends CI_Model {
      *
      * @return array
      */
-    public function getInstancias()
+    public function get_instancias()
     {
         // Obtén una lista de cursos instanciados
         $resultados = $this->db->select('instancia.id_instancia, 
         instancia.cupos_instancia, 
         instancia.cupos_instancia_ocupados,
         instancia.fecha_creacion,
+        instancia.estado_instancia,
         concat(instancia.cupos_instancia, "/", instancia.cupos_instancia_ocupados) as total_cupos,
         ti.nombre_turno,
         ti.id_turno,
         ti.descripcion_turno,
         curso.nombre_curso,
-        concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(periodo.fecha_inicio_periodo)) as periodo_academico')
+        concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as periodo_academico,
+        per.fecha_culminacion_periodo')
         ->from('instancia')
         ->join('turno_instancia as ti', 'instancia.fk_id_turno_instancia_1 = ti.id_turno')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
-        ->join('periodo', 'periodo.id_periodo = instancia.fk_id_periodo_1')
-        ->join('mes as mi', 'periodo.mes_inicio_periodo = mi.id_mes') 
-        ->join('mes as mc', 'periodo.mes_cierre_periodo = mc.id_mes') 
+        ->join('periodo as per', 'per.id_periodo = instancia.fk_id_periodo_1')
+        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
         ->where('instancia.estado_instancia', '1')
+        ->or_where('instancia.estado_instancia', '0')
         ->get();
 
         return $resultados->result();
@@ -36,35 +39,154 @@ class Instancias_model extends CI_Model {
     /**
      * Obtén datos relacionados a la instancia especificada
      *
-     * @param integer $idInstancia
+     * @param integer $id_instancia
      * @return array
      */
-    public function getInstancia($idInstancia)
+    public function get_instancia($id_instancia)
     {
         // Obtén la instancia de un curso en específico
-        $resultados = $this->db->select(
+        $resultado = $this->db->select(
             'ins.cupos_instancia_ocupados,
             cur.nombre_curso,
             concat(per.mes_inicio_periodo, " - ", per.mes_cierre_periodo, " ", YEAR(per.fecha_inicio_periodo)) as periodo,
+            per.fecha_culminacion_periodo,
             loc.nombre_locacion as locacion_instancia'
         )
         ->from('instancia as ins')
         ->join('curso as cur', 'cur.id_curso = ins.fk_id_curso_1')
         ->join('periodo as per', 'per.id_periodo = ins.fk_id_periodo_1')
         ->join('locacion as loc', 'loc.id_locacion = ins.fk_id_locacion_1')
-        ->where('ins.id_instancia', $idInstancia)
+        ->where('ins.id_instancia', $id_instancia)
         ->get('instancia');
 
-        return $resultados->row();
+        return $resultado->row();
     }
+
+     /**
+     * Verifica que el período asignado a la instancia aún esté en vigencia
+     *
+     * @param integer $id_instancia
+     * @return array
+     */
+    public function verificar_periodo_instancia($id_instancia)
+    {
+        // Obtén la instancia de un curso en específico
+        $resultado = $this->db->select(
+            'per.fecha_culminacion_periodo'
+        )
+        ->from('instancia as ins')
+        ->join('curso as cur', 'cur.id_curso = ins.fk_id_curso_1')
+        ->join('periodo as per', 'per.id_periodo = ins.fk_id_periodo_1')
+        ->where('ins.id_instancia', $id_instancia)
+        ->get('instancia')->row();
+
+        // Obtén fecha de hoy del sistema
+        $today = date('Y-m-d');
+
+        if($resultado->fecha_culminacion_periodo >= $today)
+        {
+            return TRUE;
+        }
+        else if($resultado->fecha_culminacion_periodo < $today)
+        {
+            return FALSE;
+        }
+    }
+
+    public function verificar_estado_instancia($id_instancia)
+    {
+        // Obtén la instancia de un curso en específico
+        $resultado = $this->db->select(
+            'ins.estado_instancia'
+        )
+        ->from('instancia as ins')
+        ->where('ins.id_instancia', $id_instancia)
+        ->get()
+        ->row();
+
+        if($resultado->estado_instancia == 1)
+        {
+            return TRUE;
+        }
+        else if($resultado->estado_instancia == 0)
+        {
+            return FALSE;
+        }
+    }
+   
+
+    /**
+     * Realiza conteo de inscripciones
+     * 
+     * El conteo de inscripciones se realiza en determinada instancia
+     * y retorna:
+     * inscripciones activas
+     * inscripciones inactivas
+     * inscripciones totales
+     * nombre curso
+     *
+     * @param [type] $id_instancia
+     * @return void
+     */
+    public function conteo_inscripciones($id_instancia)
+    {
+        $SQL = "SELECT 
+        curso.nombre_curso, 
+        instancia.id_instancia,
+        (
+            SELECT 
+                COUNT(i.activa)
+            FROM inscripcion_instancia as iinst
+            JOIN inscripcion as i ON i.id_inscripcion = iinst.fk_id_inscripcion_1
+            WHERE iinst.fk_id_instancia_1 = ".$id_instancia."
+            AND i.activa = 1
+        ) AS inscripciones_activas,
+        (
+            SELECT 
+                COUNT(i.activa)
+            FROM inscripcion_instancia as iinst
+            JOIN inscripcion as i ON i.id_inscripcion = iinst.fk_id_inscripcion_1
+            WHERE iinst.fk_id_instancia_1 = ".$id_instancia."
+            AND i.activa = 0
+        ) AS inscripciones_inactivas,
+        (
+            SELECT 
+                COUNT(i.activa)
+            FROM inscripcion_instancia as iinst
+            JOIN inscripcion as i ON i.id_inscripcion = iinst.fk_id_inscripcion_1
+            WHERE iinst.fk_id_instancia_1 = ".$id_instancia."
+        ) AS inscripciones_totales
+        
+        FROM instancia
+        JOIN inscripcion_instancia ON inscripcion_instancia.fk_id_instancia_1 = instancia.id_instancia
+        JOIN inscripcion ON inscripcion.id_inscripcion = inscripcion_instancia.fk_id_inscripcion_1
+        JOIN curso ON curso.id_curso = instancia.fk_id_curso_1
+        WHERE instancia.id_instancia = ".$id_instancia."
+        GROUP BY curso.nombre_curso";
+
+        $query = $this->db->query($SQL);
+
+        return $query->row();
+    }
+
 
     public function save($data) {
 		return $this->db->insert("instancia",$data);
     }
 
-    public function update($id, $data) {
-        $this->db->where('id_instancia', $id);
-        $this->db->update('instancia', $data);
+    public function update($id, $data)
+    {
+        $resultado = $this->db->where('id_instancia', $id)
+        ->update('instancia', $data);
+
+        if($resultado === TRUE)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     } 
 
     /**
