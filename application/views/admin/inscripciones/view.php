@@ -9,19 +9,38 @@
 <br>
 
 <div class="row">
-	<div class="col-xs-6">
-		<b>PARTICIPANTE</b><br>
-		<b>Participante:</b> <?php echo $inscripcion->nombre_completo_participante; ?> <br>
-		<b>Cédula:</b> <?php echo $inscripcion->cedula_persona; ?><br>
-		<b>Teléfono:</b> <?php echo $inscripcion->telefono_persona; ?> <br>
-		<b>Dirección:</b> <?php echo $inscripcion->direccion_persona; ?><br>
-	</div>	
+
+<div class="col-xs-12">
+
+<div class="box">
+	<div class="box-body table-responsive no-padding">
+	<table class="table table-striped">
+		<thead>
+			<tr>
+				<td><b>Participante</b></td>
+				<td><b>Cédula</b></td>
+				<td><b>Teléfono</b></td>
+			</tr>
+		</thead>
+		<tbody>
+
+			<tr>
+				<td><?php echo $inscripcion->nombre_completo_participante; ?></td>
+				<td><?php echo $inscripcion->cedula_persona; ?></td>
+				<td><?php echo $inscripcion->telefono_persona; ?></td>	
+			</tr>
+			<tr>
+				<td colspan="2"><b>Dirección:</b> <?php echo $inscripcion->direccion_persona; ?></td>
+			</tr>
+		</tbody>
+	</table>
+	</div>
+	<!-- /.box-body -->
+</div>
+<!-- /.box -->
+
 </div>
 
-<br>
-
-
-<div class="row">
 	<div class="col-xs-12 table-responsive">
 		<table class="table table-striped">
 			<thead>

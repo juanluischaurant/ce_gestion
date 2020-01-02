@@ -11,77 +11,56 @@
     </section>
     <!-- Main content -->
     <section class="content">
+       
+        <?php if($this->session->flashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
+            <?php echo $this->session->flashdata('error'); ?>
+        </div>
+        <?php endif; ?>
+
         <!-- Default box -->
         <div class="box box-solid">
-            <div class="box-body">
-                
-                <div class="row">
-                    <div class="col-md-12">
 
-                        <?php if($this->session->flashdata('error')): ?>
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> Alert!</h4>
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                        <?php endif; ?>
-
-                        <form action="<?php echo base_url(); ?>gestion/periodos/store" method="post">
-
-                            <div class="form-group <?php echo !empty(form_error('mes-inicio'))? 'has-error' : ''; ?>">
-                                <?php
-                                    // Estructura el atributo class y concatena el valor anterior
-                                    $atributos = array('class' => 'form-control');
-
-                                    // Genera la etiquera
-                                    echo form_label('Mes de Inicio:');
-
-                                    // Genera el elemento "select" (LA VARIABLE $lista_meses viene desde el controlador)
-                                    // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos HTML
-                                    echo form_dropdown('mes-inicio', $lista_meses, '', $atributos);
-                                ?>
-                                <?php echo form_error('mes-inicio', '<span class="help-block">', '</span>'); ?>
-
-                                <!-- Fin del campo -->  
-                            </div>
-
-                            <div class="form-group <?php echo !empty(form_error('mes-cierre'))? 'has-error' : ''; ?>">
-                                <?php
-                                    // Verifica si hay un valor seleccionado en la lista, si no, imprime el valor 'has-error'
-
-                                    // Estructura el atributo class y concatena el valor anterior
-                                    $atributos = array('class' => 'form-control');
-
-                                    // Genera la etiquera
-                                    echo form_label('Mes de Cierre:');
-
-                                    // Genera el elemento "select" (LA VARIABLE $lista_meses viene desde el controlador)
-                                    // Parámetros de form_dropdown: nombre, valores de la lista, valor para seleccionar 'selected', atributos HTML
-                                    echo form_dropdown('mes-cierre', $lista_meses, '', $atributos);
-                                ?>
-
-                                <?php echo form_error('mes-cierre', '<span class="help-block">', '</span>'); ?>
-                                <!-- Fin del campo -->  
-                            </div>
-  
-                            <div class="form-group <?php echo !empty(form_error('year-periodo'))? 'has-error' : '';?>">
-                                <label for="nombre">Año: </label>
-                                <input type="text" name="year-periodo" id="year-periodo" class="form-control" value="<?php echo set_value('year-periodo');?>">
-                                <?php echo form_error('year-periodo', '<span class="help-block">', '</span>'); ?>
-                            </div>
-
-
-
-                            <div class="form-group"> 
-                                <button type="submit" class="btn btn-success btn-flat">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+            <div class="box-header with-border">
+                <h3 class="box-title">Selecciona la fecha de inicio y culminación</h3>
             </div>
-            <!-- /.box-body -->
+            
+            <form action="<?php echo base_url(); ?>gestion/periodos/store" method="POST">
+                
+                <div class="box-body">
+             
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group <?php echo !empty(form_error('fecha-inicio'))? 'has-error' : '';?>">                                
+                                <label for="fecha-inicio">Fecha de Inicio:</label>
+                                <input type="date" class="form-control" name="fecha-inicio" value="<?php // echo $data_periodo->fecha_inicio_periodo;?>">
+                                <?php echo form_error('fecha-inicio', '<span class="help-block">', '</span>'); ?>                        
+                            </div>    
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group <?php echo !empty(form_error('fecha-inicio'))? 'has-error' : '';?>">                                
+                                <label for="fecha-culminacion">Fecha de Culminación:</label>
+                                <input type="date" class="form-control" name="fecha-culminacion" value="<?php // echo $data_periodo->fecha_culminacion_periodo;?>">
+                                <?php echo form_error('fecha-culminacion', '<span class="help-block">', '</span>'); ?>    
+                            </div>
+                        </div>
+                    
+                    </div>
+                      
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-success btn-flat">Guardar</button>
+                </div>
+            </form>
+
         </div>
         <!-- /.box -->
+
     </section>
     <!-- /.content -->
 </div>

@@ -16,7 +16,7 @@ class Inscripciones_model extends CI_Model {
             ii.id_inscripcion_instancia, 
             in.hora_inscripcion, 
             in.activa,
-            concat(curso.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_completo_instancia,
+            concat(curso.nombre_curso, "-", mi.nombre_mes, " ", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_completo_instancia,
             concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_completo_participante,
             pe.cedula_persona'
         )
@@ -249,7 +249,7 @@ class Inscripciones_model extends CI_Model {
             'int.id_instancia,
             int.cupos_instancia,
             int.cupos_instancia_ocupados,
-            concat(cur.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", per.year_periodo) as nombre_completo_instancia,
+            concat(cur.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as nombre_completo_instancia,
             int.precio_instancia'
         )
         ->from('inscripcion as insc')
@@ -282,7 +282,7 @@ class Inscripciones_model extends CI_Model {
             int.precio_instancia,
             insci.fk_id_inscripcion_1,
             insci.id_inscripcion_instancia,
-            concat(cur.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", per.year_periodo) as nombre_completo_instancia,
+            concat(cur.nombre_curso, " ", mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as nombre_completo_instancia,
             int.precio_instancia,
             int.serial_instancia'
         )
@@ -376,8 +376,8 @@ class Inscripciones_model extends CI_Model {
             instancia.cupos_instancia_ocupados,
             instancia.precio_instancia,
             curso.nombre_curso,
-            concat(curso.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as label,
-            concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", periodo.year_periodo) as periodo_academico'
+            concat(curso.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", YEAR(periodo.fecha_inicio_periodo)) as label,
+            concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", YEAR(periodo.fecha_inicio_periodo)) as periodo_academico'
         )
         ->from('instancia')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')

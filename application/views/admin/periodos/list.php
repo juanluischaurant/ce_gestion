@@ -9,8 +9,18 @@
     </section>
     <!-- Main content -->
     <section class="content">
+
+        <?php if($this->session->flashdata('success')): ?>
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-pencil"></i> ¡Éxito!</h4>
+            <?php echo $this->session->flashdata('success'); ?>
+        </div>
+        <?php endif; ?>
+        
         <!-- Default box -->
         <div class="box box-solid">
+
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -55,8 +65,10 @@
                 </div>
             </div>
             <!-- /.box-body -->
+
         </div>
         <!-- /.box -->
+        
     </section>
     <!-- /.content -->
 </div>

@@ -8,7 +8,9 @@ class Periodos_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'p.id_periodo, 
-            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as nombre_periodo,
+            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
+            p.fecha_inicio_periodo,
+            p.fecha_culminacion_periodo,
             p.fecha_creacion'
         )
         ->from('periodo as p')
@@ -17,11 +19,52 @@ class Periodos_model extends CI_Model {
         ->get(); 
         return $resultados->result();
     }
+    
+    public function get_periodo($id_periodo)
+    {
+        $resultados = $this->db->select(
+            'p.id_periodo, 
+            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
+            p.fecha_inicio_periodo,
+            p.fecha_culminacion_periodo,
+            p.fecha_creacion'
+        )
+        ->from('periodo as p')
+        ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
+        ->where('p.id_periodo', $id_periodo)
+        ->get(); 
+        return $resultados->row();
+    }
 
     public function save($data)
     {
-		return $this->db->insert("periodo",$data);
+        
+
+        if($this->db->insert("periodo", $data))
+        {
+            return $this->db->affected_rows();
+        }
+        else
+        {
+            return FALSE;
+        }
+		
     }
+
+    public function update($id_periodo, $data)
+    {
+        $this->db->where('id_periodo', $id_periodo);
+
+        if($this->db->update('periodo', $data))
+        {
+            return true;
+        }
+        else{
+            return false;
+        }
+        
+    } 
 
     /**
      * Consulta la BD y obtiene una lista de todos los meses disponibles

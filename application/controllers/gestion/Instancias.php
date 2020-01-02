@@ -92,7 +92,8 @@ class Instancias extends CI_Controller {
 		}
 	}
 		
-	public function edit($id) {
+	public function edit($id)
+	{
 		$data = array(
 			'curso' => $this->Cursos_model->getCurso($id)
 		);
@@ -102,7 +103,8 @@ class Instancias extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function update() {
+	public function update()
+	{
 		$id_curso = $this->input->post('id_curso');
 		$nombre = $this->input->post('nombre');
 		$descripcion = $this->input->post('descripcion');

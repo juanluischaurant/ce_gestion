@@ -20,7 +20,7 @@ class Instancias_model extends CI_Model {
         ti.id_turno,
         ti.descripcion_turno,
         curso.nombre_curso,
-        concat(mi.nombre_mes, " ", mc.nombre_mes, "-", periodo.year_periodo) as periodo_academico')
+        concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(periodo.fecha_inicio_periodo)) as periodo_academico')
         ->from('instancia')
         ->join('turno_instancia as ti', 'instancia.fk_id_turno_instancia_1 = ti.id_turno')
         ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
@@ -45,7 +45,7 @@ class Instancias_model extends CI_Model {
         $resultados = $this->db->select(
             'ins.cupos_instancia_ocupados,
             cur.nombre_curso,
-            concat(per.mes_inicio_periodo, " - ", per.mes_cierre_periodo, " ", per.year_periodo) as periodo,
+            concat(per.mes_inicio_periodo, " - ", per.mes_cierre_periodo, " ", YEAR(per.fecha_inicio_periodo)) as periodo,
             loc.nombre_locacion as locacion_instancia'
         )
         ->from('instancia as ins')
@@ -128,14 +128,14 @@ class Instancias_model extends CI_Model {
         // Obtén los registros de instancia de los cursos
         $resultados = $this->db->select(
             'p.id_periodo, 
-            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", p.year_periodo) as label'
+            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as label'
         )
         ->from('periodo as p')
         ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
         ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
         ->like('mi.nombre_mes', $valor)
         ->or_like('mc.nombre_mes', $valor)
-        ->or_like('p.year_periodo', $valor)
+        ->or_like('YEAR(p.fecha_inicio_periodo)', $valor)
         ->get();
 
         return $resultados->result_array();
