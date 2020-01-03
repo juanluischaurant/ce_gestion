@@ -46,16 +46,32 @@ class Instancias_model extends CI_Model {
     {
         // Obtén la instancia de un curso en específico
         $resultado = $this->db->select(
-            'ins.cupos_instancia_ocupados,
+            'ins.id_instancia,
+            ins.cupos_instancia_ocupados,
+            ins.serial_instancia,
+            ins.cupos_instancia,
+            ins.precio_instancia,
+            ins.fk_id_turno_instancia_1,
+            ins.descripcion_instancia,
             cur.nombre_curso,
-            concat(per.mes_inicio_periodo, " - ", per.mes_cierre_periodo, " ", YEAR(per.fecha_inicio_periodo)) as periodo,
+            per.id_periodo,
+            mi.nombre_mes,
+            mc.nombre_mes,
+            concat(mi.nombre_mes, " - ", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as periodo,
             per.fecha_culminacion_periodo,
-            loc.nombre_locacion as locacion_instancia'
+            loc.id_locacion,
+            loc.nombre_locacion as locacion_instancia,
+            fac.id_facilitador,
+            concat(perso.nombres_persona, " ", perso.apellidos_persona) AS nombre_facilitador'
         )
         ->from('instancia as ins')
         ->join('curso as cur', 'cur.id_curso = ins.fk_id_curso_1')
         ->join('periodo as per', 'per.id_periodo = ins.fk_id_periodo_1')
+        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
+        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
         ->join('locacion as loc', 'loc.id_locacion = ins.fk_id_locacion_1')
+        ->join('facilitador as fac', 'fac.id_facilitador = ins.fk_id_facilitador_1')
+        ->join('persona as perso', 'perso.id_persona = fac.fk_id_persona_3')
         ->where('ins.id_instancia', $id_instancia)
         ->get('instancia');
 

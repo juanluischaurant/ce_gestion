@@ -1,32 +1,3 @@
-<?php 
-
-// echo '<br>';
-// echo $today = 'Today: ' . date('Y-m-d');
-
-// echo '<br>';
-// echo $date = 'Test Date: ' . "2019-02-22";
-
-// echo '<br>';
-// $compare = ($date > $today) ? "YES, it's major" : "NO,  I'm afraid it's not";
-
-
-// echo $compare;
-// echo '<br>';
-
-
-// $another_test_date = "2019-06-22";
-// echo $another_test_date;
-// echo '<br>';
-
-// echo $date = '6 Months ago: ' . date('Y-m-d', strtotime('-6 months'));
-// echo '<br>';
-
-// echo "another's test date month: " . date('n', strtotime($another_test_date));
-// echo '<br>';
-
-?>
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

@@ -37,6 +37,11 @@
 <script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.html5.min.js"></script>
 <script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.print.min.js"></script>
 
+<!-- InputMask -->
+<script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.js"></script>
+<script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.date.extensions.js"></script>
+<script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.extensions.js"></script>
+
 <!-- FastClick -->
 <script src="<?php echo base_url();?>assets/template/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
@@ -45,12 +50,16 @@
 <script src="<?php echo base_url();?>assets/template/dist/js/demo.js"></script>
 
 <script>
+
     $(document).ready(function () {
 
         let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
         // URL base actual (Sujeto a cambios dependiendo de
         // la dirección real):http://localhost/ce_gestion/
         
+        // Activa el pluggin jQuery InputMask
+        $('[data-mask]').inputmask();
+
         $('.sidebar-menu').tree(); // Menú lateral
 
         // Invoca a la función encargada de generar el gráfico
@@ -831,6 +840,8 @@
             $('#modal-default').modal('hide');
         });
 
+        $('')
+
         $('#periodo-instancia').autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -847,8 +858,11 @@
             }, minLength: 1,
             select: function(event, ui) {
                 // Solo necesitamos almacenar el id del periodos
-                data = ui.item.id_periodo;
+                let data = ui.item.id_periodo;
                 $('#id-periodo-instancia').val(data);
+                $('#periodo-instancia').parent().addClass('has-success');
+                $('label[for="periodo-instancia"] i').removeClass('hidden');
+
             }
         });
 
@@ -870,8 +884,12 @@
                 // Solo necesitamos almacenar el id de la locación
                 let data = ui.item.id_locacion;
                 $('#id-locacion-instancia').val(data);
+                $('#locacion-instancia').parent().addClass('has-success');
+                $('label[for="locacion-instancia"] i').removeClass('hidden');
             }
         });
+
+        
 
         $('#profesor-instancia').autocomplete({
             source: function(request, response) {
@@ -891,8 +909,12 @@
                 // Solo necesitamos almacenar el id de la locación
                 let data = ui.item.id_facilitador;
                 $('#id-profesor-instancia').val(data);
+                $('#profesor-instancia').parent().addClass('has-success');
+                $('label[for="profesor-instancia"] i').removeClass('hidden');
             }
         });
+
+        $('input[name="turno-instancia"]').on('click', function() { alert('hi');});
 
         // =============================================
         // Fin de JS para Instancias

@@ -114,6 +114,15 @@ $config = array(
             'rules' => 'required|trim|min_length[2]|max_length[95]'
         ),
     ),
+    // Usada en el controlador
+    // movimientos/instancias/update
+    'editar_pago' => array(
+        array(
+            'field' => 'monto-de-operacion',
+            'label' => 'Monto de Operacion',
+            'rules' => 'required|trim|min_length[2]|max_length[95]'
+        ),
+    ),
 );
 
 
