@@ -42,7 +42,7 @@
                                 </div> 
 
                                 <div class="col-md-4">
-                                    <label for="">Costo de Instancia:</label>
+                                    <label for="">Costo:</label>
                                     <input type="number" class="form-control" id="costo-instancia" name="costo-instancia">
                                 </div>
                             </div>
@@ -83,7 +83,7 @@
 
                             <div class="form-group">
                                 <div class="col-md-8">
-                                    <label for="profesor-instancia">Profesor: </label>
+                                    <label for="profesor-instancia">Facilitador: </label>
                                     <input type="text" id="profesor-instancia" class="form-control">
                                     <input type="hidden" id="id-profesor-instancia" name="id-profesor-instancia">  
                                 </div>

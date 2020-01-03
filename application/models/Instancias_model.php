@@ -16,6 +16,7 @@ class Instancias_model extends CI_Model {
         instancia.cupos_instancia_ocupados,
         instancia.fecha_creacion,
         instancia.estado_instancia,
+        instancia.serial_instancia,
         concat(instancia.cupos_instancia, "/", instancia.cupos_instancia_ocupados) as total_cupos,
         ti.nombre_turno,
         ti.id_turno,

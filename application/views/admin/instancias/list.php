@@ -55,7 +55,7 @@
                                 <?php if(!empty($instancias)): ?>
                                 <?php foreach($instancias as $instancia): ?>
                                     <tr>
-                                        <td><?php echo $instancia->id_instancia; ?></td>
+                                        <td><?php echo $instancia->serial_instancia; ?></td>
                                         <td><?php echo $instancia->fecha_creacion; ?></td>
                                         <td>
                                             <?php echo $instancia->nombre_curso . " " . $instancia->periodo_academico; ?>

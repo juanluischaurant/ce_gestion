@@ -29,21 +29,23 @@
                                     <div class="row">
                                             
                                         <div class="col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group <?php echo !empty(form_error('costo-instancia')) ? 'has-error' : ''; ?>">
                                                 <label class="control-label" for="costo-instancia">Costo (Bs.):</label>
-                                                <input type="text" class="form-control" id="inputSuccess" name="costo-instancia" value="<?php echo $instancia->precio_instancia?>">
+                                                <input type="number" class="form-control" name="costo-instancia" value="<?php echo $instancia->precio_instancia?>">
+                                                <?php echo form_error('costo-instancia', '<span class="help-block">', '</span>'); ?>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group <?php echo !empty(form_error('id-periodo-instancia')) ? 'has-error' : ''; ?>">
                                                 <label class="control-label" for="periodo-instancia"><i class="fa fa-check hidden"></i> Período</label>
                                                 <input type="text" class="form-control" id="periodo-instancia" value="<?php echo $instancia->periodo; ?>" placeholder="Ej: Enero-Mayo 2020">
+                                                <?php echo form_error('id-periodo-instancia', '<span class="help-block">', '</span>'); ?>
                                             </div>
                                         </div>
 
                                         <div class="col-md-4">
-                                            <div class="form-group">
+                                            <div class="form-group <?php echo !empty(form_error('turno-instancia')) ? 'has-error' : ''; ?>">
                                                 <?php
                                                     $atributos = array('class' => 'form-control', 'required');
                                                     $value = $instancia->fk_id_turno_instancia_1;
@@ -56,6 +58,7 @@
                                                     echo form_dropdown('turno-instancia', $lista_turnos, $value, $atributos);
                                                 ?>
                                                 <!-- Fin del campo -->
+                                                <?php echo form_error('turno-instancia', '<span class="help-block">', '</span>'); ?>
                                             </div>
                                         </div>
                                         
@@ -65,9 +68,10 @@
                                     <div class="row">
                                                                     
                                         <div class="col-md-2">
-                                            <div class="form-group">
+                                            <div class="form-group <?php echo !empty(form_error('cupos-instancia')) ? 'has-error' : ''; ?>">
                                                 <label class="control-label" for="cupos-instancia">Cupos</label>
                                                 <input type="text" class="form-control" id="cupos-instancia" name="cupos-instancia" value="<?php echo $instancia->cupos_instancia ?>" placeholder="Enter ...">
+                                                <?php echo form_error('cupos-instancia', '<span class="help-block">', '</span>'); ?>
                                             </div>
                                         </div>
 

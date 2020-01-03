@@ -116,12 +116,29 @@ $config = array(
     ),
     // Usada en el controlador
     // movimientos/instancias/update
-    'editar_pago' => array(
+    'editar_instancia' => array(
         array(
-            'field' => 'monto-de-operacion',
-            'label' => 'Monto de Operacion',
-            'rules' => 'required|trim|min_length[2]|max_length[95]'
+            'field' => 'costo-instancia',
+            'label' => 'Costo',
+            'rules' => 'required|trim|numeric'
         ),
+        array(
+            'field' => 'id-periodo-instancia',
+            'label' => 'Período',
+            'rules' => 'required|trim'
+        ),
+        array(
+            'field' => 'turno-instancia',
+            'label' => 'Turno',
+            'rules' => 'required'
+        ),
+        array(
+            'field' => 'cupos-instancia',
+            'label' => 'Cupos',
+            'rules' => 'required'
+        ),
+
+
     ),
 );
 

@@ -824,6 +824,9 @@
         // JS para Instancias
         // =============================================
 
+        /**
+        * Genera un serial para la instancia al momento de presionar el botón indicado
+        */
         $(document).on('click', '.btn-check-curso-instanciado', function() {
             let curso = $(this).val();
             let infoCurso = curso.split('*');
@@ -831,10 +834,12 @@
             let vecesInstanciado = infoCurso[3],
             nombreCurso = infoCurso[1];
 
-            let prefijo = nombreCurso.substring(0, 3);
-            $('#serial-instancia').val(prefijo+'-'+generarNumero(vecesInstanciado));
+            let id_curso = infoCurso[0],
+            prefijo = nombreCurso.substring(0, 3);
 
-            $('#id-curso-instanciado').val(infoCurso[0]);
+            $('#serial-instancia').val(prefijo.toUpperCase()+'-'+id_curso+'-'+generarNumero(vecesInstanciado));
+
+            $('#id-curso-instanciado').val(id_curso);
             $('#nombre-curso-instanciado').val(nombreCurso);
 
             $('#modal-default').modal('hide');
@@ -1351,8 +1356,6 @@
             }]
         });
     }
-
-
 
 </script>
 

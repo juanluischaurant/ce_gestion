@@ -134,41 +134,49 @@ class Instancias extends CI_Controller {
 	public function update()
 	{
 		$id_instancia = $this->input->post('id-instancia');
-		// $id_curso_instanciado = $this->input->post('id-curso-instanciado');   // fk_id_curso_1
-        $id_profesor_instancia = $this->input->post('id-profesor-instancia'); // fk_id_facilitador
-        $id_periodo_instancia = $this->input->post('id-periodo-instancia');   // fk_id_periodo_1
-        $id_locacion_instancia = $this->input->post('id-locacion-instancia'); // fk_id_locacion_1
-        $turno_instancia = $this->input->post('turno-instancia');             // turno_instancia1
-        $cupos_instancia = $this->input->post('cupos-instancia');             // cupos_instancia
-		$precio_instancia = $this->input->post('costo-instancia');            // precio_instancia
-		$descripcion_instancia = $this->input->post('descripcion-instancia'); // descripcion_instancia
-		
-		$data = array(
-			// 'fk_id_curso_1' => $id_curso_instanciado,
-            'precio_instancia' => $precio_instancia,
-            'fk_id_facilitador_1' => $id_profesor_instancia,
-            'fk_id_periodo_1' => $id_periodo_instancia,
-			'fk_id_locacion_1' => $id_locacion_instancia,
-			'fk_id_turno_instancia_1' => $turno_instancia,
-			'cupos_instancia' => $cupos_instancia,
-		);
-		
-		if(trim($this->input->post('descripcion-instancia')) !== '')
-		{
-			$data['descripcion_instancia'] = trim($this->input->post('descripcion-instancia'));
-		}
-		
-		if($this->Instancias_model->update($id_instancia, $data))
-		{
-			$serial_instancia = $this->input->post('serial-instancia');
+
+		if($this->form_validation->run('editar_instancia'))
+		{		
+			// $id_curso_instanciado = $this->input->post('id-curso-instanciado');   // fk_id_curso_1
+			$id_profesor_instancia = $this->input->post('id-profesor-instancia'); // fk_id_facilitador
+			$id_periodo_instancia = $this->input->post('id-periodo-instancia');   // fk_id_periodo_1
+			$id_locacion_instancia = $this->input->post('id-locacion-instancia'); // fk_id_locacion_1
+			$turno_instancia = $this->input->post('turno-instancia');             // turno_instancia1
+			$cupos_instancia = $this->input->post('cupos-instancia');             // cupos_instancia
+			$precio_instancia = $this->input->post('costo-instancia');            // precio_instancia
+			$descripcion_instancia = $this->input->post('descripcion-instancia'); // descripcion_instancia
 			
-			$this->session->set_flashdata('success', $serial_instancia . ' actualizada correctamente.');
-			redirect(base_url().'gestion/instancias');
+			$data = array(
+				// 'fk_id_curso_1' => $id_curso_instanciado,
+				'precio_instancia' => $precio_instancia,
+				'fk_id_facilitador_1' => $id_profesor_instancia,
+				'fk_id_periodo_1' => $id_periodo_instancia,
+				'fk_id_locacion_1' => $id_locacion_instancia,
+				'fk_id_turno_instancia_1' => $turno_instancia,
+				'cupos_instancia' => $cupos_instancia,
+			);
+			
+			if(trim($this->input->post('descripcion-instancia')) !== '')
+			{
+				$data['descripcion_instancia'] = trim($this->input->post('descripcion-instancia'));
+			}
+			
+			if($this->Instancias_model->update($id_instancia, $data))
+			{
+				$serial_instancia = $this->input->post('serial-instancia');
+				
+				$this->session->set_flashdata('success', $serial_instancia . ' actualizada correctamente.');
+				redirect(base_url().'gestion/instancias');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo actualizar la instancia.');
+				redirect(base_url().'gestion/instancias/edit/'.$id_instancia);
+			}
 		}
 		else
 		{
-			$this->session->set_flashdata('error', 'No se pudo actualizar la instancia.');
-			redirect(base_url().'gestion/instancias/edit/'.$id_instancia);
+			$this->edit($id_instancia);
 		}
 	}
 
