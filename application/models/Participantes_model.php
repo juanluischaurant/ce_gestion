@@ -53,7 +53,8 @@ class Participantes_model extends CI_Model {
             par.estado_participante')
             ->from('participante as par')
             ->join('persona as per', 'per.id_persona = par.fk_id_persona_2')
-            ->where('par.estado_participante', '1') 
+            ->where('par.id_participante', $id_participante)
+            ->where('par.estado_participante', 1) 
             ->get(); 
     
         return $resultado->row();
@@ -79,6 +80,7 @@ class Participantes_model extends CI_Model {
         ->join('instancia AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')
         ->join('curso AS cur', 'cur.id_curso = inst.fk_id_curso_1')
         ->where('par.id_participante', $id_participante)
+        ->group_by('ins.id_inscripcion')
         ->get();
 
         return $resultados->result_array();

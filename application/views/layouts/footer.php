@@ -823,6 +823,32 @@
 
 
         // =============================================
+        // JS para Locaciones
+        // =============================================
+        $(document).on("click",".btn-view-locacion",function() {
+
+            let idLocacion = $(this).val(); // ID de la locación
+
+            $.ajax({
+                url: base_url + "gestion/locaciones/view",
+                type:"POST",
+                dataType:"html",
+                data:{
+
+                    id_locacion: idLocacion
+                },
+                success:function(data) {
+                    $("#modal-default .modal-body").html(data);
+                }
+            });
+        });
+
+        // =============================================
+        // Fin de JS para Locaciones
+        // =============================================
+
+
+        // =============================================
         // JS para Instancias
         // =============================================
 
@@ -959,7 +985,9 @@
         });
 
         $(document).on("click",".btn-view-participante",function() {
+
             let id_participante = $(this).val(); // ID de la persona
+            
             $.ajax({
                 url: base_url + "gestion/participantes/view",
                 type:"POST",

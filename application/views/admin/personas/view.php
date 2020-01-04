@@ -24,36 +24,3 @@
 
 	</div>	
 </div>
-<!-- <br>
-<div class="row">
-	<div class="col-xs-12">
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Codigo</th>
-					<th>Nombre</th>
-					<th>Precio</th>
-					<th>Cantidad</th>
-					<th>Importe</th>
-				</tr>
-			</thead>
-			<tbody>
-				
-			</tbody>
-			<tfoot>
-				<tr>
-					
-				</tr>
-				<tr>
-				
-				</tr>
-				<tr>
-					
-				</tr>
-				<tr>
-					
-				</tr>
-			</tfoot>
-		</table>
-	</div>
-</div> -->

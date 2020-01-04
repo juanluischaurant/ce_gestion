@@ -53,7 +53,7 @@ class Participantes extends CI_Controller {
 		$id_participante = $this->input->post("id_participante");
 
 		$data = array(
-			"participante" => $this->Participantes_model->get_participante($id_participante),
+			'participante' => $this->Participantes_model->get_participante($id_participante),
 			'instancias_inscritas' => $this->Participantes_model->get_instancias_inscritas($id_participante)
 		);
 
@@ -135,7 +135,8 @@ class Participantes extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function update() {
+	public function update()
+	{
 		$id_participante = $this->input->post('idParticipante');
 		$cedula = $this->input->post("cedula");
 		$nombres = $this->input->post('nombres');
