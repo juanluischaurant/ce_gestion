@@ -161,7 +161,7 @@ CREATE TABLE permiso(
 )
 
 -- ===================================================================
--- Obtener conteo re inscripciones asociadas a determinada instanica
+-- Obtener conteo de inscripciones asociadas a determinada instanica
 -- ===================================================================
 SELECT 
 curso.nombre_curso, 
@@ -190,3 +190,46 @@ FROM inscripcion_instancia
 JOIN inscripcion ON inscripcion.id_inscripcion = inscripcion_instancia.fk_id_inscripcion_1
 WHERE inscripcion_instancia.fk_id_instancia_1 = 1
 AND inscripcion.activa = 1
+
+
+-- ===================================================================
+-- Contar períodos que no han culminado
+-- ===================================================================
+SELECT COUNT(*)
+FROM periodo
+WHERE fecha_culminacion_periodo >= CURRENT_DATE
+
+-- ===================================================================
+-- Obtener conteo de instancias activas por período
+-- ===================================================================
+SELECT 
+	periodo.id_periodo,
+    CONCAT(periodo.mes_inicio_periodo, ' ', periodo.mes_cierre_periodo) as meses,
+    COUNT(*)
+FROM instancia 
+JOIN periodo on periodo.id_periodo = instancia.fk_id_periodo_1
+
+WHERE periodo.fecha_culminacion_periodo >= CURRENT_DATE AND periodo.id_periodo = 2
+group by periodo.id_periodo
+
+-- Ganador
+SELECT 
+    COUNT(*)
+FROM instancia 
+JOIN periodo on periodo.id_periodo = instancia.fk_id_periodo_1
+WHERE periodo.id_periodo = 2
+
+-- Listo para ser usado en la aplicación CE Gestión
+SELECT
+  p.id_periodo, 
+  concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
+  p.fecha_inicio_periodo,
+  p.fecha_culminacion_periodo,
+  p.fecha_creacion,
+  (SELECT COUNT(*) as instancias_asociadas FROM instancia WHERE instancia.fk_id_periodo_1 = p.id_periodo) AS instancias_asociadas
+FROM periodo AS p
+JOIN mes AS mi ON p.mes_inicio_periodo = mi.id_mes
+JOIN mes AS mc ON p.mes_cierre_periodo = mc.id_mes
+
+
+

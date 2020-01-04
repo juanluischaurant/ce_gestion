@@ -86,18 +86,20 @@
         // Cambia el estado de un registro dado
         // Este botón funciona de manera similar en distintos formularios
         $('.btn-remove').on('click', function(e) {
+
             // Código para el botón de eliminar en las tablas
             e.preventDefault();
+
             let ruta = $(this).attr('href');
             alert(ruta);
             $.ajax({
                 url: ruta,
                 type: 'POST',
                 success: function(response) {
+
                     window.location.href = base_url+response;
                 }
             });
-
         });
         
         $('#export-acciones').DataTable({
@@ -893,9 +895,7 @@
                 $('label[for="locacion-instancia"] i').removeClass('hidden');
             }
         });
-
         
-
         $('#profesor-instancia').autocomplete({
             source: function(request, response) {
                 $.ajax({
@@ -1107,6 +1107,7 @@
             }
         });
 
+        // Remover instancia en la vista de inscripcion
         $(document).on('click', '.btn-remove-curso', function() {
 
             $(this).closest('tr').remove();

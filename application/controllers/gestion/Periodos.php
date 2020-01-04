@@ -11,7 +11,7 @@ class Periodos extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'periodos' => $this->Periodos_model->getPeriodos(),
+			'periodos' => $this->Periodos_model->get_periodos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -30,20 +30,38 @@ class Periodos extends CI_Controller {
         $this->load->view('layouts/footer');
 	}
 	
+	/**
+	 * Editar período
+	 * 
+	 * El período puede ser editado solo si no ha caducado aún, se dice
+	 * que el período caducó luedo de su fecha de culminación.
+	 *
+	 * @param integer $id_periodo
+	 * @return void
+	 */
 	public function edit($id_periodo)
 	{
-		$data = array(
-			'lista_meses' => $this->Periodos_model->meses_dropdown(),
-			'data_periodo' => $this->Periodos_model->get_periodo($id_periodo)
-		);
+		$fecha_valida = $this->Periodos_model->verificar_validez_periodo($id_periodo);
 
-		$this->load->view('layouts/header');
-		$this->load->view('layouts/aside');
-		$this->load->view('admin/periodos/edit', $data);
-		$this->load->view('layouts/footer');
+		if($fecha_valida === TRUE)
+		{
+			$data = array(
+				'lista_meses' => $this->Periodos_model->meses_dropdown(),
+				'data_periodo' => $this->Periodos_model->get_periodo($id_periodo)
+			);
+			
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/periodos/edit', $data);
+			$this->load->view('layouts/footer');
+		} 
+		else if($fecha_valida === FALSE)
+		{
+			$this->session->set_flashdata('alert', 'El período ya expiro, no puede ser editado.');
+				redirect(base_url().'gestion/periodos/');
+		}
 	}
 
-	
 	public function store()
 	{
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
@@ -101,6 +119,36 @@ class Periodos extends CI_Controller {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
 			redirect(base_url().'gestion/periodos/edit/'.$id_periodo);
 		}
+	}
 
+	/**
+	 * Elimina de la base de datos un registro específico
+	 *
+	 * @param [type] $id_periodo
+	 * @return void
+	 */
+	public function delete($id_periodo)
+	{
+		$instancias_asociadas = $this->Periodos_model->count_instancias_asociadas($id_periodo)->instancias_asociadas;
+		$nombre_periodo = $this->Periodos_model->count_instancias_asociadas($id_periodo)->nombre_periodo;
+
+		if($instancias_asociadas > 0)
+		{
+			$this->session->set_flashdata('alert', 'No se puede eliminar el periodo ' . $nombre_periodo . '. Tiene instancias asociadas.');
+			redirect(base_url().'gestion/periodos/');
+		}
+		else
+		{
+			if($this->Periodos_model->delete($id_periodo))
+			{
+				$this->session->set_flashdata('success', 'Se eliminó el periodo ' . $nombre_periodo);
+				redirect(base_url().'gestion/periodos/');
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se eliminó el periodo <b>' . $nombre_periodo. '</b> Algo pasó al consultar la base de datos');
+				redirect(base_url().'gestion/periodos/');
+			}			
+		}
 	}
 }

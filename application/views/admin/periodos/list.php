@@ -17,6 +17,13 @@
             <?php echo $this->session->flashdata('success'); ?>
         </div>
         <?php endif; ?>
+        <?php if($this->session->flashdata('alert')): ?>
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h4><i class="icon fa fa-warning"></i> ¡Alerta!</h4>
+            <?php echo $this->session->flashdata('alert'); ?>
+        </div>
+        <?php endif; ?>
         
         <!-- Default box -->
         <div class="box box-solid">
@@ -37,7 +44,8 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
-                                    <th>Nombre Período</th>
+                                    <th>Período</th>
+                                    <th>Instancias Asociadas</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -48,11 +56,12 @@
                                         <td><?php echo $periodo->id_periodo; ?></td>
                                         <td><?php echo $periodo->fecha_creacion; ?></td>
                                         <td><?php echo $periodo->nombre_periodo; ?></td>                                 
+                                        <td><?php echo $periodo->instancias_asociadas; ?></td>                                 
                                         <td>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
                                                 <a href="<?php echo base_url() ?>gestion/periodos/edit/<?php echo $periodo->id_periodo; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/periodos/delete/<?php echo $periodo->id_periodo; ?>" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>
