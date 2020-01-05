@@ -31,7 +31,7 @@ class Personas_model extends CI_Model {
      * @param int $id
      * @return array
      */
-    public function getPersona($id)
+    public function get_persona($id)
     {
         $resultado = $this->db->where('id_persona', $id)
         ->get('persona');

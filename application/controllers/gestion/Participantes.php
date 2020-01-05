@@ -29,7 +29,8 @@ class Participantes extends CI_Controller {
 		
     }
 
-    public function index() {
+	public function index()
+	{
 		$data = array(
 			'participantes' => $this->Participantes_model->getParticipantes(),
 		);
@@ -61,11 +62,11 @@ class Participantes extends CI_Controller {
 	}
 
 	public function add($id_persona = 'new')
-	{	
-		if($id_persona !== 'new') {
-
+	{
+		if($id_persona !== 'new')
+		{
 			$data_persona = array(
-				'persona' => $this->Personas_model->getPersona($id_persona),
+				'persona' => $this->Personas_model->get_persona($id_persona),
 			);
 
 			$this->load->view('layouts/header');
@@ -73,8 +74,9 @@ class Participantes extends CI_Controller {
 			$this->load->view('admin/participantes/add', $data_persona); 
 			$this->load->view('layouts/footer');
 		
-		} elseif($id_persona = 'new') {
-					
+		}
+		elseif($id_persona = 'new')
+		{
 			$data_persona = array(
 				"personas" => $this->Personas_model->getPersonas() 
 			);
@@ -83,22 +85,21 @@ class Participantes extends CI_Controller {
 			$this->load->view('layouts/aside');
 			$this->load->view('admin/participantes/add', $data_persona);
 			$this->load->view('layouts/footer');
-		
-		}
-		
+		}	
 	}
 	
+	/**
+	 * Almacenar participante
+	 * 
+	 * Este método solo trabaja con el id de la persona que será
+	 * registrada como participante. Los datos ya estan registrados en la 
+	 * tabla "persona" de la base de datos.
+	 *
+	 * @return void
+	 */
 	public function store()
 	{
 		$fk_id_persona_2 = $this->input->post('fk-id-persona');
-
-		// $cedula = $this->input->post("cedula");
-		// $nombres = $this->input->post('nombres');
-		// $apellidos = $this->input->post('apellidos');
-		// $fecha_nacimiento = $this->input->post('fecha');
-		// $genero = $this->input->post('genero');
-		// $telefono = $this->input->post('telefono');
-		// $direccion = $this->input->post('direccion');
 
 		$data_participante = array(
 			'fk_id_persona_2' => $fk_id_persona_2,

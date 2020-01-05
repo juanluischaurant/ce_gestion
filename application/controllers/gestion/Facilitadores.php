@@ -32,7 +32,7 @@ class Facilitadores extends CI_Controller {
 		if($id_persona !== 'new') {
 
 			$data_persona = array(
-				'persona' => $this->Personas_model->getPersona($id_persona),
+				'persona' => $this->Personas_model->get_persona($id_persona),
 			);
 
 			$this->load->view('layouts/header');

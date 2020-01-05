@@ -817,6 +817,49 @@
 
             location.reload();
         });
+        
+        /**
+         * Botón se encuentra ubicado en la vista de Éxito mostrada luego
+         * de registrar a una persona exitosamente en la base de datos.
+         */
+        $('#add-roles-persona').on('click', function(event) {
+
+            let id_persona = $('input[name="id-persona"]').val();
+            let participante = $('input[name="rol-participante"]');
+            let titular = $('input[name="rol-titular"]');
+
+            if(participante.is(":checked")) {
+                participante = 'participante'
+            } else if(participante.is(":not(:checked)"))
+            {
+                participante = ''
+            }
+
+            if(titular.is(":checked")) {
+                titular = 'titular'
+            } else if(titular.is(":not(:checked)"))
+            {
+                titular = ''
+            }
+       
+            $.ajax({
+                url: base_url + "gestion/personas/add_rol",
+                type: 'POST',
+                data: {
+                    id_persona: id_persona,
+                    participante: participante,
+                    titular: titular
+                },
+                success: function(response) {
+
+                }
+            });
+            $('#caja-principal').hide();
+            $('#caja-secundaria').toggleClass('hidden');
+
+
+            return false;
+        });
         // =============================================
         // Fin de JS para Inscripciones
         // =============================================

@@ -31,6 +31,8 @@ class Personas extends CI_Controller {
         {
             // Carga el controlador
 			$this->load->model('Personas_model');  
+			$this->load->model('Participantes_model');  
+			$this->load->model('Titulares_model');  
 			$this->load->model('Acciones_model');  
         }
     }
@@ -72,7 +74,7 @@ class Personas extends CI_Controller {
 		$idParticipante = $this->input->post("id_persona");
 
 		$data = array(
-			"persona" => $this->Personas_model->getPersona($idParticipante),
+			"persona" => $this->Personas_model->get_persona($idParticipante),
 		);
 
 		$this->load->view("admin/personas/view", $data);
@@ -88,7 +90,7 @@ class Personas extends CI_Controller {
 		else
 		{
 			$data = array(
-				'persona' => $this->Personas_model->getPersona($id),
+				'persona' => $this->Personas_model->get_persona($id),
 				'lista_generos' => $this->Personas_model->generos_dropdown()
 			);
 			$this->load->view('layouts/header');
@@ -97,25 +99,6 @@ class Personas extends CI_Controller {
 			$this->load->view('layouts/footer');
 		}
 	}
-
-	/**
-	 * Carga en la vista una pantalla que permite al usuario escoger un rol
-	 * para el registro Persona recien almacenado.
-	 *
-	 * @param string $ultimo_id
-	 * @return void
-	 */
-	public function success($ultimo_id = 'no_id')
-	{
-        $data_persona = array(
-			'persona' => $this->Personas_model->getPersona($ultimo_id),
-		);
-		
-        $this->load->view('layouts/header');
-        $this->load->view('layouts/aside');
-        $this->load->view('admin/personas/success', $data_persona);
-		$this->load->view('layouts/footer');	
-    }
 	
 	/**
 	 * Método invocado al presionar el botón de guardado en el formulario correspondiente
@@ -160,7 +143,8 @@ class Personas extends CI_Controller {
 				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
 				// Redirige a la vista "success" dentro de este controlador
-				redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
+				$this->success($id_ultimo_registro);
+				// redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
 			}
 			else
 			{
@@ -174,7 +158,67 @@ class Personas extends CI_Controller {
 			$this->add();
 		}
 		
-    }
+	}
+	
+	/**
+	 * Carga en la vista una pantalla que permite al usuario escoger un rol
+	 * para el registro Persona recien almacenado.
+	 *
+	 * @param string $ultimo_id
+	 * @return void
+	 */
+	// cambiar a protected
+	public function success($ultimo_id = 'no_id')
+	{
+        $data_persona = array(
+			'persona' => $this->Personas_model->get_persona($ultimo_id),
+		);
+		
+        $this->load->view('layouts/header');
+        $this->load->view('layouts/aside');
+        $this->load->view('admin/personas/success', $data_persona);
+		$this->load->view('layouts/footer');	
+	}
+	
+	public function add_rol()
+	{
+		$id_persona = $this->input->post('id_persona');
+		$participante = $this->input->post('participante');
+		$titular = $this->input->post('titular');
+
+		$mensaje = '';
+
+		if($participante !== '')
+		{
+			$no_registrado = $this->Participantes_model->evitaParticipanteDuplicado($id_persona);
+			// Verifica si esta persona ya está registrada como participante
+			if($no_registrado === TRUE)
+			{
+				$data_participante = array( 'fk_id_persona_2' => $id_persona, );
+
+				$this->Participantes_model->save($data_participante);
+				echo 'hi';
+				$mensaje .= 'participante';
+			}
+		}
+
+		if($titular !== '')
+		{
+			$no_registrado = $this->Titulares_model->duplicidad_persona($id_persona);
+			// Verifica si esta persona ya está registrada como titular
+			if($no_registrado === TRUE)
+			{
+				$data_titular = array( 'fk_id_persona_1' => $id_persona, );
+
+				$this->Titulares_model->save($data_titular);
+				echo 'ho';
+				$mensaje .= ' titular';
+			}
+		}
+
+		echo $mensaje;
+
+	}
 	
 	public function update() 
 	{

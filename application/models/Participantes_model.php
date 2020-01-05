@@ -111,6 +111,7 @@ class Participantes_model extends CI_Model {
         ->where('fk_id_persona_2', $id)
         ->get();
 
+        // Retorna verdadero si la persona no está registrada aún
         if($query->num_rows() == 0)
         {
             return true;
