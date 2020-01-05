@@ -106,19 +106,23 @@
                         </tbody>
                     </table>
 
+                    <div class="col-xs-12 table-responsive">
+                                        
                     <div class="form-group">
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-addon">Monto Pagado:</span>
-                                <input type="text" class="form-control" placeholder="0.00" name="monto-pagado" readonly="readonly">
+                                <span class="input-group-addon">En Operación:</span>
+                                <input type="text" class="form-control" value="" placeholder="0.00" name="monto-en-operacion" id="monto-en-operacion" readonly="readonly">
                             </div>
                         </div>
+                        
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-addon">Subtotal:</span>
-                                <input type="text" class="form-control" placeholder="0.00" name="subtotal" readonly="readonly">
+                                <span class="input-group-addon">Monto Pagado:</span>
+                                <input type="text" class="form-control" value="0.00" placeholder="0.00" name="pagado" readonly="readonly">
                             </div>
                         </div>
+
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-addon">Deuda:</span>
@@ -127,16 +131,13 @@
                         </div>
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-addon">Total:</span>
-                                <input type="text" class="form-control" placeholder="0.00" name="total" readonly="readonly">
+                                <span class="input-group-addon">Costo Inscripción:</span>
+                                <input type="text" value="0.00" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <div class="col-md-12">
-                            <button type="submit" id='guardar-inscripcion' disabled class="btn btn-success btn-flat">Guardar</button>
-                        </div>
+                    <!-- /.form-group -->
+
                     </div>
 
                 </form>
