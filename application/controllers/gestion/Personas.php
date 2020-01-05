@@ -75,6 +75,10 @@ class Personas extends CI_Controller {
 
 		$data = array(
 			"persona" => $this->Personas_model->get_persona($idParticipante),
+			'es_participante' => $this->Personas_model->get_es_participante($idParticipante),
+			'es_titular' => $this->Personas_model->get_es_titular($idParticipante),
+			'es_facilitador' => $this->Personas_model->get_es_facilitador($idParticipante),
+
 		);
 
 		$this->load->view("admin/personas/view", $data);

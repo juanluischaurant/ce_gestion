@@ -93,7 +93,7 @@ class Locaciones extends CI_Controller {
 		$data = array('estado_locacion' => 0);
 
 		$this->Locaciones_model->update($id_locacion, $data);
-		$this->session->set_flashdata('success', 'Se activó exitosamente la locación.');
+		$this->session->set_flashdata('success', 'Se desactivó exitosamente la locación.');
 		redirect(base_url().'gestion/locaciones/');
 	}
 
@@ -112,7 +112,7 @@ class Locaciones extends CI_Controller {
 
 		if($this->Locaciones_model->update($id_locacion, $data))
 		{
-			$this->session->set_flashdata('success', 'Se desactivó exitosamente la locación.');
+			$this->session->set_flashdata('success', 'Se activó exitosamente la locación.');
 			redirect(base_url().'gestion/locaciones/');
 		}
 	}

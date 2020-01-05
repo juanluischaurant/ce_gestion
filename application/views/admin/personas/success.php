@@ -5,7 +5,7 @@
     <section class="content-header">
         <h1>
         Personas
-        <small>Escoja una opción</small>
+        <small>Asignar Roles</small>
         </h1>
     </section>
     <!-- Main content -->
@@ -74,16 +74,24 @@
                 <div class="box-body">
 
                     <blockquote>
-                    <p>¿A donde deseas ir ahora?</p>
+                    <p>Selecciona una opción</p>
                     <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
-                    <ul style="list-style-type: none;">
-                        <li>
-                            <a href="">Inscribir</a>
-                        </li>
-                        <li>
-                            <a href="">Registrar</a>
-                        </li>
-                    </ul>
+                    <div id="redirecciona-inscribir" class="row hidden">
+                        <div class="col-md-4">
+                            <a href="">Inscribir Participante</a>
+                        </div>
+                    </div>
+                    <div id="redirecciona-pago" class="row hidden">
+                        <div class="col-md-4">
+                            <a href="">Registrar Pago</a>
+                        </div>
+                    </div>
+                    <div id="redirecciona-inicio" class="row hidden">
+                        <div class="col-md-4">
+                            <a href="">Registrar a alguien más</a>
+                        </div>
+                    </div>
+         
                     </blockquote>
 
                 </div>

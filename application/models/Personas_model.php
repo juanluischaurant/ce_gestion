@@ -49,7 +49,8 @@ class Personas_model extends CI_Model {
         return $this->db->update('persona', $data);
     }
 
-    public function lastID() {
+    public function lastID()
+    {
 		return $this->db->insert_id();
     }
 
@@ -62,6 +63,72 @@ class Personas_model extends CI_Model {
         );
 
         return $array;
+    }
+
+    /**
+     * Determina si una persona está registrada como participante
+     *
+     * @param integer $id_persona
+     * @return void
+     */
+    public function get_es_participante($id_persona)
+    {
+        $SQL = "SELECT 
+        persona.nombres_persona, 
+        persona.apellidos_persona,
+        participante.id_participante
+        
+        FROM persona
+        LEFT JOIN participante ON participante.fk_id_persona_2 = persona.id_persona
+        WHERE participante.fk_id_persona_2 = ?";
+
+        $resultado = $this->db->query($SQL, array($id_persona));
+
+        return $resultado->row();
+    }
+
+    /**
+     * Determina si una persona está registrada como participante
+     *
+     * @param integer $id_persona
+     * @return void
+     */
+    public function get_es_titular($id_persona)
+    {
+        $SQL = "SELECT 
+        persona.nombres_persona, 
+        persona.apellidos_persona,
+        titular.id_titular
+        
+        FROM persona
+        LEFT JOIN titular ON titular.fk_id_persona_1 = persona.id_persona
+        WHERE titular.fk_id_persona_1 = ?";
+
+        $resultado = $this->db->query($SQL, array($id_persona));
+
+        return $resultado->row();
+    }
+
+    /**
+     * Determina si una persona está registrada como participante
+     *
+     * @param integer $id_persona
+     * @return void
+     */
+    public function get_es_facilitador($id_persona)
+    {
+        $SQL = "SELECT 
+        persona.nombres_persona, 
+        persona.apellidos_persona,
+        facilitador.id_facilitador
+        
+        FROM persona
+        LEFT JOIN facilitador ON facilitador.fk_id_persona_3 = persona.id_persona
+        WHERE facilitador.fk_id_persona_3 = ?";
+
+        $resultado = $this->db->query($SQL, array($id_persona));
+
+        return $resultado->row();
     }
 
 }

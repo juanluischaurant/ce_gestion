@@ -231,5 +231,30 @@ FROM periodo AS p
 JOIN mes AS mi ON p.mes_inicio_periodo = mi.id_mes
 JOIN mes AS mc ON p.mes_cierre_periodo = mc.id_mes
 
+-- ===================================================================
+-- COntar roles de personas
+-- ===================================================================
+SELECT po.nombres_persona
+FROM persona AS po
+WHERE EXISTS(
+	SELECT 1 FROM participante AS par WHERE par.fk_id_persona_2 = po.id_persona
+)
 
+-- Cuenta los registros
+SELECT count(*) AS total_participantes
+FROM persona AS po
+WHERE EXISTS(
+	SELECT 1 FROM participante AS par WHERE par.fk_id_persona_2 = po.id_persona
+)
+
+
+-- Experimento fallido
+SELECT 
+persona.nombres_persona, 
+persona.apellidos_persona,
+participante.id_participante
+CAST(CASE WHEN participante.id_participante IS NULL THEN 0 ELSE 1 AS SMALLINT) as relacion
+FROM persona
+LEFT JOIN participante ON participante.fk_id_persona_2 = persona.id_persona
+WHERE participante.fk_id_persona_2 = 28
 

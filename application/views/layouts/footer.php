@@ -857,6 +857,15 @@
             $('#caja-principal').hide();
             $('#caja-secundaria').toggleClass('hidden');
 
+            if(participante !== '') {
+                $('#redirecciona-inscribir').toggleClass('hidden');
+            }
+            if(titular !== '') {
+                $('#redirecciona-pago').toggleClass('hidden');
+            }
+            if(titular == '' && participante == '') { 
+                $('#redirecciona-inicio').toggleClass('hidden');
+            }
 
             return false;
         });
