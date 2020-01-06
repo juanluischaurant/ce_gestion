@@ -71,6 +71,30 @@ class Inscripciones_model extends CI_Model {
     }
 
     /**
+     * Obtén los montos exactos relacionados a determinada inscripción
+     * entre los que se listan:
+     * - Calculo Monto Pagado
+     * - Calculo Deuda
+     *
+     * @param integer $id_inscripcion
+     * @return void
+     */
+    public function get_montos_inscripcion($id_inscripcion)
+    {
+        $SQL = "SELECT 
+        inscripcion.id_inscripcion,
+        SUM(pago_de_inscripcion.monto_operacion) as calculo_monto_pagado,
+        (inscripcion.costo_de_inscripcion - SUM(pago_de_inscripcion.monto_operacion)) AS calculo_deuda
+        FROM inscripcion
+        INNER JOIN pago_de_inscripcion ON pago_de_inscripcion.fk_id_inscripcion = inscripcion.id_inscripcion
+        WHERE inscripcion.id_inscripcion = ?";
+
+        $resultado = $this->db->query($SQL, array($id_inscripcion));
+
+        return $resultado->row();
+    }
+
+    /**
      * Almacena los datos eviados por el usuario a través del controlador Inscripciones
      *
      * @param array $data

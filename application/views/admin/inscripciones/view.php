@@ -55,16 +55,16 @@
 				<tr>
 					<td><?php echo $data_instancia_inscrita->serial_instancia; ?></td>
 					<td><?php echo $data_instancia_inscrita->nombre_completo_instancia; ?></td>
-					<td><?php echo $data_instancia_inscrita->precio_instancia; ?> Bs.</td>
+					<td><?php echo $inscripcion->costo_de_inscripcion; ?> Bs.</td>
 				</tr>
 				<tr>
 				<td></td>
 					<td colspan="" class="text-right"><strong>Monto Pagado:</strong></td>
-					<td><?php echo $inscripcion->monto_pagado; ?> Bs.</td>
+					<td><?php echo $montos_de_inscripcion->calculo_monto_pagado; ?> Bs.</td>
 				</tr>
 					<td></td>
 					<td colspan="" class="text-right"><strong>Deuda:</strong></td>
-					<td><?php echo $inscripcion->deuda; ?> Bs.</td>
+					<td><?php echo $montos_de_inscripcion->calculo_deuda; ?> Bs.</td>
 				<tr>
 
 				</tr>

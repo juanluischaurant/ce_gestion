@@ -87,14 +87,15 @@ class Inscripciones extends CI_Controller {
 			$this->load->view('admin/inscripciones/edit', $data);
 			$this->load->view('layouts/footer');
 		}
-		else if($fecha_valida === FALSE) {
+		else if($fecha_valida === FALSE)
+		{
 			$this->session->set_flashdata('alert', 'Esta inscripción ya exipró, no puede ser editada.');
-					redirect(base_url().'movimientos/inscripciones/');
+			redirect(base_url().'movimientos/inscripciones/');
 		}
 		else if($estado_inscripcion == 0)
 		{
 			$this->session->set_flashdata('alert', 'La inscripción debe estar activa para editarla.');
-					redirect(base_url().'movimientos/inscripciones/');
+			redirect(base_url().'movimientos/inscripciones/');
 		}
 	}
 
@@ -110,7 +111,8 @@ class Inscripciones extends CI_Controller {
 		$data = array(
 			'inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
 			'data_instancia_inscrita' => $this->Inscripciones_model->get_instancia_inscrita($id_inscripcion),
-			'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
+			'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion),
+			'montos_de_inscripcion' => $this->Inscripciones_model->get_montos_inscripcion($id_inscripcion)
 		);
 
 		$this->load->view('admin/inscripciones/view', $data);
@@ -120,10 +122,10 @@ class Inscripciones extends CI_Controller {
 	{
 		$fk_id_participante_1 = $this->input->post('id_participante');
 		$fecha_inscripcion = $this->input->post('fecha-inscripcion');
-		$monto_pagado = $this->input->post('monto-pagado');
-		$precio_total = $this->input->post('subtotal');
-		$deuda = $this->input->post('deuda');
-		$costo_de_inscripcion = $this->input->post('total');
+		// $monto_pagado = $this->input->post('monto-pagado');
+		// $precio_total = $this->input->post('subtotal');
+		// $deuda = $this->input->post('deuda');
+		$costo_de_inscripcion = $this->input->post('costo-de-inscripcion');
 
 		// Llaves utilizadas para almacenar en la tabla inscripcion_instancia
 		$fk_id_tipo_operacion = $this->input->post('fk_id_tipo_operacion');
@@ -135,27 +137,27 @@ class Inscripciones extends CI_Controller {
 		$data_inscripcion = Array(
 			'fk_id_participante_1' => $fk_id_participante_1,
 			'fecha_inscripcion' => $fecha_inscripcion,
-			'monto_pagado' => $monto_pagado,
-			'precio_total' => $precio_total,
-			'deuda' => $deuda,
+			// 'monto_pagado' => $monto_pagado,
+			// 'precio_total' => $precio_total,
+			// 'deuda' => $deuda,
 			'costo_de_inscripcion' => $costo_de_inscripcion
 		);
 	
-		// Almacena datos en la tabla "inscripcion"
-		if ($this->Inscripciones_model->save($data_inscripcion))
-		{
-			// Obtén el ID de la última inscripción realizada
-			$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
+		// // Almacena datos en la tabla "inscripcion"
+		// if ($this->Inscripciones_model->save($data_inscripcion))
+		// {
+		// 	// Obtén el ID de la última inscripción realizada
+		// 	$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
 		
-			// Guarda los detalles de la inscripción
-			$this->save_inscripcion_instancia($fk_id_instancia, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
+		// 	// Guarda los detalles de la inscripción
+		// 	$this->save_inscripcion_instancia($fk_id_instancia, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
 
-			redirect(base_url()."movimientos/inscripciones");
-		}
-		else
-		{ 
-			redirect(base_url()."movimientos/inscripciones/add");
-		}
+		// 	redirect(base_url()."movimientos/inscripciones");
+		// }
+		// else
+		// { 
+		// 	redirect(base_url()."movimientos/inscripciones/add");
+		// }
 	}
 
 	/**
@@ -267,7 +269,7 @@ class Inscripciones extends CI_Controller {
 	 * 
 	 * @param array $id_instancia
 	 * @param integer $id_ultima_inscripcion
-	 * @param integer $cupos_curso
+	 * @param array $cupos_curso
 	 * @param array $ids_pago
 	 * @return void
 	 */
@@ -516,9 +518,6 @@ class Inscripciones extends CI_Controller {
 	{		
 		$this->Pagos_model->actualiza_estado_pago($id_pago);
 	}
-
-
-
 
 	// =======================================================
 	// Métodos utilizados para el pluggin AUTOCOMPLETE

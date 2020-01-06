@@ -248,13 +248,13 @@ WHERE EXISTS(
 )
 
 
--- Experimento fallido
+-- ===================================================================
+-- Calcular total pagado y deuda
+-- ===================================================================
 SELECT 
-persona.nombres_persona, 
-persona.apellidos_persona,
-participante.id_participante
-CAST(CASE WHEN participante.id_participante IS NULL THEN 0 ELSE 1 AS SMALLINT) as relacion
-FROM persona
-LEFT JOIN participante ON participante.fk_id_persona_2 = persona.id_persona
-WHERE participante.fk_id_persona_2 = 28
-
+inscripcion.id_inscripcion,
+SUM(pago_de_inscripcion.monto_operacion) as calculo_total_pagado,
+(inscripcion.costo_de_inscripcion - SUM(pago_de_inscripcion.monto_operacion)) AS calculo_deuda
+FROM inscripcion
+INNER JOIN pago_de_inscripcion ON pago_de_inscripcion.fk_id_inscripcion = inscripcion.id_inscripcion
+WHERE inscripcion.id_inscripcion = 4
