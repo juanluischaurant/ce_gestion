@@ -49,6 +49,7 @@ class Pagos extends CI_Controller {
 
     public function store()
     {
+        // ¿Se utiliza esta variable?
         $modulo = $this->input->post('modulo-actual');
 
         $id_banco_operacion = $this->input->post('id-banco-de-operacion');
@@ -95,11 +96,11 @@ class Pagos extends CI_Controller {
                 $this->add();
             }
         }
-
     }
 
     /**
      * Método diseñado para almacenar un pago por medio de una llamada AJAX
+     * con la finalidad de almacenar pagos desde el módulo de Inscripción Nueva.
      *
      * @return void
      */
@@ -123,38 +124,40 @@ class Pagos extends CI_Controller {
             'fecha_operacion' => $fecha_de_operacion
         );
 
-        if($id_tipo_de_pago == 1)
+        if($id_tipo_de_pago == 1 || $id_tipo_de_pago == 2 || $id_tipo_de_pago == 3)
         {
-            $this->form_validation->set_rules('numero-de-operacion-unico', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
+            // $this->form_validation->set_rules('numero_de_operacion', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
             
-            if($this->form_validation->run())
-            {
-                $resultados = $this->Pagos_model->save($data);
+            // if($this->form_validation->run('agregar_pago'))
+            // {
+                $resultados = $this->Pagos_model->insertar_pago_procedure($data);
+                // $resultados = $this->Pagos_model->save($data);
 
-                if($resultados == TRUE)
-                {
-                    $id_ultimo_pago = $this->Pagos_model->lastID();
+                // if($resultados == TRUE)
+                // {
+                //     $id_ultimo_pago = $this->Pagos_model->lastID();
                 
-                    $this->actualizar_conteo_operaciones($id_tipo_de_pago);
+                //     $this->actualizar_conteo_operaciones($id_tipo_de_pago);
     
-                    echo json_encode($resultados);  
-                }
-            }
+                echo json_encode($resultados);  
+            // }   
         }
-        else if($id_tipo_de_pago == 2 || $id_tipo_de_pago == 3)
-        {
-            $resultados = $this->Pagos_model->save($data);
+    }
 
-                if($resultados == TRUE)
-                {
-                    $id_ultimo_pago = $this->Pagos_model->lastID();
-                
-                    $this->actualizar_conteo_operaciones($id_tipo_de_pago);
-    
-                    echo json_encode($resultados);  
-                }
-        }
-    
+    /**
+     * Número de pago único
+     * 
+     * Verifica que el número de pago a registrar en la base de datos sea único.
+     *
+     * @return json
+     */
+    public function pago_unico()
+    {
+        $numero_a_evaluar = $this->input->post('query');
+
+        $resultado = $this->Pagos_model->pago_unico($numero_a_evaluar);
+
+        echo json_encode($resultado);
     }
 
     /**
@@ -298,13 +301,15 @@ class Pagos extends CI_Controller {
 	}
 	
 
-	public function get_titulares_json() {
+    public function get_titulares_json()
+    {
         $valor = $this->input->post('query');
 		$clientes = $this->Pagos_model->get_titulares_json($valor);
 		echo json_encode($clientes);
     }
 
-    public function getBancosJSON() {
+    public function getBancosJSON()
+    {
         $valor = $this->input->post('query');
 		$bancos = $this->Pagos_model->getBancosJSON($valor);
 		echo json_encode($bancos);

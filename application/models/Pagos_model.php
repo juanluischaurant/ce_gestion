@@ -100,10 +100,34 @@ class Pagos_model extends CI_Model {
     return $resultado->row();
   }
 
+  /**
+   * Insertar un registro en la tabla indicada dentro del método
+   *
+   * @param [type] $data
+   * @return void
+   */
   public function save($data)
   {
     return $this->db->insert("pago_de_inscripcion",$data);
-	}
+  }
+  
+  /**
+   * Insertar pago
+   * 
+   * Este método llama al procedimiento almacenado que se especifíca debajo, 
+   * dicho procedimiento se encarga de insertar registro en la tabla de pago
+   * de inscripción, y además aumenta el contador de tipo de operación.
+   *
+   * @param [type] $data
+   * @return void
+   */
+  public function insertar_pago_procedure($data)
+  {
+    $SQL = "CALL insertar_pago_nuevo(?, ?, ?, ?, ?, ?, ?)";
+
+    return $query = $this->db->query($SQL, $data);
+
+  }
 
   public function update($id_pago, $data)
   {
@@ -155,7 +179,36 @@ class Pagos_model extends CI_Model {
   public function save_inscripcion_instancia($data)
   {
     $this->db->insert("inscripcion_instancia",$data);
-	}
+  }
+  
+  /**
+   * Pago Único
+   * 
+   * Verifica en la base de datos que un número de operación sea único.
+   * Retorna TRUE de no existir un número de pago similar, para caso
+   * contrario retorna FALSE.
+   *
+   * @param string $numero_operacion
+   * @return void
+   */
+  public function pago_unico($numero_operacion)
+  {
+    $resultado = $this->db->select(
+      'pdi.numero_operacion'
+      )
+    ->from('pago_de_inscripcion as pdi')
+    ->where('pdi.numero_operacion', $numero_operacion)
+    ->get();
+
+    if($resultado->num_rows() < 1)
+    {
+      return TRUE;
+    }
+    else
+    {
+      return FALSE;
+    }
+  }
 
 
   // Métodos utilizadas para el pluggin AUTOCOMPLETE

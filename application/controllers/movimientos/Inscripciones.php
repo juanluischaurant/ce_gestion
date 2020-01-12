@@ -78,7 +78,8 @@ class Inscripciones extends CI_Controller {
 				'data_inscripcion' => $this->Inscripciones_model->get_inscripcion($id_inscripcion),
 				'data_instancia_inscrita' => $this->Inscripciones_model->get_instancia_inscrita($id_inscripcion),
 				'data_inscripcion_instancia' => $this->Inscripciones_model->get_id_inscripcion_instancia($id_inscripcion),
-				'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion)
+				'pagos_de_inscripcion' => $this->Inscripciones_model->get_pago_inscripcion($id_inscripcion),
+				'montos_de_inscripcion' => $this->Inscripciones_model->get_montos_inscripcion($id_inscripcion)
 			);
 			$general['page_title'] = 'Editar Inscripción';
 
@@ -121,43 +122,97 @@ class Inscripciones extends CI_Controller {
 	public function store()
 	{
 		$fk_id_participante_1 = $this->input->post('id_participante');
-		$fecha_inscripcion = $this->input->post('fecha-inscripcion');
-		// $monto_pagado = $this->input->post('monto-pagado');
-		// $precio_total = $this->input->post('subtotal');
-		// $deuda = $this->input->post('deuda');
 		$costo_de_inscripcion = $this->input->post('costo-de-inscripcion');
 
 		// Llaves utilizadas para almacenar en la tabla inscripcion_instancia
-		$fk_id_tipo_operacion = $this->input->post('fk_id_tipo_operacion');
-		$fk_id_instancia = $this->input->post('id-instancia');
-		$cupos_curso = $this->input->post('cuposcursos');
+		// $fk_id_tipo_operacion = $this->input->post('fk_id_tipo_operacion');
+		$fk_id_instancia = $this->input->post('id-instancias');
+		$cupos_instancia = $this->input->post('cupos-instancia');
 		$ids_pago = $this->input->post('id-pago');
 
 		// Datos a ser almacenados en la tabla Inscripcion
 		$data_inscripcion = Array(
 			'fk_id_participante_1' => $fk_id_participante_1,
-			'fecha_inscripcion' => $fecha_inscripcion,
-			// 'monto_pagado' => $monto_pagado,
-			// 'precio_total' => $precio_total,
-			// 'deuda' => $deuda,
 			'costo_de_inscripcion' => $costo_de_inscripcion
 		);
 	
-		// // Almacena datos en la tabla "inscripcion"
-		// if ($this->Inscripciones_model->save($data_inscripcion))
-		// {
-		// 	// Obtén el ID de la última inscripción realizada
-		// 	$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
-		
-		// 	// Guarda los detalles de la inscripción
-		// 	$this->save_inscripcion_instancia($fk_id_instancia, $id_ultima_inscripcion, $cupos_curso, $ids_pago);
+		// Almacena datos en la tabla "inscripcion"
+		if ($this->Inscripciones_model->save($data_inscripcion))
+		{
+			// Obtén el ID de la última inscripción realizada
+			$id_ultima_inscripcion = $this->Inscripciones_model->lastID();
+			
+			// Guarda los detalles de la inscripción
+			$this->save_inscripcion_instancia($fk_id_instancia, $id_ultima_inscripcion, $cupos_instancia, $ids_pago);
 
-		// 	redirect(base_url()."movimientos/inscripciones");
-		// }
-		// else
-		// { 
-		// 	redirect(base_url()."movimientos/inscripciones/add");
-		// }
+			$this->session->set_flashdata('success', 'Inscripción almacenada exitosamente.');
+			redirect(base_url()."movimientos/inscripciones");
+		}
+		else
+		{ 
+			$this->session->set_flashdata('error', 'No se pudo guardar la inscripción.');
+			redirect(base_url()."movimientos/inscripciones/add");
+		}
+	}
+
+	/**
+	 * Crea un nuevo registro en la tabla de relación inscripcion_instancia
+	 * 
+	 * @param array $id_instancia
+	 * @param integer $id_ultima_inscripcion
+	 * @param array $cupos_instancia
+	 * @param array $ids_pago
+	 * @return void
+	 */
+	protected function save_inscripcion_instancia($id_instancia, $id_ultima_inscripcion, $cupos_instancia, $ids_pago)
+	{
+		// Itera sobre un array con IDs de 1 o más instancias seleccionadas
+		for($i=0; $i < count($id_instancia); $i++)
+		{ 
+			$data  = array(
+				'fk_id_inscripcion_1' => $id_ultima_inscripcion,
+				'fk_id_instancia_1' => $id_instancia[$i]
+			);
+
+			// Almacena en inscripcion_curso
+			$this->Pagos_model->save_inscripcion_instancia($data);
+
+			// Actualiza el conteo de cupos disponibles en el curso
+			$this->actualiza_cupos_ocupados($id_instancia[$i], $cupos_instancia[$i]);
+		}
+
+		// Itera sobre un array con IDs de 1 o más pagos seleccionados
+		for($j = 0; $j < count($ids_pago); $j++)
+		{
+			$data  = array(
+				'fk_id_inscripcion' => $id_ultima_inscripcion
+			);
+
+			// Asigna ID de inscripción al pago 
+			$this->updateIdInscripcion($ids_pago[$j], $data);
+
+			// Actualiza el estado del pago a Usado
+			$this->actualiza_estado_pago($ids_pago[$j]);
+		} 
+	}
+
+	/**
+	 * Actualiza Cupos Ocupados (¿Es aún necesario este método?)
+	 * 
+	 * Actualiza el conteo de cupos en determinado curso luego de almacenar los datos de inscripción.
+	 *
+	 * @param integer $id_instancia
+	 * @param integer $cupos_instancia
+	 * @return void
+	 */
+	protected function actualiza_cupos_ocupados($id_instancia, $cupos_instancia)
+	{
+		$cursoActual = $this->Instancias_model->get_instancia($id_instancia);
+
+		$data = array(
+			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 
+		);
+		$this->Instancias_model->update($id_instancia, $data);
 	}
 
 	/**
@@ -224,6 +279,8 @@ class Inscripciones extends CI_Controller {
 	 */
 	public function activate_inscripcion($id_inscripcion, $id_instancia)
 	{
+		$fecha_valida = $this->Inscripciones_model->verifica_validez_instancia($id_inscripcion);
+
 		if($fecha_valida === TRUE)
 		{
 			// Verificar que la instancia tenga cupos disponibles
@@ -262,47 +319,6 @@ class Inscripciones extends CI_Controller {
 			$this->session->set_flashdata('alert', 'La inscripción debe estar activa para editarla.');
 			redirect(base_url().'movimientos/inscripciones/');
 		}
-	}
-
-	/**
-	 * Crea un nuevo registro en la tabla de relación inscripcion_instancia
-	 * 
-	 * @param array $id_instancia
-	 * @param integer $id_ultima_inscripcion
-	 * @param array $cupos_curso
-	 * @param array $ids_pago
-	 * @return void
-	 */
-	protected function save_inscripcion_instancia($id_instancia,$id_ultima_inscripcion, $cupos_curso, $ids_pago)
-	{
-		// Itera sobre un array con IDs de 1 o más cursos seleccionados
-		for($i=0; $i < count($id_instancia); $i++)
-		{ 
-			$data  = array(
-				'fk_id_inscripcion_1' => $id_ultima_inscripcion,
-				'fk_id_instancia_1' => $id_instancia[$i]
-			);
-
-			// Almacena en inscripcion_curso
-			$this->Pagos_model->save_inscripcion_instancia($data);
-
-			// Actualiza el conteo de cupos disponibles en el curso
-			$this->actualiza_cupos_ocupados($id_instancia[$i],$cupos_curso[$i]);
-		}
-
-		// Itera sobre un array con IDs de 1 o más pagos seleccionados
-		for($j = 0; $j < count($ids_pago); $j++)
-		{
-			$data  = array(
-				'fk_id_inscripcion' => $id_ultima_inscripcion
-			);
-
-			// Asigna ID de inscripción al pago 
-			$this->updateIdInscripcion($ids_pago[$j], $data);
-
-			// Actualiza el estado del pago a Usado
-			$this->actualiza_estado_pago($ids_pago[$j]);
-		} 
 	}
 
 	/**
@@ -377,14 +393,14 @@ class Inscripciones extends CI_Controller {
 		}
 
 		// Actualiza datos de inscripción
-		$monto_pagado = $this->input->post('monto-en-operacion') + $this->input->post('pagado'); 
-		$deuda = $this->input->post('deuda') - $this->input->post('monto-en-operacion');
+		// $monto_pagado = $this->input->post('monto-en-operacion') + $this->input->post('pagado'); 
+		// $deuda = $this->input->post('deuda') - $this->input->post('monto-en-operacion');
 		$costo_de_inscripcion = $this->input->post('costo-de-inscripcion');
 
 		$data_inscripcion = array(
-			'monto_pagado' => $monto_pagado,
+			// 'monto_pagado' => $monto_pagado,
 			'costo_de_inscripcion' => $costo_de_inscripcion,
-			'deuda' => $deuda,
+			// 'deuda' => $deuda,
 		);
 
 		// Actualiza los datos de inscripción
@@ -425,14 +441,14 @@ class Inscripciones extends CI_Controller {
 		
 		
 		// Actualiza datos de inscripción
-		$monto_pagado = $this->input->post('pagado') - $this->input->post('monto-en-operacion'); 
-		$deuda = $this->input->post('deuda') + $this->input->post('monto-en-operacion');
+		//$monto_pagado = $this->input->post('pagado') - $this->input->post('monto-en-operacion'); 
+		//$deuda = $this->input->post('deuda') + $this->input->post('monto-en-operacion');
 		$costo_de_inscripcion = $this->input->post('costo-de-inscripcion');
 		
 		$data_inscripcion = array(
-			'monto_pagado' => $monto_pagado,
+			//'monto_pagado' => $monto_pagado,
 			'costo_de_inscripcion' => $costo_de_inscripcion,
-			'deuda' => $deuda,
+			//'deuda' => $deuda,
 		);
 		
 		$id_inscripcion = $this->input->post('id-inscripcion-actual');
@@ -444,24 +460,7 @@ class Inscripciones extends CI_Controller {
 		}	
     }
 
-	/**
-	 * Actualiza Cupos Ocupados (¿Es aún necesario este método?)
-	 * 
-	 * Actualiza el conteo de cupos en determinado curso luego de almacenar los datos de inscripción.
-	 *
-	 * @param integer $id_instancia
-	 * @param integer $cupos_curso
-	 * @return void
-	 */
-	protected function actualiza_cupos_ocupados($id_instancia, $cupos_curso)
-	{
-		$cursoActual = $this->Instancias_model->get_instancia($id_instancia);
 
-		$data = array(
-			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 
-		);
-		$this->Instancias_model->update($id_instancia, $data);
-	}
 
 	/**
 	 * Resta 1 cupo a la instancia seleccionada

@@ -242,7 +242,7 @@ class Instancias_model extends CI_Model {
         $resultado = $this->db->select(
             'in.id_instancia,
             cu.nombre_curso,
-            insc.fecha_inscripcion,
+            insc.hora_inscripcion,
             par.estado_participante,
             per.nombres_persona,
             per.apellidos_persona,

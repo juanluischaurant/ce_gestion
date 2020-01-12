@@ -15,6 +15,7 @@
             <div class="col-md-12">
 
             <div id="caja-principal" class="box box-primary">
+
                 <div class="box-header with-border">
                     <h3 class="box-title">Un paso más antes de terminar</h3>
                 </div>
@@ -32,20 +33,46 @@
                         <input type="hidden" name="id-persona" value="<?php echo $persona->id_persona; ?>">
 
                         <div class="form-group">
-                            <div class="checkbox">
-                                <label>
-                                <input type="checkbox" name="rol-participante">
-                                Participante
-                                </label>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="rol-participante">
+                                            <b>Participante</b>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 hidden">
+                                    <?php
+                                        $atributos = array('class' => 'form-control');
+                                        
+                                        // Genera la etiquera
+                                        echo form_label('Nivel Académico:');
+                                        
+                                        // Genera el elemento "select"
+                                        // Parámetros de form_dropdown: nombre, valores de la lista, selected, atributos
+                                        echo form_dropdown('nivel-academico-participante', $lista_niveles, '', $atributos);
+                                    ?>
+                                </div>
                             </div>
-
-                            <div class="checkbox">
-                                <label>
-                                <input type="checkbox" name="rol-titular" value="titular">
-                                Titular
-                                </label>
-                            </div>
+                            <!-- /.row -->
                         </div>
+                        <!-- /.form-group -->
+                        
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="checkbox">
+                                        <label>
+                                            <input type="checkbox" name="rol-titular" value="titular">
+                                            <b>Titular</b>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.form-group -->
                     </blockquote>
 
                         <div class="form-group">
@@ -62,6 +89,7 @@
                 </div>
                 <!-- /.box-footer -->
                 </form>
+
             </div> 
             <!-- /.box-primay   -->
 
@@ -75,15 +103,16 @@
 
                     <blockquote>
                     <p>Selecciona una opción</p>
-                    <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
+
+                    <!-- Este elemento permanece oculto hasta que el botón remover la clase Hidden -->
                     <div id="redirecciona-inscribir" class="row hidden">
                         <div class="col-md-4">
-                            <a href="">Inscribir Participante</a>
+                            <a href="<?php echo base_url(); ?>movimientos/inscripciones/add">Inscribir Participante</a>
                         </div>
                     </div>
                     <div id="redirecciona-pago" class="row hidden">
                         <div class="col-md-4">
-                            <a href="">Registrar Pago</a>
+                            <a href="<?php echo base_url(); ?>movimientos/pagos/add">Registrar Pago</a>
                         </div>
                     </div>
                     <div id="redirecciona-inicio" class="row hidden">

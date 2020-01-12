@@ -53,10 +53,12 @@
 
     $(document).ready(function () {
 
+        /**
+         * URL base actual (Sujeto a cambios dependiendo de
+         * la dirección real):http://localhost/ce_gestion/
+         */
         let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
-        // URL base actual (Sujeto a cambios dependiendo de
-        // la dirección real):http://localhost/ce_gestion/
-        
+         
         // Activa el pluggin jQuery InputMask
         $('[data-mask]').inputmask();
 
@@ -819,17 +821,19 @@
         });
         
         /**
-         * Botón se encuentra ubicado en la vista de Éxito mostrada luego
+         * Botón se encuentra ubicado en la vista de Éxito, mostrada luego
          * de registrar a una persona exitosamente en la base de datos.
          */
         $('#add-roles-persona').on('click', function(event) {
 
             let id_persona = $('input[name="id-persona"]').val();
             let participante = $('input[name="rol-participante"]');
+            let nivelAcademicoParticipante = $('select[name="nivel-academico-participante"]');
             let titular = $('input[name="rol-titular"]');
 
             if(participante.is(":checked")) {
-                participante = 'participante'
+                participante = 'participante';
+                nivelAcademicoParticipante = nivelAcademicoParticipante.val();
             } else if(participante.is(":not(:checked)"))
             {
                 participante = ''
@@ -848,6 +852,7 @@
                 data: {
                     id_persona: id_persona,
                     participante: participante,
+                    nivel_academico_participante: nivelAcademicoParticipante,
                     titular: titular
                 },
                 success: function(response) {
@@ -869,6 +874,16 @@
 
             return false;
         });
+
+        /**
+         * Al presionar el checkbox indicado, se debe ocultar o mostrar
+         * el selector de nivel académico que por defecto se encuentra 
+         * inactivo. 
+         */
+        $('input[name="rol-participante"]').on('click', function() {
+            $('select[name="nivel-academico-participante"]').parent().toggleClass('hidden')
+        });
+
         // =============================================
         // Fin de JS para Inscripciones
         // =============================================
@@ -1074,6 +1089,11 @@
             }, minLength: 2,
             select: function(event, ui) {
 
+                /**
+                 * Para calcular el total de elementos <tr> en la tabla
+                 * es necesario agregar -1 a la longitud total debido
+                 * a que el encabezado ya tiene un elemento <tr> que también se cuenta
+                 */
                 let table_rows_count = $('#tabla-instancias tr').length - 1;
 
                 if(table_rows_count >= 1) {
@@ -1084,17 +1104,64 @@
                 // Almacena en una variable los datos recogidos con la consulta SQL realizada previamente
                 let data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia+'*'+ui.item.cupos_instancia_ocupados;
                 
-                // Almacena la variable data dentro del atributo value del elemento seleccionado
+                // Almacena la variable data dentro del atributo value del elemento selector
                 $('#btn-agregar-curso').val(data);
 
                 // Almacena el ID del curso en atributo personalizado de HTML
                 $('#btn-agregar-curso').attr('data-id-curso', ui.item.id_instancia);
+
             }
         });
 
+        /**
+         * Verifica que el número de operación sea único antes de enviar la solicitud
+         * a la base de datos.
+         */
+        $('#numero-de-operacion-unico').on('keyup click cut copy paste drop', function() {
+
+            // Al alterar el contenido de la caja de texto desactiva el botón de guardado
+            $('#btn-guardar-inscripcion-pago').attr('disabled', true);
+        });
+
+        $('#verificar-numero-pago').on('click', function() {
+
+            numeroEvaluado = $(this).val();
+
+            $.ajax({
+                url: base_url + "movimientos/pagos/pago_unico",
+                type: "POST",
+                dataType: "json",
+                data: {
+                    query: numeroEvaluado
+                },
+                success: function(data) {
+
+                    
+                    if(data == false) {
+                        
+                        alert(data)
+                    }
+                    
+                    if(data == true) {
+                        $('#numero-de-operacion-unico').parent().addClass('has-success');
+                        $('label[for="numero-de-operacion-unico"] i').removeClass('hidden');
+                        $('#btn-guardar-inscripcion-pago').removeAttr('disabled');
+                    }
+
+                    // $('#caja-principal').hide();
+                    // $('#caja-secundaria').toggleClass('hidden');
+                    // $('#btn-guardar-inscripcion-pago').toggleClass('disabled')
+
+                    // $('#id-periodo-instancia').val(data);
+
+
+                }
+            });
+            return false;
+        });
+
         // Al presionar este botón, imprimir en la vista los datos consultados
-        $('#btn-agregar-curso').on('click', function()
-        {
+        $('#btn-agregar-curso').on('click', function() {
             let data = $(this).val(); // Almacena los datos del atributo "value" del boton clickeado
 
             // Comprobar si la variable "data" está vacia o no
@@ -1110,6 +1177,7 @@
 
                     // Evita que el curso sea agregado
                     alert('El curso está lleno, por favor seleccione otro');
+
                     // Vacía el elemento #producto
                     $('#producto').val('');
                 } else {
@@ -1140,7 +1208,6 @@
                                 if(idParticipanteInscrito == idParticipante)
                                 {
 
-                                    // alert(idParticipanteInscrito);
                                     existe = true; // Cambia estado de la variable "existe"
                                     break; // Anula el ciclo FOR
                                 }
@@ -1155,7 +1222,7 @@
                                 html = '<tr>';
                                 html += '<td><input class="curso-id" type="hidden" name="id-instancias[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
                                 html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
-                                html += '<td><input type="hidden" name="cuposcursos[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
+                                html += '<td><input type="hidden" name="cupos-instancia[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
                                 html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
                                 html += '<td><input type="hidden" name="precioactualcursos[]" value="'+datosCurso[3]+'">' + datosCurso[3] + '</td>';
 
@@ -1170,7 +1237,7 @@
                                 // Vacía al elemento Producto
                                 $('#producto').val('');
 
-                                sumar();
+                                sumar_costo_inscripcion();
 
                             }
                         },
@@ -1187,20 +1254,30 @@
             }
         });
 
-        // Remover instancia en la vista de inscripcion
+        /**
+         * Permite remover una instancia agregada en la vista de Nueva Inscripción
+         * antes de que este sea almacenado en la base de datos.
+         */
         $(document).on('click', '.btn-remove-curso', function() {
 
             $(this).closest('tr').remove();
 
+            // Actualiza el campo COsto Inscripción
+            sumar_costo_inscripcion();
+
             // Verifica que el contenido del nodo <tr> tenga contenido
             if($('#tabla-instancias tr').length <= 1) 
             {
-                $('#guardar-inscripcion').attr('disabled', true);
+                $('#btn-guardar-inscripcion').attr('disabled', true);
             }
 
             
         });
 
+        /**
+         * Permite remover un pago agregado en la vista de Nueva Inscripción
+         * antes de que este sea almacenado en la base de datos.
+         */
         $(document).on('click', '.btn-remove-pago', function() {
 
             $(this).closest('tr').remove();
@@ -1264,8 +1341,15 @@
 
     });
 
-    // Función utilizada para generar un número en el rango de 1 a 999999
+    /**
+     * Función utilizada para generar un número entero dentrol del rango:
+     * 1 a 999999, con la finalidad de generar un número para distintos seriales.
+     * El parámetro recibido por esta función es necesario para poder llevar un control
+     * del número a generar.
+     * 
+     */
     function generarNumero(numero) {
+
         if(numero >= 99999 && numero < 999999) {
             return Number(numero)+1;
         }
@@ -1291,72 +1375,69 @@
         }
     }
 
+    /**
+     * Permite actualizar la sumatoria del campo Costo de Inscripción
+     * en la vista de agregar inscripción.
+     *
+     * @return void
+     */
+    function sumar_costo_inscripcion() {
+
+        // Calcula el total cada vez que se llama esta función
+        let costo_inscripcion = 0;       
+        
+        // Por cada elemento <tr> dentro del tbody en #tabla-instancias
+        $('#tabla-instancias tbody tr').each(function() {
+            
+            // Cacula
+            costo_inscripcion += Number($(this).find('td:eq(4)').text());
+        });
+
+        $('input[name=costo-de-inscripcion]').val(costo_inscripcion.toFixed(2));
+
+        if($('input[name=monto-en-operacion]').val() !== '') {
+
+            $('input[name=deuda]').val($('input[name=costo-de-inscripcion]').val() - $('input[name=monto-en-operacion]').val())
+        }
+    }
+
     function sumar() {
 
         // Calcula el total cada vez que se llama esta función
-        let costo_de_inscripcion = 0,
-        deuda = 0,
-        monto_pagado = 0;
-
-       
-        // -------------
+        let monto_en_operacion = 0;       
+        
         $('#tabla-pagos tbody tr').each(function() {
     
-            monto_pagado += Number($(this).find('td:eq(2)').text());
+            monto_en_operacion += Number($(this).find('td:eq(2)').text());
         });
 
-        $('input[name=monto-en-operacion]').val(monto_pagado.toFixed(2));
+        $('input[name=monto-en-operacion]').val(monto_en_operacion.toFixed(2));
 
-        // // --------------
+        if($('input[name=costo-de-inscripcion]').val() !== '') {
 
-        // $('#tabla-instancias tbody tr').each(function() {
-
-        //     total = total + Number($(this).find('td:eq(4)').text());
-        // });
-
-        // deuda = total - monto_pagado;
-
-        // $('input[name=deuda]').val(deuda);
-
-        //     if(deuda !== 0 && deuda > 0) {
-                
-        //         $('input[name=deuda]').val(deuda);
-        //         $('input[name=subtotal]').val('');
-        //     }
-        //     if(deuda == 0) {
-        //         $('input[name=deuda]').val('');
-        //         $('input[name=subtotal]').val('');
-        //     }
-        //     if(deuda < 0) {
-        //         $('input[name=deuda]').val('');
-        //         $('input[name=subtotal]').val(deuda*1);
-        //     }
-
-        // $('input[name=costo-de-inscripcion]').val(total.toFixed(2));
+            $('input[name=deuda]').val($('input[name=costo-de-inscripcion]').val() - $('input[name=monto-en-operacion]').val())
+        }
     }
 
     function restar() {
 
-        let costo_de_inscripcion = 0,
-        deuda = 0,
-        monto_pagado = 0;
+        let monto_en_operacion = 0;
 
         $('#pagos-desasociados tbody tr').each(function() {
     
-            monto_pagado += Number($(this).find('td:eq(2)').text());
+            monto_en_operacion += Number($(this).find('td:eq(2)').text());
         });
 
-        $('input[name=monto-en-operacion]').val(monto_pagado.toFixed(2));
-
+        $('input[name=monto-en-operacion]').val(monto_en_operacion.toFixed(2));
     }
 
     function switchGuardarInscripcion() {
 
-        let theAttribute = $('#guardar-inscripcion').attr('disabled');
+        let theAttribute = $('#btn-guardar-inscripcion').attr('disabled');
 
         if(typeof theAttribute !== typeof undefined && theAttribute !== false) {
 
-            $('#guardar-inscripcion').removeAttr('disabled');
+            $('#btn-guardar-inscripcion').removeAttr('disabled');
         }
     }
 

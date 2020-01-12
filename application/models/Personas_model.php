@@ -31,10 +31,28 @@ class Personas_model extends CI_Model {
      * @param int $id
      * @return array
      */
-    public function get_persona($id)
+    public function get_persona($id_persona)
     {
-        $resultado = $this->db->where('id_persona', $id)
-        ->get('persona');
+        $resultado = $this->db->select(
+            'p.id_persona,
+            p.cedula_persona,
+            p.nombres_persona,
+            p.apellidos_persona,
+            p.genero_persona,
+            p.fecha_nacimiento_persona,
+            TIMESTAMPDIFF(year, P.fecha_nacimiento_persona, CURDATE()) as edad_persona,
+            p.telefono_persona,
+            p.direccion_persona,
+            p.estado_persona,
+            p.fecha_registro_persona')
+            ->from('persona as p') 
+            ->where('id_persona', $id_persona)
+            ->get(); 
+    
+        // return $resultados->result();
+
+        // $resultado = $this->db->where('id_persona', $id)
+        // ->get('persona');
 
         return $resultado->row();
     }

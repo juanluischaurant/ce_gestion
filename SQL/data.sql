@@ -258,3 +258,86 @@ SUM(pago_de_inscripcion.monto_operacion) as calculo_total_pagado,
 FROM inscripcion
 INNER JOIN pago_de_inscripcion ON pago_de_inscripcion.fk_id_inscripcion = inscripcion.id_inscripcion
 WHERE inscripcion.id_inscripcion = 4
+
+
+-- ===================================================================
+-- Calcular Edad
+-- ===================================================================
+SELECT YEAR(CURRENT_TIMESTAMP) - YEAR(persona.fecha_nacimiento_persona) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(persona.fecha_nacimiento_persona, 5)) as age 
+  FROM persona
+  
+-- ===================================================================
+  -- STORED PROCEDURES
+-- ===================================================================
+SELECT * from information_schema.routines -- Mostrar procedimientos almacenados
+
+-- Actualiza conteo de operación después de un pago
+DELIMITER $$ 
+CREATE OR REPLACE PROCEDURE actualizar_conteo_operacion(IN id_operacion INT(11))
+
+BEGIN 
+
+UPDATE tipo_de_operacion SET tipo_de_operacion.conteo_operaciones = tipo_de_operacion.conteo_operaciones + 1
+WHERE tipo_de_operacion.id_tipo_de_operacion = id_operacion;
+
+END $$
+
+DELIMITER ;
+-- Fin: Actualiza conteo de operación después de un pago
+
+-- Insertar Pago 
+DELIMITER $$
+
+CREATE OR REPLACE CREATE PROCEDURE insertar_pago_nuevo(
+    IN id_banco INT(11), 
+    IN id_tipo_operacion INT(11), 
+    IN id_titular INT(11), 
+    IN serial_pago VARCHAR(255), 
+    IN numero_operacion VARCHAR(255), 
+    IN monto_operacion DECIMAL(10,2), 
+    IN fecha_operacion DATE)
+
+BEGIN 
+
+ INSERT INTO `pago_de_inscripcion`(`fk_id_banco`, `fk_id_tipo_operacion`, `fk_id_titular`, `serial_pago`, `numero_operacion`, `monto_operacion`, `fecha_operacion`, `fecha_registro_operacion`) 
+ VALUES (id_banco, id_tipo_operacion, id_titular, serial_pago, numero_operacion, monto_operacion, fecha_operacion);
+ 
+END $$
+
+DELIMITER ;
+-- Fin: Insertar Pago 
+
+-- Utilizados actualmente en la base de datos
+-- Insertar Pago y actualizar conteo de operaciones
+DELIMITER $$
+
+CREATE OR REPLACE PROCEDURE insertar_pago_nuevo(
+    IN id_banco INT(11), 
+    IN id_tipo_operacion INT(11), 
+    IN id_titular INT(11), 
+    IN serial_pago VARCHAR(255), 
+    IN numero_operacion VARCHAR(255), 
+    IN monto_operacion DECIMAL(10,2), 
+    IN fecha_operacion DATE)
+
+BEGIN 
+
+ INSERT INTO `pago_de_inscripcion`(`fk_id_banco`, `fk_id_tipo_operacion`, `fk_id_titular`, `serial_pago`, `numero_operacion`, `monto_operacion`, `fecha_operacion`) 
+ VALUES (id_banco, id_tipo_operacion, id_titular, serial_pago, numero_operacion, monto_operacion, fecha_operacion);
+ 
+UPDATE tipo_de_operacion SET tipo_de_operacion.conteo_operaciones = tipo_de_operacion.conteo_operaciones + 1
+WHERE tipo_de_operacion.id_tipo_de_operacion = id_tipo_operacion;
+ 
+END $$
+
+DELIMITER ;
+
+CALL insertar_pago_nuevo(
+    1,
+    3,
+    9,
+    'exo-000008',
+    'EXO000008',
+    10000.00,
+    '2020-01-07'
+    )

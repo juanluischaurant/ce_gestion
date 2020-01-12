@@ -11,6 +11,7 @@
 		<b>Apellidos:</b><br>
 		<b>Cédula:</b><br>
 		<b>F. de Nacimiento:</b><br>
+		<b>Edad:</b><br>
 		<b>Teléfono:</b><br>
 		<b>Dirección:</b><br>
 		<b>
@@ -30,6 +31,7 @@
 		<?php echo $persona->apellidos_persona;?><br>
 		<?php echo $persona->cedula_persona;?><br>
         <?php echo $persona->fecha_nacimiento_persona;?><br>
+        <?php echo (isset($persona->edad_persona) && $persona->fecha_nacimiento_persona !== '0000-00-00' )? $persona->edad_persona : 'No disponible';?><br>
         <?php echo $persona->telefono_persona !== '' ? $persona->telefono_persona : 'No disponible';?><br>
 		<?php echo $persona->direccion_persona !== '' ? $persona->direccion_persona : 'No disponible';?><br>
 		<?php echo isset($es_participante->id_participante) ? 'Participante<br>' : '';?>

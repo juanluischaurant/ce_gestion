@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        Persona registrada el día: <?php echo $inscripcion->fecha_inscripcion; ?>
+        Persona registrada el día: <?php echo $inscripcion->hora_inscripcion; ?>
     </div>
 </div>
 

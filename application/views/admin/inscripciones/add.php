@@ -68,11 +68,6 @@
 
                         </div> 
 
-                        <div class="col-md-3">
-                            <label for="fecha-inscripcion">Fecha de Inscripción:</label>
-                            <input type="date" class="form-control" id="fecha-inscripcion" name="fecha-inscripcion">
-                        </div>
-
                     </div>
 
                     <p>Seleccionar Instancia:</p>
@@ -106,7 +101,6 @@
                         </tbody>
                     </table>
 
-                    <div class="col-xs-12 table-responsive">
                                         
                     <div class="form-group">
                         <div class="col-md-3">
@@ -118,26 +112,24 @@
                         
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span class="input-group-addon">Monto Pagado:</span>
-                                <input type="text" class="form-control" value="0.00" placeholder="0.00" name="pagado" readonly="readonly">
+                                <span class="input-group-addon">Costo Inscripción:</span>
+                                <input type="text" value="0.00" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
                             </div>
                         </div>
-
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-addon">Deuda:</span>
-                                <input type="text" class="form-control" placeholder="0.00" name="deuda" value="0.00" readonly="readonly">
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="input-group">
-                                <span class="input-group-addon">Costo Inscripción:</span>
-                                <input type="text" value="0.00" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
+                                <input type="text" value="0.00" class="form-control" placeholder="0.00" name="deuda" readonly="readonly">
                             </div>
                         </div>
                     </div>
                     <!-- /.form-group -->
 
+
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <button type="submit" id="btn-guardar-inscripcion" class="btn btn-success btn-flat"  disabled="disabled">Guardar</button>
+                        </div>
                     </div>
 
                 </form>
@@ -217,96 +209,102 @@
                 <h4 class="modal-title">Agregar Pago</h4>
             </div>
 
-            <div class="modal-body">
-                
-                <!-- Default box -->
-                <div class="box box-solid ui-front">
-                    <div class="box-body">
-                        <div class="row">
-                            <div class="col-md-12">                           
-                                
-                                <form action="" method="POST" class="form-horizontal">
-                                    
-                                    <input type="hidden" name="modulo-actual" value="inscripciones">
+            <div class="modal-body ui-front">
+ 
+            <form action="" method="POST" class="form-horizontal">         
 
-                                    <div class="form-group">
-                                        <div class="col-md-3">
-                                            <!-- Campo select rellenado con data de la BD -->
-                                            <label for="">Tipo de Pago:</label>
-                                            <select name="tipo-de-pago" id="tipo-de-pago" class="form-control" required>
-                                                <option value="">Seleccione...</option>
-                                                <?php foreach($tipos_de_operacion as $tipo_de_operacion) : ?>
-                                                    <?php $id_tipo_operacion = $tipo_de_operacion->id_tipo_de_operacion; ?>
-                                                    <option value="<?php echo $id_tipo_operacion; ?>"><?php echo $tipo_de_operacion->tipo_de_operacion ?></option>
-                                                <?php endforeach; ?>
-                                            </select>
-                                            <input type="hidden" id="id-tipo-de-pago" name="id-tipo-de-pago">
-                                            <!-- Fin del campo -->
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="">Serial de Pago:</label>
-                                            <input type="text" class="form-control" id="serial-de-pago" name='serial-de-pago' readonly>
-                                        </div>
-                                    </div>
+                <div class="form-group">
 
-                                    <hr>
-
-                                    <div class="form-group">
-                                        <div class="col-md-3">
-                                            <label for="">Cédula del Titular:</label>
-                                            <input type="text" class="form-control" id="cedula-titular" name='cedula-titular'>
-                                        </div>
-                    
-                                        <div class="col-md-6">
-                                            <label for="">Nombre del Titular:</label>
-                                            <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' readonly>
-                                            <input type="hidden" id="id-titular" name="id-titular">   
-                                        </div>
-                                    </div>
-
-                                    <hr>
-
-                                    <div class="form-group">
-                                        <div class="col-md-4">
-                                            <label for="">Monto de Operación:</label>
-                                            <input type="text" class="form-control" name="monto-de-operacion" id="monto-de-operacion" value="<?php echo set_value('monto-de-operacion'); ?>">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <label for="">Fecha de Operación:</label>
-                                            <input type="date" class="form-control" name="fecha-operacion" id="fecha-operacion" value="<?php echo set_value('fecha-operacion'); ?>" required>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <div class="col-md-6">
-                                            <label for="">Banco de Operación:</label>
-                                            <input type="text" class="form-control" id="banco-de-operacion" name="banco-de-operacion">
-                                            <input type="hidden" id="id-banco-de-operacion" name="id-banco-de-operacion">  
-                                        </div>
-
-                                        <div class="col-md-4 <?php echo !empty(form_error('numero-de-operacion-unico')) ? 'has-error' : ''; ?>">
-                                            <label for="">Número de Operación:</label>
-                                            <input type="text" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" value="<?php echo set_value('numero-de-operacion-unico'); ?>">
-                                            <?php echo form_error('numero-de-operacion-unico', '<span class="help-block">', '</span>'); ?>
-                                        </div>
-
-                                    </div>
-                                    
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            <button type="submit" id="btn-guardar-inscripcion-pago" class="btn btn-success btn-flat">Guardar</button>
-                                        </div>
-                                    </div>
-                                </form>
-
-                            </div>
-                        </div>
+                    <div class="col-md-3">
+                        <!-- Campo select rellenado con data de la BD -->
+                        <label for="">Tipo de Pago:</label>
+                        <select name="tipo-de-pago" id="tipo-de-pago" class="form-control" required>
+                            <option value="">Seleccione...</option>
+                            <?php foreach($tipos_de_operacion as $tipo_de_operacion) : ?>
+                                <?php $id_tipo_operacion = $tipo_de_operacion->id_tipo_de_operacion; ?>
+                                <option value="<?php echo $id_tipo_operacion; ?>"><?php echo $tipo_de_operacion->tipo_de_operacion ?></option>
+                            <?php endforeach; ?>
+                        </select> 
+                        <!-- Fin del campo -->
                     </div>
-                    <!-- /.box-body -->
+
+                    <div class="col-md-4">
+                        <label for="">Serial de Pago:</label>
+                        <input type="text" class="form-control" id="serial-de-pago" name='serial-de-pago' readonly>
+                    </div>
+   
                 </div>
-                <!-- /.box -->    
+                <!-- /.form-group -->
+
+                <hr>
+
+                <div class="form-group">
+
+                    <div class="col-md-3">
+                        <label for="">Cédula del Titular:</label>
+                        <input type="text" class="form-control" id="cedula-titular" name='cedula-titular'>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="">Nombre del Titular:</label>
+                        <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' readonly>
+                         
+                    </div>
+
+                </div>
+                <!-- /.form-group -->
+
+                <hr>
+
+                <div class="form-group">
+
+                    <div class="col-md-4">
+                        <label for="">Monto de Operación:</label>
+                        <input type="text" class="form-control" name="monto-de-operacion" id="monto-de-operacion" value="<?php echo set_value('monto-de-operacion'); ?>">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label for="">Fecha de Operación:</label>
+                        <input type="date" class="form-control datepicker" name="fecha-operacion" id="fecha-operacion" value="<?php echo set_value('fecha-operacion'); ?>" required>
+                    </div>
+
+                </div>
+                <!-- /.form-group -->
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        <label for="">Banco de Operación:</label>
+                        <input type="text" class="form-control" id="banco-de-operacion" name="banco-de-operacion">
+                    </div>  
+                </div>
+                <!-- /.form-group -->
+             
+                <div class="form-group">
+
+                    <div class="col-md-10">
+                        <label class="control-label" for="numero-de-operacion-unico"><i class="fa fa-check hidden"></i> Número de Operación:</label>
+                        <input type="text" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" placeholder="Número de Operación">
+                    </div>
+          
+                    <div class="col-md-4">
+                        <button type="button" id="verificar-numero-pago" class="btn bg-olive btn-flat margin">Verificar</button>
+                    </div>
+                </div>
 
              </div>
+             <!-- /.modal-body -->
+
+             <div class="modal-footer">
+                <input type="hidden" id="id-titular" name="id-titular">  
+                <input type="hidden" name="modulo-actual" value="inscripciones">
+                <input type="hidden" id="id-tipo-de-pago" name="id-tipo-de-pago">
+                <input type="hidden" id="id-banco-de-operacion" name="id-banco-de-operacion"> 
+
+                <button type="submit" id="btn-guardar-inscripcion-pago" class="btn btn-success btn-flat" disabled="disabled">Guardar</button>                        
+             </div>
+             <!-- /.modal-footer -->
+
+            </form>
 
         </div>
         <!-- /.modal-content -->

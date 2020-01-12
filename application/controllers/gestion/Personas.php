@@ -34,6 +34,7 @@ class Personas extends CI_Controller {
 			$this->load->model('Participantes_model');  
 			$this->load->model('Titulares_model');  
 			$this->load->model('Acciones_model');  
+			$this->load->model('Niveles_academicos_model');
         }
     }
 
@@ -176,6 +177,7 @@ class Personas extends CI_Controller {
 	{
         $data_persona = array(
 			'persona' => $this->Personas_model->get_persona($ultimo_id),
+			'lista_niveles' => $this->Niveles_academicos_model->niveles_academicos_dropdown()
 		);
 		
         $this->load->view('layouts/header');
@@ -188,6 +190,7 @@ class Personas extends CI_Controller {
 	{
 		$id_persona = $this->input->post('id_persona');
 		$participante = $this->input->post('participante');
+		$nivel_academico_participante = $this->input->post('nivel_academico_participante');
 		$titular = $this->input->post('titular');
 
 		$mensaje = '';
@@ -195,10 +198,14 @@ class Personas extends CI_Controller {
 		if($participante !== '')
 		{
 			$no_registrado = $this->Participantes_model->evitaParticipanteDuplicado($id_persona);
+
 			// Verifica si esta persona ya está registrada como participante
 			if($no_registrado === TRUE)
 			{
-				$data_participante = array( 'fk_id_persona_2' => $id_persona, );
+				$data_participante = array(
+					'fk_id_persona_2' => $id_persona,
+					'fk_nivel_academico' => $nivel_academico_participante
+				);
 
 				$this->Participantes_model->save($data_participante);
 				echo 'hi';

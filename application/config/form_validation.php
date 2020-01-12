@@ -114,6 +114,15 @@ $config = array(
             'rules' => 'required|trim|min_length[2]|max_length[95]'
         ),
     ),
+    // Usada en el controlador:
+    // movimientos/inscripciones/add
+    'agregar_pago' => array(
+        array(
+            'field' => 'numero-de-operacion-unico',
+            'label' => 'Número de Operación',
+            'rules' => 'required|is_unique[pago_de_inscripcion.numero_operacion]'
+        ),
+    ),
     // Usada en el controlador
     // movimientos/instancias/update
     'editar_instancia' => array(

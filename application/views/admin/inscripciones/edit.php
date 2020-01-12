@@ -10,10 +10,6 @@
     
     <!-- Main content -->
     <section class="content">
-
-        
-
-        
         
         <div class="row">
         <div class="col-md-12">
@@ -194,11 +190,11 @@
 
                                     <?php 
 
-                                        $monto_pagado = $data_inscripcion->monto_pagado;
-                                        $deuda_pendiente = $data_inscripcion->deuda;
+                                        //$monto_pagado = $data_inscripcion->monto_pagado;
+                                        //$deuda_pendiente = $data_inscripcion->deuda;
                                         $costo_de_inscripcion = $data_inscripcion->costo_de_inscripcion;
                                     ?>
-                                        
+
                                     <div class="form-group">
                                         <div class="col-md-3">
                                             <div class="input-group">
@@ -206,24 +202,18 @@
                                                 <input type="text" class="form-control" value="" placeholder="0.00" name="monto-en-operacion" id="monto-en-operacion" readonly="readonly">
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-md-3">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Monto Pagado:</span>
-                                                <input type="text" class="form-control" value="<?php echo number_format((float)$monto_pagado, 2, '.', ''); ?>" placeholder="0.00" name="pagado" readonly="readonly">
+                                                <span class="input-group-addon">Costo Inscripción:</span>
+                                                <input type="text" value="<?php echo number_format((float)$costo_de_inscripcion, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
                                             </div>
                                         </div>
 
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Deuda:</span>
-                                                <input type="text" class="form-control" placeholder="0.00" name="deuda" value="<?php echo number_format((float)$deuda_pendiente, 2, '.', ''); ?>" readonly="readonly">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Costo Inscripción:</span>
-                                                <input type="text" value="<?php echo number_format((float)$costo_de_inscripcion, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
+                                                <input type="text" class="form-control" placeholder="0.00" name="deuda" value="<?php echo number_format((float)$montos_de_inscripcion->calculo_deuda, 2, '.', ''); ?>" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>
@@ -368,21 +358,15 @@
                                         
                                         <div class="col-md-3">
                                             <div class="input-group">
-                                                <span class="input-group-addon">Monto Pagado:</span>
-                                                <input type="text" class="form-control" value="<?php echo number_format((float)$monto_pagado, 2, '.', ''); ?>" placeholder="0.00" name="pagado" readonly="readonly">
+                                                <span class="input-group-addon">Costo Inscripción:</span>
+                                                <input type="text" value="<?php echo number_format((float)$costo_de_inscripcion, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
                                             </div>
                                         </div>
-
+                                        
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Deuda:</span>
-                                                <input type="text" class="form-control" placeholder="0.00" name="deuda" value="<?php echo number_format((float)$deuda_pendiente, 2, '.', ''); ?>" readonly="readonly">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">Costo Inscripción:</span>
-                                                <input type="text" value="<?php echo number_format((float)$costo_de_inscripcion, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
+                                                <input type="text" class="form-control" placeholder="0.00" name="deuda" value="<?php echo number_format((float)$montos_de_inscripcion->calculo_deuda, 2, '.', ''); ?>" readonly="readonly">
                                             </div>
                                         </div>
                                     </div>

@@ -52,10 +52,7 @@ class Inscripciones_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'i.hora_inscripcion,
-            i.fecha_inscripcion,
-            i.monto_pagado,
-            i.precio_total,
-            i.deuda,
+            i.hora_inscripcion,
             i.costo_de_inscripcion,
             p.cedula_persona,
             concat(p.nombres_persona, " ", p.apellidos_persona) as nombre_completo_participante,
@@ -204,7 +201,6 @@ class Inscripciones_model extends CI_Model {
         // Eliminar deuda de aquí
         $resultado = $this->db->select(
             'i.id_inscripcion,
-            i.deuda,
             par.id_participante,
             ii.id_inscripcion_instancia,
             inst.id_instancia'
@@ -490,7 +486,7 @@ class Inscripciones_model extends CI_Model {
      */
     public function inscripcion_years()
     {
-        $resultados = $this->db->select('YEAR(i.fecha_inscripcion) as year')
+        $resultados = $this->db->select('YEAR(i.hora_inscripcion) as year')
         ->from('inscripcion as i')
         ->group_by('year')
         ->order_by('year', 'desc')
@@ -508,7 +504,7 @@ class Inscripciones_model extends CI_Model {
      */
     public function inscripcion_montos($year)
     {
-        $resultados = $this->db->select('MONTH(i.fecha_inscripcion) as mes_inscripcion, SUM(i.monto_pagado) as monto_generado')
+        $resultados = $this->db->select('MONTH(i.hora_inscripcion) as mes_inscripcion, SUM(i.monto_pagado) as monto_generado')
         ->from('inscripcion as i')
         ->where('fecha_inscripcion >=', $year.'-01-01')
         ->where('fecha_inscripcion <=', $year.'-12-31')
