@@ -24,7 +24,7 @@
                              </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/participantes/update" method="POST">
+                        <form action="<?php echo base_url();?>gestion/participante/update" method="POST">
                             <input type="hidden" name="idParticipante" value="<?php echo $participante->id_participante;?>">
 
                             <div class="form-group">

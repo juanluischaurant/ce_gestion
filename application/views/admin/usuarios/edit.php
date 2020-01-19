@@ -23,7 +23,7 @@
                             </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>administrador/usuarios/update" method="POST" autocomplete="off">
+                        <form action="<?php echo base_url();?>administrador/usuario/update" method="POST" autocomplete="off">
 
                             <input type="hidden" class="form-control" id="id-usuario" name="id-usuario" value="<?php echo $usuario->id_usuario; ?>">
                             

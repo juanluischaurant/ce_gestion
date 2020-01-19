@@ -26,7 +26,7 @@
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url(); ?>gestion/cursos/store" method="post">
+                        <form action="<?php echo base_url(); ?>gestion/curso/store" method="post">
                             <div class="form-group <?php echo !empty(form_error('nombre_curso'))? 'has-error' : '';?>">
                                 <label for="nombre">Nombre: </label>
                                 <input type="text" name="nombre_curso" id="nombre_curso" class="form-control" value="<?php echo set_value('nombre_curso');?>">

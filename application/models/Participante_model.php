@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Participantes_model extends CI_Model {
+class Participante_model extends CI_Model {
 
     public function getParticipantes()
     {

@@ -6,7 +6,7 @@ class Dashboard extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('Inscripciones_model'); 
+		$this->load->model('Inscripcion_model'); 
 		
 		// Si el usuario no está logeado
 		if(!$this->session->userdata('login'))
@@ -19,7 +19,7 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'years' => $this->Inscripciones_model->inscripcion_years(),
+			'years' => $this->Inscripcion_model->inscripcion_years(),
 		);
 		$general['page_title'] = 'Principal';
 		
@@ -38,7 +38,7 @@ class Dashboard extends CI_Controller {
 	public function getData()
 	{
 		$year = $this->input->post('year_inscripcion'); // Valor generado con AJAX
-		$resultados = $this->Inscripciones_model->inscripcion_montos($year);
+		$resultados = $this->Inscripcion_model->inscripcion_montos($year);
 		echo json_encode($resultados);
 	}
 }

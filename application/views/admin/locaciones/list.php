@@ -30,7 +30,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/locaciones/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Locación</a>
+                        <a href="<?php echo base_url(); ?>gestion/locacion/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Locación</a>
                     </div>
                 </div>
                 
@@ -62,19 +62,19 @@
                                             <button type='button' value="<?php echo $locacion->id_locacion; ?>" class="btn btn-info btn-view-locacion" data-toggle='modal' data-target='#modal-default'>
                                                 <span class="fa fa-eye"></span>
                                             </button>
-                                            <a href="<?php echo base_url() ?>gestion/locaciones/edit/<?php echo $locacion->id_locacion; ?>" class="btn btn-warning">
+                                            <a href="<?php echo base_url() ?>gestion/locacion/edit/<?php echo $locacion->id_locacion; ?>" class="btn btn-warning">
                                                 <span class="fa fa-pencil"></span>
                                             </a>
 
                                             <!-- Botón para activar/desactivar Inscripción -->
                                             <?php $estado_locacion = $locacion->estado_locacion; ?>
                                             <?php if($estado_locacion == 1): ?>
-                                                <a href="<?php echo base_url() ?>gestion/locaciones/deactivate_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-danger">
+                                                <a href="<?php echo base_url() ?>gestion/locacion/deactivate_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-danger">
                                                     <span class="fa fa-toggle-off"></span>
                                                 </a>
                                             <?php endif; ?> 
                                             <?php if($estado_locacion == 0): ?>
-                                                <a href="<?php echo base_url() ?>gestion/locaciones/activate_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-success">
+                                                <a href="<?php echo base_url() ?>gestion/locacion/activate_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-success">
                                                     <span class="fa fa-toggle-on"></span>
                                                 </a>
                                             <?php endif; ?> 

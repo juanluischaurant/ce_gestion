@@ -5,12 +5,12 @@ class Inscripciones extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Inscripciones_model');  
+        $this->load->model('Inscripcion_model');  
     }
 
     public function index() {
         $data = array(
-            'inscripciones' => $this->Inscripciones_model->getInscripciones()
+            'inscripciones' => $this->Inscripcion_model->getInscripciones()
         );
 
         $this->load->view('layouts/header');

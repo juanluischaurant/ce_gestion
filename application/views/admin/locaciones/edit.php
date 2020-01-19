@@ -27,7 +27,7 @@
                 <h3 class="box-title"><?php echo $locacion->nombre_locacion; ?></h3>
             </div>
             
-            <form action="<?php echo base_url(); ?>gestion/locaciones/update" method="POST">
+            <form action="<?php echo base_url(); ?>gestion/locacion/update" method="POST">
                 
                 <div class="box-body">
 
@@ -49,7 +49,7 @@
 
                         <div class="col-md-12">
                             <p><?php echo $locacion->instancias_asociadas; ?> instancias asociadas</p>
-                            <a href="<?php echo base_url() ?>gestion/locaciones/delete_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-flat btn-danger btn-xs">Eliminar esta locación</a>
+                            <a href="<?php echo base_url() ?>gestion/locacion/delete_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-flat btn-danger btn-xs">Eliminar esta locación</a>
                         </div>
                     
                     </div>

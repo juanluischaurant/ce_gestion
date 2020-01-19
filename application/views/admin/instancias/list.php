@@ -31,7 +31,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/instancias/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Instancia</a>
+                        <a href="<?php echo base_url(); ?>gestion/instancia/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Instancia</a>
                     </div>
                 </div>
 
@@ -89,21 +89,21 @@
                                                 <button type='button' class="btn btn-info btn-view-instancia" data-toggle='modal' data-target='#modal-default' value='<?php echo $instancia->id_instancia; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>gestion/instancias/edit/<?php echo $instancia->id_instancia; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>gestion/instancia/edit/<?php echo $instancia->id_instancia; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
-                                                <a href="<?php echo base_url() ?>gestion/instancias/generate_pdf/<?php echo $instancia->id_instancia; ?>" class="btn btn-primary btn-print" target="_blank">
+                                                <a href="<?php echo base_url() ?>gestion/instancia/generate_pdf/<?php echo $instancia->id_instancia; ?>" class="btn btn-primary btn-print" target="_blank">
                                                     <span class="fa fa-print"> </span>
                                                 </a>  
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
                                                 <?php if($instancia->estado_instancia == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/instancias/deactivate_instancia/<?php echo $instancia->id_instancia; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>gestion/instancia/deactivate_instancia/<?php echo $instancia->id_instancia; ?>" class="btn btn-danger btn-activate-inscripcion">
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                 <?php endif; ?> 
                                                 <?php if($instancia->estado_instancia == 0): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/instancias/activate_instancia/<?php echo $instancia->id_instancia; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>gestion/instancia/activate_instancia/<?php echo $instancia->id_instancia; ?>" class="btn btn-success btn-deactivate-inscripcion">
                                                         <span class="fa fa-toggle-on"></span>
                                                     </a>
                                                 <?php endif; ?> 

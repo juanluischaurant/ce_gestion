@@ -2,14 +2,14 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Clase Usuarios
+ * Clase Usuario
  * 
- * Gestiona lo referente a Usuarios que pueden utilizar
+ * Gestiona lo referente a Usuario que pueden utilizar
  * CE Gestión, cada uno con nivel de accesibilidad asignado
  * 
  * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
  */
-class Usuarios extends CI_Controller {
+class Usuario extends CI_Controller {
 
 	private $permisos;
 
@@ -30,15 +30,15 @@ class Usuarios extends CI_Controller {
         else
         {
             // Carga el modélo
-            $this->load->model("Usuarios_model");
-            $this->load->model("Acciones_model");
+            $this->load->model("Usuario_model");
+            $this->load->model("Accion_model");
         }
     }
     
     public function index()
     {
 		$data = array(
-			'usuarios' => $this->Usuarios_model->get_usuarios(),
+			'usuarios' => $this->Usuario_model->get_usuarios(),
         );
         
 		$this->load->view('layouts/header');
@@ -50,7 +50,7 @@ class Usuarios extends CI_Controller {
     public function add()
     {
 		$data = array(
-			'roles' => $this->Usuarios_model->roles_dropdown(),
+			'roles' => $this->Usuario_model->roles_dropdown(),
         );
         
 		$this->load->view('layouts/header');
@@ -64,13 +64,13 @@ class Usuarios extends CI_Controller {
 		//  ¿$id es nulo?, de ser verdad, redirecciona a la vista de lista
 		if(!isset($id))
 		{
-			redirect(base_url().'administrador/usuarios/');
+			redirect(base_url().'administrador/usuario/');
 		}
 		else
 		{
 			$data = array(
-				'usuario' => $this->Usuarios_model->get_usuario($id),
-				'roles' => $this->Usuarios_model->roles_dropdown()
+				'usuario' => $this->Usuario_model->get_usuario($id),
+				'roles' => $this->Usuario_model->roles_dropdown()
 			);
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
@@ -118,21 +118,21 @@ class Usuarios extends CI_Controller {
 		// application/config/form_validation.php
 		if($this->form_validation->run('editar_usuario')) // Si la validación es correcta
 		{
-			if($this->Usuarios_model->update($id_usuario, $data))
+			if($this->Usuario_model->update($id_usuario, $data))
 			{
 				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión activa
 				$fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3 = modificar) 
 				$descripcion_accion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
 				$tabla_afectada = "Usuario"; // Tabla afectada
 
-				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
-				redirect(base_url().'administrador/usuarios');
+				redirect(base_url().'administrador/usuario');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'administrador/usuarios/edit'.$id_usuario);
+				redirect(base_url().'administrador/usuario/edit'.$id_usuario);
 			}
 		}
 		else // la validación no es correcta
@@ -171,14 +171,14 @@ class Usuarios extends CI_Controller {
 
         if($this->form_validation->run())
         {
-            if($this->Usuarios_model->save($data))
+            if($this->Usuario_model->save($data))
             {
                 $this->session->set_flashdata('success', 'Usuario '.$username_usuario.' agregado correctamente.');
-                redirect(base_url().'administrador/usuarios');
+                redirect(base_url().'administrador/usuario');
             }
             else
             {
-                redirect(base_url().'administrador/usuarios/add');
+                redirect(base_url().'administrador/usuario/add');
             }
         }
         else
@@ -192,7 +192,7 @@ class Usuarios extends CI_Controller {
 		$id_usuario = $this->input->post('id_usuario');
 
 		$data = array(
-			'usuario' => $this->Usuarios_model->get_usuario($id_usuario),
+			'usuario' => $this->Usuario_model->get_usuario($id_usuario),
 		);
 
 		$this->load->view('admin/usuarios/view', $data);
@@ -204,16 +204,16 @@ class Usuarios extends CI_Controller {
 			'estado_usuario' => 0,
 		);
 		
-		if($this->Usuarios_model->update($id_usuario, $data))
+		if($this->Usuario_model->update($id_usuario, $data))
 		{
 			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 1 = Desactivar) 
 			$descripcion_accion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
 			$tabla_afectada = "Usuario"; // Tabla afectada
 
-			$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+			$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 
-			echo 'administrador/usuarios';
+			echo 'administrador/usuario';
 		};
 	}
 

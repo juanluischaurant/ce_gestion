@@ -27,7 +27,7 @@
                 <h3 class="box-title">Selecciona la fecha de inicio y culminación</h3>
             </div>
             
-            <form action="<?php echo base_url(); ?>gestion/periodos/store" method="POST">
+            <form action="<?php echo base_url(); ?>gestion/periodo/store" method="POST">
                 
                 <div class="box-body">
              

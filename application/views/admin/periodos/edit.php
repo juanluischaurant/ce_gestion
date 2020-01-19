@@ -14,7 +14,7 @@
                 <h3 class="box-title"><?php echo $data_periodo->nombre_periodo; ?></h3>
             </div>
             
-            <form action="<?php echo base_url(); ?>gestion/periodos/update" method="POST">
+            <form action="<?php echo base_url(); ?>gestion/periodo/update" method="POST">
                 <input type="hidden" name="id-periodo" value="<?php echo $data_periodo->id_periodo ?>">
                 
                 <div class="box-body">

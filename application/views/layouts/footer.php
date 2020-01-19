@@ -262,7 +262,7 @@
         $(document).on("click",".btn-view-persona",function() {
             let idPersona = $(this).val(); // ID de la persona
             $.ajax({
-                url: base_url + "gestion/personas/view",
+                url: base_url + "gestion/persona/view",
                 type:"POST",
                 dataType:"html",
                 data:{
@@ -388,7 +388,7 @@
             if(idTipoDeOperacion != '') {
 
                 $.ajax({
-                    url: base_url + "movimientos/pagos/get_tipo_de_operacion_ajax",
+                    url: base_url + "movimientos/pago/get_tipo_de_operacion_ajax",
                     type:"POST",
                     dataType:"html",
                     data:{
@@ -498,7 +498,7 @@
             
             let id_pago = $(this).val(); // ID del elemento a consultar
             $.ajax({
-                url: base_url + "movimientos/pagos/view",
+                url: base_url + "movimientos/pago/view",
                 type:"POST",
                 dataType:"html",
                 data:{
@@ -513,7 +513,7 @@
         $('#cedula-titular').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/pagos/get_titulares_json',
+                    url: base_url+'movimientos/pago/get_titulares_json',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -565,7 +565,7 @@
 
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/pagos/get_pagos_json',
+                    url: base_url+'movimientos/pago/get_pagos_json',
                     type: 'POST',
                     dataType: 'JSON',
                     data: {
@@ -679,7 +679,7 @@
             fecha_de_operacion = $('#fecha-operacion').val();
 
             $.ajax({
-                url: base_url+'movimientos/pagos/store_ajax',
+                url: base_url+'movimientos/pago/store_ajax',
                 type: 'POST',
                 dataType: 'JSON',
                 data: {
@@ -847,7 +847,7 @@
             }
        
             $.ajax({
-                url: base_url + "gestion/personas/add_rol",
+                url: base_url + "gestion/persona/add_rol",
                 type: 'POST',
                 data: {
                     id_persona: id_persona,
@@ -897,7 +897,7 @@
             let idLocacion = $(this).val(); // ID de la locación
 
             $.ajax({
-                url: base_url + "gestion/locaciones/view",
+                url: base_url + "gestion/locacion/view",
                 type:"POST",
                 dataType:"html",
                 data:{
@@ -945,7 +945,7 @@
         $('#periodo-instancia').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'gestion/instancias/getPeriodosJSON',
+                    url: base_url+'gestion/instancia/getPeriodosJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -969,7 +969,7 @@
         $('#locacion-instancia').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'gestion/instancias/getLocacionesJSON',
+                    url: base_url+'gestion/instancia/getLocacionesJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -992,7 +992,7 @@
         $('#profesor-instancia').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'gestion/instancias/getFacilitadoresJSON',
+                    url: base_url+'gestion/instancia/getFacilitadoresJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -1056,7 +1056,7 @@
             let id_participante = $(this).val(); // ID de la persona
             
             $.ajax({
-                url: base_url + "gestion/participantes/view",
+                url: base_url + "gestion/participante/view",
                 type:"POST",
                 dataType:"html",
                 data:{
@@ -1076,7 +1076,7 @@
 
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'movimientos/inscripciones/getInstanciasJSON',
+                    url: base_url+'movimientos/inscripcion/getInstanciasJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -1128,7 +1128,7 @@
             numeroEvaluado = $(this).val();
 
             $.ajax({
-                url: base_url + "movimientos/pagos/pago_unico",
+                url: base_url + "movimientos/pago/pago_unico",
                 type: "POST",
                 dataType: "json",
                 data: {
@@ -1186,7 +1186,7 @@
                     $.ajax({
 
                         type: 'POST',
-                        url: base_url+'movimientos/inscripciones/getParticipantesJSON/',
+                        url: base_url+'movimientos/inscripcion/getParticipantesJSON/',
                         dataType: 'JSON',
                         data: {
 
@@ -1294,7 +1294,7 @@
             id_inscripcion = datosInscripcion[1];
 
             $.ajax({
-                url: base_url + 'movimientos/inscripciones/view',
+                url: base_url + 'movimientos/inscripcion/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -1311,7 +1311,7 @@
 
             let id_usuario = $(this).val();
             $.ajax({
-                url: base_url + 'administrador/usuarios/view',
+                url: base_url + 'administrador/usuario/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -1327,7 +1327,7 @@
 
             let id_instancia = $(this).val();
             $.ajax({
-                url: base_url + 'gestion/instancias/view',
+                url: base_url + 'gestion/instancia/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {

@@ -24,7 +24,7 @@
                              </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url();?>gestion/personas/update" method="POST">
+                        <form action="<?php echo base_url();?>gestion/persona/update" method="POST">
 
                             <input type="hidden" name="id-persona" value="<?php echo $persona->id_persona;?>">
 

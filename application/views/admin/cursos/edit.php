@@ -26,7 +26,7 @@
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url(); ?>gestion/cursos/update" method="POST">
+                        <form action="<?php echo base_url(); ?>gestion/curso/update" method="POST">
                             <input type="hidden" name="id_curso" id="id_curso" class="form-control" value="<?php echo $curso->id_curso; ?>">
                             <div class="form-group">
                                 <label for="nombre">Nombre: </label>

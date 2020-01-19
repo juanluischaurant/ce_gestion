@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Facilitadores_model extends CI_Model {
+class Facilitador_model extends CI_Model {
 
     public function getFacilitadores()
     {

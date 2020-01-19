@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Pagos_model extends CI_Model {
+class Pago_model extends CI_Model {
 
   public function get_pagos() {
     // Obtén una lista de pagos realizados

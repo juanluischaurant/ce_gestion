@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Instancias_model extends CI_Model {
+class Instancia_model extends CI_Model {
 
     /**
      * Returna una lista de instancias

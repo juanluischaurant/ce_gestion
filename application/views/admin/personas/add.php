@@ -24,7 +24,7 @@
                              </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/personas/store" method="POST">
+                        <form action="<?php echo base_url();?>gestion/persona/store" method="POST">
 
                             <div class="row form-group">
                                 <div class="col-md-5">                                

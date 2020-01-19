@@ -9,17 +9,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage Personas
  * @category Controladores
  */
-class Facilitadores extends CI_Controller {
+class Facilitador extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Personas_model');  
-        $this->load->model('Facilitadores_model');  
+        $this->load->model('Persona_model');  
+        $this->load->model('Facilitador_model');  
     }
 
     public function index() { 
 		$data = array(
-			'facilitadores' => $this->Facilitadores_model->getFacilitadores(),
+			'facilitadores' => $this->Facilitador_model->getFacilitadores(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -32,7 +32,7 @@ class Facilitadores extends CI_Controller {
 		if($id_persona !== 'new') {
 
 			$data_persona = array(
-				'persona' => $this->Personas_model->get_persona($id_persona),
+				'persona' => $this->Persona_model->get_persona($id_persona),
 			);
 
 			$this->load->view('layouts/header');
@@ -43,7 +43,7 @@ class Facilitadores extends CI_Controller {
 		} elseif($id_persona = 'new') {
 					
 			$data_persona = array(
-				"personas" => $this->Personas_model->getPersonas() 
+				"personas" => $this->Persona_model->getPersonas() 
 			);
 
 			$this->load->view('layouts/header');
@@ -73,23 +73,23 @@ class Facilitadores extends CI_Controller {
 			'fk_id_persona_3' => $fk_id_persona_3,
 		);
 
-		if($this->Facilitadores_model->evitaFacilitadorDuplicado($fk_id_persona_3) === true) {
+		if($this->Facilitador_model->evitaFacilitadorDuplicado($fk_id_persona_3) === true) {
 
-			if($this->Facilitadores_model->save($data_facilitador)) {
+			if($this->Facilitador_model->save($data_facilitador)) {
 
-				redirect(base_url().'gestion/facilitadores');
+				redirect(base_url().'gestion/facilitador');
 
 			} else {
 
 				$this->session->set_flashdata('error', 'No se pudo guardar la información');
-				redirect(base_url().'gestion/facilitadores/add');	
+				redirect(base_url().'gestion/facilitador/add');	
 
 			}
 
 		} else {
 
 			$this->session->set_flashdata('error', 'Esta persona ya está registrada como facilitador.');
-			redirect(base_url().'gestion/facilitadores/add');	
+			redirect(base_url().'gestion/facilitador/add');	
 
 		}
 
@@ -119,18 +119,18 @@ class Facilitadores extends CI_Controller {
 			'direccion_persona' => $direccion
 		);
 
-		if($this->Personas_model->update($fk_id_persona_3, $data)) {
-			redirect(base_url().'gestion/facilitadores');
+		if($this->Persona_model->update($fk_id_persona_3, $data)) {
+			redirect(base_url().'gestion/facilitador');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-			redirect(base_url().'gestion/facilitadores/edit'.$id_facilitador);
+			redirect(base_url().'gestion/facilitador/edit'.$id_facilitador);
 		}
 		
 	}
 
 	public function edit($id) {
 		$data = array(
-			'facilitador' => $this->Facilitadores_model->getFacilitador($id)
+			'facilitador' => $this->Facilitador_model->getFacilitador($id)
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -142,7 +142,7 @@ class Facilitadores extends CI_Controller {
 		$data = array(
 			'estado_facilitador' => 0,
 		);
-		$this->Facilitadores_model->update($id, $data);
-		echo 'gestion/facilitadores';
+		$this->Facilitador_model->update($id, $data);
+		echo 'gestion/facilitador';
 	}
 }

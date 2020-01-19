@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage Personas
  * @category Controladores
  */
-class Participantes extends CI_Controller {
+class Participante extends CI_Controller {
 
 	public function __construct() {
 		parent::__construct();
@@ -23,8 +23,8 @@ class Participantes extends CI_Controller {
         else
         {
             // Carga el controlador
-			$this->load->model('Personas_model');  
-			$this->load->model('Participantes_model');  
+			$this->load->model('Persona_model');  
+			$this->load->model('Participante_model');  
 		}
 		
     }
@@ -32,7 +32,7 @@ class Participantes extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'participantes' => $this->Participantes_model->getParticipantes(),
+			'participantes' => $this->Participante_model->getParticipantes(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -54,8 +54,8 @@ class Participantes extends CI_Controller {
 		$id_participante = $this->input->post("id_participante");
 
 		$data = array(
-			'participante' => $this->Participantes_model->get_participante($id_participante),
-			'instancias_inscritas' => $this->Participantes_model->get_instancias_inscritas($id_participante)
+			'participante' => $this->Participante_model->get_participante($id_participante),
+			'instancias_inscritas' => $this->Participante_model->get_instancias_inscritas($id_participante)
 		);
 
 		$this->load->view("admin/participantes/view", $data);
@@ -66,7 +66,7 @@ class Participantes extends CI_Controller {
 		if($id_persona !== 'new')
 		{
 			$data_persona = array(
-				'persona' => $this->Personas_model->get_persona($id_persona),
+				'persona' => $this->Persona_model->get_persona($id_persona),
 			);
 
 			$this->load->view('layouts/header');
@@ -78,7 +78,7 @@ class Participantes extends CI_Controller {
 		elseif($id_persona = 'new')
 		{
 			$data_persona = array(
-				"personas" => $this->Personas_model->getPersonas() 
+				"personas" => $this->Persona_model->getPersonas() 
 			);
 
 			$this->load->view('layouts/header');
@@ -105,29 +105,29 @@ class Participantes extends CI_Controller {
 			'fk_id_persona_2' => $fk_id_persona_2,
 		);
 
-		if($this->Participantes_model->evitaParticipanteDuplicado($fk_id_persona_2) === true)
+		if($this->Participante_model->evitaParticipanteDuplicado($fk_id_persona_2) === true)
 		{
-			if($this->Participantes_model->save($data_participante))
+			if($this->Participante_model->save($data_participante))
 			{
-				redirect(base_url().'gestion/participantes');
+				redirect(base_url().'gestion/participante');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo guardar la información');
-				redirect(base_url().'gestion/participantes/add');	
+				redirect(base_url().'gestion/participante/add');	
 			}
 		}
 		else
 		{
 			$this->session->set_flashdata('error', 'Esta persona ya está registrada como participante.');
-			redirect(base_url().'gestion/participantes/add');	
+			redirect(base_url().'gestion/participante/add');	
 		}
 	}
 
 	public function edit($id)
 	{
 		$data = array(
-			'participante' => $this->Participantes_model->getParticipante($id),
+			'participante' => $this->Participante_model->getParticipante($id),
 		);
 
 		$this->load->view('layouts/header');
@@ -157,11 +157,11 @@ class Participantes extends CI_Controller {
 			'direccion_participante' => $direccion
 		);
 
-		if($this->Participantes_model->update($id_participante, $data)) {
-			redirect(base_url().'gestion/participantes');
+		if($this->Participante_model->update($id_participante, $data)) {
+			redirect(base_url().'gestion/participante');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-			redirect(base_url().'gestion/participantes/edit'.$id_participante);
+			redirect(base_url().'gestion/participante/edit'.$id_participante);
 		}
 		
 	}

@@ -24,7 +24,7 @@
                              </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/facilitadores/store" method="POST">
+                        <form action="<?php echo base_url();?>gestion/facilitador/store" method="POST">
 
                             <div class="form-group">
                                 <label for="">Seleccionar Facilitador:</label>

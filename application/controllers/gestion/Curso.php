@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cursos extends CI_Controller {
+class Curso extends CI_Controller {
 
 	private $permisos;
 
@@ -13,13 +13,13 @@ class Cursos extends CI_Controller {
 		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
 		$this->permisos = $this->backend_lib->control();
 
-        $this->load->model('Cursos_model');  
+        $this->load->model('Curso_model');  
     }
 
 	public function index()
 	{
 		$data = array(
-			'cursos' => $this->Cursos_model->getCursos(),
+			'cursos' => $this->Curso_model->getCursos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -47,11 +47,11 @@ class Cursos extends CI_Controller {
 				'estado_curso' => '1'
 			);
 	
-			if($this->Cursos_model->saveCurso($data)) {
-				redirect(base_url().'gestion/cursos');
+			if($this->Curso_model->saveCurso($data)) {
+				redirect(base_url().'gestion/curso');
 			} else {
 				$this->session->set_flashdata('error', 'No se pudo agregar el curso.');
-				redirect(base_url().'gestion/cursos/add');
+				redirect(base_url().'gestion/curso/add');
 			}
 		} else {
 			$this->add();
@@ -60,7 +60,7 @@ class Cursos extends CI_Controller {
 
 	public function edit($id) {
 		$data = array(
-			'curso' => $this->Cursos_model->get_curso($id)
+			'curso' => $this->Curso_model->get_curso($id)
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -79,12 +79,12 @@ class Cursos extends CI_Controller {
 		);
 
 		
-		if(!$this->Cursos_model->update($id_curso, $data)) {
+		if(!$this->Curso_model->update($id_curso, $data)) {
 			$this->session->set_flashdata('success', 'Curso actualizado exitosamente.');
-			redirect(base_url().'gestion/cursos');
+			redirect(base_url().'gestion/curso');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar el curso.');
-			redirect(base_url().'gestion/cursos/edit/'.$id_curso);
+			redirect(base_url().'gestion/curso/edit/'.$id_curso);
 
 
 		}

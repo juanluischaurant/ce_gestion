@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage Participante
  * @category Controladores
  */
-class Niveles_academicos extends CI_Controller {
+class Nivel_academico extends CI_Controller {
 
     public function __construct()
     {
@@ -24,7 +24,7 @@ class Niveles_academicos extends CI_Controller {
         else
         {
             // Carga el controlador
-			$this->load->model('Niveles_academicos_model');  
+			$this->load->model('Nivel_academico_model');  
 		}	
     }
 }

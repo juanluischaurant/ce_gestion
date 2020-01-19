@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>movimientos/inscripciones/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Inscripción</a>
+                        <a href="<?php echo base_url(); ?>movimientos/inscripcion/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Inscripción</a>
                     </div>
                 </div>
                 
@@ -88,18 +88,18 @@
                                                 <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>movimientos/inscripciones/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion_activa; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>movimientos/inscripcion/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion_activa; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
                                                 <?php if($inscripcion_activa == 1): ?>
-                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/deactivate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripcion/deactivate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-danger btn-activate-inscripcion">
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                 <?php endif; ?> 
                                                 <?php if($inscripcion_activa == 0): ?>
-                                                    <a href="<?php echo base_url() ?>movimientos/inscripciones/activate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripcion/activate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-success btn-deactivate-inscripcion">
                                                         <span class="fa fa-toggle-on"></span>
                                                     </a>
                                                 <?php endif; ?> 

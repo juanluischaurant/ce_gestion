@@ -23,7 +23,7 @@
                                 <h3 class="box-title"><?php echo $instancia->nombre_curso; ?> | <?php echo $instancia->serial_instancia; ?></h3>
                             </div>
 
-                            <form action="<?php echo base_url(); ?>gestion/instancias/update" method="POST">
+                            <form action="<?php echo base_url(); ?>gestion/instancia/update" method="POST">
                                 <div class="box-body">
 
                                     <div class="row">

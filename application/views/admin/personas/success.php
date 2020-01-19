@@ -77,7 +77,7 @@
 
                         <div class="form-group">
                             <p class=>Agregar un facilitador puede requerir permisos especiales.</p>
-                            <a class="btn btn-flat btn-warning btn-xs" href="<?php echo base_url(); ?>gestion/facilitadores/add/<?php echo $persona->id_persona;?>">Facilitador</a>
+                            <a class="btn btn-flat btn-warning btn-xs" href="<?php echo base_url(); ?>gestion/facilitador/add/<?php echo $persona->id_persona;?>">Facilitador</a>
                         </div>
 
                     </form>
@@ -107,12 +107,12 @@
                     <!-- Este elemento permanece oculto hasta que el botón remover la clase Hidden -->
                     <div id="redirecciona-inscribir" class="row hidden">
                         <div class="col-md-4">
-                            <a href="<?php echo base_url(); ?>movimientos/inscripciones/add">Inscribir Participante</a>
+                            <a href="<?php echo base_url(); ?>movimientos/inscripcion/add">Inscribir Participante</a>
                         </div>
                     </div>
                     <div id="redirecciona-pago" class="row hidden">
                         <div class="col-md-4">
-                            <a href="<?php echo base_url(); ?>movimientos/pagos/add">Registrar Pago</a>
+                            <a href="<?php echo base_url(); ?>movimientos/pago/add">Registrar Pago</a>
                         </div>
                     </div>
                     <div id="redirecciona-inicio" class="row hidden">

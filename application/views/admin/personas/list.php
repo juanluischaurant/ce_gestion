@@ -15,7 +15,7 @@
                 <?php if($permisos->insert == 1): ?>
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="<?php echo base_url(); ?>gestion/personas/add" class="btn btn-primary btn-flat">
+                            <a href="<?php echo base_url(); ?>gestion/persona/add" class="btn btn-primary btn-flat">
                                 <span class="fa fa-plus"></span> Agregar Persona
                             </a>
                         </div>
@@ -62,14 +62,14 @@
                                                 <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
 
                                                 <?php if($permisos->update == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/personas/edit/<?php echo $persona->id_persona; ?>" .
+                                                    <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $persona->id_persona; ?>" .
                                                 class="btn btn-warning">
                                                         <span class="fa fa-pencil"></span>
                                                     </a>
                                                 <?php endif; ?>  
 
                                                 <?php if($permisos->delete == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/personas/delete/<?php echo $persona->id_persona; ?>" class="btn btn-danger btn-remove">
+                                                    <a href="<?php echo base_url() ?>gestion/persona/delete/<?php echo $persona->id_persona; ?>" class="btn btn-danger btn-remove">
                                                         <span class="fa fa-remove"></span>
                                                     </a>
                                                 <?php endif; ?>  

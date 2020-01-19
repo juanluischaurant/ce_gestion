@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Niveles_academicos_model extends CI_Model {
+class Nivel_academico_model extends CI_Model {
 
     /**
      * Consulta la BD y obtiene una lista de todos los niveles académicos disponibles

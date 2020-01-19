@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Inscripciones_model extends CI_Model {
+class Inscripcion_model extends CI_Model {
 
     /**
      * Consulta base de dayos y retorna una lista de inscripciones realizadas

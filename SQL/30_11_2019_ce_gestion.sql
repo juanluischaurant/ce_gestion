@@ -353,10 +353,10 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`id_menu`, `nombre_menu`, `enlace_menu`) VALUES
 (1, 'Inicio', 'dashboard'),
-(2, 'Cursos', 'gestion/cursos'),
-(3, 'Usuarios', 'administrador/usuarios'),
+(2, 'Cursos', 'gestion/curso'),
+(3, 'Usuarios', 'administrador/usuario'),
 (4, 'Permisos', 'administrador/permisos'),
-(5, 'Personas', 'gestion/personas');
+(5, 'Personas', 'gestion/persona');
 
 -- --------------------------------------------------------
 

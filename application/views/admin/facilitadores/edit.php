@@ -24,7 +24,7 @@
                              </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url();?>gestion/facilitadores/update" method="POST">
+                        <form action="<?php echo base_url();?>gestion/facilitador/update" method="POST">
                             <input type="hidden" name="id-facilitador" value="<?php echo $facilitador->id_facilitador;?>">
                             <input type="hidden" name="fk-id-persona" value="<?php echo $facilitador->fk_id_persona_3;?>">
 

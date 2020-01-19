@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Cursos_model extends CI_Model {
+class Curso_model extends CI_Model {
 
 	public function getCursos() {
          // Obtén una lista de cursos instanciados

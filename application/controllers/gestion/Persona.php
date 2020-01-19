@@ -6,10 +6,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * persona, entre las que cuentan: Facilitador, Cliente(Titular), Participnte
  * 
  * @package CE_gestion
- * @subpackage Personas
+ * @subpackage Persona
  * @category Controladores
  */
-class Personas extends CI_Controller {
+class Persona extends CI_Controller {
 
 	private $permisos;
 
@@ -30,11 +30,11 @@ class Personas extends CI_Controller {
         else
         {
             // Carga el controlador
-			$this->load->model('Personas_model');  
-			$this->load->model('Participantes_model');  
-			$this->load->model('Titulares_model');  
-			$this->load->model('Acciones_model');  
-			$this->load->model('Niveles_academicos_model');
+			$this->load->model('Persona_model');  
+			$this->load->model('Participante_model');  
+			$this->load->model('Titular_model');  
+			$this->load->model('Accion_model');  
+			$this->load->model('Nivel_academico_model');
         }
     }
 
@@ -42,7 +42,7 @@ class Personas extends CI_Controller {
 	{
 		$data = array(
 			'permisos' => $this->permisos,
-			'personas' => $this->Personas_model->getPersonas(),
+			'personas' => $this->Persona_model->getPersonas(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -53,7 +53,7 @@ class Personas extends CI_Controller {
 	public function add()
 	{
 		$data = array(
-			'lista_generos' => $this->Personas_model->generos_dropdown()
+			'lista_generos' => $this->Persona_model->generos_dropdown()
 		);
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
@@ -75,10 +75,10 @@ class Personas extends CI_Controller {
 		$idParticipante = $this->input->post("id_persona");
 
 		$data = array(
-			"persona" => $this->Personas_model->get_persona($idParticipante),
-			'es_participante' => $this->Personas_model->get_es_participante($idParticipante),
-			'es_titular' => $this->Personas_model->get_es_titular($idParticipante),
-			'es_facilitador' => $this->Personas_model->get_es_facilitador($idParticipante),
+			"persona" => $this->Persona_model->get_persona($idParticipante),
+			'es_participante' => $this->Persona_model->get_es_participante($idParticipante),
+			'es_titular' => $this->Persona_model->get_es_titular($idParticipante),
+			'es_facilitador' => $this->Persona_model->get_es_facilitador($idParticipante),
 
 		);
 
@@ -90,13 +90,13 @@ class Personas extends CI_Controller {
 		// ¿$id es nulo?
 		if(!isset($id))
 		{
-			redirect(base_url().'gestion/personas/');
+			redirect(base_url().'gestion/persona/');
 		}
 		else
 		{
 			$data = array(
-				'persona' => $this->Personas_model->get_persona($id),
-				'lista_generos' => $this->Personas_model->generos_dropdown()
+				'persona' => $this->Persona_model->get_persona($id),
+				'lista_generos' => $this->Persona_model->generos_dropdown()
 			);
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
@@ -136,25 +136,25 @@ class Personas extends CI_Controller {
 		if($this->form_validation->run('agregar_persona'))
 		{
 			// Procede a guardar los datos
-			if($this->Personas_model->save($data_persona))
+			if($this->Persona_model->save($data_persona))
 			{ 
-				$id_ultimo_registro = $this->Personas_model->lastID(); // id del último registro creado
+				$id_ultimo_registro = $this->Persona_model->lastID(); // id del último registro creado
 
 				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 				$fk_id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
 				$descripcion_accion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
 				$tabla_afectada = "PERSONA"; // Tabla afectada
 
-				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
 				// Redirige a la vista "success" dentro de este controlador
 				$this->success($id_ultimo_registro);
-				// redirect(base_url().'gestion/personas/success/'.$id_ultimo_registro);
+				// redirect(base_url().'gestion/persona/success/'.$id_ultimo_registro);
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo guardar la información');
-				redirect(base_url().'gestion/personas/add');	
+				redirect(base_url().'gestion/persona/add');	
 			}
 		}
 		else
@@ -176,8 +176,8 @@ class Personas extends CI_Controller {
 	public function success($ultimo_id = 'no_id')
 	{
         $data_persona = array(
-			'persona' => $this->Personas_model->get_persona($ultimo_id),
-			'lista_niveles' => $this->Niveles_academicos_model->niveles_academicos_dropdown()
+			'persona' => $this->Persona_model->get_persona($ultimo_id),
+			'lista_niveles' => $this->Nivel_academico_model->niveles_academicos_dropdown()
 		);
 		
         $this->load->view('layouts/header');
@@ -197,7 +197,7 @@ class Personas extends CI_Controller {
 
 		if($participante !== '')
 		{
-			$no_registrado = $this->Participantes_model->evitaParticipanteDuplicado($id_persona);
+			$no_registrado = $this->Participante_model->evitaParticipanteDuplicado($id_persona);
 
 			// Verifica si esta persona ya está registrada como participante
 			if($no_registrado === TRUE)
@@ -207,7 +207,7 @@ class Personas extends CI_Controller {
 					'fk_nivel_academico' => $nivel_academico_participante
 				);
 
-				$this->Participantes_model->save($data_participante);
+				$this->Participante_model->save($data_participante);
 				echo 'hi';
 				$mensaje .= 'participante';
 			}
@@ -215,13 +215,13 @@ class Personas extends CI_Controller {
 
 		if($titular !== '')
 		{
-			$no_registrado = $this->Titulares_model->duplicidad_persona($id_persona);
+			$no_registrado = $this->Titular_model->duplicidad_persona($id_persona);
 			// Verifica si esta persona ya está registrada como titular
 			if($no_registrado === TRUE)
 			{
 				$data_titular = array( 'fk_id_persona_1' => $id_persona, );
 
-				$this->Titulares_model->save($data_titular);
+				$this->Titular_model->save($data_titular);
 				echo 'ho';
 				$mensaje .= ' titular';
 			}
@@ -258,21 +258,21 @@ class Personas extends CI_Controller {
 		// Si la validación es correcta
 		if($this->form_validation->run('editar_persona'))
 		{
-			if($this->Personas_model->update($persona_id, $data))
+			if($this->Persona_model->update($persona_id, $data))
 			{
 				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 				$fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
 				$descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
 				$tabla_afectada = "PERSONA"; // Tabla afectada
 
-				$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
-				redirect(base_url().'gestion/personas');
+				redirect(base_url().'gestion/persona');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'gestion/personas/edit'.$persona_id);
+				redirect(base_url().'gestion/persona/edit'.$persona_id);
 			}
 		}
 		else
@@ -288,16 +288,16 @@ class Personas extends CI_Controller {
 			'estado_persona' => 0,
 		);
 		
-		if($this->Personas_model->update($persona_id, $data))
+		if($this->Persona_model->update($persona_id, $data))
 		{
 			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
 			$descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
 			$tabla_afectada = "PERSONA"; // Tabla afectada
 
-			$agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+			$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 
-			echo 'gestion/personas';
+			echo 'gestion/persona';
 		};
 	}
 

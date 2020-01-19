@@ -25,7 +25,7 @@
                     <?php endif;?>
                             
                         
-                        <form action="<?php echo base_url();?>movimientos/pagos/store" method="POST" class="form-horizontal">
+                        <form action="<?php echo base_url();?>movimientos/pago/store" method="POST" class="form-horizontal">
                             
                             <input type="hidden" name="modulo-actual" value="pagos">
 

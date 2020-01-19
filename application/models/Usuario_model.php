@@ -2,9 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Modelo Usuarios
+ * Modelo Usuario
  */
-class Usuarios_model extends CI_Model {
+class Usuario_model extends CI_Model {
 
     /**
      * Permite el acceso al sistema. Recibe dos parámetros, dichos parametros

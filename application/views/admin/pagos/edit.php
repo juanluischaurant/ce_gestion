@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="col-md-12">
                                                     
-                        <form action="<?php echo base_url();?>movimientos/pagos/update" method="POST" class="form-horizontal">
+                        <form action="<?php echo base_url();?>movimientos/pago/update" method="POST" class="form-horizontal">
                             
                             <input type="hidden" value="<?php echo $pago->id_pago; ?>" id="id-pago" name="id-pago">
 

@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
  */
-class Pagos extends CI_Controller {
+class Pago extends CI_Controller {
 
     public function __construct()
     {
@@ -21,14 +21,14 @@ class Pagos extends CI_Controller {
         else
         {
             // Carga el controlador
-            $this->load->model("Pagos_model");
+            $this->load->model("Pago_model");
         }
     }
 
     public function index()
     {
         $data = array(
-			'pagos' => $this->Pagos_model->get_pagos(),
+			'pagos' => $this->Pago_model->get_pagos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -39,7 +39,7 @@ class Pagos extends CI_Controller {
     public function add()
     {
 		$data = array(
-			'tipos_de_operacion' => $this->Pagos_model->get_tipos_de_operacion(),
+			'tipos_de_operacion' => $this->Pago_model->get_tipos_de_operacion(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -76,18 +76,18 @@ class Pagos extends CI_Controller {
             
             if($this->form_validation->run())
             {
-                if($this->Pagos_model->save($data))
+                if($this->Pago_model->save($data))
                 {
-                    $id_ultimo_pago = $this->Pagos_model->lastID();
+                    $id_ultimo_pago = $this->Pago_model->lastID();
                     $this->actualizar_conteo_operaciones($id_tipo_de_pago);
                     $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
     
-                    redirect(base_url().'movimientos/pagos/');    
+                    redirect(base_url().'movimientos/pago/');    
                 }
                 else
                 {
                     $this->session->set_flashdata('error', 'No se pudo guardar la información.');
-                    redirect(base_url().'movimientos/pagos/add');
+                    redirect(base_url().'movimientos/pago/add');
                 }
             }
             else
@@ -130,12 +130,12 @@ class Pagos extends CI_Controller {
             
             // if($this->form_validation->run('agregar_pago'))
             // {
-                $resultados = $this->Pagos_model->insertar_pago_procedure($data);
-                // $resultados = $this->Pagos_model->save($data);
+                $resultados = $this->Pago_model->insertar_pago_procedure($data);
+                // $resultados = $this->Pago_model->save($data);
 
                 // if($resultados == TRUE)
                 // {
-                //     $id_ultimo_pago = $this->Pagos_model->lastID();
+                //     $id_ultimo_pago = $this->Pago_model->lastID();
                 
                 //     $this->actualizar_conteo_operaciones($id_tipo_de_pago);
     
@@ -155,7 +155,7 @@ class Pagos extends CI_Controller {
     {
         $numero_a_evaluar = $this->input->post('query');
 
-        $resultado = $this->Pagos_model->pago_unico($numero_a_evaluar);
+        $resultado = $this->Pago_model->pago_unico($numero_a_evaluar);
 
         echo json_encode($resultado);
     }
@@ -171,7 +171,7 @@ class Pagos extends CI_Controller {
         $id_pago = $this->input->post("id_pago");
 
 		$data = array(
-			"pago" => $this->Pagos_model->get_pago($id_pago),
+			"pago" => $this->Pago_model->get_pago($id_pago),
 		);
 
 		$this->load->view("admin/pagos/view", $data);
@@ -182,19 +182,19 @@ class Pagos extends CI_Controller {
         // ¿$id es nulo?
 		if(!isset($id_pago))
 		{
-			redirect(base_url().'movimientos/pagos/');
+			redirect(base_url().'movimientos/pago/');
 		}
 		else
 		{
-            $estado_pago = $this->Pagos_model->get_estado_pago($id_pago);
+            $estado_pago = $this->Pago_model->get_estado_pago($id_pago);
 
             // Verifica el estado actual del pago. Un pago ya utilizado
             // NO se debe editar.
             if($estado_pago->estado_pago == 1)
             {
                 $data = array(
-                    'pago' => $this->Pagos_model->get_pago($id_pago),
-                    'tipos_de_operacion' => $this->Pagos_model->get_tipos_de_operacion()
+                    'pago' => $this->Pago_model->get_pago($id_pago),
+                    'tipos_de_operacion' => $this->Pago_model->get_tipos_de_operacion()
                 );
                 $this->load->view('layouts/header');
                 $this->load->view('layouts/aside');
@@ -204,7 +204,7 @@ class Pagos extends CI_Controller {
             else
             {
                 $this->session->set_flashdata('error', 'Pago ya en uso, no puedes editarlo.');
-                redirect(base_url().'movimientos/pagos/');
+                redirect(base_url().'movimientos/pago/');
             }
 		}
     }
@@ -233,21 +233,21 @@ class Pagos extends CI_Controller {
 		// Si la validación es correcta
 		if($this->form_validation->run('editar_pago'))
 		{
-			if($this->Pagos_model->update($id_pago, $data))
+			if($this->Pago_model->update($id_pago, $data))
 			{
 				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
 				// $descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
 				// $tabla_afectada = "PERSONA"; // Tabla afectada
 
-				// $agregar_accion = $this->Acciones_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				// $agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
 	
-				redirect(base_url().'movimientos/pagos');
+				redirect(base_url().'movimientos/pago');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'movimientos/pagos/edit/'.$id_pago);
+				redirect(base_url().'movimientos/pago/edit/'.$id_pago);
 			}
 		}
 		else
@@ -260,7 +260,7 @@ class Pagos extends CI_Controller {
     public function get_tipo_de_operacion_ajax()
     {
         $id_tipo_operacion = $this->input->post('id_tipo_operacion');
-        $resultados = $this->Pagos_model->get_tipo_de_operacion($id_tipo_operacion);
+        $resultados = $this->Pago_model->get_tipo_de_operacion($id_tipo_operacion);
 
         echo json_encode($resultados);
     }
@@ -274,13 +274,13 @@ class Pagos extends CI_Controller {
      */
     protected function actualizar_conteo_operaciones($id_tipo_operacion)
     {
-        $conteoActual = $this->Pagos_model->get_tipo_de_operacion($id_tipo_operacion);
+        $conteoActual = $this->Pago_model->get_tipo_de_operacion($id_tipo_operacion);
         
         $data = array(
             'conteo_operaciones' => $conteoActual->conteo_operaciones + 1
         );
         
-        $this->Pagos_model->actualizar_conteo_operaciones($id_tipo_operacion, $data);
+        $this->Pago_model->actualizar_conteo_operaciones($id_tipo_operacion, $data);
     }
     
     // Métodos utilizados para el pluggin AUTOCOMPLETE
@@ -296,7 +296,7 @@ class Pagos extends CI_Controller {
 	public function get_pagos_json()
 	{
 		$valor = $this->input->post('query');
-		$pagos = $this->Pagos_model->get_pagos_json($valor);
+		$pagos = $this->Pago_model->get_pagos_json($valor);
 		echo json_encode($pagos);
 	}
 	
@@ -304,14 +304,14 @@ class Pagos extends CI_Controller {
     public function get_titulares_json()
     {
         $valor = $this->input->post('query');
-		$clientes = $this->Pagos_model->get_titulares_json($valor);
+		$clientes = $this->Pago_model->get_titulares_json($valor);
 		echo json_encode($clientes);
     }
 
     public function getBancosJSON()
     {
         $valor = $this->input->post('query');
-		$bancos = $this->Pagos_model->getBancosJSON($valor);
+		$bancos = $this->Pago_model->getBancosJSON($valor);
 		echo json_encode($bancos);
     }
     // Fin: Métodos utilizados para el pluggin AUTOCOMPLETE

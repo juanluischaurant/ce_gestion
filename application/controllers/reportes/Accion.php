@@ -9,24 +9,24 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage Personas
  * @category Controladores
  */
-class Acciones extends CI_Controller
+class Accion extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Acciones_model');  
+        $this->load->model('Accion_model');  
     }
 
     
     public function index()
     {
         $data = array(
-            'acciones' => $this->Acciones_model->get_acciones()
+            'acciones' => $this->Accion_model->get_acciones()
         );
 
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/reportes/acciones', $data);
+        $this->load->view('admin/reportes/accion', $data);
         $this->load->view('layouts/footer');
     }
 }

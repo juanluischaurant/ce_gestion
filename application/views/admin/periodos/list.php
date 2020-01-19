@@ -31,7 +31,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/periodos/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Perído</a>
+                        <a href="<?php echo base_url(); ?>gestion/periodo/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Perído</a>
                     </div>
                 </div>
                 
@@ -60,8 +60,8 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/periodos/edit/<?php echo $periodo->id_periodo; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/periodos/delete/<?php echo $periodo->id_periodo; ?>" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/periodo/edit/<?php echo $periodo->id_periodo; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/periodo/delete/<?php echo $periodo->id_periodo; ?>" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>

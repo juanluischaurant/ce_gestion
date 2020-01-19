@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/cursos/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Curso</a>
+                        <a href="<?php echo base_url(); ?>gestion/curso/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Curso</a>
                     </div>
                 </div>
                 
@@ -51,7 +51,7 @@
                                         <td>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/cursos/edit/<?php echo $curso->id_curso; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/curso/edit/<?php echo $curso->id_curso; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>

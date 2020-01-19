@@ -26,7 +26,7 @@
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url(); ?>gestion/locaciones/store" method="POST">
+                        <form action="<?php echo base_url(); ?>gestion/locacion/store" method="POST">
 
                             <div class="form-group <?php echo !empty(form_error('nombre-locacion'))? 'has-error' : '';?>">
                                 <label for="nombre">Nombre: </label>

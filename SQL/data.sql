@@ -139,9 +139,9 @@ CREATE TABLE menu(
   `enlace_menu` varchar(250) COLLATE latin1_general_ci NOT NULL COMMENT 'Controlador al que se relaciona este menú'
 )
 
-INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Usuarios', 'administrador/usuarios');
+INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Usuarios', 'administrador/usuario');
 INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Permisos', 'administrador/permisos')
-INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Personas', 'gestion/personas')
+INSERT INTO `menu`(`nombre_menu`, `enlace_menu`) VALUES ('Personas', 'gestion/persona')
 
 
 CREATE TABLE permiso(

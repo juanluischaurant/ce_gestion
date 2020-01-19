@@ -36,7 +36,7 @@
                                         </h4>
                                     </div>
                                     
-                                    <form action="<?php echo base_url();?>movimientos/inscripciones/update" method="POST" class="form-horizontal" id='editar-instancia'>
+                                    <form action="<?php echo base_url();?>movimientos/inscripcion/update" method="POST" class="form-horizontal" id='editar-instancia'>
                                     
                                         <!-- IDs necesarios para la operación -->
                                         <input type="hidden" name="id-inscripcion-instancia" value="<?php echo $data_inscripcion_instancia->id_inscripcion_instancia; ?>">
@@ -142,7 +142,7 @@
                                     <h4><b>Gestión de Pagos: Agregar Pagos</b></h4>
                                 </div>
                                                         
-                                <form action="<?php echo base_url();?>movimientos/inscripciones/update_asociar_pago" method="POST" class="form-horizontal" id='agregar-pago'>
+                                <form action="<?php echo base_url();?>movimientos/inscripcion/update_asociar_pago" method="POST" class="form-horizontal" id='agregar-pago'>
                                     <!-- ID De la inscripción de instancia bajo edición -->
                                     <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion_instancia->id_inscripcion; ?>">
                                                                             
@@ -308,7 +308,7 @@
                                 </div>
                                 <!-- /.box -->
                                                         
-                                <form action="<?php echo base_url();?>movimientos/inscripciones/update_desasociar_pago" method="POST" class="form-horizontal" id='desasociar-pago'>
+                                <form action="<?php echo base_url();?>movimientos/inscripcion/update_desasociar_pago" method="POST" class="form-horizontal" id='desasociar-pago'>
                                     <!-- ID De la inscripción de instancia bajo edición -->
                                     <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion_instancia->id_inscripcion; ?>">
 

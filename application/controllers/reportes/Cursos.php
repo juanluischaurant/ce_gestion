@@ -5,12 +5,12 @@ class Cursos extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->load->model('Cursos_model');  
+        $this->load->model('Curso_model');  
     }
 
     public function index() {
         $data = array(
-            'cursos' => $this->Cursos_model->getCursos()
+            'cursos' => $this->Curso_model->getCursos()
         );
 
         $this->load->view('layouts/header');

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Titulares_model extends CI_Model {
+class Titular_model extends CI_Model {
 
     public function get_titulares()
     {

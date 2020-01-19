@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Periodos extends CI_Controller {
+class Periodo extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
-        $this->load->model('Periodos_model');  
+        $this->load->model('Titular_model');  
     }
 
 	public function index()
 	{
 		$data = array(
-			'periodos' => $this->Periodos_model->get_periodos(),
+			'periodos' => $this->Titular_model->get_periodos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -22,7 +22,7 @@ class Periodos extends CI_Controller {
 	public function add()
 	{
 		$data = array(
-			'lista_meses' => $this->Periodos_model->meses_dropdown(),
+			'lista_meses' => $this->Titular_model->meses_dropdown(),
 		);
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
@@ -41,13 +41,13 @@ class Periodos extends CI_Controller {
 	 */
 	public function edit($id_periodo)
 	{
-		$fecha_valida = $this->Periodos_model->verificar_validez_periodo($id_periodo);
+		$fecha_valida = $this->Titular_model->verificar_validez_periodo($id_periodo);
 
 		if($fecha_valida === TRUE)
 		{
 			$data = array(
-				'lista_meses' => $this->Periodos_model->meses_dropdown(),
-				'data_periodo' => $this->Periodos_model->get_periodo($id_periodo)
+				'lista_meses' => $this->Titular_model->meses_dropdown(),
+				'data_periodo' => $this->Titular_model->get_periodo($id_periodo)
 			);
 			
 			$this->load->view('layouts/header');
@@ -58,7 +58,7 @@ class Periodos extends CI_Controller {
 		else if($fecha_valida === FALSE)
 		{
 			$this->session->set_flashdata('alert', 'El período ya expiro, no puede ser editado.');
-				redirect(base_url().'gestion/periodos/');
+				redirect(base_url().'gestion/periodo/');
 		}
 	}
 
@@ -78,7 +78,7 @@ class Periodos extends CI_Controller {
 				'fecha_culminacion_periodo' => $this->input->post('fecha-culminacion'),
 			);
 	
-			$resultado = $this->Periodos_model->save($data);
+			$resultado = $this->Titular_model->save($data);
 
 			if($resultado === FALSE)
 			{
@@ -88,7 +88,7 @@ class Periodos extends CI_Controller {
 			else
 			{
 				$this->session->set_flashdata('success', 'Se agregó el nuevo Período.');
-				redirect(base_url().'gestion/periodos/');
+				redirect(base_url().'gestion/periodo/');
 			}
 		} 
 		else
@@ -109,15 +109,15 @@ class Periodos extends CI_Controller {
 			'fecha_culminacion_periodo' => $this->input->post('fecha-culminacion'),
 		);
 
-		if($this->Periodos_model->update($id_periodo, $data))
+		if($this->Titular_model->update($id_periodo, $data))
 		{
 			$this->session->set_flashdata('success', 'Período actualizado correctamente.');
-			redirect(base_url().'gestion/periodos');
+			redirect(base_url().'gestion/periodo');
 		}
 		else
 		{
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-			redirect(base_url().'gestion/periodos/edit/'.$id_periodo);
+			redirect(base_url().'gestion/periodo/edit/'.$id_periodo);
 		}
 	}
 
@@ -129,25 +129,25 @@ class Periodos extends CI_Controller {
 	 */
 	public function delete($id_periodo)
 	{
-		$instancias_asociadas = $this->Periodos_model->count_instancias_asociadas($id_periodo)->instancias_asociadas;
-		$nombre_periodo = $this->Periodos_model->count_instancias_asociadas($id_periodo)->nombre_periodo;
+		$instancias_asociadas = $this->Titular_model->count_instancias_asociadas($id_periodo)->instancias_asociadas;
+		$nombre_periodo = $this->Titular_model->count_instancias_asociadas($id_periodo)->nombre_periodo;
 
 		if($instancias_asociadas > 0)
 		{
 			$this->session->set_flashdata('alert', 'No se puede eliminar el periodo ' . $nombre_periodo . '. Tiene instancias asociadas.');
-			redirect(base_url().'gestion/periodos/');
+			redirect(base_url().'gestion/periodo/');
 		}
 		else
 		{
-			if($this->Periodos_model->delete($id_periodo))
+			if($this->Titular_model->delete($id_periodo))
 			{
 				$this->session->set_flashdata('success', 'Se eliminó el periodo ' . $nombre_periodo);
-				redirect(base_url().'gestion/periodos/');
+				redirect(base_url().'gestion/periodo/');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se eliminó el periodo <b>' . $nombre_periodo. '</b> Algo pasó al consultar la base de datos');
-				redirect(base_url().'gestion/periodos/');
+				redirect(base_url().'gestion/periodo/');
 			}			
 		}
 	}

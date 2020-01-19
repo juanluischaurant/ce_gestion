@@ -46,7 +46,7 @@ $config = array(
         ),
     ),
     // Usada en el controlador:
-    // gestion/personas/store
+    // gestion/persona/store
     'agregar_persona' => array(
         array(
             'field' => 'cedula-persona',
@@ -83,7 +83,7 @@ $config = array(
         )
     ),
     // Usada en el controlador:
-    // administrador/usuarios/update
+    // administrador/usuario/update
     'editar_usuario' => array(
         array(
             'field' => 'username-usuario',
@@ -106,7 +106,7 @@ $config = array(
 
     ),
     // Usada en el controlador:
-    // movimientos/pagos/update
+    // movimientos/pago/update
     'editar_pago' => array(
         array(
             'field' => 'monto-de-operacion',
@@ -115,7 +115,7 @@ $config = array(
         ),
     ),
     // Usada en el controlador:
-    // movimientos/inscripciones/add
+    // movimientos/inscripcion/add
     'agregar_pago' => array(
         array(
             'field' => 'numero-de-operacion-unico',

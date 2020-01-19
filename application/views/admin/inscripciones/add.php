@@ -14,7 +14,7 @@
         <div class="box box-solid">
             <div class="box-body">
                         
-                <form action="<?php echo base_url();?>movimientos/inscripciones/store" method="POST" class="form-horizontal">
+                <form action="<?php echo base_url();?>movimientos/inscripcion/store" method="POST" class="form-horizontal">
                             
                     <p>Buscar Pago:</p>
                     <div class="input-group margin col-md-5">

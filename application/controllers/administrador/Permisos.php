@@ -30,7 +30,7 @@ class Permisos extends CI_Controller {
         {
             // Carga el modélo
             $this->load->model("Permisos_model");
-            $this->load->model("Usuarios_model");
+            $this->load->model("Usuario_model");
         }
     }
 
@@ -49,7 +49,7 @@ class Permisos extends CI_Controller {
     public function add()
     {
 		$data = array(
-			'roles' => $this->Usuarios_model->roles_dropdown(),
+			'roles' => $this->Usuario_model->roles_dropdown(),
 			'menus' => $this->Permisos_model->menus_dropdown(),
         );
         

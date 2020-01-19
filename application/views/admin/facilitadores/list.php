@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/facilitadores/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Facilitador</a>
+                        <a href="<?php echo base_url(); ?>gestion/facilitador/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Facilitador</a>
                     </div>
                 </div>
                 
@@ -49,10 +49,10 @@
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-facilitador" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataFacilitador?>'><span class="fa fa-eye"></span></button>
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitadores/edit/<?php echo $facilitador->id_facilitador; ?>" .
+                                                <a href="<?php echo base_url() ?>gestion/facilitador/edit/<?php echo $facilitador->id_facilitador; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitadores/delete/<?php echo $facilitador->id_facilitador; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/facilitador/delete/<?php echo $facilitador->id_facilitador; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>

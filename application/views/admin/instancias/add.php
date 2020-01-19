@@ -26,7 +26,7 @@
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url(); ?>gestion/instancias/store" method="post" class='form-horizontal'>
+                        <form action="<?php echo base_url(); ?>gestion/instancia/store" method="post" class='form-horizontal'>
                             
                             <div class="form-group <?php echo !empty(form_error('nombre_curso'))? 'has-error' : '';?>">
                                 <div class="col-md-6">

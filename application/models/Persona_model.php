@@ -1,9 +1,14 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Personas_model extends CI_Model {
+class Persona_model extends CI_Model {
 
     
+    /**
+     * Obtén una lista de todas las personas registradas en unna instancia.
+     * 
+     * @return array
+     */
     public function getPersonas()
     {
         $resultados = $this->db->select(
@@ -87,7 +92,7 @@ class Personas_model extends CI_Model {
      * Determina si una persona está registrada como participante
      *
      * @param integer $id_persona
-     * @return void
+     * @return array
      */
     public function get_es_participante($id_persona)
     {
@@ -109,7 +114,7 @@ class Personas_model extends CI_Model {
      * Determina si una persona está registrada como participante
      *
      * @param integer $id_persona
-     * @return void
+     * @return array
      */
     public function get_es_titular($id_persona)
     {
@@ -131,7 +136,7 @@ class Personas_model extends CI_Model {
      * Determina si una persona está registrada como participante
      *
      * @param integer $id_persona
-     * @return void
+     * @return array
      */
     public function get_es_facilitador($id_persona)
     {

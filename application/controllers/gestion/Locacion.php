@@ -1,17 +1,17 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Locaciones extends CI_Controller {
+class Locacion extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
-        $this->load->model('Locaciones_model');  
+        $this->load->model('Locacion_model');  
     }
 
 	public function index()
 	{
 		$data = array(
-			'locaciones' => $this->Locaciones_model->get_locaciones(),
+			'locaciones' => $this->Locacion_model->get_locaciones(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -30,7 +30,7 @@ class Locaciones extends CI_Controller {
 	public function edit($id_locacion)
 	{
 		$data = array(
-			'locacion' => $this->Locaciones_model->get_locacion($id_locacion),
+			'locacion' => $this->Locacion_model->get_locacion($id_locacion),
 		);
 		$this->load->view('layouts/header');
         $this->load->view('layouts/aside');
@@ -44,8 +44,8 @@ class Locaciones extends CI_Controller {
 		$id_locacion = $this->input->post('id_locacion');
 		
 		$data = array(
-			"locacion" => $this->Locaciones_model->get_locacion($id_locacion),
-			"instancias" => $this->Locaciones_model->get_instancias_asociadas($id_locacion)
+			"locacion" => $this->Locacion_model->get_locacion($id_locacion),
+			"instancias" => $this->Locacion_model->get_instancias_asociadas($id_locacion)
 		);
 
 		$this->load->view("admin/locaciones/view", $data);
@@ -62,7 +62,7 @@ class Locaciones extends CI_Controller {
 	 */
 	public function delete_location($id_locacion) 
 	{
-		$instancias_asociadas = $this->Locaciones_model->count_instancias_asociadas($id_locacion)->instancias_asociadas;
+		$instancias_asociadas = $this->Locacion_model->count_instancias_asociadas($id_locacion)->instancias_asociadas;
 
 		if($instancias_asociadas > 0)
 		{
@@ -71,10 +71,10 @@ class Locaciones extends CI_Controller {
 		}
 		else
 		{
-			if($this->Locaciones_model->delete($id_locacion))
+			if($this->Locacion_model->delete($id_locacion))
 			{
 				$this->session->set_flashdata('success', 'Se eliminó exitosamente la locación.');
-				redirect(base_url().'gestion/locaciones/');
+				redirect(base_url().'gestion/locacion/');
 			}
 		}
 	}
@@ -92,9 +92,9 @@ class Locaciones extends CI_Controller {
 	{
 		$data = array('estado_locacion' => 0);
 
-		$this->Locaciones_model->update($id_locacion, $data);
+		$this->Locacion_model->update($id_locacion, $data);
 		$this->session->set_flashdata('success', 'Se desactivó exitosamente la locación.');
-		redirect(base_url().'gestion/locaciones/');
+		redirect(base_url().'gestion/locacion/');
 	}
 
 	/**
@@ -110,10 +110,10 @@ class Locaciones extends CI_Controller {
 	{
 		$data = array('estado_locacion' => 1);
 
-		if($this->Locaciones_model->update($id_locacion, $data))
+		if($this->Locacion_model->update($id_locacion, $data))
 		{
 			$this->session->set_flashdata('success', 'Se activó exitosamente la locación.');
-			redirect(base_url().'gestion/locaciones/');
+			redirect(base_url().'gestion/locacion/');
 		}
 	}
 
@@ -130,13 +130,13 @@ class Locaciones extends CI_Controller {
 				'direccion_locacion' => $direccion_locacion
 			);
 	
-			if($this->Locaciones_model->save($data))
+			if($this->Locacion_model->save($data))
 			{
-				redirect(base_url().'gestion/locaciones');
+				redirect(base_url().'gestion/locacion');
 			} else
 			{
 				$this->session->set_flashdata('error', 'No se pudo agregar la locación.');
-				redirect(base_url().'gestion/locaciones/add');
+				redirect(base_url().'gestion/locacion/add');
 			}
 		} else {
 			$this->add();
@@ -155,10 +155,10 @@ class Locaciones extends CI_Controller {
 			'direccion_locacion' => $direccion_locacion
 		);
 
-		if($this->Locaciones_model->update($id_locacion, $data))
+		if($this->Locacion_model->update($id_locacion, $data))
 		{
 			$this->session->set_flashdata('success', 'Se actualizó la locación.');
-			redirect(base_url().'gestion/locaciones/');
+			redirect(base_url().'gestion/locacion/');
 		}
 	}
 

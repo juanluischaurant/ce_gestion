@@ -22,7 +22,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>movimientos/pagos/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Pago</a>
+                        <a href="<?php echo base_url(); ?>movimientos/pago/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Pago</a>
                     </div>
                 </div>
                 
@@ -79,7 +79,7 @@
                                                 <button type='button' class="btn btn-info btn-view-pago" data-toggle='modal' data-target='#modal-default' value='<?php echo $id_pago ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>movimientos/pagos/edit/<?php echo $id_pago; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>movimientos/pago/edit/<?php echo $id_pago; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
                                                 <a href="#" class="btn btn-danger">
