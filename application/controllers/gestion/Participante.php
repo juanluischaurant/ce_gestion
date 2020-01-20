@@ -78,7 +78,7 @@ class Participante extends CI_Controller {
 		elseif($id_persona = 'new')
 		{
 			$data_persona = array(
-				"personas" => $this->Persona_model->getPersonas() 
+				"personas" => $this->Persona_model->get_personas() 
 			);
 
 			$this->load->view('layouts/header');
@@ -105,7 +105,7 @@ class Participante extends CI_Controller {
 			'fk_id_persona_2' => $fk_id_persona_2,
 		);
 
-		if($this->Participante_model->evitaParticipanteDuplicado($fk_id_persona_2) === true)
+		if($this->Participante_model->duplicidad_participante($fk_id_persona_2) === true)
 		{
 			if($this->Participante_model->save($data_participante))
 			{

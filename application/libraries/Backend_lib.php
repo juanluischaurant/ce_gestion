@@ -21,7 +21,8 @@ class Backend_lib {
      */
     public function control()
     {
-        if(!$this->CI->session->userdata('login')) // Verifica que se haya iniciado sesión
+        // Verifica que se haya iniciado sesión
+        if(!$this->CI->session->userdata('login')) 
         {
             // Redirecciona al usuario al formulario de loggin
             redirect(base_url());
@@ -30,7 +31,9 @@ class Backend_lib {
         // Almacena la dirección raíz + 1er segmento, ejemplo: http://localhost/ce_gestion/administrador/
         $url = $this->CI->uri->segment(1); 
 
-        if($this->CI->uri->segment(2)) // Verifica si existe un 2do segmento
+         // Verifica si existe un 2do segmento:
+        // http://localhost/ce_gestion/administrador/permiso
+        if($this->CI->uri->segment(2))
         {
             $url = $this->CI->uri->segment(1).'/'.$this->CI->uri->segment(2);
         }
@@ -39,17 +42,18 @@ class Backend_lib {
         // El método get_id() realiza una consulta a la tabla "menu" de la Base de Datos
         $informacion_menu = $this->CI->Backend_model->get_id($url);
 
-        // Los datos de sesión se consiguen en el directorio: applications/controllers/Auth.php
-        $permisos = $this->CI->Backend_model->get_permisos_usuario($informacion_menu->id_menu, $this->CI->session->userdata('rol'));
+        // Los datos de sesión se consiguen en el directorio: 
+        // applications/controllers/Auth.php
+        $permisos = $this->CI->Backend_model->get_permisos_usuario($informacion_menu->id, $this->CI->session->userdata('rol'));
 
         // Verifica los permisos de lectura del usuario
         if($permisos->read == 0)
         {
-            redirect(base_url().'dashboard'); 
+           redirect(base_url().'dashboard'); 
         }
         else
         {
-            return $permisos;
+           return $permisos;
         }
     }
     

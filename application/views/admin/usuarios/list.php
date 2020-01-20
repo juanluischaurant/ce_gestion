@@ -48,22 +48,22 @@
                                 <?php if(!empty($usuarios)): ?>
                                 <?php foreach($usuarios as $usuario): ?>
                                     <tr>
-                                        <td><?php echo $usuario->id_usuario; ?></td>
+                                        <td><?php echo $usuario->id; ?></td>
                                         <td><?php echo $usuario->fecha_creacion; ?></td>
-                                        <td><?php echo $usuario->nombres_usuario; ?></td>
-                                        <td><?php echo $usuario->apellidos_usuario; ?></td>
-                                        <td><?php echo $usuario->email_usuario; ?></td>
-                                        <td><?php echo $usuario->username_usuario; ?></td>
+                                        <td><?php echo $usuario->nombres; ?></td>
+                                        <td><?php echo $usuario->apellidos; ?></td>
+                                        <td><?php echo $usuario->email; ?></td>
+                                        <td><?php echo $usuario->username; ?></td>
                                         <td><small class="label label-success"><?php echo $usuario->rol; ?></small></td>
-                                        <?php $dataUsuario = $usuario->id_usuario; ?>
+                                        <?php $dataUsuario = $usuario->id; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-usuario" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataUsuario?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url(); ?>administrador/usuario/edit/<?php echo $usuario->id_usuario; ?>" .
+                                                <a href="<?php echo base_url(); ?>administrador/usuario/edit/<?php echo $usuario->id; ?>" .
                                                 class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
-                                                <a href="<?php echo base_url(); ?>administrador/usuario/delete/<?php echo $usuario->id_usuario; ?>" class="btn btn-danger btn-remove">
+                                                <a href="<?php echo base_url(); ?>administrador/usuario/delete/<?php echo $usuario->id; ?>" class="btn btn-danger btn-remove">
                                                     <span class="fa fa-remove"></span>
                                                 </a>
                                             </div>

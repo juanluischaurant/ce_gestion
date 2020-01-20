@@ -97,14 +97,14 @@ class Usuario extends CI_Controller {
 		$username_usuario = $this->input->post('username-usuario');
 		$password_usuario = $this->input->post('password-usuario');
 		$rol_usuario = $this->input->post('rol-usuario');
-		$estado_usuario = $this->input->post('estado-usuario');
+		$estado = $this->input->post('estado-usuario');
 
 		$data = array(
-			'nombres_usuario' => $nombres_usuario,
+			'nombres' => $nombres_usuario,
 			'apellidos_usuario' => $apellidos_usuario,
-			'email_usuario' => $email_usuario,
-			'username_usuario' => $username_usuario,
-			'fk_rol_id_1' => $rol_usuario
+			'email' => $email_usuario,
+			'username' => $username_usuario,
+			'id_rol' => $rol_usuario
 		);
 
 		// Verifica si el campo de contraseña está vacío o no
@@ -159,12 +159,12 @@ class Usuario extends CI_Controller {
         $email_usuario = $this->input->post('email-usuario');
 
         $data = array(
-            'nombres_usuario' => $nombres_usuario,
-            'apellidos_usuario' => $apellidos_usuario,
-            'username_usuario' => $username_usuario,
-            'password_usuario' => sha1($password_usuario),
-            'fk_rol_id_1' => $rol_usuario,
-            'email_usuario' => $email_usuario
+            'nombres' => $nombres_usuario,
+            'apellidos' => $apellidos_usuario,
+            'username' => $username_usuario,
+            'password' => sha1($password_usuario),
+            'id_rol' => $rol_usuario,
+            'email' => $email_usuario
         );
 
         $this->form_validation->set_rules('username-usuario', 'Username', 'required|is_unique[usuario.username_usuario]|min_length[6]|max_length[25]'); 
@@ -201,14 +201,14 @@ class Usuario extends CI_Controller {
     public function delete($id_usuario)
 	{
 		$data = array(
-			'estado_usuario' => 0,
+			'estado' => 0,
 		);
 		
 		if($this->Usuario_model->update($id_usuario, $data))
 		{
-			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 1 = Desactivar) 
-			$descripcion_accion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
+			$id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+			$id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 1 = Desactivar) 
+			$descripcion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
 			$tabla_afectada = "Usuario"; // Tabla afectada
 
 			$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);

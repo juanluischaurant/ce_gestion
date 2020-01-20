@@ -43,7 +43,7 @@ class Facilitador extends CI_Controller {
 		} elseif($id_persona = 'new') {
 					
 			$data_persona = array(
-				"personas" => $this->Persona_model->getPersonas() 
+				"personas" => $this->Persona_model->get_personas() 
 			);
 
 			$this->load->view('layouts/header');
@@ -110,8 +110,8 @@ class Facilitador extends CI_Controller {
 		// $estado_facilitador; <- Aún no utilizada
 
 		$data = array(
-			'cedula_persona' => $cedula,
-			'nombres_persona' => $nombres,
+			'cedula' => $cedula,
+			'nombres' => $nombres,
 			'apellidos_persona' => $apellidos,
 			'fecha_nacimiento_persona' => $fecha_nacimiento,
 			'genero_persona' => $genero,

@@ -43,7 +43,7 @@
                                         <td><?php echo $participante->nombres_persona; ?></td>
                                         <td><?php echo $participante->apellidos_persona; ?></td>
                                         <td><?php echo $participante->telefono_persona; ?></td>
-                                        <td><?php echo $participante->cedula_persona; ?></td>
+                                        <td><?php echo $participante->cedula; ?></td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $participante->id_participante?>'>

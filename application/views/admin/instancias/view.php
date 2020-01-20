@@ -27,7 +27,7 @@
 						<td><?php echo $contador++; ?></td>
 						<td><?php echo $participante_inscrito->hora_inscripcion; ?></td>
 						<td><?php echo $participante_inscrito->nombres_persona; ?></td>
-						<td><?php echo $participante_inscrito->cedula_persona; ?></td>
+						<td><?php echo $participante_inscrito->cedula; ?></td>
 					</tr>
 					<?php endforeach; ?>
 				<?php endif; ?>

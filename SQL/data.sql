@@ -341,3 +341,16 @@ CALL insertar_pago_nuevo(
     10000.00,
     '2020-01-07'
     )
+
+-- =============================================================
+-- =============================================================
+-- Obtén nombre de un MES a partir de fecha
+SET lc_time_names = 'es_ES'; -- Cambia el idioma a Español
+
+-- Acá se presentan dos opciones
+SELECT 
+    MONTHNAME(fecha_inicio),
+    DATE_FORMAT(periodo.fecha_inicio, '%M') as Mes
+FROM `periodo`
+-- =============================================================
+-- =============================================================

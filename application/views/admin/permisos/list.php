@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>administrador/permisos/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Permiso</a>
+                        <a href="<?php echo base_url(); ?>administrador/permiso/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Permiso</a>
                     </div>
                 </div>
                 
@@ -47,9 +47,9 @@
                                 <?php if(!empty($permisos)): ?>
                                 <?php foreach($permisos as $permiso): ?>
                                      <tr>
-                                        <td><?php echo $permiso->id_permiso; ?></td>
-                                        <td><?php echo $permiso->nombre_menu; ?></td>
-                                        <td><?php echo $permiso->nombre_rol; ?></td>
+                                        <td><?php echo $permiso->id; ?></td>
+                                        <td><?php echo $permiso->nombre; ?></td>
+                                        <td><?php echo $permiso->nombre; ?></td>
                                         <td>
                                             <?php if($permiso->read == 0): ?>
                                                 <span class="fa fa-times"></span>
@@ -81,7 +81,7 @@
                    
                                         <td>
                                             <div class="btn-group">
-                                                <a href="<?php echo base_url() ?>administrador/permisos/edit/<?php echo $permiso->id_permiso; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>administrador/permiso/edit/<?php echo $permiso->id; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
                                                 <a href="#" class="btn btn-danger">

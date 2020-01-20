@@ -1,39 +1,24 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Titular_model extends CI_Model {
+class Periodo_model extends CI_Model {
 
     // Estas dos funciones sirven para unir las tablas relacionadas a la tabla "dictado"
     public function get_periodos()
     {
         $SQL = "SELECT
-        p.id_periodo, 
-        concat(mi.nombre_mes, '-', mc.nombre_mes, ' ', YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
-        p.fecha_inicio_periodo,
-        p.fecha_culminacion_periodo,
-        p.fecha_creacion,
-        (SELECT COUNT(*) as instancias_asociadas FROM instancia WHERE instancia.fk_id_periodo_1 = p.id_periodo) AS instancias_asociadas
+        p.id, 
+        concat(MONTH(p.fecha_inicio), '-', MONTH(p.fecha_culminacion), ' ', YEAR(p.fecha_inicio)) as nombre_periodo,
+        p.fecha_inicio,
+        p.fecha_culminacion,
+        p.fecha_registro,
+        (SELECT COUNT(*) as instancias_asociadas FROM instancia WHERE instancia.id_periodo = p.id) AS instancias_asociadas
       FROM periodo AS p
-      JOIN mes AS mi ON p.mes_inicio_periodo = mi.id_mes
-      JOIN mes AS mc ON p.mes_cierre_periodo = mc.id_mes
-      WHERE p.estado_periodo = 1";
+      WHERE p.estado = 1";
 
       $resultados = $this->db->query($SQL);
 
       return $resultados->result();
-
-        // $resultados = $this->db->select(
-        //     'p.id_periodo, 
-        //     concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
-        //     p.fecha_inicio_periodo,
-        //     p.fecha_culminacion_periodo,
-        //     p.fecha_creacion'
-        // )
-        // ->from('periodo as p')
-        // ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
-        // ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
-        // ->get(); 
-        // return $resultados->result();
     }
     
     public function get_periodo($id_periodo)

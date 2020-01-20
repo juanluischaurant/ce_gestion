@@ -11,27 +11,24 @@ class Instancia_model extends CI_Model {
     public function get_instancias()
     {
         // Obtén una lista de cursos instanciados
-        $resultados = $this->db->select('instancia.id_instancia, 
-        instancia.cupos_instancia, 
-        instancia.cupos_instancia_ocupados,
-        instancia.fecha_creacion,
-        instancia.estado_instancia,
-        instancia.serial_instancia,
-        concat(instancia.cupos_instancia, "/", instancia.cupos_instancia_ocupados) as total_cupos,
-        ti.nombre_turno,
-        ti.id_turno,
-        ti.descripcion_turno,
-        curso.nombre_curso,
-        concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as periodo_academico,
-        per.fecha_culminacion_periodo')
+        $resultados = $this->db->select('instancia.id, 
+        instancia.cupos, 
+        instancia.cupos,
+        instancia.fecha_registro,
+        instancia.estado,
+        instancia.cupos as total_cupos,
+        tur.nombre,
+        tur.id,
+        tur.descripcion,
+        curso.nombre,
+        concat(MONTH(per.fecha_inicio), "-", MONTH(per.fecha_culminacion), " ", YEAR(per.fecha_inicio)) as periodo_academico,
+        per.fecha_culminacion')
         ->from('instancia')
-        ->join('turno_instancia as ti', 'instancia.fk_id_turno_instancia_1 = ti.id_turno')
-        ->join('curso', 'curso.id_curso = instancia.fk_id_curso_1')
-        ->join('periodo as per', 'per.id_periodo = instancia.fk_id_periodo_1')
-        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
-        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
-        ->where('instancia.estado_instancia', '1')
-        ->or_where('instancia.estado_instancia', '0')
+        ->join('turno as tur', 'instancia.id_turno = tur.id')
+        ->join('curso', 'curso.id = instancia.id_curso')
+        ->join('periodo as per', 'per.id = instancia.id_periodo')
+        ->where('instancia.estado', '1')
+        ->or_where('instancia.estado', '0')
         ->get();
 
         return $resultados->result();
@@ -52,12 +49,10 @@ class Instancia_model extends CI_Model {
             ins.serial_instancia,
             ins.cupos_instancia,
             ins.precio_instancia,
-            ins.fk_id_turno_instancia_1,
+            ins.id_turno,
             ins.descripcion_instancia,
             cur.nombre_curso,
             per.id_periodo,
-            mi.nombre_mes,
-            mc.nombre_mes,
             concat(mi.nombre_mes, " - ", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as periodo,
             per.fecha_culminacion_periodo,
             loc.id_locacion,
@@ -66,14 +61,12 @@ class Instancia_model extends CI_Model {
             concat(perso.nombres_persona, " ", perso.apellidos_persona) AS nombre_facilitador'
         )
         ->from('instancia as ins')
-        ->join('curso as cur', 'cur.id_curso = ins.fk_id_curso_1')
-        ->join('periodo as per', 'per.id_periodo = ins.fk_id_periodo_1')
-        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
-        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
-        ->join('locacion as loc', 'loc.id_locacion = ins.fk_id_locacion_1')
-        ->join('facilitador as fac', 'fac.id_facilitador = ins.fk_id_facilitador_1')
-        ->join('persona as perso', 'perso.id_persona = fac.fk_id_persona_3')
-        ->where('ins.id_instancia', $id_instancia)
+        ->join('curso as cur', 'cur.id = ins.id_curso')
+        ->join('periodo as per', 'per.id = ins.id_periodo')
+        ->join('locacion as loc', 'loc.id = ins.id_locacion')
+        ->join('facilitador as fac', 'fac.id = ins.id_facilitador')
+        ->join('persona as perso', 'perso.id = fac.id_persona')
+        ->where('ins.id', $id_instancia)
         ->get('instancia');
 
         return $resultado->row();
@@ -214,7 +207,7 @@ class Instancia_model extends CI_Model {
      */
     public function turnos_dropdown()
     {
-        $query = $this->db->from('turno_instancia')
+        $query = $this->db->from('turno')
         ->get();
 
         $array[''] = 'Selecciona';
@@ -223,7 +216,7 @@ class Instancia_model extends CI_Model {
         {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
-            $array[$row->id_turno] = $row->nombre_turno;
+            $array[$row->id] = $row->nombre;
         }
 
         return $array;
@@ -240,21 +233,21 @@ class Instancia_model extends CI_Model {
     public function get_participantes_inscritos($id_instancia)
     {
         $resultado = $this->db->select(
-            'in.id_instancia,
-            cu.nombre_curso,
-            insc.hora_inscripcion,
-            par.estado_participante,
-            per.nombres_persona,
-            per.apellidos_persona,
-            per.cedula_persona'
+            'in.id,
+            cu.nombre,
+            insc.fecha_registro,
+            par.estado,
+            per.nombres,
+            per.apellidos,
+            per.cedula'
         )
         ->from('instancia as in')
-        ->join('curso as cu', 'cu.id_curso = in.fk_id_curso_1')
+        ->join('curso as cu', 'cu.id = in.fk_id_curso_1')
         ->join('periodo as pe', 'pe.id_periodo = in.fk_id_periodo_1')
         ->join('inscripcion_instancia as ii', 'ii.fk_id_instancia_1 = in.id_instancia')
         ->join('inscripcion as insc', 'insc.id_inscripcion = ii.fk_id_inscripcion_1')
-        ->join('participante as par', 'par.id_participante = insc.fk_id_participante_1')
-        ->join('persona as per', 'per.id_persona = par.fk_id_persona_2')
+        ->join('participante as par', 'par.id = insc.fk_id_participante_1')
+        ->join('persona as per', 'per.id = par.id_persona')
         ->where('in.id_instancia', $id_instancia) 
         ->where('insc.activa', 1)
         ->get();
@@ -266,7 +259,7 @@ class Instancia_model extends CI_Model {
     {
         // Obtén los registros de instancia de los cursos
         $resultados = $this->db->select(
-            'p.id_periodo, 
+            'p.id, 
             concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as label'
         )
         ->from('periodo as p')
@@ -283,12 +276,12 @@ class Instancia_model extends CI_Model {
     public function getLocacionesJSON($valor) {
          // Obtén los registros de instancia de los cursos
          $resultados = $this->db->select(
-            'l.id_locacion,
-            l.nombre_locacion as label,
-            l.direccion_locacion'
+            'l.id,
+            l.nombre as label,
+            l.direccion'
         )
         ->from('locacion l')
-        ->like('nombre_locacion', $valor)
+        ->like('nombre', $valor)
         ->get();
 
         return $resultados->result_array();
@@ -298,18 +291,18 @@ class Instancia_model extends CI_Model {
     {
          // Obtén los registros de instancia de los profesores
          $resultados = $this->db->select(
-            'f.id_facilitador,
-            f.fk_id_persona_3,
-            p.id_persona,
-            p.nombres_persona,
-            p.apellidos_persona,
-            concat(p.nombres_persona, " ", p.apellidos_persona) as label'
+            'f.id,
+            f.id_persona,
+            p.id,
+            p.nombres,
+            p.apellidos,
+            concat(p.nombres, " ", p.apellidos) as label'
         )
         ->from('facilitador f')
-        ->join('persona as p', 'p.id_persona = f.fk_id_persona_3')
-        ->where('f.estado_facilitador', '1') 
-        ->like('p.nombres_persona', $valor)
-        ->or_like('p.apellidos_persona', $valor)
+        ->join('persona as p', 'p.id = f.id_persona')
+        ->where('f.estado', '1') 
+        ->like('p.nombres', $valor)
+        ->or_like('p.apellidos', $valor)
         ->get();
 
         return $resultados->result_array();

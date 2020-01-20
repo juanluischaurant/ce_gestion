@@ -42,7 +42,7 @@ class Persona extends CI_Controller {
 	{
 		$data = array(
 			'permisos' => $this->permisos,
-			'personas' => $this->Persona_model->getPersonas(),
+			'personas' => $this->Persona_model->get_personas(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -118,17 +118,19 @@ class Persona extends CI_Controller {
 		$fecha_nacimiento = $this->input->post('nacimiento-persona');
 		$genero = $this->input->post('genero-persona');
 		$telefono = $this->input->post('telefono-persona');
+		$correo_electronico = $this->input->post('correo-persona');
 		$direccion = $this->input->post('direccion-persona');
 		
 		$data_persona = array(
-			'cedula_persona' => $cedula,
-			'nombres_persona' => $nombres,
-			'apellidos_persona' => $apellidos,
-			'fecha_nacimiento_persona' => $fecha_nacimiento,
-			'genero_persona' => $genero,
-			'telefono_persona' => $telefono,
-			'direccion_persona' => $direccion,
-			'estado_persona' => '1'
+			'cedula' => $cedula,
+			'nombres' => $nombres,
+			'apellidos' => $apellidos,
+			'fecha_nacimiento' => $fecha_nacimiento,
+			'genero' => $genero,
+			'telefono' => $telefono,
+			'correo_electronico' => $correo_electronico,
+			'direccion' => $direccion,
+			'estado' => '1'
 		);
 		
 		// Reglas declaradas para la validación de formularios en el directorio application/config/form_validation.php
@@ -140,16 +142,16 @@ class Persona extends CI_Controller {
 			{ 
 				$id_ultimo_registro = $this->Persona_model->lastID(); // id del último registro creado
 
-				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-				$fk_id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
-				$descripcion_accion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
+				$id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				$id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
+				$descripcion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
 				$tabla_afectada = "PERSONA"; // Tabla afectada
 
-				$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				$agregar_accion = $this->Accion_model->save_action($id_usuario, $id_tipo_accion, $descripcion, $tabla_afectada);
 	
 				// Redirige a la vista "success" dentro de este controlador
-				$this->success($id_ultimo_registro);
-				// redirect(base_url().'gestion/persona/success/'.$id_ultimo_registro);
+				// $this->success($id_ultimo_registro);
+				redirect(base_url().'gestion/persona/success/'.$id_ultimo_registro);
 			}
 			else
 			{
@@ -161,8 +163,7 @@ class Persona extends CI_Controller {
 		{
 			// $this hace referencia al módulo donde es invocado
 			$this->add();
-		}
-		
+		}	
 	}
 	
 	/**
@@ -186,6 +187,19 @@ class Persona extends CI_Controller {
 		$this->load->view('layouts/footer');	
 	}
 	
+	/**
+	 * Añadir Rol
+	 * 
+	 * Dentro del Sistema, cada persona puede tener 3 roles:
+	 * Titular
+	 * Participante
+	 * Facilitador
+	 * 
+	 * Luego que una persona se ha registrado, se le muestra al usuario una
+	 * ventana que le permite asignarle distintos roles a una persona.
+	 *
+	 * @return void
+	 */
 	public function add_rol()
 	{
 		$id_persona = $this->input->post('id_persona');
@@ -197,14 +211,14 @@ class Persona extends CI_Controller {
 
 		if($participante !== '')
 		{
-			$no_registrado = $this->Participante_model->evitaParticipanteDuplicado($id_persona);
+			$no_registrado = $this->Participante_model->duplicidad_participante($id_persona);
 
 			// Verifica si esta persona ya está registrada como participante
 			if($no_registrado === TRUE)
 			{
 				$data_participante = array(
-					'fk_id_persona_2' => $id_persona,
-					'fk_nivel_academico' => $nivel_academico_participante
+					'id_persona' => $id_persona,
+					'id_nivel_academico' => $nivel_academico_participante
 				);
 
 				$this->Participante_model->save($data_participante);
@@ -219,7 +233,7 @@ class Persona extends CI_Controller {
 			// Verifica si esta persona ya está registrada como titular
 			if($no_registrado === TRUE)
 			{
-				$data_titular = array( 'fk_id_persona_1' => $id_persona, );
+				$data_titular = array( 'id_persona' => $id_persona, );
 
 				$this->Titular_model->save($data_titular);
 				echo 'ho';
@@ -228,7 +242,6 @@ class Persona extends CI_Controller {
 		}
 
 		echo $mensaje;
-
 	}
 	
 	public function update() 
@@ -244,13 +257,13 @@ class Persona extends CI_Controller {
 		$direccion = $this->input->post('direccion-persona');
 
 		$data = array(
-			'cedula_persona' => $cedula,
-			'nombres_persona' => $nombres,
-			'apellidos_persona' => $apellidos,
-			'fecha_nacimiento_persona' => $fecha_nacimiento,
-			'genero_persona' => $genero,
-			'telefono_persona' => $telefono,
-			'direccion_persona' => $direccion
+			'cedula' => $cedula,
+			'nombres' => $nombres,
+			'apellidos' => $apellidos,
+			'fecha_nacimiento' => $fecha_nacimiento,
+			'genero' => $genero,
+			'telefono' => $telefono,
+			'direccion' => $direccion
 		);
 
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
@@ -285,7 +298,7 @@ class Persona extends CI_Controller {
 	public function delete($persona_id)
 	{
 		$data = array(
-			'estado_persona' => 0,
+			'estado' => 0,
 		);
 		
 		if($this->Persona_model->update($persona_id, $data))
@@ -314,8 +327,8 @@ class Persona extends CI_Controller {
 	 */
 	public function edit_unique_cedula($cedula)
 	{
-		$this->db->where_not_in('id_persona', $this->input->post('id-persona'));
-		$this->db->where('cedula_persona', $cedula);
+		$this->db->where_not_in('id', $this->input->post('id-persona'));
+		$this->db->where('cedula', $cedula);
 
 		if($this->db->count_all_results('persona') > 0)
 		{

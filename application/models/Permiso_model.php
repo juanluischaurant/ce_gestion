@@ -9,18 +9,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
  */
-class Permisos_model extends CI_Model {
+class Permiso_model extends CI_Model {
 
     public function get_permisos()
     {
         $resultados = $this->db->select(
             'p.*,
-            m.nombre_menu,
-            r.nombre_rol'
+            m.nombre,
+            r.nombre'
         )
         ->from('permiso as p')
-        ->join('rol as r', 'p.fk_id_rol_2 = r.rol_id')
-        ->join('menu as m', 'p.fk_id_menu_1 = m.id_menu')
+        ->join('rol as r', 'p.id_rol = r.id')
+        ->join('menu as m', 'p.id_menu = m.id')
         ->get();
 
         return $resultados->result();    
@@ -49,7 +49,7 @@ class Permisos_model extends CI_Model {
         {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
-            $array[$row->id_menu] = $row->nombre_menu;
+            $array[$row->id] = $row->nombre;
         }
 
         return $array;

@@ -30,10 +30,10 @@
                                 <?php if(!empty($acciones)): ?>
                                 <?php foreach($acciones as $accion): ?>
                                     <tr>
-                                        <td><?php echo $accion->id_accion; ?></td>
-                                        <td><?php echo $accion->fecha_creacion; ?></td>
-                                        <td><?php echo $accion->username_usuario; ?></td>
-                                        <td><?php echo $accion->nombre_tipo_accion . ' ' .$accion->descripcion_accion; ?></td>
+                                        <td><?php echo $accion->id; ?></td>
+                                        <td><?php echo $accion->fecha_registro; ?></td>
+                                        <td><?php echo $accion->username; ?></td>
+                                        <td><?php echo $accion->nombre . ' ' .$accion->descripcion; ?></td>
                                     </tr>
                                  <?php endforeach; ?>
                                 <?php endif; ?>

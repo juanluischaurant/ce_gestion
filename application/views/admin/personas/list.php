@@ -55,7 +55,7 @@
                                         <td><?php echo $persona->nombres_persona; ?></td>
                                         <td><?php echo $persona->apellidos_persona; ?></td>
                                         <td><?php echo $persona->telefono_persona; ?></td>
-                                        <td><?php echo $persona->cedula_persona; ?></td>
+                                        <td><?php echo $persona->cedula; ?></td>
                                         <?php $dataPersona = $persona->id_persona; ?>
                                         <td>
                                             <div class="btn-group">

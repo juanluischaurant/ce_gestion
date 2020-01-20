@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Nivel_academico_model extends CI_Model {
 
+    private $niveles_academicos = array();
+
     /**
      * Consulta la BD y obtiene una lista de todos los niveles académicos disponibles
      * para luego almacenarlos en un array que es retornado, el método se 
@@ -19,10 +21,10 @@ class Nivel_academico_model extends CI_Model {
         {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
-            $array[$nivel->id_nivel_academico] = $nivel->nombre_nivel_academico;
+            $this->niveles_academicos[$nivel->id] = $nivel->nombre;
         }
 
-        return $array;
+        return $this->niveles_academicos;
     }
 
 }

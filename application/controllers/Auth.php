@@ -34,9 +34,10 @@ class Auth extends CI_Controller {
         $password = $this->input->post('password');
 
         // Consulta al modelo Usuarios
-        $res = $this->Usuario_model->login($username, $password);
+        $datos_usuario = $this->Usuario_model->login($username, $password);
         
-        if(!$res)
+        // SI $datos_usuario retorna como resultado FALSE
+        if(!$datos_usuario)
         {
             $this->session->set_flashdata('error', 'El usuario y/o contraseña son incorrectos.');
             redirect(base_url());
@@ -44,9 +45,10 @@ class Auth extends CI_Controller {
         else
         {
             $data = array(
-                'id_usuario' => $res->id_usuario,
-                'nombre' => $res->nombres_usuario,
-                'rol' => $res->fk_rol_id_1,
+                'id_usuario' => $datos_usuario->id,
+                'nombre' => $datos_usuario->nombres,
+                'apellidos' => $datos_usuario->apellidos,
+                'rol' => $datos_usuario->id_rol,
                 'login' => TRUE
             );
 

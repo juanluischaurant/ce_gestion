@@ -56,7 +56,8 @@
                             </div>
 
                             <div class="row form-group">
-                                <div class="col-md-4">
+
+                                <div class="col-md-2">
                                     <label for="genero-persona">Genero:</label>
                                     <select name="genero-persona" id="genero-persona" class="form-control <?php echo !empty(form_error('genero-persona'))? 'has-error' : '';?>">
                                         <option value="">Seleccione</option>
@@ -66,12 +67,20 @@
                                     <?php echo form_error('genero-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <label for="telefono-persona">Número de Teléfono:</label>
                                     <input type="text" class="form-control <?php echo !empty(form_error('telefono-persona'))? 'has-error' : '';?>" id="telefono-persona" name="telefono-persona" value="<?php echo set_value('telefono-persona');?>">
                                     <?php echo form_error('telefono-persona', '<span class="help-block">', '</span>'); ?>
                                 </div>
+
+                                <div class="col-md-4">
+                                    <label for="correo-persona">Correo Electrónico:</label>
+                                    <input type="email" class="form-control <?php// echo !empty(form_error('telefono-persona'))? 'has-error' : '';?>" id="correo-persona" name="correo-persona" value="<?php //echo set_value('telefono-persona');?>">
+                                    <?php // echo form_error('telefono-persona', '<span class="help-block">', '</span>'); ?>
+                                </div>
+
                             </div>
+                            <!-- /.row -->
 
                             <div class="row form-group">
                                 <div class="col-md-10">

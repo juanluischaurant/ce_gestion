@@ -30,7 +30,7 @@
 
                             <div class="form-group">
                                 <label for="cedula-facilitador">Cédula:</label>
-                                <input type="text" class="form-control" id="cedula-facilitador" name="cedula-facilitador" value='<?php echo $facilitador->cedula_persona; ?>'>
+                                <input type="text" class="form-control" id="cedula-facilitador" name="cedula-facilitador" value='<?php echo $facilitador->cedula; ?>'>
                             </div>
 
                             <div class="form-group">

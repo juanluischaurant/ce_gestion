@@ -48,7 +48,7 @@
                                             <div class="form-group <?php echo !empty(form_error('turno-instancia')) ? 'has-error' : ''; ?>">
                                                 <?php
                                                     $atributos = array('class' => 'form-control', 'required');
-                                                    $value = $instancia->fk_id_turno_instancia_1;
+                                                    $value = $instancia->id_turno;
 
                                                     // Genera la etiquera
                                                     echo form_label('Turno:');

@@ -9,7 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * 
  * @author Juan Luis Chaurant <juanluischaurant@gmail.com>
  */
-class Permisos extends CI_Controller {
+class Permiso extends CI_Controller {
     
     private $permisos;
 
@@ -29,7 +29,7 @@ class Permisos extends CI_Controller {
         else
         {
             // Carga el modélo
-            $this->load->model("Permisos_model");
+            $this->load->model("Permiso_model");
             $this->load->model("Usuario_model");
         }
     }
@@ -37,7 +37,7 @@ class Permisos extends CI_Controller {
     public function index()
     {
 		$data = array(
-			'permisos' => $this->Permisos_model->get_permisos(),
+			'permisos' => $this->Permiso_model->get_permisos(),
         );
         
 		$this->load->view('layouts/header');
@@ -50,7 +50,7 @@ class Permisos extends CI_Controller {
     {
 		$data = array(
 			'roles' => $this->Usuario_model->roles_dropdown(),
-			'menus' => $this->Permisos_model->menus_dropdown(),
+			'menus' => $this->Permiso_model->menus_dropdown(),
         );
         
 		$this->load->view('layouts/header');
@@ -69,22 +69,22 @@ class Permisos extends CI_Controller {
         $eliminar = $this->input->post('eliminar');
 
         $data = array(
-            'fk_id_menu_1' => $menu,
-            'fk_id_rol_2' => $rol,
+            'id_menu' => $menu,
+            'id_rol' => $rol,
             'read' => $leer,
             'insert' => $insertar,
             'update' => $editar,
             'delete' => $eliminar
         );
 
-        if($this->Permisos_model->save($data))
+        if($this->Permiso_model->save($data))
         {
-            redirect(base_url().'administrador/permisos');
+            redirect(base_url().'administrador/permiso');
         }
         else
         {
             $this->session->set_flashdata('error', 'No se pudo guardar la información');
-            redirect(base_url().'administrador/permisos/add');
+            redirect(base_url().'administrador/permiso/add');
         }
     }
 }

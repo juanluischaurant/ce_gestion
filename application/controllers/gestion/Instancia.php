@@ -47,7 +47,7 @@ class Instancia extends CI_Controller {
 	public function add()
 	{
         $data = array(
-			'cursos' => $this->Curso_model->getCursos(),
+			'cursos' => $this->Curso_model->get_cursos(),
 			'lista_turnos' =>  $this->Instancia_model->turnos_dropdown()
 		);
 		$this->load->view('layouts/header');
@@ -59,7 +59,6 @@ class Instancia extends CI_Controller {
 	public function store()
 	{
         $id_curso_instanciado = $this->input->post('id-curso-instanciado');   // fk_id_curso_1
-        $serial_instancia = $this->input->post('serial-instancia');   // serial_instancia
         $id_profesor_instancia = $this->input->post('id-profesor-instancia'); // fk_id_facilitador
         $id_periodo_instancia = $this->input->post('id-periodo-instancia');   // fk_id_periodo_1
         $id_locacion_instancia = $this->input->post('id-locacion-instancia'); // fk_id_locacion_1
@@ -69,15 +68,14 @@ class Instancia extends CI_Controller {
 		$descripcion_instancia = $this->input->post('descripcion-instancia'); // descripcion_instancia
 		
         $data = array (
-			'fk_id_curso_1' => $id_curso_instanciado,
-			'serial_instancia' => $serial_instancia,
+			'id_curso' => $id_curso_instanciado,
+            'id_facilitador' => $id_profesor_instancia,
+            'id_periodo' => $id_periodo_instancia,
+			'id_turno' => $turno_instancia,
+			'id_locacion' => $id_locacion_instancia,
             'precio_instancia' => $precio_instancia,
-            'fk_id_facilitador_1' => $id_profesor_instancia,
-            'fk_id_periodo_1' => $id_periodo_instancia,
-			'fk_id_locacion_1' => $id_locacion_instancia,
-			'fk_id_turno_instancia_1' => $turno_instancia,
-			'cupos_instancia' => $cupos_instancia,
-			'descripcion_instancia' => $descripcion_instancia
+			'cupos' => $cupos_instancia,
+			'descripcion' => $descripcion_instancia
         );
 
 		if($this->Instancia_model->save($data))
@@ -152,7 +150,7 @@ class Instancia extends CI_Controller {
 				'fk_id_facilitador_1' => $id_profesor_instancia,
 				'fk_id_periodo_1' => $id_periodo_instancia,
 				'fk_id_locacion_1' => $id_locacion_instancia,
-				'fk_id_turno_instancia_1' => $turno_instancia,
+				'id_turno' => $turno_instancia,
 				'cupos_instancia' => $cupos_instancia,
 			);
 			
@@ -339,7 +337,7 @@ class Instancia extends CI_Controller {
 			{
 				$pdf->Cell(6, 6, $i++, 1, 0, 'C');
 				$pdf->Cell(69,6, utf8_decode($participante->nombres_persona) . " " . utf8_decode($participante->apellidos_persona), 1, 0, 'C');
-				$pdf->Cell(28,6, $participante->cedula_persona,1,0,'C');
+				$pdf->Cell(28,6, $participante->cedula,1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');

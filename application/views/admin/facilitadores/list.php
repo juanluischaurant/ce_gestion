@@ -43,8 +43,8 @@
                                         <td><?php echo $facilitador->nombres_persona; ?></td>
                                         <td><?php echo $facilitador->apellidos_persona; ?></td>
                                         <td><?php echo $facilitador->telefono_persona; ?></td>
-                                        <td><?php echo $facilitador->cedula_persona; ?></td>
-                                        <?php $dataFacilitador = $facilitador->id_facilitador.'*'.$facilitador->nombres_persona.'*'.$facilitador->apellidos_persona.'*'.$facilitador->telefono_persona.'*'.$facilitador->cedula_persona.'*'.$facilitador->fk_id_persona_3; ?>
+                                        <td><?php echo $facilitador->cedula; ?></td>
+                                        <?php $dataFacilitador = $facilitador->id_facilitador.'*'.$facilitador->nombres_persona.'*'.$facilitador->apellidos_persona.'*'.$facilitador->telefono_persona.'*'.$facilitador->cedula.'*'.$facilitador->fk_id_persona_3; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-facilitador" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataFacilitador?>'><span class="fa fa-eye"></span></button>

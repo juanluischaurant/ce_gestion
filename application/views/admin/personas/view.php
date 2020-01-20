@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        Persona registrada durante: <?php echo $persona->fecha_registro_persona; ?>
+        Persona registrada durante: <?php echo $persona->fecha_registro; ?>
     </div>
 </div> <br>
 <div class="row">
@@ -27,13 +27,13 @@
 		</b><br>
 	</div>
 	<div class="col-xs-6">	
-		<?php echo $persona->nombres_persona;?><br>
-		<?php echo $persona->apellidos_persona;?><br>
-		<?php echo $persona->cedula_persona;?><br>
-        <?php echo $persona->fecha_nacimiento_persona;?><br>
-        <?php echo (isset($persona->edad_persona) && $persona->fecha_nacimiento_persona !== '0000-00-00' )? $persona->edad_persona : 'No disponible';?><br>
-        <?php echo $persona->telefono_persona !== '' ? $persona->telefono_persona : 'No disponible';?><br>
-		<?php echo $persona->direccion_persona !== '' ? $persona->direccion_persona : 'No disponible';?><br>
+		<?php echo $persona->nombres;?><br>
+		<?php echo $persona->apellidos;?><br>
+		<?php echo $persona->cedula;?><br>
+        <?php echo $persona->fecha_nacimiento;?><br>
+        <?php echo (isset($persona->edad) && $persona->fecha_nacimiento !== '0000-00-00' )? $persona->edad : 'No disponible';?><br>
+        <?php echo $persona->telefono !== '' ? $persona->telefono : 'No disponible';?><br>
+		<?php echo $persona->direccion !== '' ? $persona->direccion : 'No disponible';?><br>
 		<?php echo isset($es_participante->id_participante) ? 'Participante<br>' : '';?>
 		<?php echo isset($es_titular->id_titular) ? 'Titular<br>' : '';?>
 		<?php echo isset($es_facilitador->id_facilitador) ? 'Facilitador<br>' : '';?>

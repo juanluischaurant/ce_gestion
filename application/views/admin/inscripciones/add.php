@@ -173,8 +173,8 @@
                             <td><?php echo $participante->id_participante; ?></td>
                             <td><?php echo $participante->nombres_persona; ?></td>
                             <td><?php echo $participante->apellidos_persona; ?></td>
-                            <td><?php echo $participante->cedula_persona; ?></td>
-                            <?php $dataParticipante = $participante->id_participante.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula_persona; ?>
+                            <td><?php echo $participante->cedula; ?></td>
+                            <?php $dataParticipante = $participante->id_participante.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula; ?>
                             <td>
                                 <button type='button' class='btn btn-success btn-check-participante-inscripcion' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
                             </td>

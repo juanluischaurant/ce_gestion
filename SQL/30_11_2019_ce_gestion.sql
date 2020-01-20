@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 12, 2020 at 03:36 PM
+-- Generation Time: Jan 19, 2020 at 03:54 AM
 -- Server version: 10.1.34-MariaDB
 -- PHP Version: 7.2.7
 
@@ -16,7 +16,7 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAfecha_registro_inscripcion utf8mb4 */;
 
 --
 -- Database: `30_11_2019_ce_gestion`
@@ -60,67 +60,20 @@ DELIMITER ;
 --
 
 CREATE TABLE `accion` (
-  `id_accion` int(11) NOT NULL COMMENT 'ID de la tabla',
-  `fk_id_usuario` int(11) NOT NULL COMMENT 'Referencia al usuario del sistema que realizó la acción',
-  `fk_id_tipo_accion` int(2) DEFAULT NULL COMMENT 'Referencia al tipo de acción realizada',
-  `descripcion_accion` varchar(100) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Descripción de la acción realizada',
-  `tabla_afectada` varchar(20) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Tabla afectada por la operación',
-  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Captura automáticamente la hora de creación del registro'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `id` int(11) NOT NULL COMMENT 'ID de la tabla',
+  `id_usuario` SMALLINT NOT NULL COMMENT 'Referencia al usuario del sistema que realizó la acción',
+  `id_tipo_accion` TINYINT(2) DEFAULT NULL COMMENT 'Referencia al tipo de acción realizada',
+  `descripcion` varchar(100) CHARACTER SET NOT NULL COMMENT 'Descripción de la acción realizada',
+  `tabla_afectada` varchar(20) CHARACTER SET NOT NULL COMMENT 'Tabla afectada por la operación',
+  `fecha_registro` CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Captura automáticamente la hora de creación del registro'
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `accion`
 --
 
 INSERT INTO `accion` (`id_accion`, `fk_id_usuario`, `fk_id_tipo_accion`, `descripcion_accion`, `tabla_afectada`, `fecha_creacion`) VALUES
-(1, 1, 2, 'PERSONA ID: 25', 'PERSONA', '2019-11-17 12:59:58'),
-(2, 1, 3, 'PERSONA ID: 25', 'PERSONA', '2019-11-17 13:41:09'),
-(3, 1, 1, 'PERSONA ID: 18', 'PERSONA', '2019-11-17 19:52:06'),
-(4, 1, 2, 'PERSONA ID: 26', 'PERSONA', '2019-12-21 02:01:47'),
-(5, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 16:13:22'),
-(6, 1, 3, 'PERSONA ID: 23', 'PERSONA', '2019-12-22 18:02:23'),
-(7, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:15:22'),
-(8, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:15:29'),
-(9, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:15:54'),
-(10, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:17:35'),
-(11, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:19:57'),
-(12, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:21:13'),
-(13, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:23:58'),
-(14, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:29:16'),
-(15, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:29:56'),
-(16, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:30:02'),
-(17, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 19:31:40'),
-(18, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 19:42:46'),
-(19, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 19:42:54'),
-(20, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 19:44:54'),
-(21, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 20:09:59'),
-(22, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 20:10:08'),
-(28, 1, 1, 'Usuario ID: 5', 'Usuario', '2019-12-22 20:24:54'),
-(29, 1, 3, 'Usuario ID: 3', 'Usuario', '2019-12-22 22:52:59'),
-(30, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 22:53:10'),
-(31, 1, 3, 'Usuario ID: 2', 'Usuario', '2019-12-22 22:53:31'),
-(32, 1, 3, 'Usuario ID: 1', 'Usuario', '2019-12-23 03:54:07'),
-(33, 5, 3, 'Usuario ID: 4', 'Usuario', '2019-12-23 04:45:24'),
-(34, 4, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 04:47:43'),
-(35, 5, 3, 'Usuario ID: 1', 'Usuario', '2019-12-23 04:55:46'),
-(36, 1, 3, 'Usuario ID: 4', 'Usuario', '2019-12-23 05:01:12'),
-(37, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 13:49:56'),
-(38, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:10:15'),
-(39, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:12:35'),
-(40, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:13:01'),
-(41, 1, 3, 'Usuario ID: 5', 'Usuario', '2019-12-23 14:14:20'),
-(42, 1, 3, 'Usuario ID: 4', 'Usuario', '2019-12-23 14:15:06'),
-(43, 1, 3, 'Usuario ID: 1', 'Usuario', '2019-12-23 14:38:54'),
-(44, 5, 2, 'PERSONA ID: 27', 'PERSONA', '2020-01-02 04:06:21'),
-(45, 5, 3, 'PERSONA ID: 23', 'PERSONA', '2020-01-04 21:22:17'),
-(46, 5, 3, 'PERSONA ID: 27', 'PERSONA', '2020-01-04 21:24:24'),
-(47, 5, 3, 'PERSONA ID: 27', 'PERSONA', '2020-01-04 21:24:30'),
-(48, 5, 2, 'PERSONA ID: 28', 'PERSONA', '2020-01-04 21:29:33'),
-(49, 5, 2, 'PERSONA ID: 29', 'PERSONA', '2020-01-04 21:56:22'),
-(50, 5, 2, 'PERSONA ID: 30', 'PERSONA', '2020-01-06 05:09:23'),
-(51, 5, 2, 'PERSONA ID: 31', 'PERSONA', '2020-01-07 15:29:43'),
-(52, 5, 3, 'PERSONA ID: 16', 'PERSONA', '2020-01-08 18:21:22');
-
+(1, 1, 2, 'PERSONA ID: 25', 'PERSONA', '2019-11-17 12:59:58');
 -- --------------------------------------------------------
 
 --
@@ -128,20 +81,19 @@ INSERT INTO `accion` (`id_accion`, `fk_id_usuario`, `fk_id_tipo_accion`, `descri
 --
 
 CREATE TABLE `banco` (
-  `id_banco` int(11) NOT NULL COMMENT 'ID del banco de operación',
-  `nombre_banco` varchar(255) COLLATE latin1_general_ci NOT NULL COMMENT 'Nombre del banco',
-  `detalles_banco` varchar(255) COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Descripción del banco'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `id` TINYINT NOT NULL COMMENT 'ID del banco de operación',
+  `nombre` varchar(255) NOT NULL COMMENT 'Nombre del banco'
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `banco`
 --
 
-INSERT INTO `banco` (`id_banco`, `nombre_banco`, `detalles_banco`) VALUES
-(1, 'Banco de Venezuela', 'El banco de Venezuela'),
-(2, 'Bancaribe', 'El banco de Venezuela y el Caribe'),
-(3, 'Mercantil', 'Banco mercantil'),
-(4, 'Sin Banco', 'Valor seleccionado cuando no hay banco intermediario');
+INSERT INTO `banco` (`id`, `nombre`) VALUES
+(1, 'Banco de Venezuela'),
+(2, 'Bancaribe'),
+(3, 'Mercantil'),
+(4, 'Sin Banco');
 
 -- --------------------------------------------------------
 
@@ -150,43 +102,24 @@ INSERT INTO `banco` (`id_banco`, `nombre_banco`, `detalles_banco`) VALUES
 --
 
 CREATE TABLE `curso` (
-  `id_curso` int(11) NOT NULL,
-  `nombre_curso` varchar(45) COLLATE latin1_general_ci NOT NULL,
-  `estado_curso` int(1) NOT NULL DEFAULT '1',
-  `descripcion_curso` varchar(256) COLLATE latin1_general_ci DEFAULT NULL,
-  `veces_instanciado` int(11) NOT NULL DEFAULT '0',
-  `fecha_registro_curso` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `id` SMALLINT NOT NULL PRIMARY KEY,
+  `nombre` varchar(45) NOT NULL,
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `descripcion` varchar(256) DEFAULT 'Sin Descripción',
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `curso`
 --
 
-INSERT INTO `curso` (`id_curso`, `nombre_curso`, `estado_curso`, `descripcion_curso`, `veces_instanciado`, `fecha_registro_curso`) VALUES
-(1, 'Informática', 1, 'Dirigído a estudiantes de informática', 2, '2019-12-22 09:00:00'),
-(2, 'Reparación de Computadoras', 1, 'Enfoque en reparaciónes de Hardware', 1, '2019-12-22 17:09:44'),
-(3, 'Corte y Costura', 1, 'Para quienes fabrican ropa', 2, '2019-12-22 17:15:44'),
-(4, 'Refrigeración', 1, 'Curso dedicado a la reparación de equipos', 4, '2019-12-22 17:48:44');
+INSERT INTO `curso` (`id`, `nombre`, `estado`, `descripcion`, `fecha_registro`) VALUES
+(1, 'Informática', 1, 'Dirigído a estudiantes de informática', '2019-12-22 09:00:00'),
+(2, 'Reparación de Computadoras', 1, 'Enfoque en reparaciónes de Hardware', '2019-12-22 17:09:44'),
+(3, 'Corte y Costura', 1, 'Para quienes fabrican ropa', '2019-12-22 17:15:44'),
+(4, 'Refrigeración', 1, 'Curso dedicado a la reparación de equipos', '2019-12-22 17:48:44');
 
 -- --------------------------------------------------------
-
---
--- Table structure for table `estatus`
---
-
-CREATE TABLE `estatus` (
-  `id_estatus` int(11) NOT NULL,
-  `nombre_estatus` varchar(25) COLLATE latin1_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Dumping data for table `estatus`
---
-
-INSERT INTO `estatus` (`id_estatus`, `nombre_estatus`) VALUES
-(1, 'Pago'),
-(2, 'No pago');
-
 -- --------------------------------------------------------
 
 --
@@ -195,10 +128,10 @@ INSERT INTO `estatus` (`id_estatus`, `nombre_estatus`) VALUES
 
 CREATE TABLE `facilitador` (
   `id_facilitador` int(11) NOT NULL,
-  `estado_facilitador` varchar(9) COLLATE latin1_general_ci NOT NULL DEFAULT '1' COMMENT 'Define si un registro ha sido eliminado o no. 1 = Activo, 0 = Eliminado',
+  `estado_facilitador` varchar(9) NOT NULL DEFAULT '1' COMMENT 'Define si un registro ha sido eliminado o no. 1 = Activo, 0 = Eliminado',
   `fecha_registro_facilitador` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Registra la fecha exacta en que se creó el registro',
   `fk_id_persona_3` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `facilitador`
@@ -220,30 +153,12 @@ CREATE TABLE `inscripcion` (
   `fk_id_participante_1` int(11) NOT NULL COMMENT 'Referencia a la tabla Participante',
   `fk_id_estatus_1` int(11) NOT NULL DEFAULT '1' COMMENT 'Referencia la tabla Estatus, el estatus de una isncripción puede ser: 1. Pago, 2. Por pagar',
   `fk_id_usuario_1` int(11) DEFAULT NULL COMMENT 'Referencia a la tabla usuarios, permite registrar que usuario realiza la operación',
-  `hora_inscripcion` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha y hora capturada automáticamente por el sistema',
-  `hora_cancelada` datetime DEFAULT NULL COMMENT 'Hora en que se cancela el pago (puede no ser cancelado)',
+  `fecha_registro_inscripcion` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha y hora capturada automáticamente por el sistema',
+  `hora_cancelada` datetime DEFAULT NULL COMMENT 'Hora en que se cancela la inscripción (puede no ser cancelado)',
   `costo_de_inscripcion` decimal(10,2) DEFAULT NULL COMMENT 'Monto de dinero a pagar por las instancias inscritas',
   `activa` tinyint(1) DEFAULT '1' COMMENT 'Estado de la inscripción, usado para "desactivar el registro". 1 = Activo, 0 = Inactivo'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
---
--- Dumping data for table `inscripcion`
---
-
-INSERT INTO `inscripcion` (`id_inscripcion`, `fk_id_participante_1`, `fk_id_estatus_1`, `fk_id_usuario_1`, `hora_inscripcion`, `hora_cancelada`, `costo_de_inscripcion`, `activa`) VALUES
-(1, 1, 1, NULL, '2019-11-15 18:22:02', NULL, '60000.00', 1),
-(2, 2, 1, NULL, '2019-11-15 18:50:14', NULL, '60000.00', 1),
-(3, 3, 1, NULL, '2019-11-18 14:38:26', NULL, '60000.00', 1),
-(4, 4, 1, NULL, '2019-12-20 22:05:35', NULL, '60000.00', 1),
-(5, 5, 1, NULL, '2019-12-21 12:45:39', NULL, '60000.00', 1),
-(6, 1, 1, NULL, '2019-12-24 12:21:03', NULL, '60000.00', 1),
-(7, 3, 1, NULL, '2019-12-25 13:42:24', NULL, '60000.00', 1),
-(8, 4, 1, NULL, '2019-12-26 19:09:25', NULL, '60000.00', 1),
-(9, 3, 1, NULL, '2019-12-29 22:20:27', NULL, '60000.00', 1),
-(10, 2, 1, NULL, '2019-12-30 00:49:40', NULL, '60000.00', 1),
-(11, 7, 1, NULL, '2020-01-06 00:11:41', NULL, '100000.00', 1),
-(13, 6, 1, NULL, '2020-01-06 00:46:37', NULL, '100000.00', 1),
-(14, 9, 1, NULL, '2020-01-07 11:32:42', NULL, '100000.00', 0);
 
 -- --------------------------------------------------------
 
@@ -255,7 +170,7 @@ CREATE TABLE `inscripcion_instancia` (
   `id_inscripcion_instancia` int(11) NOT NULL,
   `fk_id_inscripcion_1` int(11) DEFAULT NULL,
   `fk_id_instancia_1` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `inscripcion_instancia`
@@ -283,33 +198,20 @@ INSERT INTO `inscripcion_instancia` (`id_inscripcion_instancia`, `fk_id_inscripc
 --
 
 CREATE TABLE `instancia` (
-  `id_instancia` int(11) NOT NULL,
-  `serial_instancia` varchar(15) COLLATE latin1_general_ci NOT NULL,
-  `fk_id_curso_1` int(11) NOT NULL,
-  `fk_id_facilitador_1` int(11) DEFAULT NULL,
-  `fk_id_periodo_1` int(11) DEFAULT NULL,
-  `fk_id_locacion_1` int(11) DEFAULT NULL,
-  `fk_id_turno_instancia_1` int(11) NOT NULL COMMENT 'Referencia a la tabla turno_instancia',
-  `cupos_instancia` int(4) DEFAULT NULL,
-  `precio_instancia` decimal(10,2) DEFAULT NULL COMMENT 'Precio a pagar para la inscripción',
-  `estado_instancia` int(1) NOT NULL DEFAULT '1' COMMENT 'Determina el estado de la instancia. 1 = Activa, 2 = Desactivada',
-  `descripcion_instancia` varchar(256) COLLATE latin1_general_ci DEFAULT 'Sin Descripción' COMMENT 'Describe brevemente la instancia',
-  `cupos_instancia_ocupados` int(11) NOT NULL DEFAULT '0' COMMENT 'Cuenta el total de participantes inscritos en un curso',
+  `id` int(11) NOT NULL,
+  `serial` varchar(15) NOT NULL,
+  `id_curso` int(11) NOT NULL,
+  `id_facilitador` int(11) DEFAULT NULL,
+  `id_periodo` int(11) DEFAULT NULL,
+  `id_locacion` int(11) DEFAULT NULL,
+  `id_turno` int(11) NOT NULL COMMENT 'Referencia a la tabla turno_instancia',
+  `cupos` int(4) DEFAULT NULL,
+  `precio` decimal(10,2) DEFAULT NULL COMMENT 'Precio a pagar para la inscripción',
+  `estado` int(1) NOT NULL DEFAULT '1' COMMENT 'Determina el estado de la instancia. 1 = Activa, 2 = Desactivada',
+  `descripcion` varchar(256) DEFAULT 'Sin Descripción' COMMENT 'Describe brevemente la instancia',
   `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación del registro',
   `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de actualización del registro'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Dumping data for table `instancia`
---
-
-INSERT INTO `instancia` (`id_instancia`, `serial_instancia`, `fk_id_curso_1`, `fk_id_facilitador_1`, `fk_id_periodo_1`, `fk_id_locacion_1`, `fk_id_turno_instancia_1`, `cupos_instancia`, `precio_instancia`, `estado_instancia`, `descripcion_instancia`, `cupos_instancia_ocupados`, `fecha_creacion`, `fecha_modificacion`) VALUES
-(1, 'REF-4-000002', 4, 1, 2, 1, 4, 15, '60000.00', 1, 'Refrigeración dictado en IRFA', 3, '2019-11-15 14:00:00', '2020-01-06 00:53:39'),
-(2, 'INF-1-000002', 1, 2, 3, 1, 3, 12, '60000.00', 1, 'Ofimática y lógica', 5, '2019-11-15 10:38:19', '2020-01-03 14:02:04'),
-(3, 'REP-2-000001', 2, 2, 2, 1, 4, 20, '100000.00', 1, 'Enfoque en hardware y sistemas operativos', 2, '2019-12-21 12:18:07', '2020-01-09 15:49:06'),
-(4, 'COR-3-000002', 3, 2, 2, 1, 4, 10, '100000.00', 0, 'Corte y costura básico', 0, '2019-12-29 14:07:45', '2020-01-06 14:16:24'),
-(6, 'REF-4-000003', 4, 1, 2, 2, 4, 10, '100000.00', 1, 'Enfoque en mantenimiento preventivo', 2, '2020-01-03 14:00:40', '2020-01-06 00:46:38'),
-(7, 'REF-4-000004', 4, 3, 13, 5, 3, 10, '100000.00', 1, 'enfoque en mantenimiento correctivo', 0, '2020-01-06 14:53:32', '2020-01-06 14:57:07');
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -319,12 +221,12 @@ INSERT INTO `instancia` (`id_instancia`, `serial_instancia`, `fk_id_curso_1`, `f
 
 CREATE TABLE `locacion` (
   `id_locacion` int(11) NOT NULL,
-  `nombre_locacion` varchar(85) COLLATE latin1_general_ci NOT NULL COMMENT 'Nombre para mostrar en la interfáz de usuario',
-  `direccion_locacion` varchar(355) COLLATE latin1_general_ci NOT NULL COMMENT 'Ubicación de la locación',
+  `nombre_locacion` varchar(85) NOT NULL COMMENT 'Nombre para mostrar en la interfáz de usuario',
+  `direccion_locacion` varchar(355) NOT NULL COMMENT 'Ubicación de la locación',
   `estado_locacion` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Para desactivar locación, el valor: 0. Para activar locación, el valor: 1',
-  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_creacion_locacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `locacion`
@@ -342,16 +244,16 @@ INSERT INTO `locacion` (`id_locacion`, `nombre_locacion`, `direccion_locacion`, 
 --
 
 CREATE TABLE `menu` (
-  `id_menu` int(11) NOT NULL COMMENT 'ID de la tabla',
-  `nombre_menu` varchar(45) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL COMMENT 'Nombre del menú',
-  `enlace_menu` varchar(250) CHARACTER SET latin1 COLLATE latin1_general_ci NOT NULL COMMENT 'Controlador al que se relaciona este menú'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `id` int(11) NOT NULL COMMENT 'ID de la tabla',
+  `nombre` varchar(45) NOT NULL COMMENT 'Nombre del menú',
+  `enlace` varchar(250) NOT NULL COMMENT 'Controlador al que se relaciona este menú'
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `menu`
 --
 
-INSERT INTO `menu` (`id_menu`, `nombre_menu`, `enlace_menu`) VALUES
+INSERT INTO `menu` (`id`, `nombre`, `enlace`) VALUES
 (1, 'Inicio', 'dashboard'),
 (2, 'Cursos', 'gestion/curso'),
 (3, 'Usuarios', 'administrador/usuario'),
@@ -361,19 +263,19 @@ INSERT INTO `menu` (`id_menu`, `nombre_menu`, `enlace_menu`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mes`
+-- Table structure for table `fecha_registro_inscripcion`
 --
 
-CREATE TABLE `mes` (
-  `id_mes` int(11) NOT NULL COMMENT 'ID de la tabla',
-  `nombre_mes` varchar(13) COLLATE latin1_spanish_ci NOT NULL COMMENT 'Meses del año'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+CREATE TABLE `fecha_registro_inscripcion` (
+  `id_fecha_registro_inscripcion` int(11) NOT NULL COMMENT 'ID de la tabla',
+  `nombre_fecha_registro_inscripcion` varchar(13) NOT NULL COMMENT 'fecha_registro_inscripciones del año'
+) ENGINE=InnoDB;
 
 --
--- Dumping data for table `mes`
+-- Dumping data for table `fecha_registro_inscripcion`
 --
 
-INSERT INTO `mes` (`id_mes`, `nombre_mes`) VALUES
+INSERT INTO `fecha_registro_inscripcion` (`id_fecha_registro_inscripcion`, `nombre_fecha_registro_inscripcion`) VALUES
 (1, 'Enero'),
 (2, 'Febrero'),
 (3, 'Marzo'),
@@ -395,11 +297,11 @@ INSERT INTO `mes` (`id_mes`, `nombre_mes`) VALUES
 
 CREATE TABLE `nivel_academico` (
   `id_nivel_academico` int(11) NOT NULL,
-  `nombre_nivel_academico` varchar(35) COLLATE latin1_general_ci NOT NULL COMMENT 'Nombre del nivel académico del participante',
+  `nombre_nivel_academico` varchar(35) NOT NULL COMMENT 'Nombre del nivel académico del participante',
   `estado_nivel_academico` int(11) NOT NULL DEFAULT '1' COMMENT 'Determina si un nivel está activa dentro del sistema o no (1=activo, 0=inactivo)',
   `fecha_registro_nivel_academico` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_modificacion_nivel_academico` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `nivel_academico`
@@ -422,42 +324,12 @@ CREATE TABLE `pago_de_inscripcion` (
   `fk_id_banco` int(11) DEFAULT NULL,
   `fk_id_tipo_operacion` int(11) NOT NULL,
   `fk_id_titular` int(11) NOT NULL,
-  `serial_pago` varchar(255) COLLATE latin1_general_ci NOT NULL,
-  `numero_operacion` varchar(255) COLLATE latin1_general_ci DEFAULT NULL,
+  `numero_transferencia` varchar(45) DEFAULT NULL,
   `monto_operacion` decimal(10,2) DEFAULT NULL,
   `fecha_operacion` date NOT NULL,
   `fecha_registro_operacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Captura hora de registro de la operación',
   `estado_pago` int(11) NOT NULL DEFAULT '1' COMMENT 'Registra si un pago ha sido utilizado o desactivado: 0 =  Desactivado, 1 = Nuevo, 2 = Utilizado'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
-
---
--- Dumping data for table `pago_de_inscripcion`
---
-
-INSERT INTO `pago_de_inscripcion` (`id_pago`, `fk_id_inscripcion`, `fk_id_banco`, `fk_id_tipo_operacion`, `fk_id_titular`, `serial_pago`, `numero_operacion`, `monto_operacion`, `fecha_operacion`, `fecha_registro_operacion`, `estado_pago`) VALUES
-(1, 1, 3, 1, 1, 'tra-000039', '010534212345', '60000.00', '2019-11-15', '2019-11-15 18:16:19', 2),
-(2, 2, 3, 1, 2, 'tra-000040', '010523423243', '60000.00', '2019-11-15', '2019-11-15 18:49:40', 2),
-(3, 3, 3, 1, 2, 'tra-000041', '010542434637', '60000.00', '2019-11-17', '2019-11-18 14:28:55', 2),
-(4, 5, 1, 1, 4, 'tra-000042', '0102345343456543', '75000.00', '2019-12-02', '2019-12-01 22:42:16', 2),
-(5, 4, 1, 1, 5, 'tra-000043', '010224322324', '100000.00', '2019-12-20', '2019-12-20 22:04:37', 2),
-(6, 6, 2, 1, 1, 'tra-000044', '0103243243243135', '75000.00', '2019-12-24', '2019-12-24 12:19:52', 2),
-(7, 7, 1, 1, 4, 'tra-000045', '010224322932', '75000.00', '2019-12-24', '2019-12-24 17:09:14', 2),
-(11, 11, 1, 1, 1, 'tra-000049', '0102034342225443', '100000.00', '2019-12-25', '2019-12-25 13:08:15', 2),
-(47, 8, 4, 3, 5, 'exo-000001', 'EXO000001', '50000.00', '2019-12-26', '2019-12-26 18:33:25', 2),
-(53, 13, 4, 2, 5, 'efe-000016', 'EFE000016', '100000.00', '2019-12-27', '2019-12-27 00:52:25', 2),
-(54, 10, 4, 3, 5, 'exo-000006', 'EXO000006', '25000.00', '2019-12-27', '2019-12-27 01:02:00', 2),
-(55, 8, 4, 3, 4, 'exo-000007', 'EXO000007', '25000.00', '2019-12-27', '2019-12-27 01:16:21', 2),
-(56, 9, 4, 2, 2, 'efe-000017', 'EFE000017', '25000.00', '2019-12-29', '2019-12-29 22:18:07', 2),
-(57, 10, 3, 1, 3, 'tra-000066', '0104230988565453', '25000.00', '2019-12-23', '2019-12-30 00:45:39', 2),
-(58, 9, 4, 2, 5, 'efe-000018', 'EFE000018', '50000.00', '2019-12-27', '2019-12-30 00:47:45', 2),
-(59, 10, 4, 2, 2, 'efe-000019', 'EFE000019', '10000.00', '2019-12-31', '2019-12-31 12:23:29', 2),
-(60, 14, 4, 2, 6, 'efe-000020', 'EFE000020', '110000.00', '2020-01-02', '2020-01-02 00:08:16', 3),
-(61, NULL, 1, 1, 9, 'tra-000067', '0102034342222123', '100000.00', '2020-01-07', '2020-01-07 14:39:36', 1),
-(62, NULL, 1, 3, 9, 'exo-000008', 'EXO000008', '10000.00', '2020-01-07', '2020-01-07 16:19:39', 1),
-(63, NULL, 1, 1, 9, 'tra-000068', '0102034342228787', '25000.00', '2020-01-07', '2020-01-07 17:11:45', 1),
-(64, NULL, 4, 3, 5, 'exo-000009', 'EXO000009', '0.00', '2020-01-07', '2020-01-07 17:28:35', 1),
-(65, NULL, 4, 2, 7, 'efe-000021', 'EFE000021', '100000.00', '2020-01-07', '2020-01-07 19:29:41', 1),
-(66, NULL, 4, 2, 6, 'efe-000022', 'EFE000022', '100000.00', '2020-01-08', '2020-01-08 01:45:23', 1);
+) ENGINE=InnoDB;
 
 -- --------------------------------------------------------
 
@@ -468,11 +340,10 @@ INSERT INTO `pago_de_inscripcion` (`id_pago`, `fk_id_inscripcion`, `fk_id_banco`
 CREATE TABLE `participante` (
   `id_participante` int(11) NOT NULL,
   `fk_id_persona_2` int(11) NOT NULL COMMENT 'Referencia a la tabla Participante',
-  `serial_participante` varchar(25) COLLATE latin1_general_ci DEFAULT NULL,
   `estado_participante` int(11) NOT NULL DEFAULT '1',
   `fecha_registro_participante` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fk_nivel_academico` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `participante`
@@ -499,24 +370,22 @@ INSERT INTO `participante` (`id_participante`, `fk_id_persona_2`, `serial_partic
 
 CREATE TABLE `periodo` (
   `id_periodo` int(11) NOT NULL,
-  `mes_inicio_periodo` int(11) NOT NULL,
-  `mes_cierre_periodo` int(11) DEFAULT NULL,
   `fecha_inicio_periodo` date NOT NULL,
   `fecha_culminacion_periodo` date NOT NULL,
   `estado_periodo` tinyint(1) NOT NULL DEFAULT '1',
-  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `fecha_registro_periodo` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion_periodo` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `periodo`
 --
 
-INSERT INTO `periodo` (`id_periodo`, `mes_inicio_periodo`, `mes_cierre_periodo`, `fecha_inicio_periodo`, `fecha_culminacion_periodo`, `estado_periodo`, `fecha_creacion`, `fecha_modificacion`) VALUES
-(2, 1, 5, '2020-01-13', '2020-05-15', 1, '2019-11-15 17:01:36', '2020-01-01 15:14:13'),
-(3, 9, 12, '2019-09-10', '2019-12-14', 1, '2019-11-17 17:43:41', '2020-01-01 16:23:03'),
-(12, 12, 12, '2019-12-26', '2019-12-31', 0, '2020-01-03 00:00:00', '2020-01-03 21:30:58'),
-(13, 6, 8, '2020-06-17', '2020-08-29', 1, '2020-01-06 14:33:04', '2020-01-06 14:33:04');
+INSERT INTO `periodo` (`id_periodo`, `fecha_registro_inscripcion_inicio_periodo`, `fecha_registro_inscripcion_cierre_periodo`, `fecha_inicio_periodo`, `fecha_culminacion_periodo`, `estado_periodo`, `fecha_creacion`, `fecha_modificacion`) VALUES
+(2, '2020-01-13', '2020-05-15', 1, '2019-11-15 17:01:36', '2020-01-01 15:14:13'),
+(3,'2019-09-10', '2019-12-14', 1, '2019-11-17 17:43:41', '2020-01-01 16:23:03'),
+(4, '2019-12-26', '2019-12-31', 0, '2020-01-03 00:00:00', '2020-01-03 21:30:58'),
+(5, '2020-06-17', '2020-08-29', 1, '2020-01-06 14:33:04', '2020-01-06 14:33:04');
 
 -- --------------------------------------------------------
 
@@ -532,7 +401,7 @@ CREATE TABLE `permiso` (
   `insert` int(11) DEFAULT NULL COMMENT 'insertar',
   `update` int(11) DEFAULT NULL COMMENT 'actualizar',
   `delete` int(11) DEFAULT NULL COMMENT 'borrar'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `permiso`
@@ -554,24 +423,25 @@ INSERT INTO `permiso` (`id_permiso`, `fk_id_menu_1`, `fk_id_rol_2`, `read`, `ins
 --
 
 CREATE TABLE `persona` (
-  `id_persona` int(11) NOT NULL,
-  `cedula_persona` int(11) NOT NULL,
-  `nombres_persona` varchar(95) COLLATE latin1_general_ci DEFAULT NULL,
-  `apellidos_persona` varchar(95) COLLATE latin1_general_ci DEFAULT NULL,
-  `genero_persona` varchar(9) COLLATE latin1_general_ci DEFAULT NULL,
-  `fecha_nacimiento_persona` date NOT NULL,
-  `telefono_persona` varchar(45) COLLATE latin1_general_ci DEFAULT NULL,
-  `direccion_persona` varchar(95) COLLATE latin1_general_ci DEFAULT NULL,
-  `estado_persona` int(11) NOT NULL DEFAULT '1' COMMENT 'Determina si una persona está activa dentro del sistema o no (1=activo, 0=inactivo)',
-  `fecha_registro_persona` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `id` int(11) NOT NULL,
+  `cedula` int(11) NOT NULL,
+  `nombres` varchar(95) DEFAULT NULL,
+  `apellidos` varchar(95) DEFAULT NULL,
+  `genero` varchar(9) DEFAULT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `telefono` varchar(45) DEFAULT NULL,
+  email VARCHAR(50) DEFAULT NULL,
+  `direccion` varchar(95) DEFAULT NULL,
+  `estado` int(11) NOT NULL DEFAULT '1' COMMENT 'Determina si una persona está activa dentro del sistema o no (1=activo, 0=inactivo)',
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `persona`
 --
 
-INSERT INTO `persona` (`id_persona`, `cedula_persona`, `nombres_persona`, `apellidos_persona`, `genero_persona`, `fecha_nacimiento_persona`, `telefono_persona`, `direccion_persona`, `estado_persona`, `fecha_registro_persona`, `fecha_modificacion`) VALUES
+INSERT INTO `persona` (`id`, `cedula`, `nombres`, `apellidos`, `genero`, `fecha_nacimiento`, `telefono`, `direccion`, `estado`, `fecha_registro`, `fecha_modificacion`) VALUES
 (1, 22574648, 'Juan Luis', 'Chaurant Zamora', '1', '1993-12-13', '04248900840', 'El Tigre, edo. Anzoátegui', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
 (3, 8965910, 'Alicia', 'Zamora', '2', '1967-03-03', '04242929292', 'EL Tigre, Chaguaramos', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
 (5, 9458635, 'Edgardo', 'Saá', '1', '1969-09-04', '04249485560', 'Av. La Paz, urb. Chimire.', 1, '2019-11-06 17:11:32', '2019-11-15 22:12:10'),
@@ -608,16 +478,16 @@ INSERT INTO `persona` (`id_persona`, `cedula_persona`, `nombres_persona`, `apell
 --
 
 CREATE TABLE `rol` (
-  `rol_id` int(11) NOT NULL COMMENT 'ID único del registro',
-  `nombre_rol` varchar(45) COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Nombre del rol (Los principales son: superadmin, estándar)',
-  `descripcion_rol` varchar(256) COLLATE latin1_general_ci DEFAULT NULL COMMENT 'Descripción de la funcionalidad de cada rol'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `id` int(11) NOT NULL COMMENT 'ID único del registro',
+  `nombre` varchar(45) DEFAULT NULL COMMENT 'Nombre del rol (Los principales son: superadmin, estándar)',
+  `descripcion` varchar(256) DEFAULT NULL COMMENT 'Descripción de la funcionalidad de cada rol'
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `rol`
 --
 
-INSERT INTO `rol` (`rol_id`, `nombre_rol`, `descripcion_rol`) VALUES
+INSERT INTO `rol` (`id`, `nombre`, `descripcion`) VALUES
 (1, 'Superadmin', 'con todos los permisos en el sistema'),
 (2, 'Admin', 'permisos parciales en el sistema'),
 (3, 'Usuario', 'puede realizar ciertas operaciones en el sistema');
@@ -629,19 +499,19 @@ INSERT INTO `rol` (`rol_id`, `nombre_rol`, `descripcion_rol`) VALUES
 --
 
 CREATE TABLE `tipo_de_accion` (
-  `id_tipo_accion` int(2) NOT NULL,
-  `nombre_tipo_accion` varchar(20) COLLATE latin1_spanish_ci NOT NULL,
-  `alerta_tipo_accion` varchar(30) COLLATE latin1_spanish_ci NOT NULL,
-  `estado_tipoaccion` int(1) NOT NULL DEFAULT '1',
-  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `fecha_modificacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+  `id` TINYINT NOT NULL,
+  `nombre` varchar(20) NOT NULL,
+  `tipo_notificacion` varchar(30) NOT NULL COMMENT 'Será utilizado para generar determinado tipo de alerta en la interfáz de usuario',
+  `estado` TINYINT(1) NOT NULL DEFAULT '1',
+  `fecha_creacion` tifecha_registro_inscripciontamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `fecha_modificacion` tifecha_registro_inscripciontamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `tipo_de_accion`
 --
 
-INSERT INTO `tipo_de_accion` (`id_tipo_accion`, `nombre_tipo_accion`, `alerta_tipo_accion`, `estado_tipoaccion`, `fecha_creacion`, `fecha_modificacion`) VALUES
+INSERT INTO `tipo_de_accion` (`id_tipo_accion`, `nombre_tipo_accion`, `alerta`, `estado_tipoaccion`, `fecha_creacion`, `fecha_modificacion`) VALUES
 (1, 'ELIMINAR', 'alert-danger', 1, '2018-11-11 06:29:06', '2019-11-12 23:15:05'),
 (2, 'INSERTAR', 'alert-success', 1, '2018-11-11 06:29:06', '2019-11-12 23:15:05'),
 (3, 'MODIFICAR', 'alert-info', 1, '2018-11-11 06:29:06', '2019-11-12 23:15:05');
@@ -653,19 +523,18 @@ INSERT INTO `tipo_de_accion` (`id_tipo_accion`, `nombre_tipo_accion`, `alerta_ti
 --
 
 CREATE TABLE `tipo_de_operacion` (
-  `id_tipo_de_operacion` int(11) NOT NULL,
-  `tipo_de_operacion` varchar(35) COLLATE latin1_general_ci NOT NULL,
-  `conteo_operaciones` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `id` int(11) NOT NULL COMMENT 'ID de la operación',
+  `tipo` varchar(35) NOT NULL
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `tipo_de_operacion`
 --
 
-INSERT INTO `tipo_de_operacion` (`id_tipo_de_operacion`, `tipo_de_operacion`, `conteo_operaciones`) VALUES
-(1, 'Transferencia', 68),
-(2, 'Efectivo', 22),
-(3, 'Exonerado', 9);
+INSERT INTO `tipo_de_operacion` (`id`, `tipo`) VALUES
+(1, 'Transferencia'),
+(2, 'Efectivo'),
+(3, 'Exonerado');
 
 -- --------------------------------------------------------
 
@@ -676,9 +545,9 @@ INSERT INTO `tipo_de_operacion` (`id_tipo_de_operacion`, `tipo_de_operacion`, `c
 CREATE TABLE `titular` (
   `id_titular` int(11) NOT NULL,
   `fk_id_persona_1` int(11) NOT NULL COMMENT 'Referencia a la tabla Participante',
-  `estado_cliente` int(11) NOT NULL DEFAULT '1',
-  `fecha_registro_cliente` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+  `estado_titular` int(11) NOT NULL DEFAULT '1',
+  `fecha_registro_titular` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `titular`
@@ -706,7 +575,7 @@ CREATE TABLE `turno_instancia` (
   `id_turno` int(11) NOT NULL COMMENT 'Referencia a la tabla Participante',
   `nombre_turno` varchar(45) COLLATE latin1_spanish_ci NOT NULL COMMENT 'Almacena los turnos en los que la institución oferta sus cursos',
   `descripcion_turno` varchar(250) COLLATE latin1_spanish_ci DEFAULT NULL COMMENT 'Breve descripción del turno especificado'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_spanish_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `turno_instancia`
@@ -723,17 +592,17 @@ INSERT INTO `turno_instancia` (`id_turno`, `nombre_turno`, `descripcion_turno`) 
 --
 
 CREATE TABLE `usuario` (
-  `id_usuario` int(11) NOT NULL,
-  `nombres_usuario` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
-  `apellidos_usuario` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
-  `email_usuario` varchar(100) COLLATE latin1_general_ci DEFAULT NULL,
-  `username_usuario` varchar(45) COLLATE latin1_general_ci NOT NULL,
-  `password_usuario` varchar(150) COLLATE latin1_general_ci DEFAULT NULL,
+  `id` int(11) NOT NULL,
+  `nombres` varchar(100) DEFAULT NULL,
+  `apellidos` varchar(100) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `username` varchar(45) NOT NULL,
+  `password` varchar(150) DEFAULT NULL,
   `fk_rol_id_1` int(11) DEFAULT NULL,
-  `estado_usuario` int(45) DEFAULT '1',
+  `estado` TINYINT DEFAULT '1',
   `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación del registro',
   `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de actualización del registro'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_general_ci;
+) ENGINE=InnoDB;
 
 --
 -- Dumping data for table `usuario`
@@ -824,10 +693,10 @@ ALTER TABLE `menu`
   ADD PRIMARY KEY (`id_menu`);
 
 --
--- Indexes for table `mes`
+-- Indexes for table `fecha_registro_inscripcion`
 --
-ALTER TABLE `mes`
-  ADD PRIMARY KEY (`id_mes`);
+ALTER TABLE `fecha_registro_inscripcion`
+  ADD PRIMARY KEY (`id_fecha_registro_inscripcion`);
 
 --
 -- Indexes for table `nivel_academico`
@@ -858,8 +727,8 @@ ALTER TABLE `participante`
 --
 ALTER TABLE `periodo`
   ADD PRIMARY KEY (`id_periodo`),
-  ADD KEY `mes_inicio` (`mes_inicio_periodo`),
-  ADD KEY `mes_cierre` (`mes_cierre_periodo`);
+  ADD KEY `fecha_registro_inscripcion_inicio` (`fecha_registro_inscripcion_inicio_periodo`),
+  ADD KEY `fecha_registro_inscripcion_cierre` (`fecha_registro_inscripcion_cierre_periodo`);
 
 --
 -- Indexes for table `permiso`
@@ -980,10 +849,10 @@ ALTER TABLE `menu`
   MODIFY `id_menu` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `mes`
+-- AUTO_INCREMENT for table `fecha_registro_inscripcion`
 --
-ALTER TABLE `mes`
-  MODIFY `id_mes` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=13;
+ALTER TABLE `fecha_registro_inscripcion`
+  MODIFY `id_fecha_registro_inscripcion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID de la tabla', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `nivel_academico`
@@ -1107,8 +976,8 @@ ALTER TABLE `participante`
 -- Constraints for table `periodo`
 --
 ALTER TABLE `periodo`
-  ADD CONSTRAINT `mes_cierre` FOREIGN KEY (`mes_cierre_periodo`) REFERENCES `mes` (`id_mes`),
-  ADD CONSTRAINT `mes_inicio` FOREIGN KEY (`mes_inicio_periodo`) REFERENCES `mes` (`id_mes`);
+  ADD CONSTRAINT `fecha_registro_inscripcion_cierre` FOREIGN KEY (`fecha_registro_inscripcion_cierre_periodo`) REFERENCES `fecha_registro_inscripcion` (`id_fecha_registro_inscripcion`),
+  ADD CONSTRAINT `fecha_registro_inscripcion_inicio` FOREIGN KEY (`fecha_registro_inscripcion_inicio_periodo`) REFERENCES `fecha_registro_inscripcion` (`id_fecha_registro_inscripcion`);
 
 --
 -- Constraints for table `permiso`

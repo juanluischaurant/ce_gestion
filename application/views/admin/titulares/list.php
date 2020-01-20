@@ -43,8 +43,8 @@
                                         <td><?php echo $titular->nombres_persona; ?></td>
                                         <td><?php echo $titular->apellidos_persona; ?></td>
                                         <td><?php echo $titular->telefono_persona; ?></td>
-                                        <td><?php echo $titular->cedula_persona; ?></td>
-                                        <?php $dataTitular = $titular->id_persona.'*'.$titular->nombres_persona.'*'.$titular->apellidos_persona.'*'.$titular->telefono_persona.'*'.$titular->cedula_persona; ?>
+                                        <td><?php echo $titular->cedula; ?></td>
+                                        <?php $dataTitular = $titular->id_persona.'*'.$titular->nombres_persona.'*'.$titular->apellidos_persona.'*'.$titular->telefono_persona.'*'.$titular->cedula; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-titular" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataTitular?>'><span class="fa fa-eye"></span></button>

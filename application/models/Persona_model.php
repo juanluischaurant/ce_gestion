@@ -9,21 +9,21 @@ class Persona_model extends CI_Model {
      * 
      * @return array
      */
-    public function getPersonas()
+    public function get_personas()
     {
         $resultados = $this->db->select(
-            'p.id_persona,
-            p.cedula_persona,
-            p.nombres_persona,
-            p.apellidos_persona,
-            p.genero_persona,
-            p.fecha_nacimiento_persona,
-            p.telefono_persona,
-            p.direccion_persona,
-            p.estado_persona,
-            p.fecha_registro_persona')
+            'p.id,
+            p.cedula,
+            p.nombres,
+            p.apellidos,
+            p.genero,
+            p.fecha_nacimiento,
+            p.telefono,
+            p.direccion,
+            p.estado,
+            p.fecha_registro')
             ->from('persona as p') 
-            ->where('estado_persona', 1)
+            ->where('estado', 1)
             ->get(); 
     
         return $resultados->result();
@@ -39,24 +39,24 @@ class Persona_model extends CI_Model {
     public function get_persona($id_persona)
     {
         $resultado = $this->db->select(
-            'p.id_persona,
-            p.cedula_persona,
-            p.nombres_persona,
-            p.apellidos_persona,
-            p.genero_persona,
-            p.fecha_nacimiento_persona,
-            TIMESTAMPDIFF(year, P.fecha_nacimiento_persona, CURDATE()) as edad_persona,
-            p.telefono_persona,
-            p.direccion_persona,
-            p.estado_persona,
-            p.fecha_registro_persona')
+            'p.id,
+            p.cedula,
+            p.nombres,
+            p.apellidos,
+            p.genero,
+            p.fecha_nacimiento,
+            TIMESTAMPDIFF(year, p.fecha_nacimiento, CURDATE()) as edad,
+            p.telefono,
+            p.direccion,
+            p.estado,
+            p.fecha_registro')
             ->from('persona as p') 
-            ->where('id_persona', $id_persona)
+            ->where('id', $id_persona)
             ->get(); 
     
         // return $resultados->result();
 
-        // $resultado = $this->db->where('id_persona', $id)
+        // $resultado = $this->db->where('id', $id)
         // ->get('persona');
 
         return $resultado->row();
@@ -68,7 +68,7 @@ class Persona_model extends CI_Model {
 
     public function update($id, $data)
     {
-        $this->db->where('id_persona', $id);
+        $this->db->where('id', $id);
         return $this->db->update('persona', $data);
     }
 
@@ -97,13 +97,13 @@ class Persona_model extends CI_Model {
     public function get_es_participante($id_persona)
     {
         $SQL = "SELECT 
-        persona.nombres_persona, 
-        persona.apellidos_persona,
+        persona.nombres, 
+        persona.apellidos,
         participante.id_participante
         
         FROM persona
-        LEFT JOIN participante ON participante.fk_id_persona_2 = persona.id_persona
-        WHERE participante.fk_id_persona_2 = ?";
+        LEFT JOIN participante ON participante.id_persona = persona.id_persona
+        WHERE participante.id_persona = ?";
 
         $resultado = $this->db->query($SQL, array($id_persona));
 
@@ -124,8 +124,8 @@ class Persona_model extends CI_Model {
         titular.id_titular
         
         FROM persona
-        LEFT JOIN titular ON titular.fk_id_persona_1 = persona.id_persona
-        WHERE titular.fk_id_persona_1 = ?";
+        LEFT JOIN titular ON titular.id_persona = persona.id_persona
+        WHERE titular.id_persona = ?";
 
         $resultado = $this->db->query($SQL, array($id_persona));
 

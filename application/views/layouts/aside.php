@@ -66,7 +66,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li>
-                                <a href="<?php echo base_url(); ?>administrador/permisos">
+                                <a href="<?php echo base_url(); ?>administrador/permiso">
                                     <i class="fa fa-circle-o"></i> Permisos
                                 </a>
                             </li>

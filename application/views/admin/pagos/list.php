@@ -71,7 +71,7 @@
                                         </td>
 
                                         <td>
-                                            <?php echo $pago->cedula_persona; ?>
+                                            <?php echo $pago->cedula; ?>
                                         </td>
 
                                         <td>

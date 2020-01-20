@@ -52,7 +52,7 @@
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="nombre-usuario">Nombres:</label>
-                                    <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario" value="<?php echo $usuario->nombres_usuario; ?>">
+                                    <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario" value="<?php echo $usuario->nombres; ?>">
                                 </div>
 
                                 <div class="col-md-6">                                
@@ -72,7 +72,7 @@
 
                                         // Genera el elemento "select"
                                         // Parámetros de form_dropdown: atributo name, valores de la lista, atributo a seleccionar para selected, atributos
-                                        echo form_dropdown('rol-usuario', $roles_usuario, $usuario->fk_rol_id_1, $atributos);
+                                        echo form_dropdown('rol-usuario', $roles_usuario, $usuario->id_rol, $atributos);
                                     ?>
                                     <!-- Fin del campo -->
                                 </div>

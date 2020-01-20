@@ -5,13 +5,13 @@ class Periodo extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
-        $this->load->model('Titular_model');  
+        $this->load->model('Periodo_model');  
     }
 
 	public function index()
 	{
 		$data = array(
-			'periodos' => $this->Titular_model->get_periodos(),
+			'periodos' => $this->Periodo_model->get_periodos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');

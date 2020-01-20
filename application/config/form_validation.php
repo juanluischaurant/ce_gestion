@@ -51,7 +51,7 @@ $config = array(
         array(
             'field' => 'cedula-persona',
             'label' => 'Cédula',
-            'rules' => 'required|trim|min_length[2]|max_length[10]|is_unique[persona.cedula_persona]',
+            'rules' => 'required|trim|min_length[2]|max_length[10]|is_unique[persona.cedula]',
             'errors' => array(
                 'edit_unique_cedula' => 'Cédula en uso. Por favor intenta de nuevo'
             )

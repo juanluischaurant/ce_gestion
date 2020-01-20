@@ -17,20 +17,20 @@ class Usuario_model extends CI_Model {
      */
     public function login($username, $password)
     {
-        $this->db->where('username_usuario', $username);
-        $this->db->where('password_usuario', sha1($password));
+        $this->db->where('username', $username);
+        $this->db->where('password', sha1($password));
 
         // Consulta BD
-        $resultados = $this->db->get('usuario');
+        $resultado = $this->db->get('usuario');
 
-        if($resultados->num_rows() > 0)
+        if($resultado->num_rows() > 0)
         {
             // Returna registro
-            return $resultados->row();
+            return $resultado->row();
         }
         else
         {
-            return false;
+            return FALSE;
         }
     }
 
@@ -43,11 +43,11 @@ class Usuario_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'u.*,
-            r.nombre_rol as rol'
+            r.nombre as rol'
             )
             ->from('usuario as u')
-            ->join('rol as r', 'r.rol_id = u.fk_rol_id_1') 
-            ->where('estado_usuario', 1)
+            ->join('rol as r', 'r.id = u.id_rol') 
+            ->where('estado', 1)
             ->get(); 
     
         return $resultados->result();
@@ -62,9 +62,9 @@ class Usuario_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'u.*,
-            r.nombre_rol')
+            r.nombre')
         ->from('usuario as u')
-        ->join('rol as r', 'r.rol_id = u.fk_rol_id_1')
+        ->join('rol as r', 'r.id = u.id_rol')
         ->where('u.id_usuario', $id_usuario)
         ->get();
 
@@ -89,7 +89,7 @@ class Usuario_model extends CI_Model {
         {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
-            $array[$row->rol_id] = $row->nombre_rol;
+            $array[$row->id] = $row->nombre;
         }
 
         return $array;

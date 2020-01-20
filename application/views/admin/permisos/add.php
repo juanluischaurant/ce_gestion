@@ -26,7 +26,7 @@
                         </div>
                         <?php endif; ?>
 
-                        <form action="<?php echo base_url(); ?>administrador/permisos/store" method="POST">
+                        <form action="<?php echo base_url(); ?>administrador/permiso/store" method="POST">
 
                             <div class="row form-group <?php // echo !empty(form_error('mes-inicio'))? 'has-error' : ''; ?>">
                                 <div class="col-md-4">

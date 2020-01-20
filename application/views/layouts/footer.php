@@ -587,7 +587,7 @@
                     return;
                 }
 
-                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula_persona+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
+                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
         });
@@ -821,7 +821,7 @@
         });
         
         /**
-         * Botón se encuentra ubicado en la vista de Éxito, mostrada luego
+         * Botón que se encuentra ubicado en la vista de Éxito, mostrada luego
          * de registrar a una persona exitosamente en la base de datos.
          */
         $('#add-roles-persona').on('click', function(event) {
@@ -836,14 +836,14 @@
                 nivelAcademicoParticipante = nivelAcademicoParticipante.val();
             } else if(participante.is(":not(:checked)"))
             {
-                participante = ''
+                participante = '';
             }
 
             if(titular.is(":checked")) {
                 titular = 'titular'
             } else if(titular.is(":not(:checked)"))
             {
-                titular = ''
+                titular = '';
             }
        
             $.ajax({

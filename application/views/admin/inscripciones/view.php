@@ -26,7 +26,7 @@
 
 			<tr>
 				<td><?php echo $inscripcion->nombre_completo_participante; ?></td>
-				<td><?php echo $inscripcion->cedula_persona; ?></td>
+				<td><?php echo $inscripcion->cedula; ?></td>
 				<td><?php echo $inscripcion->telefono_persona; ?></td>	
 			</tr>
 			<tr>
@@ -105,7 +105,7 @@
 					
 					</div>
 					<div class="col-xs-12 col-md-4">
-					Cédula: <?php echo $pdi->cedula_persona; ?><br>
+					Cédula: <?php echo $pdi->cedula; ?><br>
 					Fecha: <?php echo $pdi->fecha_operacion; ?><br>
 					Monto: <?php echo $pdi->monto_operacion; ?> Bs.<br>
 					

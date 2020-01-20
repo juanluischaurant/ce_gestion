@@ -7,12 +7,12 @@ class Locacion_model extends CI_Model {
     public function get_locaciones()
     {
         $resultados = $this->db->select(
-            'l.id_locacion, 
-            l.estado_locacion,
-            l.nombre_locacion,
-            l.fecha_creacion,
-            (SELECT COUNT(*) FROM instancia WHERE instancia.fk_id_locacion_1 = l.id_locacion) AS instancias_asociadas,
-            l.direccion_locacion'
+            'l.id, 
+            l.estado,
+            l.nombre,
+            l.fecha_registro,
+            (SELECT COUNT(*) FROM instancia WHERE instancia.id_locacion = l.id) AS instancias_asociadas,
+            l.direccion'
         )
         ->from('locacion as l')   
         ->get(); 
@@ -23,16 +23,16 @@ class Locacion_model extends CI_Model {
     public function get_locacion($id_locacion)
     {
         $resultado = $this->db->select(
-            'l.id_locacion, 
-            l.estado_locacion,
-            l.nombre_locacion,
-            l.direccion_locacion,
+            'l.id, 
+            l.estado,
+            l.nombre,
+            l.direccion,
             l.fecha_creacion,
-            (SELECT COUNT(*) FROM instancia WHERE instancia.fk_id_locacion_1 = l.id_locacion) AS instancias_asociadas,
-            l.direccion_locacion'
+            (SELECT COUNT(*) FROM instancia WHERE instancia.id_locacion = l.id) AS instancias_asociadas,
+            l.direccion'
         )
         ->from('locacion as l')   
-        ->where('l.id_locacion', $id_locacion)
+        ->where('l.id', $id_locacion)
         ->get(); 
 
         return $resultado->row();
@@ -77,35 +77,44 @@ class Locacion_model extends CI_Model {
         ins.estado_instancia,
         ins.serial_instancia,
         concat(ins.cupos_instancia, "/", ins.cupos_instancia_ocupados) as total_cupos,
-        ti.nombre_turno,
-        ti.id_turno,
-        ti.descripcion_turno,
+        tur.nombre,
+        tur.id,
+        tur.descripcion,
         curso.nombre_curso,
         concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(per.fecha_inicio_periodo)) as periodo_academico,
         per.fecha_culminacion_periodo')
         ->from('instancia AS ins')
-        ->join('locacion AS loc', 'loc.id_locacion = ins.fk_id_locacion_1')
-        ->join('turno_instancia as ti', 'ins.fk_id_turno_instancia_1 = ti.id_turno')
+        ->join('locacion AS loc', 'loc.id = ins.id_locacion')
+        ->join('turno as tur', 'ins.id_turno = tur.id')
         ->join('curso', 'curso.id_curso = ins.fk_id_curso_1')
         ->join('periodo as per', 'per.id_periodo = ins.fk_id_periodo_1')
         ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
         ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
         // ->where('ins.estado_instancia', '1')
         // ->or_where('ins.estado_instancia', '0')
-        ->where('loc.id_locacion', $id_locacion)
+        ->where('loc.id', $id_locacion)
         ->limit(25)
         ->get();
 
         return $resultados->result();
     }
 
+    /**
+     * Contar Instancias Asociadas
+     * 
+     * Retora un conteo de las instancias asociadas a la
+     * locación.
+     *
+     * @param integer $id_locacion
+     * @return array
+     */
     public function count_instancias_asociadas($id_locacion)
     {
         $resultado = $this->db->select(
-            '(SELECT COUNT(*) FROM instancia WHERE instancia.fk_id_locacion_1 = l.id_locacion) AS instancias_asociadas'
+            '(SELECT COUNT(*) FROM instancia WHERE instancia.fk_id_locacion_1 = l.id) AS instancias_asociadas'
         )
         ->from('locacion as l')   
-        ->where('l.id_locacion', $id_locacion)
+        ->where('l.id', $id_locacion)
         ->get(); 
 
         return $resultado->row();

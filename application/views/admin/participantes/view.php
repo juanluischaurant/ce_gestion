@@ -17,7 +17,7 @@
 	<div class="col-xs-6">	
 		<?php echo $participante->nombres_persona;?><br>
 		<?php echo $participante->apellidos_persona;?><br>
-		<?php echo $participante->cedula_persona;?><br>
+		<?php echo $participante->cedula;?><br>
         <?php echo $participante->fecha_nacimiento_persona;?><br>
         <?php echo $participante->telefono_persona;?><br>
         <?php echo $participante->direccion_persona;?><br>

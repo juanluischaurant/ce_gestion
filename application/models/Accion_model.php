@@ -16,9 +16,9 @@ class Accion_model extends CI_Model
     public function save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada)
     {
         $data = array(
-            'fk_id_usuario' => $fk_id_usuario,
-            'fk_id_tipo_accion' => $fk_id_tipo_accion,
-            'descripcion_accion' => $descripcion_accion,
+            'id_usuario' => $fk_id_usuario,
+            'id_tipo_accion' => $fk_id_tipo_accion,
+            'descripcion' => $descripcion_accion,
             'tabla_afectada' => $tabla_afectada
         );
 
@@ -33,17 +33,17 @@ class Accion_model extends CI_Model
     public function get_acciones()
     {
         $resultados = $this->db->select(
-            'a.id_accion,
-            a.fk_id_usuario,
-            a.fk_id_tipo_accion,
-            a.descripcion_accion,
+            'a.id,
+            a.id_usuario,
+            a.id_tipo_accion,
+            a.descripcion,
             a.tabla_afectada,
-            a.fecha_creacion,
-            ta.nombre_tipo_accion,
-            u.username_usuario')
+            a.fecha_registro,
+            ta.nombre,
+            u.username')
             ->from('accion as a')
-            ->join('tipo_de_accion as ta', 'ta.id_tipo_accion = a.fk_id_tipo_accion')
-            ->join('usuario as u', 'u.id_usuario = a.fk_id_usuario')
+            ->join('tipo_de_accion as ta', 'ta.id = a.id_tipo_accion')
+            ->join('usuario as u', 'u.id = a.id_usuario')
             ->get(); 
     
             return $resultados->result();

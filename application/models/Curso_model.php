@@ -3,25 +3,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Curso_model extends CI_Model {
 
-	public function getCursos() {
+    public function get_cursos()
+    {
          // Obtén una lista de cursos instanciados
          $resultados = $this->db->select(
-             'cu.id_curso,
-             cu.nombre_curso,
-             cu.estado_curso,
-             cu.descripcion_curso,
-             cu.veces_instanciado,
-             cu.fecha_registro_curso'
+             'cu.id,
+             cu.nombre,
+             cu.estado,
+             cu.descripcion,
+             (SELECT COUNT(*) FROM instancia WHERE instancia.id_curso = cu.id) AS instancias_asociadas,
+             cu.fecha_registro'
             )
          ->from('curso cu')
-         ->where('cu.estado_curso', '1')
+         ->where('cu.estado', '1')
          ->get();
  
          return $resultados->result();
     }
 
     public function get_curso($id) {
-        $this->db->where('id_curso', $id);
+        $this->db->where('id', $id);
         $resultado = $this->db->get('curso');
         return $resultado->row(); 
     }
@@ -33,7 +34,7 @@ class Curso_model extends CI_Model {
     }
 
     public function update($id, $data) {
-        $this->db->where('id_curso', $id);
+        $this->db->where('id', $id);
         $this->db->update('curso', $data);
     } 
 

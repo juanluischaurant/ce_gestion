@@ -55,7 +55,6 @@ class Pago extends CI_Controller {
         $id_banco_operacion = $this->input->post('id-banco-de-operacion');
         $id_tipo_de_pago = $this->input->post('id-tipo-de-pago');
         $id_cliente = $this->input->post('id-titular');
-        $serial_de_pago = $this->input->post('serial-de-pago');
         $numero_de_operacion = $this->input->post('numero-de-operacion-unico');
         $monto_de_operacion = $this->input->post('monto-de-operacion');
         $fecha_de_operacion = $this->input->post('fecha-operacion');
@@ -109,16 +108,14 @@ class Pago extends CI_Controller {
         $id_banco_operacion = $this->input->post('id_banco_operacion');
         $id_tipo_de_pago = $this->input->post('fk_id_tipo_operacion');
         $id_cliente = $this->input->post('id_cliente');
-        $serial_de_pago = $this->input->post('serial_de_pago');
         $numero_de_operacion = $this->input->post('numero_de_operacion');
         $monto_de_operacion = $this->input->post('monto_de_operacion');
         $fecha_de_operacion = $this->input->post('fecha_de_operacion');
         
         $data = array(
-            'fk_id_banco' => $id_banco_operacion,
-            'fk_id_tipo_operacion' => $id_tipo_de_pago,
-            'fk_id_titular' => $id_cliente,
-            'serial_pago' => $serial_de_pago,
+            'id_banco' => $id_banco_operacion,
+            'id_tipo_operacion' => $id_tipo_de_pago,
+            'id_titular' => $id_cliente,
             'numero_operacion' => $numero_de_operacion,
             'monto_operacion' => $monto_de_operacion,
             'fecha_operacion' => $fecha_de_operacion

@@ -6,23 +6,23 @@ class Titular_model extends CI_Model {
     public function get_titulares()
     {
         $resultados = $this->db->select(
-            'per.id_persona,
-            per.cedula_persona,
-            per.nombres_persona,
-            per.apellidos_persona,
-            per.genero_persona,
-            per.fecha_nacimiento_persona,
-            per.telefono_persona,
-            per.direccion_persona,
-            per.estado_persona,
-            c.id_titular,
-            c.estado_cliente,
-            c.fecha_registro_cliente,
-            c.fk_id_persona_1,
-            c.estado_cliente')
+            'per.id,
+            per.cedula,
+            per.nombres,
+            per.apellidos,
+            per.genero,
+            per.fecha_nacimiento,
+            per.telefono,
+            per.direccion,
+            per.estado,
+            c.id,
+            c.estado,
+            c.fecha_registro,
+            c.id_persona,
+            c.estado')
             ->from('persona as per')
-            ->join('titular as c', 'c.fk_id_persona_1 = per.id_persona')
-            ->where('c.estado_cliente', '1') 
+            ->join('titular as c', 'c.id_persona = per.id')
+            ->where('c.estado', '1') 
             ->get(); 
     
             return $resultados->result();
@@ -50,9 +50,9 @@ class Titular_model extends CI_Model {
     public function duplicidad_persona($id)
     {
         // Al momento de asignar el rol de Facilitador a una Persona, verifica que esta acción no haya sido realizada anteriormente
-        $query = $this->db->select('fk_id_persona_1')
+        $query = $this->db->select('id_persona')
         ->from('titular')
-        ->where('fk_id_persona_1', $id)
+        ->where('id_persona', $id)
         ->get();
 
         if($query->num_rows() == 0)

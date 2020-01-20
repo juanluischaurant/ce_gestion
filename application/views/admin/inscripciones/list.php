@@ -80,7 +80,7 @@
                                         </td>
 
                                         <td><?php echo $inscripcion->nombre_completo_participante; ?></td>
-                                        <td><?php echo $inscripcion->cedula_persona; ?></td>
+                                        <td><?php echo $inscripcion->cedula; ?></td>
                                         <?php $dataInscripcion =  $inscripcion->fk_id_instancia_1.'*'.$inscripcion->fk_id_inscripcion_1; ?>
 
                                         <td>

@@ -6,23 +6,23 @@ class Participante_model extends CI_Model {
     public function getParticipantes()
     {
         $resultados = $this->db->select(
-            'per.id_persona,
-            per.cedula_persona,
-            per.nombres_persona,
-            per.apellidos_persona,
-            per.genero_persona,
-            per.fecha_nacimiento_persona,
-            per.telefono_persona,
-            per.direccion_persona,
-            per.estado_persona,
-            par.id_participante,
-            par.estado_participante,
-            par.fecha_registro_participante,
-            par.fk_id_persona_2,
-            par.estado_participante')
+            'per.id,
+            per.cedula,
+            per.nombres,
+            per.apellidos,
+            per.genero,
+            per.fecha_nacimiento,
+            per.telefono,
+            per.direccion,
+            per.estado,
+            par.id,
+            par.estado,
+            par.fecha_registro,
+            par.id_persona,
+            par.estado')
             ->from('persona as per')
-            ->join('participante as par', 'par.fk_id_persona_2 = per.id_persona')
-            ->where('par.estado_participante', '1') 
+            ->join('participante as par', 'par.id_persona = per.id')
+            ->where('par.estado', '1') 
             ->get(); 
     
             return $resultados->result();
@@ -37,24 +37,24 @@ class Participante_model extends CI_Model {
     public function get_participante($id_participante)
     {
         $resultado = $this->db->select(
-            'per.id_persona,
-            per.cedula_persona,
-            per.nombres_persona,
-            per.apellidos_persona,
-            per.genero_persona,
-            per.fecha_nacimiento_persona,
-            per.telefono_persona,
-            per.direccion_persona,
-            per.estado_persona,
-            par.id_participante,
-            par.estado_participante,
-            par.fecha_registro_participante,
-            par.fk_id_persona_2,
-            par.estado_participante')
+            'per.id,
+            per.cedula,
+            per.nombres,
+            per.apellidos,
+            per.genero,
+            per.fecha_nacimiento,
+            per.telefono,
+            per.direccion,
+            per.estado,
+            par.id,
+            par.estado,
+            par.fecha_registro,
+            par.id_persona,
+            par.estado')
             ->from('participante as par')
-            ->join('persona as per', 'per.id_persona = par.fk_id_persona_2')
-            ->where('par.id_participante', $id_participante)
-            ->where('par.estado_participante', 1) 
+            ->join('persona as per', 'per.id = par.id_persona')
+            ->where('par.id', $id_participante)
+            ->where('par.estado', 1) 
             ->get(); 
     
         return $resultado->row();
@@ -69,17 +69,17 @@ class Participante_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'cur.nombre_curso,
-            par.fk_id_persona_2,
-            per.nombres_persona'
+            par.id_persona,
+            per.nombres'
         )
         ->from('participante AS par')
-        ->join('persona AS per', 'per.id_persona = par.fk_id_persona_2')
-        ->join('inscripcion AS ins', 'ins.fk_id_participante_1 = par.id_participante')
+        ->join('persona AS per', 'per.id = par.id_persona')
+        ->join('inscripcion AS ins', 'ins.fk_id_participante_1 = par.id')
         ->join('pago_de_inscripcion AS pdi', 'pdi.fk_id_inscripcion = ins.id_inscripcion')
         ->join('inscripcion_instancia AS ins_inst', 'ins_inst.fk_id_inscripcion_1 = ins.id_inscripcion')
         ->join('instancia AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')
         ->join('curso AS cur', 'cur.id_curso = inst.fk_id_curso_1')
-        ->where('par.id_participante', $id_participante)
+        ->where('par.id', $id_participante)
         ->group_by('ins.id_inscripcion')
         ->get();
 
@@ -104,11 +104,11 @@ class Participante_model extends CI_Model {
      * @param integer $id
      * @return boolean
      */
-    public function evitaParticipanteDuplicado($id)
+    public function duplicidad_participante($id)
     {
-        $query = $this->db->select('fk_id_persona_2')
+        $query = $this->db->select('id_persona')
         ->from('participante')
-        ->where('fk_id_persona_2', $id)
+        ->where('id_persona', $id)
         ->get();
 
         // Retorna verdadero si la persona no está registrada aún

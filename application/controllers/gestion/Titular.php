@@ -43,7 +43,7 @@ class Titular extends CI_Controller {
 		} elseif($id_persona = 'new') {
 					
 			$data_persona = array(
-				"personas" => $this->Persona_model->getPersonas() 
+				"personas" => $this->Persona_model->get_personas() 
 			);
 
 			$this->load->view('layouts/header');
@@ -57,7 +57,7 @@ class Titular extends CI_Controller {
     
 	public function store()
 	{
-		$fk_id_persona_1 = $this->input->post('fk-id-persona');
+		$id_persona = $this->input->post('fk-id-persona');
 
 		// $cedula = $this->input->post("cedula");
 		// $nombres = $this->input->post('nombres');
@@ -68,10 +68,10 @@ class Titular extends CI_Controller {
 		// $direccion = $this->input->post('direccion');
 
 		$data_cliente = array(
-			'fk_id_persona_1' => $fk_id_persona_1,
+			'id_persona' => $id_persona,
 		);
 
-		if($this->Titular_model->duplicidad_persona($fk_id_persona_1) === TRUE)
+		if($this->Titular_model->duplicidad_persona($id_persona) === TRUE)
 		{
 			if($this->Titular_model->save($data_cliente))
 			{
