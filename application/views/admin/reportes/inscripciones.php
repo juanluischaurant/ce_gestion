@@ -20,7 +20,7 @@
                                 <tr>
                                     <th># Inscripción</th>
                                     <th>Hora Inscripción</th>
-                                    <th>Instancia</th>
+                                    <th>Curso</th>
                                     <th>Cédula Participante</th>
                                     <th>Opciones</th>
                    

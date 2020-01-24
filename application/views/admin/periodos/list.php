@@ -45,7 +45,7 @@
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
                                     <th>Período</th>
-                                    <th>Instancias Asociadas</th>
+                                    <th>Cursos Asociadas</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -53,15 +53,15 @@
                                 <?php if(!empty($periodos)): ?>
                                 <?php foreach($periodos as $periodo): ?>
                                     <tr>
-                                        <td><?php echo $periodo->id_periodo; ?></td>
-                                        <td><?php echo $periodo->fecha_creacion; ?></td>
+                                        <td><?php echo $periodo->id; ?></td>
+                                        <td><?php echo $periodo->fecha_registro; ?></td>
                                         <td><?php echo $periodo->nombre_periodo; ?></td>                                 
                                         <td><?php echo $periodo->instancias_asociadas; ?></td>                                 
                                         <td>
                                             <div class="btn-group">
                                                 <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/periodo/edit/<?php echo $periodo->id_periodo; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/periodo/delete/<?php echo $periodo->id_periodo; ?>" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/periodo/edit/<?php echo $periodo->id; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/periodo/delete/<?php echo $periodo->id; ?>" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>

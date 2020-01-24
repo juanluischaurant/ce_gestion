@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        Instancia registrada durante: <?php echo $locacion->fecha_creacion; ?>
+        Curso registrada durante: <?php echo $locacion->fecha_registro; ?>
     </div>
 </div> <br>
 
@@ -10,7 +10,7 @@
         
 <div class="box">
             <div class="box-header">
-              <h3 class="box-title">Últimas Instancias Asociadas</h3>
+              <h3 class="box-title">Últimas Cursos Asociadas</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
@@ -22,12 +22,12 @@
                   <th>Cupos</th>
                 </tr>
                
-                <?php foreach($instancias as $instancia) : ?>
+                <?php foreach($cursos as $curso) : ?>
                     <tr>
-                        <td><?php echo $instancia->serial_instancia; ?></td>
-                        <td><?php echo $instancia->nombre_curso ?></td>
-                        <td> <?php echo $instancia->nombre_turno; ?></td>
-                        <td><?php echo $instancia->total_cupos; ?></td>
+                        <td><?php echo $curso->serial_instancia; ?></td>
+                        <td><?php echo $curso->nombre_curso ?></td>
+                        <td> <?php echo $curso->nombre_turno; ?></td>
+                        <td><?php echo $curso->total_cupos; ?></td>
                     </tr>
                 <?php endforeach; ?>
 

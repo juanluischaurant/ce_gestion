@@ -178,12 +178,12 @@
             }
         });
 
-        $('#export-cursos').DataTable({
+        $('#export-especialidades').DataTable({
             dom: 'Bfrtip',
             buttons: [
                 {
                     extend: 'excelHtml5',
-                    title: "Listado de cursos",
+                    title: "Listado de especialidades",
                     exportOptions: {
                         columns: [ 0, 1, 2 ]
                     }
@@ -661,7 +661,7 @@
             // Oculta ventana modal
             $('#modal-default').modal('hide');
 
-            // Activa campo para agregar Instancia
+            // Activa campo para agregar Curso
             $('#producto').removeAttr('disabled');
         });
 
@@ -805,7 +805,7 @@
             $("#edit-inscripcion-tabs a[href='"+activeTab+"']").tab("show");
         }
 
-        $('#tab-cambiar-instancia').on('click', function() {
+        $('#tab-cambiar-curso').on('click', function() {
 
             location.reload();
         });
@@ -916,15 +916,15 @@
 
 
         // =============================================
-        // JS para Instancias
+        // JS para Cursos
         // =============================================
 
         /**
-        * Genera un serial para la instancia al momento de presionar el botón indicado
+        * Genera un serial para la curso al momento de presionar el botón indicado
         */
-        $(document).on('click', '.btn-check-curso-instanciado', function() {
-            let curso = $(this).val();
-            let infoCurso = curso.split('*');
+        $(document).on('click', '.btn-check-especialidad-instanciado', function() {
+            let especialidad = $(this).val();
+            let infoCurso = especialidad.split('*');
 
             let vecesInstanciado = infoCurso[3],
             nombreCurso = infoCurso[1];
@@ -932,20 +932,20 @@
             let id_curso = infoCurso[0],
             prefijo = nombreCurso.substring(0, 3);
 
-            $('#serial-instancia').val(prefijo.toUpperCase()+'-'+id_curso+'-'+generarNumero(vecesInstanciado));
+            $('#serial-curso').val(prefijo.toUpperCase()+'-'+id_curso+'-'+generarNumero(vecesInstanciado));
 
-            $('#id-curso-instanciado').val(id_curso);
-            $('#nombre-curso-instanciado').val(nombreCurso);
+            $('#id-especialidad-instanciado').val(id_curso);
+            $('#nombre-especialidad-instanciado').val(nombreCurso);
 
             $('#modal-default').modal('hide');
         });
 
         $('')
 
-        $('#periodo-instancia').autocomplete({
+        $('#periodo-curso').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'gestion/instancia/getPeriodosJSON',
+                    url: base_url+'gestion/curso/getPeriodosJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -959,17 +959,17 @@
             select: function(event, ui) {
                 // Solo necesitamos almacenar el id del periodos
                 let data = ui.item.id_periodo;
-                $('#id-periodo-instancia').val(data);
-                $('#periodo-instancia').parent().addClass('has-success');
-                $('label[for="periodo-instancia"] i').removeClass('hidden');
+                $('#id-periodo-curso').val(data);
+                $('#periodo-curso').parent().addClass('has-success');
+                $('label[for="periodo-curso"] i').removeClass('hidden');
 
             }
         });
 
-        $('#locacion-instancia').autocomplete({
+        $('#locacion-curso').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'gestion/instancia/getLocacionesJSON',
+                    url: base_url+'gestion/curso/getLocacionesJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -983,16 +983,16 @@
             select: function(event, ui) {
                 // Solo necesitamos almacenar el id de la locación
                 let data = ui.item.id_locacion;
-                $('#id-locacion-instancia').val(data);
-                $('#locacion-instancia').parent().addClass('has-success');
-                $('label[for="locacion-instancia"] i').removeClass('hidden');
+                $('#id-locacion-curso').val(data);
+                $('#locacion-curso').parent().addClass('has-success');
+                $('label[for="locacion-curso"] i').removeClass('hidden');
             }
         });
         
-        $('#profesor-instancia').autocomplete({
+        $('#facilitador-curso').autocomplete({
             source: function(request, response) {
                 $.ajax({
-                    url: base_url+'gestion/instancia/getFacilitadoresJSON',
+                    url: base_url+'gestion/curso/getFacilitadoresJSON',
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -1006,16 +1006,16 @@
             select: function(event, ui) {
                 // Solo necesitamos almacenar el id de la locación
                 let data = ui.item.id_facilitador;
-                $('#id-profesor-instancia').val(data);
-                $('#profesor-instancia').parent().addClass('has-success');
-                $('label[for="profesor-instancia"] i').removeClass('hidden');
+                $('#id-facilitador-curso').val(data);
+                $('#facilitador-curso').parent().addClass('has-success');
+                $('label[for="facilitador-curso"] i').removeClass('hidden');
             }
         });
 
-        $('input[name="turno-instancia"]').on('click', function() { alert('hi');});
+        // $('input[name="turno-curso"]').on('click', function() { alert('hi');});
 
         // =============================================
-        // Fin de JS para Instancias
+        // Fin de JS para Cursos
         // =============================================
 
 
@@ -1094,21 +1094,21 @@
                  * es necesario agregar -1 a la longitud total debido
                  * a que el encabezado ya tiene un elemento <tr> que también se cuenta
                  */
-                let table_rows_count = $('#tabla-instancias tr').length - 1;
+                let table_rows_count = $('#tabla-cursos tr').length - 1;
 
                 if(table_rows_count >= 1) {
 
-                    alert('¡No puedes seleccionar más de 1 curso!');
+                    alert('¡No puedes seleccionar más de 1 especialidad!');
                     return;
                 }
                 // Almacena en una variable los datos recogidos con la consulta SQL realizada previamente
                 let data = ui.item.id_instancia+'*'+ui.item.label+'*'+ui.item.cupos_instancia+'*'+ui.item.precio_instancia+'*'+ui.item.cupos_instancia_ocupados;
                 
                 // Almacena la variable data dentro del atributo value del elemento selector
-                $('#btn-agregar-curso').val(data);
+                $('#btn-agregar-especialidad').val(data);
 
-                // Almacena el ID del curso en atributo personalizado de HTML
-                $('#btn-agregar-curso').attr('data-id-curso', ui.item.id_instancia);
+                // Almacena el ID del especialidad en atributo personalizado de HTML
+                $('#btn-agregar-especialidad').attr('data-id-especialidad', ui.item.id_instancia);
 
             }
         });
@@ -1152,7 +1152,7 @@
                     // $('#caja-secundaria').toggleClass('hidden');
                     // $('#btn-guardar-inscripcion-pago').toggleClass('disabled')
 
-                    // $('#id-periodo-instancia').val(data);
+                    // $('#id-periodo-curso').val(data);
 
 
                 }
@@ -1161,7 +1161,7 @@
         });
 
         // Al presionar este botón, imprimir en la vista los datos consultados
-        $('#btn-agregar-curso').on('click', function() {
+        $('#btn-agregar-especialidad').on('click', function() {
             let data = $(this).val(); // Almacena los datos del atributo "value" del boton clickeado
 
             // Comprobar si la variable "data" está vacia o no
@@ -1169,14 +1169,14 @@
             {
 
                 let datosCurso = data.split('*'),
-                cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por curso
-                cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por curso
+                cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por especialidad
+                cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por especialidad
 
                 // Si la cantidad de cupos totales es menor a la de cupos ocupados
                 if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
 
-                    // Evita que el curso sea agregado
-                    alert('El curso está lleno, por favor seleccione otro');
+                    // Evita que el especialidad sea agregado
+                    alert('El especialidad está lleno, por favor seleccione otro');
 
                     // Vacía el elemento #producto
                     $('#producto').val('');
@@ -1190,9 +1190,9 @@
                         dataType: 'JSON',
                         data: {
 
-                            // "data-id-curso" es un atributo personalizado de HTML que almacena
-                            // el ID de la instancia seleccionada
-                            id: $(this).attr('data-id-curso')
+                            // "data-id-especialidad" es un atributo personalizado de HTML que almacena
+                            // el ID de la curso seleccionada
+                            id: $(this).attr('data-id-especialidad')
                         },
                         success: function( data, textStatus, jQxhr ) {
 
@@ -1203,7 +1203,7 @@
                             for(let i = 0; i < data.length; i++)
                             {
 
-                                let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el curso dado
+                                let idParticipanteInscrito = data[i]['fk_id_participante_1']; // Almacena ID del participante Inscrito en el especialidad dado
                                 
                                 if(idParticipanteInscrito == idParticipante)
                                 {
@@ -1215,21 +1215,21 @@
 
                             if(existe) {
 
-                                alert('El participante ya está registrado en esta instancia.');
+                                alert('El participante ya está registrado en esta curso.');
                             }
                             else if(!existe) 
                             {    
                                 html = '<tr>';
-                                html += '<td><input class="curso-id" type="hidden" name="id-instancias[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
+                                html += '<td><input class="especialidad-id" type="hidden" name="id-cursos[]" value="'+datosCurso[0]+'">'+datosCurso[0]+'</td>';
                                 html += '<td><input type="hidden" name="nombrescursos[]" value="'+datosCurso[1]+'">'+datosCurso[1]+'</td>';
-                                html += '<td><input type="hidden" name="cupos-instancia[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
+                                html += '<td><input type="hidden" name="cupos-curso[]" value="'+datosCurso[2]+'">'+datosCurso[2]+'</td>';
                                 html += '<td><input type="hidden" name="cuposIntanciaOcupados[]" value="'+datosCurso[4]+'">' + datosCurso[4] + '</td>';
                                 html += '<td><input type="hidden" name="precioactualcursos[]" value="'+datosCurso[3]+'">' + datosCurso[3] + '</td>';
 
-                                html += '<td><button type="button" class="btn btn-danger btn-remove-curso"><span class="fa fa-remove"></span></button></td>'
+                                html += '<td><button type="button" class="btn btn-danger btn-remove-especialidad"><span class="fa fa-remove"></span></button></td>'
                                 html += '</tr>';
 
-                                $('#tabla-instancias tbody').append(html);
+                                $('#tabla-cursos tbody').append(html);
 
                                 // Verifica el estado del atributo "disabled" del botón clickeado 
                                 switchGuardarInscripcion();
@@ -1250,15 +1250,15 @@
             else
             {
 
-                alert('Seleccione una instancia');
+                alert('Seleccione una curso');
             }
         });
 
         /**
-         * Permite remover una instancia agregada en la vista de Nueva Inscripción
+         * Permite remover una curso agregada en la vista de Nueva Inscripción
          * antes de que este sea almacenado en la base de datos.
          */
-        $(document).on('click', '.btn-remove-curso', function() {
+        $(document).on('click', '.btn-remove-especialidad', function() {
 
             $(this).closest('tr').remove();
 
@@ -1266,7 +1266,7 @@
             sumar_costo_inscripcion();
 
             // Verifica que el contenido del nodo <tr> tenga contenido
-            if($('#tabla-instancias tr').length <= 1) 
+            if($('#tabla-cursos tr').length <= 1) 
             {
                 $('#btn-guardar-inscripcion').attr('disabled', true);
             }
@@ -1323,11 +1323,11 @@
             });
         });
 
-        $(document).on('click', '.btn-view-instancia', function() {
+        $(document).on('click', '.btn-view-curso', function() {
 
             let id_instancia = $(this).val();
             $.ajax({
-                url: base_url + 'gestion/instancia/view',
+                url: base_url + 'gestion/curso/view',
                 type: 'POST',
                 dataType: 'html',
                 data: {
@@ -1386,8 +1386,8 @@
         // Calcula el total cada vez que se llama esta función
         let costo_inscripcion = 0;       
         
-        // Por cada elemento <tr> dentro del tbody en #tabla-instancias
-        $('#tabla-instancias tbody tr').each(function() {
+        // Por cada elemento <tr> dentro del tbody en #tabla-cursos
+        $('#tabla-cursos tbody tr').each(function() {
             
             // Cacula
             costo_inscripcion += Number($(this).find('td:eq(4)').text());

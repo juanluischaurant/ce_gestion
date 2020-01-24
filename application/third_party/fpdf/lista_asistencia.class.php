@@ -11,17 +11,17 @@ class PDF extends FPDF {
     private $locacion = '';
     
     /**
-     * Setter que permite obeter el id del curso que se desea consultar
+     * Setter que permite obeter el id del especialidad que se desea consultar
      *
      * @param integer $id
      * @return void
      */
-    public function set_id_instancia($id)
+    public function set_id_curso($id)
     {
         $this->id_instancia = $id;
     }
 
-    public function set_datos_instancia($nombre, $periodo, $locacion)
+    public function set_datos_curso($nombre, $periodo, $locacion)
     {
         $this->nombre_instancia = $nombre;
         $this->periodo = $periodo;
@@ -61,7 +61,7 @@ class PDF extends FPDF {
 
         $this->Cell(29);
         $this->SetFont('Arial', 'B', 11);
-        $this->Cell(150, 5, 'Curso: '.utf8_decode($this->nombre_instancia), 0, 0, 'L');
+        $this->Cell(150, 5, 'Especialidad: '.utf8_decode($this->nombre_instancia), 0, 0, 'L');
 
         // Inicio de la tabla
         $this->Ln(8);

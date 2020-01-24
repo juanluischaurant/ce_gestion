@@ -19,7 +19,7 @@ class Inscripcion extends CI_Controller {
 			$this->load->model("Inscripcion_model");
 			$this->load->model("Pago_model");
 			$this->load->model("Participante_model");
-			$this->load->model('Instancia_model');
+			$this->load->model('Curso_model');
         }
     }
 
@@ -126,8 +126,8 @@ class Inscripcion extends CI_Controller {
 
 		// Llaves utilizadas para almacenar en la tabla ocupa
 		// $fk_id_tipo_operacion = $this->input->post('fk_id_tipo_operacion');
-		$fk_id_instancia = $this->input->post('id-instancias');
-		$cupos_instancia = $this->input->post('cupos-instancia');
+		$fk_id_instancia = $this->input->post('id-cursos');
+		$cupos_instancia = $this->input->post('cupos-curso');
 		$ids_pago = $this->input->post('id-pago');
 
 		// Datos a ser almacenados en la tabla Inscripcion
@@ -166,7 +166,7 @@ class Inscripcion extends CI_Controller {
 	 */
 	protected function save_ocupa($id_instancia, $id_ultima_inscripcion, $cupos_instancia, $ids_pago)
 	{
-		// Itera sobre un array con IDs de 1 o más instancias seleccionadas
+		// Itera sobre un array con IDs de 1 o más cursos seleccionadas
 		for($i=0; $i < count($id_instancia); $i++)
 		{ 
 			$data  = array(
@@ -177,7 +177,7 @@ class Inscripcion extends CI_Controller {
 			// Almacena en inscripcion_curso
 			$this->Pago_model->save_ocupa($data);
 
-			// Actualiza el conteo de cupos disponibles en el curso
+			// Actualiza el conteo de cupos disponibles en el especialidad
 			$this->actualiza_cupos_ocupados($id_instancia[$i], $cupos_instancia[$i]);
 		}
 
@@ -199,7 +199,7 @@ class Inscripcion extends CI_Controller {
 	/**
 	 * Actualiza Cupos Ocupados (¿Es aún necesario este método?)
 	 * 
-	 * Actualiza el conteo de cupos en determinado curso luego de almacenar los datos de inscripción.
+	 * Actualiza el conteo de cupos en determinado especialidad luego de almacenar los datos de inscripción.
 	 *
 	 * @param integer $id_instancia
 	 * @param integer $cupos_instancia
@@ -207,12 +207,12 @@ class Inscripcion extends CI_Controller {
 	 */
 	protected function actualiza_cupos_ocupados($id_instancia, $cupos_instancia)
 	{
-		$cursoActual = $this->Instancia_model->get_instancia($id_instancia);
+		$cursoActual = $this->Curso_model->get_curso($id_instancia);
 
 		$data = array(
 			'cupos_instancia_ocupados' => $cursoActual->cupos_instancia_ocupados + 1, 
 		);
-		$this->Instancia_model->update($id_instancia, $data);
+		$this->Curso_model->update($id_instancia, $data);
 	}
 
 	/**
@@ -283,7 +283,7 @@ class Inscripcion extends CI_Controller {
 
 		if($fecha_valida === TRUE)
 		{
-			// Verificar que la instancia tenga cupos disponibles
+			// Verificar que la curso tenga cupos disponibles
 			if($this->Inscripcion_model->verificar_cupos_disponibles($id_instancia))
 			{
 				// Esta primera consulta cambia el estado de la inscripción
@@ -325,36 +325,36 @@ class Inscripcion extends CI_Controller {
 	 * Actualiza Inscripción
 	 * 
 	 * Método diseñado para ser llamado por el módulo de edición de inscripción,
-	 * permite actualizar la tabla "ocupa" y el conteo de cursos
+	 * permite actualizar la tabla "ocupa" y el conteo de especialidades
 	 * involucrados en la transacción.
 	 *
 	 * @return void
 	 */
 	public function update()
 	{
-		$instancia_actual = $this->input->post('id-instancia-actual'); 
-		$id_instancias_nuevas = $this->input->post('id-instancias'); // Array de cursos seleccionados
-		$id_ocupa = $this->input->post('id-inscripcion-instancia'); 
+		$instancia_actual = $this->input->post('id-curso-actual'); 
+		$id_instancias_nuevas = $this->input->post('id-cursos'); // Array de especialidades seleccionados
+		$id_ocupa = $this->input->post('id-inscripcion-curso'); 
 
 		foreach($id_instancias_nuevas as $idin)
 		{
-			// Verificar que hay cupos disponibles en la nueva instancia que se desea seleccionar
+			// Verificar que hay cupos disponibles en la nueva curso que se desea seleccionar
 			if($this->Inscripcion_model->verificar_cupos_disponibles($idin))
 			{
 				$data = array(
 					'fk_id_instancia_1' => $idin,
 				);
 				
-				// Actualizar la tabla relacional "inscripcion_instanica" con el ID de la nueva instancia
+				// Actualizar la tabla relacional "inscripcion_instanica" con el ID de la nueva curso
 				if($this->Inscripcion_model->update_ocupa($id_ocupa, $data))
 				{
-					// Sumar +1 a los cupos de la instancia nueva
+					// Sumar +1 a los cupos de la curso nueva
 					if($this->Inscripcion_model->sumar_cupo_instancia($idin))
 					{
 						if($this->Inscripcion_model->restar_cupo_instancia($instancia_actual))
 						{
 							// Emitir alerta y redireccionar
-							$this->session->set_flashdata('success', 'Cambio de instancia exitoso.');
+							$this->session->set_flashdata('success', 'Cambio de curso exitoso.');
 							redirect(base_url().'movimientos/inscripcion/');
 						}
 					}					
@@ -362,7 +362,7 @@ class Inscripcion extends CI_Controller {
 			}
 			else
 			{
-				$this->session->set_flashdata('error', 'Instancia no tiene cupos disponibles.');
+				$this->session->set_flashdata('error', 'Curso no tiene cupos disponibles.');
 				redirect(base_url().'movimientos/inscripcion/');
 			}
 		}
@@ -463,7 +463,7 @@ class Inscripcion extends CI_Controller {
 
 
 	/**
-	 * Resta 1 cupo a la instancia seleccionada
+	 * Resta 1 cupo a la curso seleccionada
 	 * 
 	 * Este método es invocado al momento de desactivar una inscripción.
 	 *
@@ -476,7 +476,7 @@ class Inscripcion extends CI_Controller {
 	}
 
 	/**
-	 * Suma 1 cupo a la instancia seleccionada
+	 * Suma 1 cupo a la curso seleccionada
 	 * 
 	 * Este método es invocado al momento de activar una inscripción.
 	 *
@@ -523,7 +523,7 @@ class Inscripcion extends CI_Controller {
 	// =======================================================
 
 	/**
-	 * Consulta el curso indicado
+	 * Consulta el especialidad indicado
 	 * 
 	 * Este método se invoca a través de una llamada AJAX realizada con jQuery
 	 *
@@ -536,10 +536,10 @@ class Inscripcion extends CI_Controller {
 	}
 
 	/**
-     * Método invocado al momento de agregar una instancia a la ficha de inscripción
+     * Método invocado al momento de agregar una curso a la ficha de inscripción
      * 
      * Permite verificar que el participante seleccionado no se encuentre registrado en
-     * el curso seleccionado
+     * el especialidad seleccionado
      *
      * @param integer $id_instancia
      * @return void

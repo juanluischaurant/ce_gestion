@@ -46,7 +46,7 @@
 			<thead>
 				<tr>
 					<th>Serial #</th>
-					<th>Instancia Inscrita</th>
+					<th>Curso Inscrita</th>
 					<th>Costo</th>
 				</tr>
 			</thead>

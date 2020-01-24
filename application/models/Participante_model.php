@@ -61,7 +61,7 @@ class Participante_model extends CI_Model {
     }
 
     /**
-     * Retorna las instancias en las que el participante se ha inscrito
+     * Retorna las cursos en las que el participante se ha inscrito
      *
      * @return integer $id_participante
      */
@@ -77,8 +77,8 @@ class Participante_model extends CI_Model {
         ->join('inscripcion AS ins', 'ins.fk_id_participante_1 = par.id')
         ->join('pago_de_inscripcion AS pdi', 'pdi.fk_id_inscripcion = ins.id_inscripcion')
         ->join('inscripcion_instancia AS ins_inst', 'ins_inst.fk_id_inscripcion_1 = ins.id_inscripcion')
-        ->join('instancia AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')
-        ->join('curso AS cur', 'cur.id_curso = inst.fk_id_curso_1')
+        ->join('curso AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')
+        ->join('especialidad AS cur', 'cur.id_curso = inst.fk_id_curso_1')
         ->where('par.id', $id_participante)
         ->group_by('ins.id_inscripcion')
         ->get();

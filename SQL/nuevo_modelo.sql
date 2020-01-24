@@ -30,7 +30,7 @@ CREATE TABLE `menu` (
 
 INSERT INTO `menu` (`id`, `nombre`, `enlace`) VALUES
 (1, 'Inicio', 'dashboard'),
-(2, 'Cursos', 'gestion/curso'),
+(2, 'Especialidades', 'gestion/especialidad'),
 (3, 'Usuarios', 'administrador/usuario'),
 (4, 'Permisos', 'administrador/permisos'),
 (5, 'Personas', 'gestion/persona');
@@ -149,6 +149,37 @@ CREATE TABLE `persona` (
   `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
+
+INSERT INTO `persona` (`id`, `cedula`, `nombres`, `apellidos`, `genero`, `fecha_nacimiento`, `telefono`, `direccion`, `estado`, `fecha_registro`, `fecha_modificacion`) VALUES
+(1, 22574648, 'Juan Luis', 'Chaurant Zamora', '1', '1993-12-13', '04248900840', 'El Tigre, edo. Anzoátegui', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(3, 8965910, 'Alicia', 'Zamora', '2', '1967-03-03', '04242929292', 'EL Tigre, Chaguaramos', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(5, 9458635, 'Edgardo', 'Saá', '1', '1969-09-04', '04249485560', 'Av. La Paz, urb. Chimire.', 1, '2019-11-06 17:11:32', '2019-11-15 22:12:10'),
+(6, 7294645, 'Marco', 'Aurelio', '1', '1965-09-25', '04149675848', 'El Tigrito, Campo Norte', 1, '2019-11-06 17:11:32', '2019-11-15 22:12:07'),
+(7, 4965328, 'Johan', 'Bach', '1', '1960-10-13', '04165843323', 'El Tigrito, Campo Norte, casa #230', 1, '2019-11-06 17:11:32', '2019-11-15 22:12:02'),
+(8, 25468978, 'Asena', 'Vural', '2', '1999-11-20', '04245694548', 'Av. Franca, El Tigre', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(9, 27865343, 'José', 'Lopez', '1', '2000-10-20', '04167843304', 'El Tigre, antes del estadio', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(10, 23254648, 'Felipe', 'Rondón', '1', '1999-09-23', '04245643943', 'El Tigre, estado Anzoátegui', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(11, 12438628, 'Yulimar Celidett', 'Fajardo Rojas', '2', '1975-10-20', '04247684312', 'El Tigre, detrás de Campo Oficina', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(12, 25678432, 'Joselyn', 'Marín', '2', '1996-10-13', '04267242295', 'Av. Carabobo, cruce con calle 10', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(13, 12275704, 'José', 'Astudillo', '1', '1975-11-03', '04248965754', 'El Tigrito, Chimire', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(14, 8477818, 'Felix', 'Blackman', '1', '1965-05-27', '04248113920', 'El Tigre, detrás de La Cascada', 1, '2019-11-06 17:11:32', '2019-11-15 22:11:56'),
+(15, 25568648, 'Mario', 'Bustamante', '1', '1997-12-04', '04245645456', 'El Tigre, estado Anzoátegui', 1, '2019-11-06 17:11:32', '2019-11-15 19:53:01'),
+(16, 2582893, 'Esteban de Jesus', 'Chaurant Zamora', '1', '1995-12-26', '04141929294', 'Aveneda 2 Casa N° 118 Sector Cincuentenario ', 1, '2019-11-06 17:11:32', '2020-01-08 14:21:22'),
+(18, 27546895, 'Yorman', 'Pérez', '1', '2019-11-06', '', '', 0, '2019-11-06 17:47:45', '2019-11-17 15:52:06'),
+(19, 23857463, 'Katty', 'Otero', '2', '1995-12-14', '04142354465', 'Urb. Los Naranjos, calle 5', 1, '2019-11-12 21:45:02', '2019-11-15 19:53:01'),
+(20, 25657342, 'Fernando', 'La Rosa', '1', '1994-12-09', '04167922205', 'La California, el Tigrito', 1, '2019-11-12 21:50:30', '2019-11-15 19:53:01'),
+(21, 8477827, 'Gregorio', 'Velásquez', '1', '1964-06-27', '02834002095', 'El Tigre, Chaguaramos', 1, '2019-11-14 23:15:58', '2019-11-15 19:53:01'),
+(22, 8466825, 'Manuel Alejandro', 'Contreras', '1', '1964-10-06', '04243254403', 'El Tigre, carretera negra', 1, '2019-11-14 23:31:00', '2019-11-17 08:09:20'),
+(23, 10939925, 'Freddy', 'Miranda', '1', '0000-00-00', '', '', 1, '2019-11-15 15:20:39', '2019-11-15 19:53:01'),
+(24, 27380945, 'Samuel Andrés', 'Requena Abache', '1', '1999-11-21', '04248812413', 'Urb. Virgen del Valle c/ Santa Rosa P130', 1, '2019-11-15 15:26:16', '2019-11-16 13:10:00'),
+(25, 23454648, 'Daniel Fernando', 'Fernández', '1', '1994-12-14', '04243211514', 'Calle 10, sector Morichal. Casa #14', 1, '2019-11-17 08:59:57', '2019-11-17 09:41:09'),
+(26, 8456789, 'Carmen', 'Martínez', '2', '1965-11-25', '04162839768', '17 de diciembre, calle 25', 1, '2019-12-20 22:01:46', '2019-12-20 22:01:46'),
+(27, 29176244, 'Felipe', 'Gómez', '1', '2000-12-25', '04243445699', 'El Tigre, pueblo nuevo', 1, '2020-01-02 00:06:21', '2020-01-02 00:06:21'),
+(28, 24688325, 'Edgar', 'Pacheco', '1', '1999-11-24', '04243251215', 'Urb. Los Naranjos, calle 5', 1, '2020-01-04 17:29:33', '2020-01-04 17:29:33'),
+(29, 30254533, 'Ariana', 'Díaz', '2', '1999-01-13', '04243253324', 'Casco Viejo, cassa #125', 1, '2020-01-04 17:56:22', '2020-01-04 17:56:22'),
+(30, 24322878, 'Jesús', 'Alcantara', '1', '1999-12-24', '04243254499', 'Av. Libertador, cruce con calle 12 ', 1, '2020-01-06 01:09:23', '2020-01-06 01:09:23'),
+(31, 12504138, 'Alfredo', 'Bizcochea', '1', '1976-06-28', '04248070018', 'Calle Independencia, #16, 17 de Diciembre', 1, '2020-01-07 11:29:43', '2020-01-07 11:29:43');
+
 --
 -- Table structure for table `nivel_academico`
 --
@@ -208,10 +239,10 @@ ALTER TABLE `titular`
 -- Tablas asociadas a Instancia
 -- =========================================
 -- 
--- Table structure for table `curso`
+-- Table structure for table `especialidad`
 --
 
-CREATE TABLE `curso` (
+CREATE TABLE `especialidad` (
   `id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `nombre` varchar(45) NOT NULL,
   `estado` TINYINT NOT NULL DEFAULT '1',
@@ -219,14 +250,14 @@ CREATE TABLE `curso` (
   `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB;
 
-ALTER TABLE `curso`
+ALTER TABLE `especialidad`
   ADD UNIQUE KEY `banco_unique_nombre` (`nombre`);
 
-INSERT INTO `curso` (`id`, `nombre`, `estado`, `descripcion`, `fecha_registro`) VALUES
+INSERT INTO `especialidad` (`id`, `nombre`, `estado`, `descripcion`, `fecha_registro`) VALUES
 (1, 'Informática', 1, 'Dirigído a estudiantes de informática', '2019-12-22 09:00:00'),
 (2, 'Reparación de Computadoras', 1, 'Enfoque en reparaciónes de Hardware', '2019-12-22 17:09:44'),
 (3, 'Corte y Costura', 1, 'Para quienes fabrican ropa', '2019-12-22 17:15:44'),
-(4, 'Refrigeración', 1, 'Curso dedicado a la reparación de equipos', '2019-12-22 17:48:44');
+(4, 'Refrigeración', 1, 'Especialidad dedicada a la reparación de equipos', '2019-12-22 17:48:44');
 
 --
 -- Table structure for table `facilitador`
@@ -282,40 +313,41 @@ INSERT INTO `periodo` (`id`, `fecha_inicio`, `fecha_culminacion`, `estado`, `fec
 (5, '2020-06-17', '2020-08-29', 1, '2020-01-06 14:33:04', '2020-01-06 14:33:04');
 
 --
--- Turno de instancia
+-- Turno
 --
 CREATE TABLE `turno` (
   `id` int(11) NOT NULL  PRIMARY KEY AUTO_INCREMENT COMMENT 'Referencia a la tabla Participante',
-  `nombre` varchar(45) NOT NULL COMMENT 'Almacena los turnos en los que la institución oferta sus instancias',
-  `descripcion` varchar(250) DEFAULT NULL COMMENT 'Breve descripción del turno especificado'
+  `nombre` varchar(6) NOT NULL COMMENT 'Almacena los turnos en los que la institución oferta sus cursos'
 ) ENGINE=InnoDB;
 
+INSERT INTO `turno`(`id`, `nombre`) VALUES (1, 'Mañana'),(2, 'Tarde');
+
 --
--- Table structure for table `instancia`
+-- Table structure for table `curso`
 --
 
-CREATE TABLE `instancia` (
+CREATE TABLE `curso` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `serial` varchar(15) NOT NULL,
-  `id_curso` int(11) NOT NULL,
+  `id_especialidad` int(11) NOT NULL,
   `id_facilitador` int(11) DEFAULT NULL,
   `id_periodo` int(11) DEFAULT NULL,
   `id_locacion` int(11) DEFAULT NULL,
-  `id_turno` int(11) NOT NULL COMMENT 'Referencia a la tabla turno_instancia',
+  `id_turno` int(11) NOT NULL COMMENT 'Referencia a la tabla turno',
   `cupos` int(4) DEFAULT NULL,
   `precio` decimal(10,2) DEFAULT NULL COMMENT 'Precio a pagar para la inscripción',
-  `estado` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Determina el estado de la instancia. 1 = Activa, 2 = Desactivada',
-  `descripcion` varchar(256) DEFAULT 'Sin Descripción' COMMENT 'Describe brevemente la instancia',
-  `fecha_creacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación del registro',
+  `estado` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'Determina el estado de el curso. 1 = Activa, 2 = Desactivada',
+  `descripcion` varchar(256) DEFAULT 'Sin Descripción' COMMENT 'Describe brevemente el curso',
+  `fecha_registro` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creación del registro',
   `fecha_modificacion` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de actualización del registro'
 ) ENGINE=InnoDB;
 
-ALTER TABLE `instancia`
-  ADD CONSTRAINT `instancia_fk_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id`),
-  ADD CONSTRAINT `instancia_fk_facilitador` FOREIGN KEY (`id_facilitador`) REFERENCES `facilitador` (`id`),
-  ADD CONSTRAINT `instancia_fk_periodo` FOREIGN KEY (`id_periodo`) REFERENCES `periodo` (`id`),
-  ADD CONSTRAINT `instancia_fk_locacion` FOREIGN KEY (`id_locacion`) REFERENCES `locacion` (`id`),
-  ADD CONSTRAINT `instancia_fk_turno` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id`);
+ALTER TABLE `curso`
+  ADD CONSTRAINT `curso_fk_especialidad` FOREIGN KEY (`id_especialidad`) REFERENCES `especialidad` (`id`),
+  ADD CONSTRAINT `curso_fk_facilitador` FOREIGN KEY (`id_facilitador`) REFERENCES `facilitador` (`id`),
+  ADD CONSTRAINT `curso_fk_periodo` FOREIGN KEY (`id_periodo`) REFERENCES `periodo` (`id`),
+  ADD CONSTRAINT `curso_fk_locacion` FOREIGN KEY (`id_locacion`) REFERENCES `locacion` (`id`),
+  ADD CONSTRAINT `curso_fk_turno` FOREIGN KEY (`id_turno`) REFERENCES `turno` (`id`);
 
 
 -- ==================================================
@@ -331,14 +363,14 @@ ALTER TABLE `instancia`
 CREATE TABLE `inscripcion` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la entidad, autogenerado',
   `id_participante` int(11) NOT NULL COMMENT 'Referencia a la tabla Participante',
-  `costo` decimal(10,2) DEFAULT NULL COMMENT 'Monto de dinero a pagar por las instancias inscritas',
+  `costo` decimal(10,2) DEFAULT NULL COMMENT 'Monto de dinero a pagar por los cursos inscritos',
   `fecha_registro` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha y hora capturada automáticamente por el sistema',
   `fecha_modificacion` datetime DEFAULT NULL COMMENT 'Hora en que se modifica la inscripción',
   `estado` tinyint(1) DEFAULT '1' COMMENT 'Estado de la inscripción, usado para "desactivar el registro". 1 = Activo, 0 = Inactivo'
 ) ENGINE=InnoDB;
 
 ALTER TABLE `inscripcion`
-  ADD CONSTRAINT `instancia_fk_participante` FOREIGN KEY (`id_participante`) REFERENCES `participante` (`id`);
+  ADD CONSTRAINT `curso_fk_participante` FOREIGN KEY (`id_participante`) REFERENCES `participante` (`id`);
 
 
 -- ============================================
@@ -399,17 +431,17 @@ ALTER TABLE `pago_de_inscripcion`
   ADD CONSTRAINT `pago_de_inscripcion_fk_tipo_de_operacion` FOREIGN KEY (`id_tipo_de_operacion`) REFERENCES `tipo_de_operacion` (`id`);
 
 --
--- Table structure for table `inscripcion_instancia`
+-- Table structure for table `ocupa`
 --
 
 CREATE TABLE `ocupa` (
   `id` int(11) NOT NULL  PRIMARY KEY AUTO_INCREMENT,
   `id_inscripcion` int(11) NOT NULL,
-  `id_instancia` int(11) NOT NULL
+  `id_curso` int(11) NOT NULL
 ) ENGINE=InnoDB;
 
 ALTER TABLE `ocupa`
   ADD CONSTRAINT `ocupa_fk_inscripcion` FOREIGN KEY (`id_inscripcion`) REFERENCES `inscripcion` (`id`),
-  ADD CONSTRAINT `ocupa_fk_instancia` FOREIGN KEY (`id_instancia`) REFERENCES `instancia` (`id`);
+  ADD CONSTRAINT `ocupa_fk_curso` FOREIGN KEY (`id_curso`) REFERENCES `curso` (`id`);
   
 

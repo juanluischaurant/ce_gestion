@@ -26,8 +26,8 @@
                             <li><a href="<?php echo base_url(); ?>gestion/participante"><i class="fa fa-circle-o"></i> Participantes</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/locacion"><i class="fa fa-circle-o"></i> Locaciones</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/periodo"><i class="fa fa-circle-o"></i> Períodos</a></li>
+                            <li><a href="<?php echo base_url(); ?>gestion/especialidad"><i class="fa fa-circle-o"></i> Especialidades</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/curso"><i class="fa fa-circle-o"></i> Cursos</a></li>
-                            <li><a href="<?php echo base_url(); ?>gestion/instancia"><i class="fa fa-circle-o"></i> Instancias</a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -52,7 +52,7 @@
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>reportes/inscripciones"><i class="fa fa-circle-o"></i> Inscripciones </a></li>
                             <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Titular</a></li>
-                            <li><a href="<?php echo base_url(); ?>reportes/cursos"><i class="fa fa-circle-o"></i> Cursos</a></li>
+                            <li><a href="<?php echo base_url(); ?>reportes/especialidades"><i class="fa fa-circle-o"></i> Especialidades</a></li>
                             <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Ventas</a></li>
                             <li><a href="<?php echo base_url(); ?>reportes/accion"><i class="fa fa-circle-o"></i> Acciones</a></li>
                         </ul>

@@ -16,7 +16,7 @@
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
             <ul class="nav nav-tabs" id="edit-inscripcion-tabs">
-                <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="true" id="tab-cambiar-instancia">Instancia</a></li>
+                <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="true" id="tab-cambiar-curso">Curso</a></li>
                 <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false" id="tab-asociar-pago">Asociar Pago</a></li>
                 <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false" id="tab-desasociar-pago">Desasociar Pago</a></li>
             </ul>
@@ -32,22 +32,22 @@
 
                                     <div>
                                         <h4>
-                                            <b>Instancia Actual:</b> <?php echo $data_instancia_inscrita->nombre_completo_instancia; ?>
+                                            <b>Curso Actual:</b> <?php echo $data_instancia_inscrita->nombre_completo_instancia; ?>
                                         </h4>
                                     </div>
                                     
-                                    <form action="<?php echo base_url();?>movimientos/inscripcion/update" method="POST" class="form-horizontal" id='editar-instancia'>
+                                    <form action="<?php echo base_url();?>movimientos/inscripcion/update" method="POST" class="form-horizontal" id='editar-curso'>
                                     
                                         <!-- IDs necesarios para la operación -->
-                                        <input type="hidden" name="id-inscripcion-instancia" value="<?php echo $data_inscripcion_instancia->id_inscripcion_instancia; ?>">
-                                        <input type="hidden" name="id-instancia-actual" value="<?php echo  $data_inscripcion_instancia->id_instancia; ?>">
+                                        <input type="hidden" name="id-inscripcion-curso" value="<?php echo $data_inscripcion_instancia->id_inscripcion_instancia; ?>">
+                                        <input type="hidden" name="id-curso-actual" value="<?php echo  $data_inscripcion_instancia->id_instancia; ?>">
                                         
                                         <input type="hidden" name="id_participante" id="id_participante" value="<?php echo  $data_inscripcion_instancia->id_participante; ?>">
                                         
                                         <div class="box">
 
                                             <div class="box-header">
-                                                <h4 class="box-title">Cambiar Instancia</h4>
+                                                <h4 class="box-title">Cambiar Curso</h4>
 
                                                 <div class="input-group margin col-md-5">
 
@@ -55,7 +55,7 @@
 
                                                     <span class="input-group-btn">
 
-                                                        <button type="button" class="btn btn-success btn-flat" id="btn-agregar-curso">
+                                                        <button type="button" class="btn btn-success btn-flat" id="btn-agregar-especialidad">
                                                             <span class="fa fa-paperclip"></span>
                                                         </button>
 
@@ -65,7 +65,7 @@
                                             <!-- /.box-header -->
 
                                             <div class="box-body table-responsive">
-                                                <table id="tabla-instancias" class="table table-hover">
+                                                <table id="tabla-cursos" class="table table-hover">
 
                                                 <thead>
                                                     <tr>
@@ -89,7 +89,7 @@
                                                             <?php echo $data_instancia_inscrita->precio_instancia; ?>
                                                         </td>
                                                         <td>
-                                                            <button type="button" class="btn btn-danger btn-remove-curso">
+                                                            <button type="button" class="btn btn-danger btn-remove-especialidad">
                                                                 <span class="fa fa-remove"></span>
                                                             </button>
                                                         </td>
@@ -108,7 +108,7 @@
 
                                         <div class="form-group">
                                             <div class="col-md-12">
-                                                <button type="submit" form='editar-instancia' id='editar-instancia' class="btn btn-success btn-flat">
+                                                <button type="submit" form='editar-curso' id='editar-curso' class="btn btn-success btn-flat">
                                                     Guardar
                                                 </button>
                                                 <button type="button" class="btn btn-cancel-edicion-inscripcion">
@@ -143,7 +143,7 @@
                                 </div>
                                                         
                                 <form action="<?php echo base_url();?>movimientos/inscripcion/update_asociar_pago" method="POST" class="form-horizontal" id='agregar-pago'>
-                                    <!-- ID De la inscripción de instancia bajo edición -->
+                                    <!-- ID De la inscripción de curso bajo edición -->
                                     <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion_instancia->id_inscripcion; ?>">
                                                                             
                                     <div class="box">
@@ -309,7 +309,7 @@
                                 <!-- /.box -->
                                                         
                                 <form action="<?php echo base_url();?>movimientos/inscripcion/update_desasociar_pago" method="POST" class="form-horizontal" id='desasociar-pago'>
-                                    <!-- ID De la inscripción de instancia bajo edición -->
+                                    <!-- ID De la inscripción de curso bajo edición -->
                                     <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion_instancia->id_inscripcion; ?>">
 
                                     <div class="box">

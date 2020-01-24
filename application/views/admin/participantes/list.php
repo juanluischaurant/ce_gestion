@@ -38,15 +38,15 @@
                                 <?php if(!empty($participantes)): ?>
                                 <?php foreach($participantes as $participante): ?>
                                     <tr>
-                                        <td><?php echo $participante->id_participante; ?></td>
-                                        <td><?php echo $participante->fecha_registro_participante; ?></td>
-                                        <td><?php echo $participante->nombres_persona; ?></td>
-                                        <td><?php echo $participante->apellidos_persona; ?></td>
-                                        <td><?php echo $participante->telefono_persona; ?></td>
+                                        <td><?php echo $participante->id; ?></td>
+                                        <td><?php echo $participante->fecha_registro; ?></td>
+                                        <td><?php echo $participante->nombres; ?></td>
+                                        <td><?php echo $participante->apellidos; ?></td>
+                                        <td><?php echo $participante->telefono; ?></td>
                                         <td><?php echo $participante->cedula; ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $participante->id_participante?>'>
+                                                <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $participante->id?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
                                                 <a href="<?php echo base_url() ?>gestion/participante/edit/<?php echo $participante->id_persona; ?>" .

@@ -85,17 +85,17 @@ class Persona extends CI_Controller {
 		$this->load->view("admin/personas/view", $data);
 	}
 
-	public function edit($id = NULL)
+	public function edit($id_persona = NULL)
 	{
 		// ¿$id es nulo?
-		if(!isset($id))
+		if(!isset($id_persona))
 		{
 			redirect(base_url().'gestion/persona/');
 		}
 		else
 		{
 			$data = array(
-				'persona' => $this->Persona_model->get_persona($id),
+				'persona' => $this->Persona_model->get_persona($id_persona),
 				'lista_generos' => $this->Persona_model->generos_dropdown()
 			);
 			$this->load->view('layouts/header');
@@ -246,7 +246,7 @@ class Persona extends CI_Controller {
 	
 	public function update() 
 	{
-		$persona_id = $this->input->post('id-persona');
+		$id_persona = $this->input->post('id-persona');
 
 		$cedula = $this->input->post('cedula-persona');
 		$nombres = $this->input->post('nombre-persona');
@@ -271,11 +271,11 @@ class Persona extends CI_Controller {
 		// Si la validación es correcta
 		if($this->form_validation->run('editar_persona'))
 		{
-			if($this->Persona_model->update($persona_id, $data))
+			if($this->Persona_model->update($id_persona, $data))
 			{
 				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 				$fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-				$descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
+				$descripcion_accion = "PERSONA ID: " . $id_persona; // Texto de descripción de acción
 				$tabla_afectada = "PERSONA"; // Tabla afectada
 
 				$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
@@ -285,27 +285,27 @@ class Persona extends CI_Controller {
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'gestion/persona/edit'.$persona_id);
+				redirect(base_url().'gestion/persona/edit'.$id_persona);
 			}
 		}
 		else
 		{
 			// $this hace referencia al módulo donde es invocado
-			$this->edit($persona_id);
+			$this->edit($id_persona);
 		}		
 	}
 
-	public function delete($persona_id)
+	public function delete($id_persona)
 	{
 		$data = array(
 			'estado' => 0,
 		);
 		
-		if($this->Persona_model->update($persona_id, $data))
+		if($this->Persona_model->update($id_persona, $data))
 		{
 			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
 			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-			$descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
+			$descripcion_accion = "PERSONA ID: " . $id_persona; // Texto de descripción de acción
 			$tabla_afectada = "PERSONA"; // Tabla afectada
 
 			$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);

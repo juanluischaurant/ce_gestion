@@ -50,26 +50,26 @@
                                 <?php if(!empty($personas)): ?>
                                 <?php foreach($personas as $persona): ?>
                                     <tr>
-                                        <td><?php echo $persona->id_persona; ?></td>
-                                        <td><?php echo $persona->fecha_registro_persona; ?></td>
-                                        <td><?php echo $persona->nombres_persona; ?></td>
-                                        <td><?php echo $persona->apellidos_persona; ?></td>
-                                        <td><?php echo $persona->telefono_persona; ?></td>
+                                        <td><?php echo $persona->id; ?></td>
+                                        <td><?php echo $persona->fecha_registro; ?></td>
+                                        <td><?php echo $persona->nombres; ?></td>
+                                        <td><?php echo $persona->apellidos; ?></td>
+                                        <td><?php echo $persona->telefono; ?></td>
                                         <td><?php echo $persona->cedula; ?></td>
-                                        <?php $dataPersona = $persona->id_persona; ?>
+                                        <?php $dataPersona = $persona->id; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
 
                                                 <?php if($permisos->update == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $persona->id_persona; ?>" .
+                                                    <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $persona->id; ?>" .
                                                 class="btn btn-warning">
                                                         <span class="fa fa-pencil"></span>
                                                     </a>
                                                 <?php endif; ?>  
 
                                                 <?php if($permisos->delete == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/persona/delete/<?php echo $persona->id_persona; ?>" class="btn btn-danger btn-remove">
+                                                    <a href="<?php echo base_url() ?>gestion/persona/delete/<?php echo $persona->id; ?>" class="btn btn-danger btn-remove">
                                                         <span class="fa fa-remove"></span>
                                                     </a>
                                                 <?php endif; ?>  

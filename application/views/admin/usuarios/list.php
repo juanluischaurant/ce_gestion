@@ -49,7 +49,7 @@
                                 <?php foreach($usuarios as $usuario): ?>
                                     <tr>
                                         <td><?php echo $usuario->id; ?></td>
-                                        <td><?php echo $usuario->fecha_creacion; ?></td>
+                                        <td><?php echo $usuario->fecha_registro; ?></td>
                                         <td><?php echo $usuario->nombres; ?></td>
                                         <td><?php echo $usuario->apellidos; ?></td>
                                         <td><?php echo $usuario->email; ?></td>

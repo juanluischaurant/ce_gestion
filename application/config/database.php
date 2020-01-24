@@ -79,7 +79,7 @@ $db['default'] = array(
 	// watch out here Juan, remember to add a password to your database 
 	'username' => 'root',
 	'password' => '',
-	'database' => '18_01_2020_ce_gestion',
+	'database' => 'ci_spanish',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

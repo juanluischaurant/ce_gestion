@@ -44,7 +44,7 @@
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombre Período</th>
-                                    <th>Instancias Asociadas</th>
+                                    <th>Cursos Asociadas</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -53,28 +53,28 @@
                                 <?php foreach($locaciones as $locacion): ?>
                                 <tr>
                                     
-                                    <td><?php echo $locacion->id_locacion; ?></td>
-                                    <td><?php echo $locacion->fecha_creacion; ?></td>
-                                    <td><?php echo $locacion->nombre_locacion; ?></td>                                 
+                                    <td><?php echo $locacion->id; ?></td>
+                                    <td><?php echo $locacion->fecha_registro; ?></td>
+                                    <td><?php echo $locacion->nombre; ?></td>                                 
                                     <td><?php echo $locacion->instancias_asociadas; ?></td>                                 
                                     <td>
                                         <div class="btn-group">
-                                            <button type='button' value="<?php echo $locacion->id_locacion; ?>" class="btn btn-info btn-view-locacion" data-toggle='modal' data-target='#modal-default'>
+                                            <button type='button' value="<?php echo $locacion->id; ?>" class="btn btn-info btn-view-locacion" data-toggle='modal' data-target='#modal-default'>
                                                 <span class="fa fa-eye"></span>
                                             </button>
-                                            <a href="<?php echo base_url() ?>gestion/locacion/edit/<?php echo $locacion->id_locacion; ?>" class="btn btn-warning">
+                                            <a href="<?php echo base_url() ?>gestion/locacion/edit/<?php echo $locacion->id; ?>" class="btn btn-warning">
                                                 <span class="fa fa-pencil"></span>
                                             </a>
 
                                             <!-- Botón para activar/desactivar Inscripción -->
-                                            <?php $estado_locacion = $locacion->estado_locacion; ?>
+                                            <?php $estado_locacion = $locacion->estado; ?>
                                             <?php if($estado_locacion == 1): ?>
-                                                <a href="<?php echo base_url() ?>gestion/locacion/deactivate_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-danger">
+                                                <a href="<?php echo base_url() ?>gestion/locacion/deactivate_location/<?php echo $locacion->id; ?>" class="btn btn-danger">
                                                     <span class="fa fa-toggle-off"></span>
                                                 </a>
                                             <?php endif; ?> 
                                             <?php if($estado_locacion == 0): ?>
-                                                <a href="<?php echo base_url() ?>gestion/locacion/activate_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-success">
+                                                <a href="<?php echo base_url() ?>gestion/locacion/activate_location/<?php echo $locacion->id; ?>" class="btn btn-success">
                                                     <span class="fa fa-toggle-on"></span>
                                                 </a>
                                             <?php endif; ?> 

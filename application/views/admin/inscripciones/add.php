@@ -70,21 +70,21 @@
 
                     </div>
 
-                    <p>Seleccionar Instancia:</p>
+                    <p>Seleccionar Curso:</p>
                     <div class="input-group margin col-md-5">
 
                         <input type="text" class="form-control" id="producto" disabled="disabled">
 
                         <span class="input-group-btn">
 
-                            <button type="button" class="btn btn-success btn-flat" id="btn-agregar-curso">
+                            <button type="button" class="btn btn-success btn-flat" id="btn-agregar-especialidad">
                                 <span class="fa fa-paperclip"></span>
                             </button>
 
                         </span>
                     </div>
 
-                    <table id="tabla-instancias" class="table table-bordered table-striped table-hover">
+                    <table id="tabla-cursos" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>Código</th>

@@ -124,25 +124,25 @@ $config = array(
         ),
     ),
     // Usada en el controlador
-    // movimientos/instancias/update
+    // movimientos/cursos/update
     'editar_instancia' => array(
         array(
-            'field' => 'costo-instancia',
+            'field' => 'costo-curso',
             'label' => 'Costo',
             'rules' => 'required|trim|numeric'
         ),
         array(
-            'field' => 'id-periodo-instancia',
+            'field' => 'id-periodo-curso',
             'label' => 'Período',
             'rules' => 'required|trim'
         ),
         array(
-            'field' => 'turno-instancia',
+            'field' => 'turno-curso',
             'label' => 'Turno',
             'rules' => 'required'
         ),
         array(
-            'field' => 'cupos-instancia',
+            'field' => 'cupos-curso',
             'label' => 'Cupos',
             'rules' => 'required'
         ),

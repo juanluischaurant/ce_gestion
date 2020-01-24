@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        <?php echo 'Instancia: ' . $datos_instancia->nombre_curso; ?>
+        <?php echo 'Curso: ' . $datos_instancia->nombre_curso; ?>
     </div>
 </div> <br>
 <div class="row">
@@ -25,8 +25,8 @@
 					<?php foreach($participantes_inscritos as $participante_inscrito): ?>
 					<tr>
 						<td><?php echo $contador++; ?></td>
-						<td><?php echo $participante_inscrito->hora_inscripcion; ?></td>
-						<td><?php echo $participante_inscrito->nombres_persona; ?></td>
+						<td><?php echo $participante_inscrito->fecha_registro; ?></td>
+						<td><?php echo $participante_inscrito->nombres; ?></td>
 						<td><?php echo $participante_inscrito->cedula; ?></td>
 					</tr>
 					<?php endforeach; ?>

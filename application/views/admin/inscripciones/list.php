@@ -43,7 +43,7 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
-                                    <th>Instancia</th>
+                                    <th>Curso</th>
                                     <th>Estado Inscripción</th>
                                     <th>Nombre Participante</th>
                                     <th>Cédula Participante</th>

@@ -45,7 +45,7 @@ class Locacion extends CI_Controller {
 		
 		$data = array(
 			"locacion" => $this->Locacion_model->get_locacion($id_locacion),
-			"instancias" => $this->Locacion_model->get_instancias_asociadas($id_locacion)
+			"cursos" => $this->Locacion_model->get_instancias_asociadas($id_locacion)
 		);
 
 		$this->load->view("admin/locaciones/view", $data);
@@ -66,7 +66,7 @@ class Locacion extends CI_Controller {
 
 		if($instancias_asociadas > 0)
 		{
-			$this->session->set_flashdata('alert', 'No puedes eliminar una locación con instancias asociadas.');
+			$this->session->set_flashdata('alert', 'No puedes eliminar una locación con cursos asociadas.');
 			$this->edit($id_locacion);
 		}
 		else
@@ -83,14 +83,14 @@ class Locacion extends CI_Controller {
 	 * Desactivar una locacion
 	 * 
 	 * Las locaciones pueden ser desactivadas y reactivadas, al desactivar una 
-	 * instancia esta no debe aparecer en los campos de búsqueda del sistema.
+	 * curso esta no debe aparecer en los campos de búsqueda del sistema.
 	 *
 	 * @param integer $id_locacion
 	 * @return void
 	 */
 	public function deactivate_location($id_locacion)
 	{
-		$data = array('estado_locacion' => 0);
+		$data = array('estado' => 0);
 
 		$this->Locacion_model->update($id_locacion, $data);
 		$this->session->set_flashdata('success', 'Se desactivó exitosamente la locación.');
@@ -101,14 +101,14 @@ class Locacion extends CI_Controller {
 	 * Activar una locacion
 	 * 
 	 * Las locaciones pueden ser desactivadas y reactivadas, al desactivar una 
-	 * instancia esta no debe aparecer en los campos de búsqueda del sistema.
+	 * curso esta no debe aparecer en los campos de búsqueda del sistema.
 	 *
 	 * @param integer $id_locacion
 	 * @return void
 	 */
 	public function activate_location($id_locacion)
 	{
-		$data = array('estado_locacion' => 1);
+		$data = array('estado' => 1);
 
 		if($this->Locacion_model->update($id_locacion, $data))
 		{
@@ -126,8 +126,8 @@ class Locacion extends CI_Controller {
 		
 		if($this->form_validation->run()) {
 			$data = array (
-				'nombre_locacion' => $nombre_locacion,
-				'direccion_locacion' => $direccion_locacion
+				'nombre' => $nombre_locacion,
+				'direccion' => $direccion_locacion
 			);
 	
 			if($this->Locacion_model->save($data))
@@ -151,8 +151,8 @@ class Locacion extends CI_Controller {
 		$direccion_locacion = $this->input->post('direccion-locacion');
 		
 		$data = array(
-			'nombre_locacion' => $nombre_locacion,
-			'direccion_locacion' => $direccion_locacion
+			'nombre' => $nombre_locacion,
+			'direccion' => $direccion_locacion
 		);
 
 		if($this->Locacion_model->update($id_locacion, $data))

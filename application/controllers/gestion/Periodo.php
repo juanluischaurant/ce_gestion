@@ -22,7 +22,7 @@ class Periodo extends CI_Controller {
 	public function add()
 	{
 		$data = array(
-			'lista_meses' => $this->Titular_model->meses_dropdown(),
+			'lista_meses' => $this->Periodo_model->meses_dropdown(),
 		);
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
@@ -41,13 +41,13 @@ class Periodo extends CI_Controller {
 	 */
 	public function edit($id_periodo)
 	{
-		$fecha_valida = $this->Titular_model->verificar_validez_periodo($id_periodo);
+		$fecha_valida = $this->Periodo_model->verificar_validez_periodo($id_periodo);
 
 		if($fecha_valida === TRUE)
 		{
 			$data = array(
-				'lista_meses' => $this->Titular_model->meses_dropdown(),
-				'data_periodo' => $this->Titular_model->get_periodo($id_periodo)
+				'lista_meses' => $this->Periodo_model->meses_dropdown(),
+				'data_periodo' => $this->Periodo_model->get_periodo($id_periodo)
 			);
 			
 			$this->load->view('layouts/header');
@@ -78,7 +78,7 @@ class Periodo extends CI_Controller {
 				'fecha_culminacion_periodo' => $this->input->post('fecha-culminacion'),
 			);
 	
-			$resultado = $this->Titular_model->save($data);
+			$resultado = $this->Periodo_model->save($data);
 
 			if($resultado === FALSE)
 			{
@@ -109,7 +109,7 @@ class Periodo extends CI_Controller {
 			'fecha_culminacion_periodo' => $this->input->post('fecha-culminacion'),
 		);
 
-		if($this->Titular_model->update($id_periodo, $data))
+		if($this->Periodo_model->update($id_periodo, $data))
 		{
 			$this->session->set_flashdata('success', 'Período actualizado correctamente.');
 			redirect(base_url().'gestion/periodo');
@@ -124,22 +124,22 @@ class Periodo extends CI_Controller {
 	/**
 	 * Elimina de la base de datos un registro específico
 	 *
-	 * @param [type] $id_periodo
+	 * @param integer $id_periodo
 	 * @return void
 	 */
 	public function delete($id_periodo)
 	{
-		$instancias_asociadas = $this->Titular_model->count_instancias_asociadas($id_periodo)->instancias_asociadas;
-		$nombre_periodo = $this->Titular_model->count_instancias_asociadas($id_periodo)->nombre_periodo;
+		$instancias_asociadas = $this->Periodo_model->count_instancias_asociadas($id_periodo)->instancias_asociadas;
+		$nombre_periodo = $this->Periodo_model->count_instancias_asociadas($id_periodo)->nombre_periodo;
 
 		if($instancias_asociadas > 0)
 		{
-			$this->session->set_flashdata('alert', 'No se puede eliminar el periodo ' . $nombre_periodo . '. Tiene instancias asociadas.');
+			$this->session->set_flashdata('alert', 'No se puede eliminar el periodo ' . $nombre_periodo . '. Tiene cursos asociadas.');
 			redirect(base_url().'gestion/periodo/');
 		}
 		else
 		{
-			if($this->Titular_model->delete($id_periodo))
+			if($this->Periodo_model->delete($id_periodo))
 			{
 				$this->session->set_flashdata('success', 'Se eliminó el periodo ' . $nombre_periodo);
 				redirect(base_url().'gestion/periodo/');

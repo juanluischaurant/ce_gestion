@@ -24,7 +24,7 @@
         <div class="box box-solid">
 
             <div class="box-header with-border">
-                <h3 class="box-title"><?php echo $locacion->nombre_locacion; ?></h3>
+                <h3 class="box-title"><?php echo $locacion->nombre; ?></h3>
             </div>
             
             <form action="<?php echo base_url(); ?>gestion/locacion/update" method="POST">
@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <div class="form-group <?php echo !empty(form_error('nombre-locacion'))? 'has-error' : '';?>">
                                 <label for="nombre">Nombre: </label>
-                                <input type="text" name="nombre-locacion" id="nombre-locacion" class="form-control" value="<?php echo $locacion->nombre_locacion; ?>">
+                                <input type="text" name="nombre-locacion" id="nombre-locacion" class="form-control" value="<?php echo $locacion->nombre; ?>">
                                 <?php echo form_error('nombre-locacion', '<span class="help-block">', '</span>'); ?>
                             </div>
                         </div>
@@ -43,13 +43,13 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="descripcion">Dirección: </label>
-                                <input type="text" name="direccion-locacion" id="direccion-locacion" class="form-control" value="<?php echo $locacion->direccion_locacion; ?>">
+                                <input type="text" name="direccion-locacion" id="direccion-locacion" class="form-control" value="<?php echo $locacion->direccion; ?>">
                             </div>
                         </div>
 
                         <div class="col-md-12">
-                            <p><?php echo $locacion->instancias_asociadas; ?> instancias asociadas</p>
-                            <a href="<?php echo base_url() ?>gestion/locacion/delete_location/<?php echo $locacion->id_locacion; ?>" class="btn btn-flat btn-danger btn-xs">Eliminar esta locación</a>
+                            <p><?php echo $locacion->instancias_asociadas; ?> cursos asociadas</p>
+                            <a href="<?php echo base_url() ?>gestion/locacion/delete_location/<?php echo $locacion->id; ?>" class="btn btn-flat btn-danger btn-xs">Eliminar esta locación</a>
                         </div>
                     
                     </div>
@@ -58,7 +58,7 @@
                 <!-- /.box-body -->
 
                 <div class="box-footer">
-                    <input type="hidden" name="id-locacion" value="<?php echo $locacion->id_locacion; ?>">
+                    <input type="hidden" name="id-locacion" value="<?php echo $locacion->id; ?>">
                     
                     <button type="submit" class="btn btn-success btn-flat">Guardar</button>
                 </div>

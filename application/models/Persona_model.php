@@ -5,7 +5,7 @@ class Persona_model extends CI_Model {
 
     
     /**
-     * Obtén una lista de todas las personas registradas en unna instancia.
+     * Obtén una lista de todas las personas registradas en unna curso.
      * 
      * @return array
      */
@@ -66,9 +66,9 @@ class Persona_model extends CI_Model {
         return $this->db->insert('persona', $data);
     }
 
-    public function update($id, $data)
+    public function update($id_persona, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id', $id_persona);
         return $this->db->update('persona', $data);
     }
 
@@ -91,7 +91,7 @@ class Persona_model extends CI_Model {
     /**
      * Determina si una persona está registrada como participante
      *
-     * @param integer $id_persona
+     * @param array $id_persona
      * @return array
      */
     public function get_es_participante($id_persona)
@@ -99,10 +99,10 @@ class Persona_model extends CI_Model {
         $SQL = "SELECT 
         persona.nombres, 
         persona.apellidos,
-        participante.id_participante
+        participante.id
         
         FROM persona
-        LEFT JOIN participante ON participante.id_persona = persona.id_persona
+        LEFT JOIN participante ON participante.id_persona = persona.id
         WHERE participante.id_persona = ?";
 
         $resultado = $this->db->query($SQL, array($id_persona));
@@ -119,12 +119,12 @@ class Persona_model extends CI_Model {
     public function get_es_titular($id_persona)
     {
         $SQL = "SELECT 
-        persona.nombres_persona, 
-        persona.apellidos_persona,
-        titular.id_titular
+        persona.nombres, 
+        persona.apellidos,
+        titular.id
         
         FROM persona
-        LEFT JOIN titular ON titular.id_persona = persona.id_persona
+        LEFT JOIN titular ON titular.id_persona = persona.id
         WHERE titular.id_persona = ?";
 
         $resultado = $this->db->query($SQL, array($id_persona));
@@ -141,13 +141,13 @@ class Persona_model extends CI_Model {
     public function get_es_facilitador($id_persona)
     {
         $SQL = "SELECT 
-        persona.nombres_persona, 
-        persona.apellidos_persona,
-        facilitador.id_facilitador
+        persona.nombres, 
+        persona.apellidos,
+        facilitador.id
         
         FROM persona
-        LEFT JOIN facilitador ON facilitador.fk_id_persona_3 = persona.id_persona
-        WHERE facilitador.fk_id_persona_3 = ?";
+        LEFT JOIN facilitador ON facilitador.id_persona = persona.id
+        WHERE facilitador.id_persona = ?";
 
         $resultado = $this->db->query($SQL, array($id_persona));
 

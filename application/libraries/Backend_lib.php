@@ -5,12 +5,12 @@
 
 class Backend_lib {
 
-    // Almacenará la instancia del objeto CodeIgniter
+    // Almacenará la curso del objeto CodeIgniter
     private $CI;
 
     public function __construct()
     {
-        // Instancia el objeto CodeIgniter
+        // Curso el objeto CodeIgniter
         $this->CI =& get_instance();
     }
 

@@ -6,13 +6,16 @@ class Periodo_model extends CI_Model {
     // Estas dos funciones sirven para unir las tablas relacionadas a la tabla "dictado"
     public function get_periodos()
     {
+        // Cambia el idioma del set de resultados a generar
+        $this->db->query("SET lc_time_names = 'es_ES';");
+        
         $SQL = "SELECT
         p.id, 
-        concat(MONTH(p.fecha_inicio), '-', MONTH(p.fecha_culminacion), ' ', YEAR(p.fecha_inicio)) as nombre_periodo,
+        concat(MONTHNAME(p.fecha_inicio), '-', MONTHNAME(p.fecha_culminacion), ' ', YEAR(p.fecha_inicio)) as nombre_periodo,
         p.fecha_inicio,
         p.fecha_culminacion,
         p.fecha_registro,
-        (SELECT COUNT(*) as instancias_asociadas FROM instancia WHERE instancia.id_periodo = p.id) AS instancias_asociadas
+        (SELECT COUNT(*) as instancias_asociadas FROM curso WHERE curso.id_periodo = p.id) AS instancias_asociadas
       FROM periodo AS p
       WHERE p.estado = 1";
 
@@ -23,26 +26,26 @@ class Periodo_model extends CI_Model {
     
     public function get_periodo($id_periodo)
     {
+        $this->db->query("SET lc_time_names = 'es_ES'; -- Cambia el idioma a Españolp.id_periodo, ");
+
         $resultado = $this->db->select(
             'p.id_periodo, 
-            concat(mi.nombre_mes, "-", mc.nombre_mes, " ", YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
+            concat(MONTHNAME(p.fecha_inicio), "-", MONTHNAME(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_periodo,
             p.fecha_inicio_periodo,
-            p.fecha_culminacion_periodo,
-            p.fecha_creacion'
+            p.fecha_culminacion,
+            p.fecha_registro'
         )
         ->from('periodo as p')
-        ->join('mes as mi', 'p.mes_inicio_periodo = mi.id_mes') 
-        ->join('mes as mc', 'p.mes_cierre_periodo = mc.id_mes') 
         ->where('p.id_periodo', $id_periodo)
         ->get(); 
         return $resultado->row();
     }
 
     /**
-     * Obtén un conteo de las instancias asociadas a determinado período
+     * Obtén un conteo de las cursos asociadas a determinado período
      * 
      * Método principalmente utilizado al momento de intentar eliminar un período,
-     * verifica cuántas instancias estan asociadas a determinado período. 
+     * verifica cuántas cursos estan asociadas a determinado período. 
      *
      * @return boolean
      */
@@ -50,7 +53,7 @@ class Periodo_model extends CI_Model {
     {
         $SQL = "SELECT
         concat(mi.nombre_mes, '-', mc.nombre_mes, ' ', YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
-        (SELECT COUNT(*) as instancias_asociadas FROM instancia WHERE instancia.fk_id_periodo_1 = p.id_periodo) AS instancias_asociadas
+        (SELECT COUNT(*) as instancias_asociadas FROM curso WHERE curso.fk_id_periodo_1 = p.id_periodo) AS instancias_asociadas
         FROM periodo AS p
         JOIN mes AS mi ON p.mes_inicio_periodo = mi.id_mes
         JOIN mes AS mc ON p.mes_cierre_periodo = mc.id_mes

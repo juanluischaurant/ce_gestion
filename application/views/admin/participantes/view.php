@@ -31,7 +31,7 @@
 			<thead>
 				<tr>
 					<th>#</th>
-					<th>Nombre Instancia</th>
+					<th>Nombre Curso</th>
 					<th>Período</th>
 				</tr>
 			</thead>
