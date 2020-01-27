@@ -12,7 +12,7 @@
 $config = array(
     'editar_persona' => array(
         array(
-            'field' => 'cedula-persona',
+            'field' => 'cedula_persona',
             'label' => 'Cédula',
             'rules' => 'required|trim|min_length[2]|max_length[10]|callback_edit_unique_cedula',
             'errors' => array(
@@ -20,22 +20,22 @@ $config = array(
             )
         ),
         array(
-            'field' => 'nombre-persona',
+            'field' => 'nombre_persona',
             'label' => 'Nombres',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
         array(
-            'field' => 'apellido-persona',
+            'field' => 'apellido_persona',
             'label' => 'Apellidos',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
         array(
-            'field' => 'genero-persona',
+            'field' => 'genero_persona',
             'label' => 'Género',
             'rules' => 'required'
         ),
         array(
-            'field' => 'telefono-persona',
+            'field' => 'telefono_persona',
             'label' => 'Número de Teléfono',
             'rules' => 'trim|min_length[6]|max_length[12]'
         ),
@@ -49,7 +49,7 @@ $config = array(
     // gestion/persona/store
     'agregar_persona' => array(
         array(
-            'field' => 'cedula-persona',
+            'field' => 'cedula_persona',
             'label' => 'Cédula',
             'rules' => 'required|trim|min_length[2]|max_length[10]|is_unique[persona.cedula]',
             'errors' => array(
@@ -57,22 +57,22 @@ $config = array(
             )
         ),
         array(
-            'field' => 'nombre-persona',
+            'field' => 'nombre_persona',
             'label' => 'Nombres',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
         array(
-            'field' => 'apellido-persona',
+            'field' => 'apellido_persona',
             'label' => 'Apellidos',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
         array(
-            'field' => 'genero-persona',
+            'field' => 'genero_persona',
             'label' => 'Género',
             'rules' => 'required'
         ),
         array(
-            'field' => 'telefono-persona',
+            'field' => 'telefono_persona',
             'label' => 'Número de Teléfono',
             'rules' => 'trim|min_length[6]|max_length[12]'
         ),

@@ -56,7 +56,7 @@ class Inscripcion extends CI_Controller {
 		$data = array(
 			'pagos' => $this->Pago_model->get_pagos_activos(),
 			'tipos_de_operacion' => $this->Pago_model->get_tipos_de_operacion(),
-			"participantes" => $this->Participante_model->getParticipantes(),
+			"participantes" => $this->Participante_model->get_participantes(),
 		);
 		$general['page_title'] = 'Nueva Inscripción';
 
@@ -544,10 +544,10 @@ class Inscripcion extends CI_Controller {
      * @param integer $id_instancia
      * @return void
      */
-	public function getParticipantesJSON()
+	public function get_participantesJSON()
 	{
 		$valor = $this->input->post('id');
-		$participantes = $this->Inscripcion_model->getParticipantesJSON($valor);
+		$participantes = $this->Inscripcion_model->get_participantesJSON($valor);
 
 		echo json_encode($participantes);
 	}

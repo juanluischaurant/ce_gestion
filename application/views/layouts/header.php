@@ -11,25 +11,76 @@
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/template/bootstrap/css/bootstrap.min.css">
+     
+    <!-- Bootstrap Validator -->
+     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/bootstrap_validator/bootstrapValidator.min.css">
+    
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/template/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/font-awesome/css/font-awesome.min.css">
         
     <!-- Ionicons -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/template/Ionicons/css/ionicons.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/Ionicons/css/ionicons.min.css">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo base_url();?>assets/template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">  
     <!-- DataTables Export-->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/template/datatables-export/css/buttons.dataTables.min.css">   
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/datatables-export/css/buttons.dataTables.min.css">   
  
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/template/dist/css/AdminLTE.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/dist/css/AdminLTE.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/template/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/dist/css/skins/_all-skins.min.css">
 
-       <!-- jQuery UI -->
-       <link rel="stylesheet" href="<?php echo base_url();?>assets/template/jquery-ui/jquery-ui.css">  
+    <!-- jQuery UI -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/jquery-ui/jquery-ui.css">
+
+    <!-- Hoja de estilos para uso general -->
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/custom_css/general.css">
+
+    <!-- ===========================
+    JAVASCRIPT LIBRARIES 
+    ============================ -->
+    <script src="<?php echo base_url();?>assets/template/jquery/jquery.min.js"></script>
+
+    <!-- jQuery UI -->
+    <script src="<?php echo base_url();?>assets/template/jquery-ui/jquery-ui.js"></script>
+
+    <!-- Highcharts -->
+    <script src="<?php echo base_url();?>assets/template/highcharts/highcharts.js"></script>
+    <script src="<?php echo base_url();?>assets/template/highcharts/exporting.js"></script>
+
+
+    <!-- Bootstrap 3.3.7 -->
+    <script src="<?php echo base_url();?>assets/template/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- SlimScroll -->
+    <script src="<?php echo base_url();?>assets/template/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Bootstrap Validator -->
+    <script type="text/javascript" src="<?= base_url();?>assets/template/bootstrap_validator/moment.js"></script>
+    <script type="text/javascript" src="<?= base_url();?>assets/template/bootstrap_validator/bootstrapvalidator.min.js"></script>
+
+    <!-- DataTables -->
+    <script src="<?php echo base_url(); ?>assets/template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="<?php echo base_url(); ?>assets/template//bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+
+    <!-- DataTables Export -->
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/dataTables.buttons.min.js"></script>
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.flash.min.js"></script>
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/jszip.min.js"></script>
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/pdfmake.min.js"></script>
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/vfs_fonts.js"></script>
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.html5.min.js"></script>
+    <script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.print.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.js"></script>
+    <script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.date.extensions.js"></script>
+    <script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.extensions.js"></script>
+
+    <!-- FastClick -->
+    <script src="<?php echo base_url();?>assets/template/fastclick/lib/fastclick.js"></script>  
     
 </head>
 <body class="hold-transition skin-red sidebar-mini sidebar-collapse">

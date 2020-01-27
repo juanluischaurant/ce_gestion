@@ -32,11 +32,11 @@ class Participante extends CI_Controller {
 	public function index()
 	{
 		$data = array(
-			'participantes' => $this->Participante_model->getParticipantes(),
+			'participantes' => $this->Participante_model->get_participantes(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/participantes/list', $data);
+		$this->load->view('admin/participante/list', $data);
 		$this->load->view('layouts/footer');
 	}
 
@@ -58,7 +58,7 @@ class Participante extends CI_Controller {
 			'instancias_inscritas' => $this->Participante_model->get_instancias_inscritas($id_participante)
 		);
 
-		$this->load->view("admin/participantes/view", $data);
+		$this->load->view("admin/participante/view", $data);
 	}
 
 	public function add($id_persona = 'new')
@@ -71,7 +71,7 @@ class Participante extends CI_Controller {
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/participantes/add', $data_persona); 
+			$this->load->view('admin/participante/add', $data_persona); 
 			$this->load->view('layouts/footer');
 		
 		}
@@ -83,7 +83,7 @@ class Participante extends CI_Controller {
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/participantes/add', $data_persona);
+			$this->load->view('admin/participante/add', $data_persona);
 			$this->load->view('layouts/footer');
 		}	
 	}
@@ -132,7 +132,7 @@ class Participante extends CI_Controller {
 
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/participantes/edit', $data);
+		$this->load->view('admin/participante/edit', $data);
 		$this->load->view('layouts/footer');
 	}
 

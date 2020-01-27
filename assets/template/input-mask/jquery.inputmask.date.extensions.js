@@ -475,7 +475,7 @@ Optional extensions on the jquery.inputmask base
             autoUnmask: false
         },
         'date': {
-            alias: "dd/mm/yyyy" // "mm/dd/yyyy"
+            alias: "mm/dd/yyyy"
         },
         'mm/yyyy': {
             mask: "1/y",

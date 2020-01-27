@@ -413,7 +413,7 @@ class Inscripcion_model extends CI_Model {
      * @param integer $id_instancia
      * @return void
      */
-    public function getParticipantesJSON($id_instancia)
+    public function get_participantesJSON($id_instancia)
     {
         $resultados = $this->db->select(
             'especialidad.nombre_curso,

@@ -3,52 +3,47 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Facilitador_model extends CI_Model {
 
-    public function getFacilitadores()
+    public function get_facilitadores()
     {
     $resultados = $this->db->select(
-        'p.id,
-        p.cedula,
-        p.nombres,
-        p.apellidos,
-        p.genero,
-        p.fecha_nacimiento,
-        p.telefono,
-        p.direccion,
-        p.estado,
-        f.id,
-        f.estado,
-        f.fecha_registro,
-        f.id_persona,
-        f.estado')
-        ->from('persona as p')
-        ->join('facilitador as f', 'f.id_persona = p.id')
-        ->where('f.estado', '1') 
+        'persona.nombres,
+        persona.apellidos,
+        persona.genero,
+        persona.fecha_nacimiento,
+        persona.telefono,
+        persona.direccion,
+        persona.estado,
+        facilitador.cedula_persona,
+        facilitador.estado,
+        facilitador.fecha_registro,
+        facilitador.estado'
+        )
+        ->from('facilitador')
+        ->join('persona', 'persona.cedula = facilitador.cedula_persona')
+        ->where('facilitador.estado', '1') 
         ->get(); 
 
         return $resultados->result();
     }
 
-    public function getFacilitador($id)
+    public function get_facilitador($cedula_persona)
     {
         $resultado = $this->db->select(
-            'p.id,
-            p.cedula,
-            p.nombres,
-            p.apellidos,
-            p.genero,
-            p.fecha_nacimiento,
-            p.telefono,
-            p.direccion,
-            p.estado,
-            f.id,
-            f.estado,
-            f.fecha_registro,
-            f.id_persona,
-            f.estado')
-            ->from('persona as p')
-            ->join('facilitador as f', 'f.id_persona = p.id')
-            ->where('f.id', $id)
-            ->get('facilitador');
+            'facilitador.cedula_persona,
+            persona.nombres,
+            persona.apellidos,
+            persona.genero,
+            persona.fecha_nacimiento,
+            persona.telefono,
+            persona.direccion,
+            persona.correo_electronico,
+            facilitador.fecha_contratacion,
+            facilitador.fecha_registro,
+            facilitador.estado')
+            ->from('facilitador')
+            ->join('persona', 'persona.cedula = facilitador.cedula_persona')
+            ->where('facilitador.cedula_persona', $cedula_persona)
+            ->get();
 
         return $resultado->row(); 
     }
@@ -68,9 +63,9 @@ class Facilitador_model extends CI_Model {
     public function evitaFacilitadorDuplicado($id)
     {
         // Al momento de asignar el rol de Facilitador a una Persona, verifica que esta acción no haya sido realizada anteriormente
-        $query = $this->db->select('fac.id_persona')
-        ->from('facilitador as fac')
-        ->where('fac.id_persona', $id)
+        $query = $this->db->select('facilitador.cedula_persona')
+        ->from('facilitador')
+        ->where('facilitador.cedula_persona', $id)
         ->get();
 
         if($query->num_rows() == 0) {

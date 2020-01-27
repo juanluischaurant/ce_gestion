@@ -25,6 +25,14 @@
                 <hr>
 
                 <?php if($this->session->flashdata('error')): ?>
+                    <div class="alert alert-warning alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <h4><i class="icon fa fa-pencil"></i> ¡Error!</h4>
+                        <?php echo $this->session->flashdata('error'); ?>
+                    </div>
+                <?php endif; ?>
+                
+                <?php if($this->session->flashdata('success')): ?>
                     <div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                         <h4><i class="icon fa fa-pencil"></i> ¡Bien Hecho!</h4>
@@ -34,15 +42,14 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-persona" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Cédula</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>
-                                    <th>Cédula</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -50,26 +57,25 @@
                                 <?php if(!empty($personas)): ?>
                                 <?php foreach($personas as $persona): ?>
                                     <tr>
-                                        <td><?php echo $persona->id; ?></td>
+                                        <td><?php echo $persona->cedula; ?></td>
                                         <td><?php echo $persona->fecha_registro; ?></td>
                                         <td><?php echo $persona->nombres; ?></td>
                                         <td><?php echo $persona->apellidos; ?></td>
                                         <td><?php echo $persona->telefono; ?></td>
-                                        <td><?php echo $persona->cedula; ?></td>
-                                        <?php $dataPersona = $persona->id; ?>
+                                        <?php $dataPersona = $persona->cedula; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
 
                                                 <?php if($permisos->update == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $persona->id; ?>" .
+                                                    <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $dataPersona; ?>" .
                                                 class="btn btn-warning">
                                                         <span class="fa fa-pencil"></span>
                                                     </a>
                                                 <?php endif; ?>  
 
                                                 <?php if($permisos->delete == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/persona/delete/<?php echo $persona->id; ?>" class="btn btn-danger btn-remove">
+                                                    <a href="<?php echo base_url() ?>gestion/persona/delete/<?php echo $dataPersona; ?>" class="btn btn-danger btn-remove">
                                                         <span class="fa fa-remove"></span>
                                                     </a>
                                                 <?php endif; ?>  
@@ -113,3 +119,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/persona.list.js"></script>

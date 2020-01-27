@@ -247,7 +247,7 @@
 
                     <div class="col-md-6">
                         <label for="">Nombre del Titular:</label>
-                        <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' readonly>
+                        <input type="text" class="form-control" name="nombre_titular" id='nombre_titular' readonly>
                          
                     </div>
 

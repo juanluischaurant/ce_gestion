@@ -22,15 +22,14 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-facilitador" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Cédula</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>
-                                    <th>Cédula</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -38,21 +37,20 @@
                                 <?php if(!empty($facilitadores)): ?>
                                 <?php foreach($facilitadores as $facilitador): ?>
                                     <tr>
-                                        <td><?php echo $facilitador->id_facilitador; ?></td>
-                                        <td><?php echo $facilitador->fecha_registro_facilitador; ?></td>
-                                        <td><?php echo $facilitador->nombres_persona; ?></td>
-                                        <td><?php echo $facilitador->apellidos_persona; ?></td>
-                                        <td><?php echo $facilitador->telefono_persona; ?></td>
-                                        <td><?php echo $facilitador->cedula; ?></td>
-                                        <?php $dataFacilitador = $facilitador->id_facilitador.'*'.$facilitador->nombres_persona.'*'.$facilitador->apellidos_persona.'*'.$facilitador->telefono_persona.'*'.$facilitador->cedula.'*'.$facilitador->fk_id_persona_3; ?>
+                                        <td><?php echo $facilitador->cedula_persona; ?></td>
+                                        <td><?php echo $facilitador->fecha_registro; ?></td>
+                                        <td><?php echo $facilitador->nombres; ?></td>
+                                        <td><?php echo $facilitador->apellidos; ?></td>
+                                        <td><?php echo $facilitador->telefono; ?></td>
+                                        <?php $dataFacilitador = $facilitador->cedula_persona.'*'.$facilitador->fecha_registro.'*'.$facilitador->nombres.'*'.$facilitador->apellidos.'*'.$facilitador->telefono.'*'; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-facilitador" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataFacilitador?>'><span class="fa fa-eye"></span></button>
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitador/edit/<?php echo $facilitador->id_facilitador; ?>" .
+                                                <a href="<?php echo base_url() ?>gestion/facilitador/edit/<?php echo $facilitador->cedula_persona; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitador/delete/<?php echo $facilitador->id_facilitador; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/facilitador/delete/<?php echo $facilitador->cedula_persona; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -93,3 +91,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/facilitador.list.js"></script>

@@ -9,45 +9,11 @@
     <!-- ./wrapper -->
 
 <!-- jQuery 3 -->
-<script src="<?php echo base_url();?>assets/template/jquery/jquery.min.js"></script>
 
-<!-- jQuery UI -->
-<script src="<?php echo base_url();?>assets/template/jquery-ui/jquery-ui.js"></script>
-
-<!-- Highcharts -->
-<script src="<?php echo base_url();?>assets/template/highcharts/highcharts.js"></script>
-<script src="<?php echo base_url();?>assets/template/highcharts/exporting.js"></script>
-
-
-<!-- Bootstrap 3.3.7 -->
-<script src="<?php echo base_url();?>assets/template/bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll -->
-<script src="<?php echo base_url();?>assets/template/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-
-<!-- DataTables -->
-<script src="<?php echo base_url(); ?>assets/template/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/template//bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
-
-<!-- DataTables Export -->
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/dataTables.buttons.min.js"></script>
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.flash.min.js"></script>
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/jszip.min.js"></script>
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/pdfmake.min.js"></script>
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/vfs_fonts.js"></script>
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.html5.min.js"></script>
-<script src="<?php echo base_url();?>assets/template/datatables-export/js/buttons.print.min.js"></script>
-
-<!-- InputMask -->
-<script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.js"></script>
-<script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.date.extensions.js"></script>
-<script src="<?php echo base_url();?>assets/template/input-mask/jquery.inputmask.extensions.js"></script>
-
-<!-- FastClick -->
-<script src="<?php echo base_url();?>assets/template/fastclick/lib/fastclick.js"></script>
 <!-- AdminLTE App -->
 <script src="<?php echo base_url();?>assets/template/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-<script src="<?php echo base_url();?>assets/template/dist/js/demo.js"></script>
+<!-- <script src="<?php // echo base_url();?>assets/template/dist/js/demo.js"></script> -->
 
 <script>
 
@@ -60,7 +26,7 @@
         let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
          
         // Activa el pluggin jQuery InputMask
-        $('[data-mask]').inputmask();
+        // $('[data-mask]').inputmask();
 
         $('.sidebar-menu').tree(); // Menú lateral
 
@@ -81,10 +47,7 @@
         // JS para DataTables
         // =============================================
 
-        $('#example1').DataTable({
-            "order": [[ 1, "desc" ]]
-        });
-
+        
         // Cambia el estado de un registro dado
         // Este botón funciona de manera similar en distintos formularios
         $('.btn-remove').on('click', function(e) {
@@ -275,85 +238,42 @@
         });
 
         // =============================================
-        // Fin JS para Personas
-        // =============================================
-
-
-        // =============================================
-        // JS para Titulares
-        // =============================================
-
-        $(document).on('click', '.btn-check-titular', function() {
-            let titular = $(this).val();
-            let informacionTitular = titular.split('*');
-
-            let personaId = informacionTitular[0],
-            nombresPersona = informacionTitular[1],
-            apellidosPersona = informacionTitular[2],
-            telefonoPersona = informacionTitular[3],
-            cedulaPersona = informacionTitular[4],
-            fechaNacimientoPersona = informacionTitular[5],
-            generoPersona = informacionTitular[6];
-            direccionPersona = informacionTitular[7];
-
-            $('#nacimiento-titular').val(fechaNacimientoPersona);
-            $('#fk-id-persona').val(personaId);
-            $('#genero-titular').val(generoPersona);
-            $('#nombres-titular').val(nombresPersona);
-            $('#apellidos-titular').val(apellidosPersona);
-            $('#telefono-titular').val(telefonoPersona);
-            $('#direccion-titular').val(direccionPersona);
-
-
-            // Al seleccionar un titular de la lista, activa el botón "Guardar"
-            $('#guardar-titular').removeAttr('disabled');
-
-            // Oculta ventana modal
-            $('#modal-default').modal('hide');
-        });
-
-        // =============================================
-        // Fin de JS para Titulares
-        // =============================================
-
-
-        // =============================================
         // JS para Facilitadores
         // =============================================
         
-        if($('#fk-id-persona').val() !== '') {
-            // Si hay alguna persona seleccionada para ser instanciada, 
-            // remueve el atributo 'disabled' del botón
-            $('#guardar-facilitador').removeAttr('disabled');
-        }
+        // if($('#fk-id-persona').val() !== '') {
+        //     // Si hay alguna persona seleccionada para ser instanciada, 
+        //     // remueve el atributo 'disabled' del botón
+        //     $('#guardar-facilitador').removeAttr('disabled');
+        // }
 
-        $(document).on('click', '.btn-check-facilitador', function() {
-            let facilitador = $(this).val();
-            let informacionFacilitador = facilitador.split('*');
+        // $(document).on('click', '.btn-check-facilitador', function() {
+        //     let facilitador = $(this).val();
+        //     let informacionFacilitador = facilitador.split('*');
 
-            let personaId = informacionFacilitador[0],
-            nombresPersona = informacionFacilitador[1],
-            apellidosPersona = informacionFacilitador[2],
-            telefonoPersona = informacionFacilitador[3],
-            cedulaPersona = informacionFacilitador[4],
-            fechaNacimientoPersona = informacionFacilitador[5],
-            generoPersona = informacionFacilitador[6];
-            direccionPersona = informacionFacilitador[7];
+        //     let personaId = informacionFacilitador[0],
+        //     nombresPersona = informacionFacilitador[1],
+        //     apellidosPersona = informacionFacilitador[2],
+        //     telefonoPersona = informacionFacilitador[3],
+        //     cedulaPersona = informacionFacilitador[4],
+        //     fechaNacimientoPersona = informacionFacilitador[5],
+        //     generoPersona = informacionFacilitador[6];
+        //     direccionPersona = informacionFacilitador[7];
 
-            $('#fk-id-persona').val(personaId);
-            $('#nombres-facilitador').val(nombresPersona);
-            $('#apellidos-facilitador').val(apellidosPersona);
-            $('#nacimiento-facilitador').val(fechaNacimientoPersona);
-            $('#genero-facilitador').val(generoPersona);
-            $('#telefono-facilitador').val(telefonoPersona);
-            $('#direccion-facilitador').val(direccionPersona);
+        //     $('#fk-id-persona').val(personaId);
+        //     $('#nombres-facilitador').val(nombresPersona);
+        //     $('#apellidos-facilitador').val(apellidosPersona);
+        //     $('#nacimiento-facilitador').val(fechaNacimientoPersona);
+        //     $('#genero-facilitador').val(generoPersona);
+        //     $('#telefono-facilitador').val(telefonoPersona);
+        //     $('#direccion-facilitador').val(direccionPersona);
 
-            // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
-            $('#guardar-facilitador').removeAttr('disabled');
+        //     // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
+        //     $('#guardar-facilitador').removeAttr('disabled');
 
-            // Oculta ventana modal
-            $('#modal-default').modal('hide');
-        });
+        //     // Oculta ventana modal
+        //     $('#modal-default').modal('hide');
+        // });
 
         $('.btn-view-facilitador').on('click', function() {
             // Al clickear el botón de vista de facilitador, expande modal
@@ -528,7 +448,7 @@
                 // Considera eliminar esta variable `data` no utilizada aquí
                 data = ui.item.id_titular+'*'+ui.item.label;
 
-                $('#nombre-titular').val(ui.item.nombre_titular);
+                $('#nombre_titular').val(ui.item.nombre_titular);
                 $('#id-titular').val(ui.item.id_titular);
             }
         });
@@ -1186,7 +1106,7 @@
                     $.ajax({
 
                         type: 'POST',
-                        url: base_url+'movimientos/inscripcion/getParticipantesJSON/',
+                        url: base_url+'movimientos/inscripcion/get_participantesJSON/',
                         dataType: 'JSON',
                         data: {
 

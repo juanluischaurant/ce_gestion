@@ -51,7 +51,7 @@
                                 <div class="col-md-6">
                                     <label for="">Nombre del Titular:</label>
                                     <?php $nombre =  $pago->nombres_persona . " " . $pago->apellidos_persona; ?>
-                                    <input type="text" class="form-control" name="nombre-titular" id='nombre-titular' value="<?php echo $nombre; ?>" readonly>
+                                    <input type="text" class="form-control" name="nombre_titular" id='nombre_titular' value="<?php echo $nombre; ?>" readonly>
                                     <input type="hidden" id="id-titular" name="id-titular" value="<?php echo $pago->id_titular; ?>">   
                                 </div>
                             </div>

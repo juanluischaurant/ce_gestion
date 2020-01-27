@@ -45,7 +45,7 @@ class Auth extends CI_Controller {
         else
         {
             $data = array(
-                'id_usuario' => $datos_usuario->id,
+                'username' => $datos_usuario->username,
                 'nombre' => $datos_usuario->nombres,
                 'apellidos' => $datos_usuario->apellidos,
                 'rol' => $datos_usuario->id_rol,

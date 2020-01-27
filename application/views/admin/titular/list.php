@@ -22,15 +22,14 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-titular" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Cédula</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>
-                                    <th>Cédula</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -38,17 +37,16 @@
                                 <?php if(!empty($titulares)): ?>
                                 <?php foreach($titulares as $titular): ?>
                                     <tr>
-                                        <td><?php echo $titular->id_persona; ?></td>
-                                        <td><?php echo $titular->fecha_registro_cliente; ?></td>
-                                        <td><?php echo $titular->nombres_persona; ?></td>
-                                        <td><?php echo $titular->apellidos_persona; ?></td>
-                                        <td><?php echo $titular->telefono_persona; ?></td>
-                                        <td><?php echo $titular->cedula; ?></td>
-                                        <?php $dataTitular = $titular->id_persona.'*'.$titular->nombres_persona.'*'.$titular->apellidos_persona.'*'.$titular->telefono_persona.'*'.$titular->cedula; ?>
+                                        <td><?php echo $titular->cedula_persona; ?></td>
+                                        <td><?php echo $titular->fecha_registro_titular; ?></td>
+                                        <td><?php echo $titular->nombres; ?></td>
+                                        <td><?php echo $titular->apellidos; ?></td>
+                                        <td><?php echo $titular->telefono; ?></td>
+                                        <?php $dataTitular = $titular->nombres.'*'.$titular->apellidos.'*'.$titular->telefono.'*'.$titular->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-titular" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataTitular?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url() ?>gestion/titular/edit/<?php echo $titular->id_persona; ?>" .
+                                                <a href="<?php echo base_url() ?>gestion/titular/edit/<?php echo $titular->cedula_persona; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
@@ -91,3 +89,8 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/titular.list.js"></script>
+
+

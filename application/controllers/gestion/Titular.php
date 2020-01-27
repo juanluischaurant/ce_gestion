@@ -11,67 +11,60 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Titular extends CI_Controller {
 
-	public function __construct() {
+	public function __construct()
+	{
         parent::__construct();
         $this->load->model('Persona_model');  
         $this->load->model('Titular_model');  
     }
 
-    public function index() {
+	public function index()
+	{
 		$data = array(
 			'titulares' => $this->Titular_model->get_titulares(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/titulares/list', $data);
+		$this->load->view('admin/titular/list', $data);
 		$this->load->view('layouts/footer');
     }
     
-    public function add($id_persona = 'new') {
-		
-		if($id_persona !== 'new') {
-
+	public function add($cedula_persona = 'new')
+	{
+		if($cedula_persona !== 'new')
+		{
 			$data_persona = array(
-				'persona' => $this->Persona_model->get_persona($id_persona),
+				'persona' => $this->Persona_model->get_persona($cedula_persona),
 			);
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/titulares/add', $data_persona); 
+			$this->load->view('admin/titular/add', $data_persona); 
 			$this->load->view('layouts/footer');
 		
-		} elseif($id_persona = 'new') {
-					
+		}
+		elseif($cedula_persona = 'new')
+		{	
 			$data_persona = array(
 				"personas" => $this->Persona_model->get_personas() 
 			);
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/titulares/add', $data_persona);
+			$this->load->view('admin/titular/add', $data_persona);
 			$this->load->view('layouts/footer');
-		
 		}
-		
     }
     
 	public function store()
 	{
-		$id_persona = $this->input->post('fk-id-persona');
-
-		// $cedula = $this->input->post("cedula");
-		// $nombres = $this->input->post('nombres');
-		// $apellidos = $this->input->post('apellidos');
-		// $fecha_nacimiento = $this->input->post('fecha');
-		// $genero = $this->input->post('genero');
-		// $telefono = $this->input->post('telefono');
-		// $direccion = $this->input->post('direccion');
+		$cedula_persona = $this->input->post('cedula_persona');
 
 		$data_cliente = array(
-			'id_persona' => $id_persona,
+			'cedula_persona' => $cedula_persona,
 		);
 
-		if($this->Titular_model->duplicidad_persona($id_persona) === TRUE)
+		if($this->Titular_model->duplicidad_persona($cedula_persona) === TRUE)
 		{
 			if($this->Titular_model->save($data_cliente))
 			{

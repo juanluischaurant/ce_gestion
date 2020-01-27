@@ -4,7 +4,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Participantes
+        Titulares
         <small>Nuevo</small>
         </h1>
     </section>
@@ -25,33 +25,33 @@
                              </div>
                         <?php endif;?>
 
-                        <form action="<?php echo base_url();?>gestion/participante/store" method="POST">
+                        <form action="<?php echo base_url();?>gestion/titular/store" method="POST">
 
                             <div class="form-group">
-                                <label for="">Seleccionar Participante:</label>
+                                <label for="">Seleccionar Titular:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" disabled="disabled" id="cedula-persona">
+                                    <input type="text" class="form-control" readonly id="cedula_persona"  name="cedula_persona" value="<?php echo isset($persona) ? $persona->cedula_persona : ''; ?>">
                                     <span class="input-group-btn">
-                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
+                                        <button class="btn btn-primary" id="busca-titular" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
 
-                            <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->id_persona : ''; ?>">
+                            <input  type="hidden" class="form-control" id="cedula_persona">
                             
                             <div class="form-group">
-                                <label for="nombre-participante">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <label for="nombre_titular">Nombres:</label>
+                                <input type="text" class="form-control" id="nombre_titular" name="nombre_titular" value="<?php echo isset($persona) ? $persona->nombres : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-participante">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <label for="apellido_titular">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellido_titular" name="apellido_titular" value="<?php echo isset($persona) ? $persona->apellidos : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="nacimiento-participante">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" id="nacimiento-participante" name="nacimiento-participante" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
+                                <label for="nacimiento_titular">Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" id="nacimiento_titular" name="nacimiento_titular" value="<?php echo isset($persona) ? $persona->fecha_nacimiento : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -61,7 +61,9 @@
                                         1 => 'Masculino',
                                         2 => 'Femenino'
                                     );
-                                    $atributos = array('class' => 'form-control', 'id' => 'genero-participante', 'required' => 'required');
+
+                                    // Atributos para la entidad HTML a crear con el método form_label()
+                                    $atributos = array('class' => 'form-control', 'id' => 'genero-titular', 'required' => 'required');
                                     
                                     // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
                                     // Verifica si se encuentra asignada (isset) la variable $persona
@@ -71,26 +73,26 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
-                                    echo form_dropdown('genero-participante', $lista_generos, $value, $atributos);
+                                    echo form_dropdown('genero-titular', $lista_generos, $value, $atributos);
                                 ?>
                             </div>
 
                             <div class="form-group">
-                                <label for="telefono-participante">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-participante" name="telefono-participante" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
+                                <label for="telefono-titular">Número de Teléfono:</label>
+                                <input type="text" class="form-control" id="telefono-titular" name="telefono-titular" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="direccion-participante">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-participante" name="direccion-participante" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
+                                <label for="direccion-titular">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion-titular" name="direccion-titular" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" disabled id="guardar-participante" class="btn btn-success btn-flat">Guardar</button>
+                                <button type="submit" id="guardar-titular" class="btn btn-success btn-flat">Guardar</button>
                             </div>
 
                         </form>
-                        <!-- fin del cursor -->
+                        <!-- fin del formulario -->
 
                     </div>
                 </div>
@@ -103,7 +105,7 @@
 </div>
 <!-- /.content-wrapper -->
 
-<!-- Modal para lista de participantes -->
+<!-- Modal para lista de titulares -->
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -113,13 +115,12 @@
                 <h4 class="modal-title">Lita de Personas</h4>
             </div>
             <div class="modal-body">
-                <table id="example1" class="table table-bordered table-striped table-hover">
+                <table id="lista-persona" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Cédula</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
-                            <th>Documento</th>
                             <th>Opcion</th>
                         </tr>
                     </thead>
@@ -127,13 +128,12 @@
                         <?php if(!empty($personas)): ?>
                         <?php foreach($personas as $persona): ?>
                             <tr>
-                                <td><?php echo $persona->id_persona; ?></td>
-                                <td><?php echo $persona->nombres_persona; ?></td>
-                                <td><?php echo $persona->apellidos_persona; ?></td>
                                 <td><?php echo $persona->cedula; ?></td>
-                                <?php $dataPersona = $persona->id_persona.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
+                                <td><?php echo $persona->nombres; ?></td>
+                                <td><?php echo $persona->apellidos; ?></td>
+                                <?php $dataPersona = $persona->cedula.'*'.$persona->nombres.'*'.$persona->apellidos.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
                                 <td>
-                                    <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
+                                    <button type='button' class='btn btn-success btn-check-titular' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -150,4 +150,9 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/titular.add.js"></script>
+
 

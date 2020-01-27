@@ -14,13 +14,13 @@ class Permiso_model extends CI_Model {
     public function get_permisos()
     {
         $resultados = $this->db->select(
-            'p.*,
-            m.nombre,
-            r.nombre'
+            'permiso.*,
+            menu.nombre,
+            rol.funcion'
         )
-        ->from('permiso as p')
-        ->join('rol as r', 'p.id_rol = r.id')
-        ->join('menu as m', 'p.id_menu = m.id')
+        ->from('permiso')
+        ->join('rol', 'permiso.id_rol = rol.id')
+        ->join('menu', 'permiso.id_menu = menu.id')
         ->get();
 
         return $resultados->result();    

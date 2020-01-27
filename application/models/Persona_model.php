@@ -12,17 +12,16 @@ class Persona_model extends CI_Model {
     public function get_personas()
     {
         $resultados = $this->db->select(
-            'p.id,
-            p.cedula,
-            p.nombres,
-            p.apellidos,
-            p.genero,
-            p.fecha_nacimiento,
-            p.telefono,
-            p.direccion,
-            p.estado,
-            p.fecha_registro')
-            ->from('persona as p') 
+            'persona.cedula,
+            persona.nombres,
+            persona.apellidos,
+            persona.genero,
+            persona.fecha_nacimiento,
+            persona.telefono,
+            persona.direccion,
+            persona.estado,
+            persona.fecha_registro')
+            ->from('persona') 
             ->where('estado', 1)
             ->get(); 
     
@@ -36,22 +35,21 @@ class Persona_model extends CI_Model {
      * @param int $id
      * @return array
      */
-    public function get_persona($id_persona)
+    public function get_persona($cedula)
     {
         $resultado = $this->db->select(
-            'p.id,
-            p.cedula,
-            p.nombres,
-            p.apellidos,
-            p.genero,
-            p.fecha_nacimiento,
-            TIMESTAMPDIFF(year, p.fecha_nacimiento, CURDATE()) as edad,
-            p.telefono,
-            p.direccion,
-            p.estado,
-            p.fecha_registro')
-            ->from('persona as p') 
-            ->where('id', $id_persona)
+            'persona.cedula,
+            persona.nombres,
+            persona.apellidos,
+            persona.genero,
+            persona.fecha_nacimiento,
+            TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) as edad,
+            persona.telefono,
+            persona.direccion,
+            persona.estado,
+            persona.fecha_registro')
+            ->from('persona') 
+            ->where('persona.cedula', $cedula)
             ->get(); 
     
         // return $resultados->result();
@@ -62,14 +60,23 @@ class Persona_model extends CI_Model {
         return $resultado->row();
     }
     
-    public function save($data) {
+    public function save($data) 
+    {
         return $this->db->insert('persona', $data);
     }
 
-    public function update($id_persona, $data)
+    public function update($cedula, $data)
     {
-        $this->db->where('id', $id_persona);
-        return $this->db->update('persona', $data);
+        $this->db->where('cedula', $cedula);
+
+        if($this->db->update('persona', $data))
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
     public function lastID()

@@ -1,0 +1,15 @@
+/* .container {
+    width: 100%
+} */
+.centrar_div {
+    margin: 0 auto;
+    width: 45%;
+}
+
+/* Up to 700px */
+@media (max-width: 1155px) {
+    .centrar_div {
+        margin: 0 auto;
+        width: 100%;
+    }
+}

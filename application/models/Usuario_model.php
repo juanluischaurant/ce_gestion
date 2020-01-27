@@ -43,7 +43,7 @@ class Usuario_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'u.*,
-            r.nombre as rol'
+            r.funcion as rol'
             )
             ->from('usuario as u')
             ->join('rol as r', 'r.id = u.id_rol') 
@@ -58,14 +58,14 @@ class Usuario_model extends CI_Model {
      *
      * @return void
      */
-    public function get_usuario($id_usuario)
+    public function get_usuario($username)
     {
         $resultado = $this->db->select(
-            'u.*,
-            r.nombre')
-        ->from('usuario as u')
-        ->join('rol as r', 'r.id = u.id_rol')
-        ->where('u.id_usuario', $id_usuario)
+            'usuario.*,
+            rol.nombre')
+        ->from('usuario')
+        ->join('rol', 'rol.id = usuario.userna,e')
+        ->where('usuario.username', $username)
         ->get();
 
         return $resultado->row();

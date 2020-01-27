@@ -3,26 +3,29 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Participante_model extends CI_Model {
 
-    public function getParticipantes()
+    /**
+     * Obtener participantes
+     * 
+     * Obtiene una lista de participantes registrados.
+     *
+     * @return array
+     */
+    public function get_participantes()
     {
         $resultados = $this->db->select(
-            'per.id,
-            per.cedula,
-            per.nombres,
-            per.apellidos,
-            per.genero,
-            per.fecha_nacimiento,
-            per.telefono,
-            per.direccion,
-            per.estado,
-            par.id,
-            par.estado,
-            par.fecha_registro,
-            par.id_persona,
-            par.estado')
-            ->from('persona as per')
-            ->join('participante as par', 'par.id_persona = per.id')
-            ->where('par.estado', '1') 
+            'persona.nombres,
+            persona.apellidos,
+            persona.genero,
+            persona.fecha_nacimiento,
+            persona.telefono,
+            persona.direccion,
+            persona.estado,
+            participante.cedula_persona,
+            participante.estado,
+            participante.fecha_registro,
+            participante.estado')
+            ->from('persona')
+            ->join('participante', 'participante.cedula_persona = persona.cedula')
             ->get(); 
     
             return $resultados->result();
@@ -37,24 +40,24 @@ class Participante_model extends CI_Model {
     public function get_participante($id_participante)
     {
         $resultado = $this->db->select(
-            'per.id,
-            per.cedula,
-            per.nombres,
-            per.apellidos,
-            per.genero,
-            per.fecha_nacimiento,
-            per.telefono,
-            per.direccion,
-            per.estado,
-            par.id,
-            par.estado,
-            par.fecha_registro,
-            par.id_persona,
-            par.estado')
+            'persona.id,
+            persona.cedula,
+            persona.nombres,
+            persona.apellidos,
+            persona.genero,
+            persona.fecha_nacimiento,
+            persona.telefono,
+            persona.direccion,
+            persona.estado,
+            participante.id,
+            participante.estado,
+            participante.fecha_registro,
+            participante.id_persona,
+            participante.estado')
             ->from('participante as par')
-            ->join('persona as per', 'per.id = par.id_persona')
-            ->where('par.id', $id_participante)
-            ->where('par.estado', 1) 
+            ->join('persona as per', 'persona.id = participante.id_persona')
+            ->where('participante.id', $id_participante)
+            ->where('participante.estado', 1) 
             ->get(); 
     
         return $resultado->row();
@@ -69,17 +72,17 @@ class Participante_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'cur.nombre_curso,
-            par.id_persona,
-            per.nombres'
+            participante.id_persona,
+            persona.nombres'
         )
         ->from('participante AS par')
-        ->join('persona AS per', 'per.id = par.id_persona')
-        ->join('inscripcion AS ins', 'ins.fk_id_participante_1 = par.id')
+        ->join('persona AS per', 'persona.id = participante.id_persona')
+        ->join('inscripcion AS ins', 'ins.fk_id_participante_1 = participante.id')
         ->join('pago_de_inscripcion AS pdi', 'pdi.fk_id_inscripcion = ins.id_inscripcion')
         ->join('inscripcion_instancia AS ins_inst', 'ins_inst.fk_id_inscripcion_1 = ins.id_inscripcion')
         ->join('curso AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')
         ->join('especialidad AS cur', 'cur.id_curso = inst.fk_id_curso_1')
-        ->where('par.id', $id_participante)
+        ->where('participante.id', $id_participante)
         ->group_by('ins.id_inscripcion')
         ->get();
 

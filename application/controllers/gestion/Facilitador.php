@@ -11,7 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Facilitador extends CI_Controller {
 
-    public function __construct() {
+	public function __construct()
+	{
         parent::__construct();
         $this->load->model('Persona_model');  
         $this->load->model('Facilitador_model');  
@@ -19,28 +20,28 @@ class Facilitador extends CI_Controller {
 
     public function index() { 
 		$data = array(
-			'facilitadores' => $this->Facilitador_model->getFacilitadores(),
+			'facilitadores' => $this->Facilitador_model->get_facilitadores(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/facilitadores/list', $data);
+		$this->load->view('admin/facilitador/list', $data);
 		$this->load->view('layouts/footer');
     }
     
-    public function add($id_persona = 'new') {
+    public function add($cedula_persona = 'new') {
 
-		if($id_persona !== 'new') {
+		if($cedula_persona !== 'new') {
 
 			$data_persona = array(
-				'persona' => $this->Persona_model->get_persona($id_persona),
+				'persona' => $this->Persona_model->get_persona($cedula_persona),
 			);
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/facilitadores/add', $data_persona); 
+			$this->load->view('admin/facilitador/add', $data_persona); 
 			$this->load->view('layouts/footer');
 		
-		} elseif($id_persona = 'new') {
+		} elseif($cedula_persona = 'new') {
 					
 			$data_persona = array(
 				"personas" => $this->Persona_model->get_personas() 
@@ -48,32 +49,22 @@ class Facilitador extends CI_Controller {
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/facilitadores/add', $data_persona);
+			$this->load->view('admin/facilitador/add', $data_persona);
 			$this->load->view('layouts/footer');
 		
 		}
 		
     }
     
-    public function store() {
-
-		$fk_id_persona_3 = $this->input->post('fk-id-persona');
-
-		// No utilizados porque estis datos ya fueron guardados en la tabla personas
-		//
-		// $cedula = $this->input->post("cedula-facilitador");
-		// $nombres = $this->input->post('nombre-facilitador');
-		// $apellidos = $this->input->post('apellido-facilitador');
-		// $fecha_nacimiento = $this->input->post('nacimiento-facilitador');
-		// $genero = $this->input->post('genero-facilitador');
-		// $telefono = $this->input->post('telefono-facilitador');
-		// $direccion = $this->input->post('direccion-facilitador');
+	public function store()
+	{
+		$cedula_persona = $this->input->post('cedula_persona');
 
 		$data_facilitador = array(
-			'fk_id_persona_3' => $fk_id_persona_3,
+			'cedula_persona' => $cedula_persona,
 		);
 
-		if($this->Facilitador_model->evitaFacilitadorDuplicado($fk_id_persona_3) === true) {
+		if($this->Facilitador_model->evitaFacilitadorDuplicado($cedula_persona) === true) {
 
 			if($this->Facilitador_model->save($data_facilitador)) {
 
@@ -96,10 +87,7 @@ class Facilitador extends CI_Controller {
 	}
 
 	public function update() {
-		$id_facilitador = $this->input->post('id-facilitador');
-		$fk_id_persona_3 = $this->input->post('fk-id-persona');
-
-		$cedula = $this->input->post('cedula-facilitador');
+		$cedula_persona = $this->input->post('cedula-facilitador');
 		$nombres = $this->input->post('nombre-facilitador');
 		$apellidos = $this->input->post('apellido-facilitador');
 		$genero = $this->input->post('genero-facilitador');
@@ -110,7 +98,7 @@ class Facilitador extends CI_Controller {
 		// $estado_facilitador; <- Aún no utilizada
 
 		$data = array(
-			'cedula' => $cedula,
+			'cedula' => $cedula_persona,
 			'nombres' => $nombres,
 			'apellidos_persona' => $apellidos,
 			'fecha_nacimiento_persona' => $fecha_nacimiento,
@@ -119,30 +107,30 @@ class Facilitador extends CI_Controller {
 			'direccion_persona' => $direccion
 		);
 
-		if($this->Persona_model->update($fk_id_persona_3, $data)) {
+		if($this->Persona_model->update($cedula_persona, $data)) {
 			redirect(base_url().'gestion/facilitador');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-			redirect(base_url().'gestion/facilitador/edit'.$id_facilitador);
+			redirect(base_url().'gestion/facilitador/edit'.$cedula_persona);
 		}
 		
 	}
 
-	public function edit($id) {
+	public function edit($cedula_persona) {
 		$data = array(
-			'facilitador' => $this->Facilitador_model->getFacilitador($id)
+			'facilitador' => $this->Facilitador_model->get_facilitador($cedula_persona)
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/facilitadores/edit', $data);
+		$this->load->view('admin/facilitador/edit', $data);
 		$this->load->view('layouts/footer');
 	}
 
-	public function delete($id) {
+	public function delete($cedula_persona) {
 		$data = array(
-			'estado_facilitador' => 0,
+			'estado' => 0,
 		);
-		$this->Facilitador_model->update($id, $data);
+		$this->Facilitador_model->update($cedula_persona, $data);
 		echo 'gestion/facilitador';
 	}
 }

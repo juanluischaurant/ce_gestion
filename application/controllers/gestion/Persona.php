@@ -46,7 +46,7 @@ class Persona extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/personas/list', $data);
+		$this->load->view('admin/persona/list', $data);
 		$this->load->view('layouts/footer');
     }
     
@@ -57,7 +57,7 @@ class Persona extends CI_Controller {
 		);
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/personas/add', $data);
+        $this->load->view('admin/persona/add', $data);
         $this->load->view('layouts/footer');
     }
 	
@@ -82,25 +82,25 @@ class Persona extends CI_Controller {
 
 		);
 
-		$this->load->view("admin/personas/view", $data);
+		$this->load->view("admin/persona/view", $data);
 	}
 
-	public function edit($id_persona = NULL)
+	public function edit($cedula = NULL)
 	{
 		// ¿$id es nulo?
-		if(!isset($id_persona))
+		if(!isset($cedula))
 		{
 			redirect(base_url().'gestion/persona/');
 		}
 		else
 		{
 			$data = array(
-				'persona' => $this->Persona_model->get_persona($id_persona),
+				'persona' => $this->Persona_model->get_persona($cedula),
 				'lista_generos' => $this->Persona_model->generos_dropdown()
 			);
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/personas/edit', $data);
+			$this->load->view('admin/persona/edit', $data);
 			$this->load->view('layouts/footer');
 		}
 	}
@@ -112,12 +112,12 @@ class Persona extends CI_Controller {
 	 */
 	public function store() 
 	{
-		$cedula = $this->input->post("cedula-persona");
-		$nombres = $this->input->post('nombre-persona');
-		$apellidos = $this->input->post('apellido-persona');
-		$fecha_nacimiento = $this->input->post('nacimiento-persona');
-		$genero = $this->input->post('genero-persona');
-		$telefono = $this->input->post('telefono-persona');
+		$cedula = $this->input->post("cedula_persona");
+		$nombres = $this->input->post('nombre_persona');
+		$apellidos = $this->input->post('apellido_persona');
+		$fecha_nacimiento = $this->input->post('nacimiento_persona');
+		$genero = $this->input->post('genero_persona');
+		$telefono = $this->input->post('telefono_persona');
 		$correo_electronico = $this->input->post('correo-persona');
 		$direccion = $this->input->post('direccion-persona');
 		
@@ -142,7 +142,7 @@ class Persona extends CI_Controller {
 			{ 
 				$id_ultimo_registro = $this->Persona_model->lastID(); // id del último registro creado
 
-				$id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
+				$id_usuario = $this->session->userdata('username'); // ID del usuario con sesión iniciada
 				$id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
 				$descripcion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
 				$tabla_afectada = "PERSONA"; // Tabla afectada
@@ -183,7 +183,7 @@ class Persona extends CI_Controller {
 		
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/personas/success', $data_persona);
+        $this->load->view('admin/persona/success', $data_persona);
 		$this->load->view('layouts/footer');	
 	}
 	
@@ -246,14 +246,12 @@ class Persona extends CI_Controller {
 	
 	public function update() 
 	{
-		$id_persona = $this->input->post('id-persona');
-
-		$cedula = $this->input->post('cedula-persona');
-		$nombres = $this->input->post('nombre-persona');
-		$apellidos = $this->input->post('apellido-persona');
-		$genero = $this->input->post('genero-persona');
+		$cedula = $this->input->post('cedula_persona');
+		$nombres = $this->input->post('nombre_persona');
+		$apellidos = $this->input->post('apellido_persona');
+		$genero = $this->input->post('genero_persona');
 		$fecha_nacimiento = $this->input->post('nacimiento-persona');
-		$telefono = $this->input->post('telefono-persona');
+		$telefono = $this->input->post('telefono_persona');
 		$direccion = $this->input->post('direccion-persona');
 
 		$data = array(
@@ -271,27 +269,28 @@ class Persona extends CI_Controller {
 		// Si la validación es correcta
 		if($this->form_validation->run('editar_persona'))
 		{
-			if($this->Persona_model->update($id_persona, $data))
+			if($this->Persona_model->update($cedula, $data))
 			{
-				$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-				$fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-				$descripcion_accion = "PERSONA ID: " . $id_persona; // Texto de descripción de acción
-				$tabla_afectada = "PERSONA"; // Tabla afectada
+				// $username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
+				// $descripcion_accion = "PERSONA CÉDULA: " . $cedula; // Texto de descripción de acción
+				// $tabla_afectada = "PERSONA"; // Tabla afectada
 
-				$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
-	
+				// $agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
+				
+				$this->session->set_flashdata('success', 'Datos actualizados correctamente');
 				redirect(base_url().'gestion/persona');
 			}
 			else
 			{
 				$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-				redirect(base_url().'gestion/persona/edit'.$id_persona);
+				redirect(base_url().'gestion/persona/edit'.$cedula);
 			}
 		}
 		else
 		{
 			// $this hace referencia al módulo donde es invocado
-			$this->edit($id_persona);
+			$this->edit($cedula);
 		}		
 	}
 
@@ -327,7 +326,7 @@ class Persona extends CI_Controller {
 	 */
 	public function edit_unique_cedula($cedula)
 	{
-		$this->db->where_not_in('id', $this->input->post('id-persona'));
+		$this->db->where_not_in('cedula', $this->input->post('cedula_persona'));
 		$this->db->where('cedula', $cedula);
 
 		if($this->db->count_all_results('persona') > 0)
