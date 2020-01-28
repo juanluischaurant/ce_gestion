@@ -364,7 +364,7 @@ ALTER TABLE `curso`
 CREATE TABLE `inscripcion` (
   `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la entidad, autogenerado',
   `cedula_participante` int(8) NOT NULL COMMENT 'Referencia a la tabla Participante',
-  `id_curso` int(11) NOT NULL COMMENT 'Referencia a la tabla Cursos',
+  `id_curso` int(11) NOT NULL COMMENT 'Referencia a la tabEl cursos',
   `costo` decimal(10,2) DEFAULT NULL COMMENT 'Monto de dinero a pagar por los cursos inscritos',
   `fecha_registro` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha y hora capturada automáticamente por el sistema',
   `fecha_modificacion` datetime DEFAULT NULL COMMENT 'Hora en que se modifica la inscripción',
@@ -420,7 +420,7 @@ CREATE TABLE `pago_de_inscripcion` (
   `cedula_titular` int(8) NOT NULL,
   `id_banco` int(2) DEFAULT NULL,
   `id_tipo_de_operacion` int(1) NOT NULL,
-  `numero_transferencia` varchar(45) DEFAULT NULL,
+  `numero_referencia_bancaria` varchar(45) DEFAULT NULL,
   `monto_operacion` decimal(10,2) DEFAULT NULL,
   `fecha_operacion` date NOT NULL,
   `fecha_devolucion` DATE DEFAULT NULL,

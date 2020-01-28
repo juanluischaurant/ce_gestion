@@ -85,8 +85,8 @@ class Locacion_model extends CI_Model {
         ->join('turno as tur', 'ins.id_turno = tur.id')
         ->join('especialidad', 'especialidad.id = ins.id_curso')
         ->join('periodo as per', 'per.id = ins.id_periodo')
-        // ->where('ins.estado_instancia', '1')
-        // ->or_where('ins.estado_instancia', '0')
+        // ->where('ins.estado_curso', '1')
+        // ->or_where('ins.estado_curso', '0')
         ->where('loc.id', $id_locacion)
         ->limit(25)
         ->get();

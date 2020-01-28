@@ -3,7 +3,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Periodo_model extends CI_Model {
 
-    // Estas dos funciones sirven para unir las tablas relacionadas a la tabla "dictado"
+    /**
+     * Obtener períodos
+     * 
+     * Obtén una lista de períodos registrados en el sistema
+     *
+     * @return void
+     */
     public function get_periodos()
     {
         // Cambia el idioma del set de resultados a generar
@@ -29,14 +35,14 @@ class Periodo_model extends CI_Model {
         $this->db->query("SET lc_time_names = 'es_ES'; -- Cambia el idioma a Españolp.id_periodo, ");
 
         $resultado = $this->db->select(
-            'p.id_periodo, 
+            'p.id, 
             concat(MONTHNAME(p.fecha_inicio), "-", MONTHNAME(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_periodo,
-            p.fecha_inicio_periodo,
+            p.fecha_inicio,
             p.fecha_culminacion,
             p.fecha_registro'
         )
         ->from('periodo as p')
-        ->where('p.id_periodo', $id_periodo)
+        ->where('p.id', $id_periodo)
         ->get(); 
         return $resultado->row();
     }
@@ -52,12 +58,10 @@ class Periodo_model extends CI_Model {
     public function count_instancias_asociadas($id_periodo)
     {
         $SQL = "SELECT
-        concat(mi.nombre_mes, '-', mc.nombre_mes, ' ', YEAR(p.fecha_inicio_periodo)) as nombre_periodo,
-        (SELECT COUNT(*) as instancias_asociadas FROM curso WHERE curso.fk_id_periodo_1 = p.id_periodo) AS instancias_asociadas
+        concat(MONTHNAME(p.fecha_inicio), '-', MONTHNAME(p.fecha_culminacion), ' ', YEAR(p.fecha_inicio)) as nombre_periodo,
+        (SELECT COUNT(*) as instancias_asociadas FROM curso WHERE curso.id_periodo = p.id) AS instancias_asociadas
         FROM periodo AS p
-        JOIN mes AS mi ON p.mes_inicio_periodo = mi.id_mes
-        JOIN mes AS mc ON p.mes_cierre_periodo = mc.id_mes
-        WHERE p.id_periodo = " . $id_periodo;
+        WHERE p.id = " . $id_periodo;
 
       $resultado = $this->db->query($SQL);
 
@@ -78,7 +82,7 @@ class Periodo_model extends CI_Model {
 
     public function update($id_periodo, $data)
     {
-        $this->db->where('id_periodo', $id_periodo);
+        $this->db->where('id', $id_periodo);
 
         if($this->db->update('periodo', $data))
         {
@@ -106,52 +110,28 @@ class Periodo_model extends CI_Model {
         {
             return FALSE;
         }
-
-    }
-
-    /**
-     * Consulta la BD y obtiene una lista de todos los meses disponibles
-     * para luego almacenrla en un array que es retornado
-     *
-     * @return array
-     */
-    public function meses_dropdown()
-    {
-        $query = $this->db->from('mes')
-        ->get();
-
-        $array[''] = 'Selecciona';
-
-        foreach($query->result() as $row)
-        {
-            // Crea un arreglo llave-valor,
-            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
-            $array[$row->id_mes] = $row->nombre_mes;
-        }
-
-        return $array;
     }
 
     public function verificar_validez_periodo($id_periodo)
     {
         $resultado = $this->db->select(
-            'per.id_periodo,
-            per.fecha_inicio_periodo,
-            per.fecha_culminacion_periodo'
+            'p.id,
+            p.fecha_inicio,
+            p.fecha_culminacion'
         )
-        ->from('periodo AS per')
-        ->where('per.id_periodo', $id_periodo)
+        ->from('periodo AS p')
+        ->where('p.id', $id_periodo)
         ->get()
         ->row();
      
         // Obtén fecha de hoy del sistema
         $today = date('Y-m-d');
 
-        if($resultado->fecha_culminacion_periodo >= $today)
+        if($resultado->fecha_culminacion >= $today)
         {
             return TRUE;
         }
-        else if($resultado->fecha_inicio_periodo < $today)
+        else if($resultado->fecha_inicio < $today)
         {
             return FALSE;
         }

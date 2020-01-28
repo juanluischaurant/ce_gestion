@@ -30,10 +30,10 @@
                             
                             <div class="form-group <?php echo !empty(form_error('nombre_curso'))? 'has-error' : '';?>">
                                 <div class="col-md-6">
-                                    <label for="">Seleccionar Especialidad:</label>
+                                    <label for="">Nombre del Curso</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" disabled="disabled" id="nombre-especialidad-instanciado">
-                                        <input type="hidden" name="id-especialidad-instanciado" id="id-especialidad-instanciado">
+                                        <input type="text" class="form-control" disabled="disabled" id="nombre-curso">
+                                        <input type="hidden" name="id-nombre-curso" id="id-nombre-curso">
                                         <input type="hidden" name="serial-curso" id="serial-curso">
                                         <span class="input-group-btn">
                                             <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
@@ -42,7 +42,7 @@
                                 </div> 
 
                                 <div class="col-md-4">
-                                    <label for="">Costo:</label>
+                                    <label for="">Costo</label>
                                     <input type="number" class="form-control" id="costo-curso" name="costo-curso">
                                 </div>
                             </div>
@@ -51,13 +51,13 @@
 
                             <div class="form-group">
                                 <div class="col-md-2">
-                                    <label for="">Período:</label>
+                                    <label for="">Período</label>
                                     <input type="text" class="form-control" id="periodo-curso">
                                     <input type="hidden" id="id-periodo-curso" name="id-periodo-curso">  
                                 </div>
 
                                 <div class="col-md-6 <?php echo !empty(form_error('numero-de-operacion')) ? 'has-error' : ''; ?>">
-                                    <label for="locacion-curso">Locación:</label>
+                                    <label for="locacion-curso">Locación</label>
                                     <input type="text" class="form-control" id="locacion-curso">
                                     <input type="hidden" id="id-locacion-curso" name="id-locacion-curso">  
                                     <?php echo form_error('numero-de-operacion', '<span class="help-block">', '</span>'); ?>
@@ -68,7 +68,7 @@
 
                                         $atributos = array('class' => 'form-control', 'required');
                                         // Genera la etiquera
-                                        echo form_label('Turno:');
+                                        echo form_label('Turno');
 
                                         // Genera el elemento "select"
                                         // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
@@ -76,26 +76,25 @@
                                     ?>
                                     <!-- Fin del campo -->
                                 </div>
-
                             </div>
 
                             <hr>
 
                             <div class="form-group">
                                 <div class="col-md-8">
-                                    <label for="facilitador-curso">Facilitador: </label>
+                                    <label for="facilitador-curso">Facilitador </label>
                                     <input type="text" id="facilitador-curso" class="form-control">
                                     <input type="hidden" id="id-facilitador-curso" name="id-facilitador-curso">  
                                 </div>
                                 <div class="col-md-2">
-                                    <label for="cupos-especialidad">Cupos: </label>
+                                    <label for="cupos-especialidad">Cupos </label>
                                     <input type="text" name="cupos-curso" id="cupos-curso" class="form-control">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <div class="col-md-6">
-                                    <label for="descripcion-curso">Descripción: </label>
+                                    <label for="descripcion-curso">Descripción </label>
                                     <input type="text" name="descripcion-curso" id="descripcion-curso" class="form-control">
                                 </div>    
                             </div>
@@ -130,25 +129,27 @@
                 <h4 class="modal-title">Lita de Especialidades</h4>
             </div>
             <div class="modal-body">
-                <table id="example1" class="table table-bordered table-striped table-hover">
+                <table id="lista-nombre-curso" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre Especialidad</th>
-                            <th>Descripción</th>
+                            <th>Fecha de Registro</th>
+                            <th>Nombre</th>
+                            <th>Usado</th>
                             <th>Acción</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php if(!empty($especialidades)): ?>
-                        <?php foreach($especialidades as $especialidad): ?>
+                        <?php if(!empty($nombres_curso)): ?>
+                        <?php foreach($nombres_curso as $nombre_curso): ?>
                             <tr>
-                                <td><?php echo $especialidad->id; ?></td>
-                                <td><?php echo $especialidad->nombre; ?></td>
-                                <td><?php echo $especialidad->descripcion; ?></td>
-                                <?php $dataCurso = $especialidad->id.'*'.$especialidad->nombre.'*'.$especialidad->estado.'*'.$especialidad->instancias_asociadas; ?>
-                                <td>
-                                    <button type='button' class='btn btn-success btn-check-especialidad-instanciado' value='<?php echo $dataCurso; ?>'><span class="fa fa-check"></span></button>
+                                <td><?php echo $nombre_curso->id; ?></td>
+                                <td><?php echo $nombre_curso->fecha_registro; ?></td>
+                                <td><?php echo $nombre_curso->descripcion; ?></td>
+                                <?php $dataCurso = $nombre_curso->id.'*'.$nombre_curso->descripcion.'*'.$nombre_curso->estado.'*'.$nombre_curso->conteo_uso; ?>
+                                <td><?php  echo $nombre_curso->conteo_uso; ?></td>
+                               <td>
+                                    <button type='button' class='btn btn-success btn-check-nombre-curso' value='<?php echo $dataCurso; ?>'><span class="fa fa-check"></span></button>
                                 </td>
                             </tr>
                             <?php endforeach; ?>
@@ -165,3 +166,8 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/curso.add.js"></script>
+

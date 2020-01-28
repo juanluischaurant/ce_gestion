@@ -52,7 +52,7 @@
                                     <label for="">Nombre del Titular:</label>
                                     <?php $nombre =  $pago->nombres_persona . " " . $pago->apellidos_persona; ?>
                                     <input type="text" class="form-control" name="nombre_titular" id='nombre_titular' value="<?php echo $nombre; ?>" readonly>
-                                    <input type="hidden" id="id-titular" name="id-titular" value="<?php echo $pago->id_titular; ?>">   
+                                    <input type="hidden" id="cedula-titular" name="cedula-titular" value="<?php echo $pago->id_titular; ?>">   
                                 </div>
                             </div>
 
@@ -76,10 +76,10 @@
                                     <input type="hidden" value="<?php echo $pago->id_banco; ?>" id="id-banco-de-operacion" name="id-banco-de-operacion">  
                                 </div>
 
-                                <div class="col-md-4 <?php echo !empty(form_error('numero-de-operacion-unico')) ? 'has-error' : ''; ?>">
+                                <div class="col-md-4 <?php echo !empty(form_error('numero-referencia')) ? 'has-error' : ''; ?>">
                                     <label for="">Número de Operación:</label>
-                                    <input type="text" value="<?php echo $pago->numero_operacion; ?>" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" value="<?php echo set_value('numero-de-operacion-unico'); ?>" readonly>
-                                    <?php echo form_error('numero-de-operacion-unico', '<span class="help-block">', '</span>'); ?>
+                                    <input type="text" value="<?php echo $pago->numero_referencia_bancaria; ?>" class="form-control" id="numero-referencia" name="numero-referencia" value="<?php echo set_value('numero-referencia'); ?>" readonly>
+                                    <?php echo form_error('numero-referencia', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                             </div>

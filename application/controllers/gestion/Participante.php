@@ -11,7 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Participante extends CI_Controller {
 
-	public function __construct() {
+	public function __construct()
+	{
 		parent::__construct();
 		
 		// Si el usuario no ha iniciado sesión
@@ -61,24 +62,25 @@ class Participante extends CI_Controller {
 		$this->load->view("admin/participante/view", $data);
 	}
 
-	public function add($id_persona = 'new')
+	public function add($cedula_persona = 'new')
 	{
-		if($id_persona !== 'new')
+		if($cedula_persona !== 'new')
 		{
 			$data_persona = array(
-				'persona' => $this->Persona_model->get_persona($id_persona),
+				'persona' => $this->Persona_model->get_persona($cedula_persona),
+				'nivel_academico' => $this->Participante_model->nivel_academico_dropdown()
 			);
 
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
 			$this->load->view('admin/participante/add', $data_persona); 
 			$this->load->view('layouts/footer');
-		
 		}
-		elseif($id_persona = 'new')
+		elseif($cedula_persona = 'new')
 		{
 			$data_persona = array(
-				"personas" => $this->Persona_model->get_personas() 
+				"personas" => $this->Persona_model->get_personas(),
+				'nivel_academico' => $this->Participante_model->nivel_academico_dropdown()
 			);
 
 			$this->load->view('layouts/header');
@@ -99,16 +101,20 @@ class Participante extends CI_Controller {
 	 */
 	public function store()
 	{
-		$fk_id_persona_2 = $this->input->post('fk-id-persona');
+		// Valor obtenido por medio del método POST
+		$cedula_persona = $this->input->post('cedula_persona');
+		$nivel_academico = $this->input->post('nivel_academico');
 
 		$data_participante = array(
-			'fk_id_persona_2' => $fk_id_persona_2,
+			'cedula_persona' => $cedula_persona,
+			'id_nivel_academico' => $nivel_academico
 		);
 
-		if($this->Participante_model->duplicidad_participante($fk_id_persona_2) === true)
+		if($this->Participante_model->duplicidad_participante($cedula_persona) === TRUE)
 		{
 			if($this->Participante_model->save($data_participante))
 			{
+				$this->session->set_flashdata('success', 'Participante registrado exitosamente');
 				redirect(base_url().'gestion/participante');
 			}
 			else

@@ -221,8 +221,8 @@
                         <select name="tipo-de-pago" id="tipo-de-pago" class="form-control" required>
                             <option value="">Seleccione...</option>
                             <?php foreach($tipos_de_operacion as $tipo_de_operacion) : ?>
-                                <?php $id_tipo_operacion = $tipo_de_operacion->id_tipo_de_operacion; ?>
-                                <option value="<?php echo $id_tipo_operacion; ?>"><?php echo $tipo_de_operacion->tipo_de_operacion ?></option>
+                                <?php $id_tipo_de_operacion = $tipo_de_operacion->id_tipo_de_operacion; ?>
+                                <option value="<?php echo $id_tipo_de_operacion; ?>"><?php echo $tipo_de_operacion->tipo_de_operacion ?></option>
                             <?php endforeach; ?>
                         </select> 
                         <!-- Fin del campo -->
@@ -282,8 +282,8 @@
                 <div class="form-group">
 
                     <div class="col-md-10">
-                        <label class="control-label" for="numero-de-operacion-unico"><i class="fa fa-check hidden"></i> Número de Operación:</label>
-                        <input type="text" class="form-control" id="numero-de-operacion-unico" name="numero-de-operacion-unico" placeholder="Número de Operación">
+                        <label class="control-label" for="numero-referencia"><i class="fa fa-check hidden"></i> Número de Operación:</label>
+                        <input type="text" class="form-control" id="numero-referencia" name="numero-referencia" placeholder="Número de Operación">
                     </div>
           
                     <div class="col-md-4">
@@ -295,7 +295,7 @@
              <!-- /.modal-body -->
 
              <div class="modal-footer">
-                <input type="hidden" id="id-titular" name="id-titular">  
+                <input type="hidden" id="cedula-titular" name="cedula-titular">  
                 <input type="hidden" name="modulo-actual" value="inscripciones">
                 <input type="hidden" id="id-tipo-de-pago" name="id-tipo-de-pago">
                 <input type="hidden" id="id-banco-de-operacion" name="id-banco-de-operacion"> 

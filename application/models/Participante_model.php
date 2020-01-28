@@ -13,19 +13,18 @@ class Participante_model extends CI_Model {
     public function get_participantes()
     {
         $resultados = $this->db->select(
-            'persona.nombres,
+            'participante.cedula_persona,
+            persona.nombres,
             persona.apellidos,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,
             persona.direccion,
-            persona.estado,
-            participante.cedula_persona,
             participante.estado,
             participante.fecha_registro,
             participante.estado')
-            ->from('persona')
-            ->join('participante', 'participante.cedula_persona = persona.cedula')
+            ->from('participante')
+            ->join('persona', 'persona.cedula = participante.cedula_persona')
             ->get(); 
     
             return $resultados->result();
@@ -104,14 +103,14 @@ class Participante_model extends CI_Model {
      * Al momento de asignar el rol de Participante a una Persona, 
      * verifica que esta acción no haya sido realizada anteriormente
      *
-     * @param integer $id
+     * @param integer $cedula_persona
      * @return boolean
      */
-    public function duplicidad_participante($id)
+    public function duplicidad_participante($cedula_persona)
     {
-        $query = $this->db->select('id_persona')
+        $query = $this->db->select('cedula_persona')
         ->from('participante')
-        ->where('id_persona', $id)
+        ->where('cedula_persona', $cedula_persona)
         ->get();
 
         // Retorna verdadero si la persona no está registrada aún
@@ -125,4 +124,28 @@ class Participante_model extends CI_Model {
         }
     }
 
+    /**
+     * Consulta la BD y obtiene una lista de todos los niveles académicos
+     *  disponibles para luego almacenrla en un array que es retornado, 
+     * el método se utiliza para generar un elemento DROPDOWN HTML
+     *
+     * @return array
+     */
+    public function nivel_academico_dropdown()
+    {
+        $query = $this->db
+        ->from('nivel_academico')
+        ->get();
+
+        $array[''] = 'Selecciona';
+
+        foreach($query->result() as $row)
+        {
+            // Crea un arreglo llave-valor,
+            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
+            $array[$row->id] = $row->nombre;
+        }
+
+        return $array;
+    }
 }

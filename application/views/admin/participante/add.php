@@ -30,28 +30,26 @@
                             <div class="form-group">
                                 <label for="">Seleccionar Participante:</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" disabled="disabled" id="cedula_persona">
+                                    <input type="text" readonly class="form-control" name="cedula_persona" id="cedula_persona">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
                                     </span>
                                 </div><!-- /input-group -->
                             </div>
-
-                            <input  type="hidden" class="form-control" id="fk-id-persona" name="fk-id-persona" value="<?php echo isset($persona) ? $persona->id_persona : ''; ?>">
                             
                             <div class="form-group">
-                                <label for="nombre-participante">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres-participante" name="nombre-participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <label for="nombre_participante">Nombres:</label>
+                                <input type="text" class="form-control" id="nombres_participante" name="nombre_participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-participante">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos-participante" name="apellido-participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <label for="apellido_participante">Apellidos:</label>
+                                <input type="text" class="form-control" id="apellidos_participante" name="apellido_participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
-                                <label for="nacimiento-participante">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" id="nacimiento-participante" name="nacimiento-participante" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
+                                <label for="nacimiento_participante">Fecha de Nacimiento:</label>
+                                <input type="date" class="form-control" id="nacimiento_participante" name="nacimiento_participante" value="<?php echo isset($persona) ? $persona->fecha_nacimiento_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -61,7 +59,7 @@
                                         1 => 'Masculino',
                                         2 => 'Femenino'
                                     );
-                                    $atributos = array('class' => 'form-control', 'id' => 'genero-participante', 'required' => 'required');
+                                    $atributos = array('class' => 'form-control', 'id' => 'genero_participante', 'required' => 'required');
                                     
                                     // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
                                     // Verifica si se encuentra asignada (isset) la variable $persona
@@ -71,18 +69,33 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
-                                    echo form_dropdown('genero-participante', $lista_generos, $value, $atributos);
+                                    echo form_dropdown('genero_participante', $lista_generos, $value, $atributos);
                                 ?>
                             </div>
 
                             <div class="form-group">
-                                <label for="telefono-participante">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono-participante" name="telefono-participante" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
+                                    <?php
+                                        $atributos = array('class' => 'form-control', 'id' => 'nivel_academico', 'required' => 'required');
+                                    
+                                        // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
+                                        // Verifica si se encuentra asignada (isset) la variable $persona
+                                                                
+                                        echo form_label('Nivel Académico:'); // Genera la etiqueta
+    
+                                        // Genera el elemento "select"
+                                        // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
+                                        echo form_dropdown('nivel_academico', $nivel_academico, '', $atributos);
+                                    ?>
                             </div>
 
                             <div class="form-group">
-                                <label for="direccion-participante">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion-participante" name="direccion-participante" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
+                                <label for="telefono_participante">Número de Teléfono:</label>
+                                <input type="text" class="form-control" id="telefono_participante" name="telefono_participante" value="<?php echo isset($persona) ? $persona->telefono_persona : ''; ?>">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="direccion_participante">Dirección:</label>
+                                <input type="text" class="form-control" id="direccion_participante" name="direccion_participante" value="<?php echo isset($persona) ? $persona->direccion_persona : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -113,25 +126,23 @@
                 <h4 class="modal-title">Lita de Personas</h4>
             </div>
             <div class="modal-body">
-                <table id="example1" class="table table-bordered table-striped table-hover">
+                <table id="lista-persona" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>Cédula</th>
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Documento</th>
-                            <th>Opcion</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php if(!empty($personas)): ?>
                         <?php foreach($personas as $persona): ?>
                             <tr>
-                                <td><?php echo $persona->id_persona; ?></td>
-                                <td><?php echo $persona->nombres_persona; ?></td>
-                                <td><?php echo $persona->apellidos_persona; ?></td>
                                 <td><?php echo $persona->cedula; ?></td>
-                                <?php $dataPersona = $persona->id_persona.'*'.$persona->nombres_persona.'*'.$persona->apellidos_persona.'*'.$persona->telefono_persona.'*'.$persona->cedula.'*'.$persona->fecha_nacimiento_persona.'*'.$persona->genero_persona.'*'.$persona->direccion_persona; ?>
+                                <td><?php echo $persona->nombres; ?></td>
+                                <td><?php echo $persona->apellidos; ?></td>
+                                <?php $dataPersona = $persona->cedula.'*'.$persona->nombres.'*'.$persona->apellidos.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>
@@ -150,4 +161,8 @@
     <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/participante.add.js"></script>
+
 

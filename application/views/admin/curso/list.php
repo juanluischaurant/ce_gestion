@@ -39,10 +39,10 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-curso" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Serial</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombre</th>
                                     <th>Estado</th>
@@ -63,17 +63,17 @@
 
                                         <td>
                                         <?php $today = date('Y-m-d'); ?>
-                                        <?php if($curso->estado_instancia == 1 && date($curso->fecha_culminacion_periodo) >= $today): ?>
+                                        <?php if($curso->estado == 1 && date($curso->fecha_culminacion) >= $today): ?>
                                             <small class="label label-success">
                                                 <i class="fa fa-clock-o"></i> Activa
                                             </small>
                                         <?php endif; ?> 
-                                        <?php if($curso->estado_instancia == 0): ?>
+                                        <?php if($curso->estado == 0): ?>
                                             <small class="label label-danger">
                                                 <i class="fa fa-clock-o"></i> Cancelada
                                             </small>
                                         <?php endif; ?> 
-                                        <?php if(date($curso->fecha_culminacion_periodo) <= $today): ?>
+                                        <?php if(date($curso->fecha_culminacion) <= $today): ?>
                                             <small class="label label-warning">
                                                 <i class="fa fa-clock-o"></i> Archivada
                                             </small>
@@ -86,24 +86,24 @@
                                         <td><?php echo $curso->total_cupos; ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-curso" data-toggle='modal' data-target='#modal-default' value='<?php echo $curso->id_instancia; ?>'>
+                                                <button type='button' class="btn btn-info btn-view-curso" data-toggle='modal' data-target='#modal-default' value='<?php echo $curso->id; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>gestion/curso/edit/<?php echo $curso->id_instancia; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>gestion/curso/edit/<?php echo $curso->id; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
-                                                <a href="<?php echo base_url() ?>gestion/curso/generate_pdf/<?php echo $curso->id_instancia; ?>" class="btn btn-primary btn-print" target="_blank">
+                                                <a href="<?php echo base_url() ?>gestion/curso/generate_pdf/<?php echo $curso->id; ?>" class="btn btn-primary btn-print" target="_blank">
                                                     <span class="fa fa-print"> </span>
                                                 </a>  
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
-                                                <?php if($curso->estado_instancia == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/curso/deactivate_instancia/<?php echo $curso->id_instancia; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                <?php if($curso->estado == 1): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/curso/deactivate_instancia/<?php echo $curso->id; ?>" class="btn btn-danger btn-activate-inscripcion">
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                 <?php endif; ?> 
-                                                <?php if($curso->estado_instancia == 0): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/curso/activate_instancia/<?php echo $curso->id_instancia; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                <?php if($curso->estado == 0): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/curso/activate_instancia/<?php echo $curso->id; ?>" class="btn btn-success btn-deactivate-inscripcion">
                                                         <span class="fa fa-toggle-on"></span>
                                                     </a>
                                                 <?php endif; ?> 
@@ -148,3 +148,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/curso.list.js"></script>

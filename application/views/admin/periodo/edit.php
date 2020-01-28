@@ -15,7 +15,7 @@
             </div>
             
             <form action="<?php echo base_url(); ?>gestion/periodo/update" method="POST">
-                <input type="hidden" name="id-periodo" value="<?php echo $data_periodo->id_periodo ?>">
+                <input type="hidden" name="id-periodo" value="<?php echo $data_periodo->id ?>">
                 
                 <div class="box-body">
              
@@ -31,13 +31,13 @@
                         <div class="col-md-4">
                             <div class="form-group">                                
                                 <label for="fecha-inicio">Fecha de Inicio:</label>
-                                <input type="date" class="form-control" name="fecha-inicio" value="<?php echo $data_periodo->fecha_inicio_periodo;?>">
+                                <input type="date" class="form-control" name="fecha-inicio" value="<?php echo $data_periodo->fecha_inicio;?>">
                             </div>                            
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">                                
                                 <label for="fecha-culminacion">Fecha de Culminación:</label>
-                                <input type="date" class="form-control" name="fecha-culminacion" value="<?php echo $data_periodo->fecha_culminacion_periodo;?>">
+                                <input type="date" class="form-control" name="fecha-culminacion" value="<?php echo $data_periodo->fecha_culminacion;?>">
                             </div>
                         </div>
                     

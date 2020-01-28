@@ -283,7 +283,7 @@
                                                         <input type="hidden" name="id-pago[]" value="<?php echo $pdi->id_pago; ?>">
                                                         <?php echo $pdi->serial_pago; ?>
                                                     </td>
-                                                    <td><?php echo $pdi->numero_operacion; ?></td>
+                                                    <td><?php echo $pdi->numero_referencia_bancaria; ?></td>
                                                     <td>
                                                         <?php echo $pdi->monto_operacion; ?>
                                                     </td>

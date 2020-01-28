@@ -25,12 +25,11 @@
                         <table id="example1" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Cédula</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Teléfono</th>
-                                    <th>Cédula</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
@@ -38,19 +37,20 @@
                                 <?php if(!empty($participantes)): ?>
                                 <?php foreach($participantes as $participante): ?>
                                     <tr>
-                                        <td><?php echo $participante->id; ?></td>
+                                        <td><?php echo $participante->cedula_persona; ?></td>
                                         <td><?php echo $participante->fecha_registro; ?></td>
                                         <td><?php echo $participante->nombres; ?></td>
                                         <td><?php echo $participante->apellidos; ?></td>
                                         <td><?php echo $participante->telefono; ?></td>
-                                        <td><?php echo $participante->cedula; ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $participante->id?>'>
+                                                <button type='button' class="btn btn-info btn-view-participante" data-toggle='modal' data-target='#modal-default' value='<?php echo $participante->cedula_persona?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>gestion/participante/edit/<?php echo $participante->id_persona; ?>" .
-                                                class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                <a href="<?php echo base_url(); ?>gestion/participante/edit/<?php echo $participante->cedula_persona; ?>" .
+                                                class="btn btn-warning">
+                                                    <span class="fa fa-pencil"></span>
+                                                </a>
                                                 <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>

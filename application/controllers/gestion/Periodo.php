@@ -15,18 +15,16 @@ class Periodo extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/periodos/list', $data);
+		$this->load->view('admin/periodo/list', $data);
 		$this->load->view('layouts/footer');
 	}
 
 	public function add()
 	{
-		$data = array(
-			'lista_meses' => $this->Periodo_model->meses_dropdown(),
-		);
+
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/periodos/add', $data);
+        $this->load->view('admin/periodo/add');
         $this->load->view('layouts/footer');
 	}
 	
@@ -46,13 +44,12 @@ class Periodo extends CI_Controller {
 		if($fecha_valida === TRUE)
 		{
 			$data = array(
-				'lista_meses' => $this->Periodo_model->meses_dropdown(),
 				'data_periodo' => $this->Periodo_model->get_periodo($id_periodo)
 			);
 			
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/periodos/edit', $data);
+			$this->load->view('admin/periodo/edit', $data);
 			$this->load->view('layouts/footer');
 		} 
 		else if($fecha_valida === FALSE)
@@ -72,10 +69,8 @@ class Periodo extends CI_Controller {
 		if($this->form_validation->run())
 		{
 			$data = array (
-				'mes_inicio_periodo' => date('n', strtotime($_POST['fecha-inicio'])),
-				'mes_cierre_periodo' => date('n', strtotime($_POST['fecha-culminacion'])),
-				'fecha_inicio_periodo' => $this->input->post('fecha-inicio'),
-				'fecha_culminacion_periodo' => $this->input->post('fecha-culminacion'),
+				'fecha_inicio' => $this->input->post('fecha-inicio'),
+				'fecha_culminacion' => $this->input->post('fecha-culminacion'),
 			);
 	
 			$resultado = $this->Periodo_model->save($data);
@@ -103,10 +98,8 @@ class Periodo extends CI_Controller {
 		$id_periodo = $this->input->post('id-periodo');
 		
 		$data = array (
-			'mes_inicio_periodo' => date('n', strtotime($_POST['fecha-inicio'])),
-			'mes_cierre_periodo' => date('n', strtotime($_POST['fecha-culminacion'])),
-			'fecha_inicio_periodo' => $this->input->post('fecha-inicio'),
-			'fecha_culminacion_periodo' => $this->input->post('fecha-culminacion'),
+			'fecha_inicio' => $this->input->post('fecha-inicio'),
+			'fecha_culminacion' => $this->input->post('fecha-culminacion'),
 		);
 
 		if($this->Periodo_model->update($id_periodo, $data))

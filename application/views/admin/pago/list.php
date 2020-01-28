@@ -30,7 +30,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-pago" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -49,7 +49,7 @@
                                     <tr>
                                         <td><?php echo $id_pago ?></td>
                                         <td><?php echo $pago->fecha_registro_operacion; ?></td>
-                                        <td><?php echo ($pago->numero_operacion == NULL) ? 'No Aplica' : $pago->numero_operacion; ?></td>
+                                        <td><?php echo ($pago->numero_referencia_bancaria == NULL) ? 'No Aplica' : $pago->numero_referencia_bancaria; ?></td>
                                         <td><?php echo ($pago->monto_operacion == '') ? '0.00' : $pago->monto_operacion; ?></td>
                                         
                                         <td>
@@ -124,5 +124,10 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/pago.list.js"></script>
+
 
                                

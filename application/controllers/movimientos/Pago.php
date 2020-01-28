@@ -32,7 +32,7 @@ class Pago extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/pagos/list', $data);
+		$this->load->view('admin/pago/list', $data);
 		$this->load->view('layouts/footer');
     }
     
@@ -43,58 +43,61 @@ class Pago extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/pagos/add', $data);
+		$this->load->view('admin/pago/add', $data);
 		$this->load->view('layouts/footer');		
     }
 
     public function store()
     {
         // ¿Se utiliza esta variable?
-        $modulo = $this->input->post('modulo-actual');
+        // $modulo = $this->input->post('modulo-actual');
 
         $id_banco_operacion = $this->input->post('id-banco-de-operacion');
-        $id_tipo_de_pago = $this->input->post('id-tipo-de-pago');
-        $id_cliente = $this->input->post('id-titular');
-        $numero_de_operacion = $this->input->post('numero-de-operacion-unico');
+        $id_tipo_de_operacion = $this->input->post('id-tipo-de-pago');
+        $cedula_titular = $this->input->post('cedula-titular');
+        $numero_referencia_bancaria = $this->input->post('numero-referencia');
         $monto_de_operacion = $this->input->post('monto-de-operacion');
         $fecha_de_operacion = $this->input->post('fecha-operacion');
 
         $data = array(
-            'fk_id_banco' => $id_banco_operacion,
-            'fk_id_tipo_operacion' => $id_tipo_de_pago,
-            'fk_id_titular' => $id_cliente,
-            'serial_pago' => $serial_de_pago,
-            'numero_operacion' => $numero_de_operacion,
+            'cedula_titular' => $cedula_titular,
+            'id_tipo_de_operacion' => $id_tipo_de_operacion,
             'monto_operacion' => $monto_de_operacion,
             'fecha_operacion' => $fecha_de_operacion
         );
 
-        if($id_tipo_de_pago == 1 || $id_tipo_de_pago == 2 || $id_tipo_de_pago == 3)
+        if($numero_referencia_bancaria !== NULL && $id_tipo_de_operacion == 1)
         {
-            $this->form_validation->set_rules('numero-de-operacion-unico', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
-            
-            if($this->form_validation->run())
-            {
-                if($this->Pago_model->save($data))
-                {
-                    $id_ultimo_pago = $this->Pago_model->lastID();
-                    $this->actualizar_conteo_operaciones($id_tipo_de_pago);
-                    $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
-    
-                    redirect(base_url().'movimientos/pago/');    
-                }
-                else
-                {
-                    $this->session->set_flashdata('error', 'No se pudo guardar la información.');
-                    redirect(base_url().'movimientos/pago/add');
-                }
-            }
-            else
-            {
-                $this->session->set_flashdata('error', 'No se pudo guardar la información.');
-                $this->add();
-            }
+            $data['id_banco'] = $id_banco_operacion;
+            $data['numero_referencia_bancaria' ] = $numero_referencia_bancaria;
+
+            $this->form_validation->set_rules('numero-referencia', 'Número de Referencia', 'required|is_unique[pago_de_inscripcion.numero_referencia_bancaria]'); 
         }
+  
+        $this->form_validation->set_rules('fecha-operacion', 'Fecha de Operación', 'required'); 
+
+        if($this->form_validation->run())
+        {
+            print_r($data);          
+        }
+        //     if($this->Pago_model->save($data))
+        //     {
+        //         $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
+
+        //         redirect(base_url().'movimientos/pago/');    
+        //     }
+        //     else
+        //     {
+        //         $this->session->set_flashdata('error', 'No se pudo guardar la información.');
+        //         redirect(base_url().'movimientos/pago/add');
+        //     }
+        // }
+        else
+        {
+            $this->session->set_flashdata('error', 'No se pudo guardar la información.');
+            $this->add();
+        }
+        
     }
 
     /**
@@ -106,24 +109,24 @@ class Pago extends CI_Controller {
     public function store_ajax()
     {
         $id_banco_operacion = $this->input->post('id_banco_operacion');
-        $id_tipo_de_pago = $this->input->post('fk_id_tipo_operacion');
-        $id_cliente = $this->input->post('id_cliente');
-        $numero_de_operacion = $this->input->post('numero_de_operacion');
+        $id_tipo_de_operacion = $this->input->post('id_tipo_de_operacion');
+        $cedula_titular = $this->input->post('cedula_titular');
+        $numero_referencia_bancaria = $this->input->post('numero_referencia_bancaria');
         $monto_de_operacion = $this->input->post('monto_de_operacion');
         $fecha_de_operacion = $this->input->post('fecha_de_operacion');
         
         $data = array(
             'id_banco' => $id_banco_operacion,
-            'id_tipo_operacion' => $id_tipo_de_pago,
-            'id_titular' => $id_cliente,
-            'numero_operacion' => $numero_de_operacion,
+            'id_tipo_de_operacion' => $id_tipo_de_operacion,
+            'cedula_titular' => $cedula_titular,
+            'numero_referencia_bancaria' => $numero_referencia_bancaria,
             'monto_operacion' => $monto_de_operacion,
             'fecha_operacion' => $fecha_de_operacion
         );
 
-        if($id_tipo_de_pago == 1 || $id_tipo_de_pago == 2 || $id_tipo_de_pago == 3)
+        if($id_tipo_de_operacion == 1 || $id_tipo_de_operacion == 2 || $id_tipo_de_operacion == 3)
         {
-            // $this->form_validation->set_rules('numero_de_operacion', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_operacion]'); 
+            // $this->form_validation->set_rules('numero_referencia_bancaria', 'Número de Operación', 'required|is_unique[pago_de_inscripcion.numero_referencia_bancaria]'); 
             
             // if($this->form_validation->run('agregar_pago'))
             // {
@@ -132,12 +135,9 @@ class Pago extends CI_Controller {
 
                 // if($resultados == TRUE)
                 // {
-                //     $id_ultimo_pago = $this->Pago_model->lastID();
                 
-                //     $this->actualizar_conteo_operaciones($id_tipo_de_pago);
-    
-                echo json_encode($resultados);  
-            // }   
+                    echo json_encode($resultados);  
+                // }   
         }
     }
 
@@ -171,7 +171,7 @@ class Pago extends CI_Controller {
 			"pago" => $this->Pago_model->get_pago($id_pago),
 		);
 
-		$this->load->view("admin/pagos/view", $data);
+		$this->load->view("admin/pago/view", $data);
     }
 
     public function edit($id_pago = NULL)
@@ -195,7 +195,7 @@ class Pago extends CI_Controller {
                 );
                 $this->load->view('layouts/header');
                 $this->load->view('layouts/aside');
-                $this->load->view('admin/pagos/edit', $data);
+                $this->load->view('admin/pago/edit', $data);
                 $this->load->view('layouts/footer');
             }
             else
@@ -211,18 +211,18 @@ class Pago extends CI_Controller {
 	{
 		$id_pago = $this->input->post('id-pago');
 
-		$id_titular = $this->input->post('id-titular');
+		$cedula_titular = $this->input->post('cedula-titular');
         $monto_operacion = $this->input->post('monto-de-operacion');
         $fecha_operacion = $this->input->post('fecha-operacion');
         $id_banco = $this->input->post('id-banco-de-operacion');
-        $numero_operacion = $this->input->post('numero-de-operacion-unico');
+        $numero_referencia_bancaria = $this->input->post('numero-referencia');
 
 		$data = array(
-            'fk_id_titular' => $id_titular,
+            'fk_id_titular' => $cedula_titular,
             'monto_operacion' => $monto_operacion,
             'fecha_operacion' => $fecha_operacion,
             'fk_id_banco' => $id_banco,
-            'numero_operacion' => $numero_operacion,			
+            'numero_referencia_bancaria' => $numero_referencia_bancaria,			
 		);
 
 		// Reglas declaradas para la validación de formularios integrada en CodeIgniter
@@ -256,28 +256,10 @@ class Pago extends CI_Controller {
 
     public function get_tipo_de_operacion_ajax()
     {
-        $id_tipo_operacion = $this->input->post('id_tipo_operacion');
-        $resultados = $this->Pago_model->get_tipo_de_operacion($id_tipo_operacion);
+        $id_tipo_de_operacion = $this->input->post('id_tipo_de_operacion');
+        $resultados = $this->Pago_model->get_tipo_de_operacion($id_tipo_de_operacion);
 
         echo json_encode($resultados);
-    }
-
-    /**
-     * Actualiza el conteo de operaciones al momento den que un pago ha sido
-     * registrado de forma exitósa
-     *
-     * @param integer $id_tipo_operacion
-     * @return void
-     */
-    protected function actualizar_conteo_operaciones($id_tipo_operacion)
-    {
-        $conteoActual = $this->Pago_model->get_tipo_de_operacion($id_tipo_operacion);
-        
-        $data = array(
-            'conteo_operaciones' => $conteoActual->conteo_operaciones + 1
-        );
-        
-        $this->Pago_model->actualizar_conteo_operaciones($id_tipo_operacion, $data);
     }
     
     // Métodos utilizados para el pluggin AUTOCOMPLETE
@@ -305,10 +287,10 @@ class Pago extends CI_Controller {
 		echo json_encode($clientes);
     }
 
-    public function getBancosJSON()
+    public function get_bancos_json()
     {
         $valor = $this->input->post('query');
-		$bancos = $this->Pago_model->getBancosJSON($valor);
+		$bancos = $this->Pago_model->get_bancos_json($valor);
 		echo json_encode($bancos);
     }
     // Fin: Métodos utilizados para el pluggin AUTOCOMPLETE

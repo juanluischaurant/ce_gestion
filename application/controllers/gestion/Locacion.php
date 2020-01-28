@@ -15,7 +15,7 @@ class Locacion extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/locaciones/list', $data);
+		$this->load->view('admin/locacion/list', $data);
 		$this->load->view('layouts/footer');
 	}
 
@@ -23,7 +23,7 @@ class Locacion extends CI_Controller {
 	{
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/locaciones/add');
+        $this->load->view('admin/locacion/add');
         $this->load->view('layouts/footer');
 	}
 
@@ -34,7 +34,7 @@ class Locacion extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/locaciones/edit', $data);
+        $this->load->view('admin/locacion/edit', $data);
         $this->load->view('layouts/footer');
 	}
 
@@ -48,7 +48,7 @@ class Locacion extends CI_Controller {
 			"cursos" => $this->Locacion_model->get_instancias_asociadas($id_locacion)
 		);
 
-		$this->load->view("admin/locaciones/view", $data);
+		$this->load->view("admin/locacion/view", $data);
 	}
 
 	/**

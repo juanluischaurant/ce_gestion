@@ -19,7 +19,7 @@ class Curso extends CI_Controller {
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/cursos/list', $data);
+		$this->load->view('admin/curso/list', $data);
 		$this->load->view('layouts/footer');
 	}
 
@@ -34,32 +34,33 @@ class Curso extends CI_Controller {
 	 */
 	public function view()
 	{
-		$id_instancia = $this->input->post("id_instancia");
+		$id_curso = $this->input->post("id_curso");
 
 		$data = array(
-			"participantes_inscritos" => $this->Curso_model->get_participantes_inscritos($id_instancia),
-			'datos_instancia' => $this->Curso_model->get_curso($id_instancia)
+			"participantes_inscritos" => $this->Curso_model->get_participantes_inscritos($id_curso),
+			'datos_instancia' => $this->Curso_model->get_curso($id_curso)
 		);
 
-		$this->load->view("admin/cursos/view", $data);
+		$this->load->view("admin/curso/view", $data);
 	}
 
 	public function add()
 	{
         $data = array(
-			'especialidades' => $this->Especialidad_model->get_especialidades(),
+			'nombres_curso' => $this->Curso_model->get_nombres_curso(),
 			'lista_turnos' =>  $this->Curso_model->turnos_dropdown()
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/cursos/add', $data);
+		$this->load->view('admin/curso/add', $data);
 		$this->load->view('layouts/footer');
 	}
 
 	public function store()
 	{
-        $id_especialidad = $this->input->post('id-especialidad-instanciado');   // fk_id_curso_1
-        $id_facilitador_instancia = $this->input->post('id-facilitador-curso'); // fk_id_facilitador
+		$id_nombre_curso = $this->input->post('id-nombre-curso');   // fk_id_curso_1
+		$serial_curso = $this->input->post('serial-curso');
+        $cedula_facilitador = $this->input->post('id-facilitador-curso'); // fk_id_facilitador
         $id_periodo_instancia = $this->input->post('id-periodo-curso');   // fk_id_periodo_1
         $id_locacion_instancia = $this->input->post('id-locacion-curso'); // fk_id_locacion_1
         $turno_instancia = $this->input->post('turno-curso');             // turno_instancia1
@@ -68,8 +69,9 @@ class Curso extends CI_Controller {
 		$descripcion_instancia = $this->input->post('descripcion-curso'); // descripcion_instancia
 		
         $data = array (
-			'id_especialidad' => $id_especialidad,
-            'id_facilitador' => $id_facilitador_instancia,
+			'id_nombre_curso' => $id_nombre_curso,
+			'serial' => $serial_curso,
+            'cedula_facilitador' => $cedula_facilitador,
             'id_periodo' => $id_periodo_instancia,
 			'id_turno' => $turno_instancia,
 			'id_locacion' => $id_locacion_instancia,
@@ -90,59 +92,58 @@ class Curso extends CI_Controller {
 		}
 	}
 		
-	public function edit($id_instancia)
+	public function edit($id_curso)
 	{
-		// Obtén la fecha de culminación del período asociado a la curso
-		$fecha_valida = $this->Curso_model->verificar_periodo_curso($id_instancia);
+		// Obtén la fecha de culminación del período asociado a el curso
+		$fecha_valida = $this->Curso_model->verificar_periodo_curso($id_curso);
 		
-		// Verifica que el período asociado a la curso sea vigente (no culminado)
+		// Verifica que el período asociado a el curso sea vigente (no culminado)
 		if($fecha_valida == TRUE)
 		{
-			// Obtén información sobre el estado de la curso
-			$estado_instancia = $this->Curso_model->verificar_estado_instancia($id_instancia);
+			// Obtén información sobre el estado de el curso
+			$estado_curso = $this->Curso_model->verificar_estado_curso($id_curso);
 			
-			// Verifica el estado actual de la curso (activo o inactivo)
-			if($estado_instancia === TRUE)
+			// Verifica el estado actual de el curso (activo o inactivo)
+			if($estado_curso === TRUE)
 			{
 				// Obtén la información del especialidad instanciado
 				$data = array(
-					'curso' => $this->Curso_model->get_curso($id_instancia),
+					'curso' => $this->Curso_model->get_curso($id_curso),
 					'lista_turnos' =>  $this->Curso_model->turnos_dropdown()
 				);
 				$this->load->view('layouts/header');
 				$this->load->view('layouts/aside');
-				$this->load->view('admin/cursos/edit', $data);
+				$this->load->view('admin/curso/edit', $data);
 				$this->load->view('layouts/footer');
 			}
 			else
 			{
-				// La curso se encuentra en estado: DESACTIVADO
-				$this->session->set_flashdata('error', 'La curso está desactivada, no puede ser editada.');
+				// El curso se encuentra en estado: DESACTIVADO
+				$this->session->set_flashdata('error', 'El curso está desactivada, no puede ser editada.');
 				redirect(base_url().'gestion/curso/');
 			}
 		}
 		else
 		{
-			// El período asociado a la curso EXPIRÓ
-			$this->session->set_flashdata('error', 'La curso ya cerró, no puede ser editada.');
+			// El período asociado a el curso EXPIRÓ
+			$this->session->set_flashdata('error', 'El curso ya cerró, no puede ser editada.');
 			redirect(base_url().'gestion/curso/');
 		}
 	}
 
 	public function update()
 	{
-		$id_instancia = $this->input->post('id-curso');
+		$id_curso = $this->input->post('id-curso');
 
 		if($this->form_validation->run('editar_instancia'))
 		{		
-			// $id_curso_instanciado = $this->input->post('id-especialidad-instanciado');   // fk_id_curso_1
-			$id_facilitador_instancia = $this->input->post('id-facilitador-curso'); // fk_id_facilitador
-			$id_periodo_instancia = $this->input->post('id-periodo-curso');   // fk_id_periodo_1
-			$id_locacion_instancia = $this->input->post('id-locacion-curso'); // fk_id_locacion_1
-			$turno_instancia = $this->input->post('turno-curso');             // turno_instancia1
-			$cupos_instancia = $this->input->post('cupos-curso');             // cupos_instancia
-			$precio_instancia = $this->input->post('costo-curso');            // precio_instancia
-			$descripcion_instancia = $this->input->post('descripcion-curso'); // descripcion_instancia
+			$id_facilitador_instancia = $this->input->post('id-facilitador-curso');
+			$id_periodo_instancia = $this->input->post('id-periodo-curso');
+			$id_locacion_instancia = $this->input->post('id-locacion-curso'); 
+			$turno_instancia = $this->input->post('turno-curso');
+			$cupos_instancia = $this->input->post('cupos-curso');
+			$precio_instancia = $this->input->post('costo-curso');
+			$descripcion_instancia = $this->input->post('descripcion-curso');
 			
 			$data = array(
 				'id_facilitador' => $id_facilitador_instancia,
@@ -158,22 +159,22 @@ class Curso extends CI_Controller {
 				$data['descripcion_instancia'] = trim($this->input->post('descripcion-curso'));
 			}
 			
-			if($this->Curso_model->update($id_instancia, $data))
+			if($this->Curso_model->update($id_curso, $data))
 			{
-				$serial_instancia = $this->input->post('serial-curso');
+				$serial_curso = $this->input->post('serial-curso');
 				
-				$this->session->set_flashdata('success', $serial_instancia . ' actualizada correctamente.');
+				$this->session->set_flashdata('success', $serial_curso . ' actualizada correctamente.');
 				redirect(base_url().'gestion/curso');
 			}
 			else
 			{
-				$this->session->set_flashdata('error', 'No se pudo actualizar la curso.');
-				redirect(base_url().'gestion/curso/edit/'.$id_instancia);
+				$this->session->set_flashdata('error', 'No se pudo actualizar el curso.');
+				redirect(base_url().'gestion/curso/edit/'.$id_curso);
 			}
 		}
 		else
 		{
-			$this->edit($id_instancia);
+			$this->edit($id_curso);
 		}
 	}
 
@@ -182,36 +183,37 @@ class Curso extends CI_Controller {
 	 * 
 	 * Las cursos pueden ser desactivadas luego de que el período asociado haya expirado.
 	 *
-	 * @param integer $id_instancia
+	 * @param integer $id_curso
 	 * @return void
 	 */
-	public function deactivate_instancia($id_instancia)
+	public function deactivate_instancia($id_curso)
     {
+		// Verifica el total de inscripciones activas
 		$total_inscripciones = $this
 								->Curso_model
-								->conteo_inscripciones($id_instancia)
+								->conteo_inscripciones($id_curso)
 								->inscripciones_activas;
 
-		// Obtén la fecha de culminación del período asociado a la curso
-		$fecha_valida = $this->Curso_model->verificar_periodo_curso($id_instancia);
+		// Obtén la fecha de culminación del período asociado a el curso
+		$fecha_valida = $this->Curso_model->verificar_periodo_curso($id_curso);
 
 		if($fecha_valida == TRUE)
 		{
 			if($total_inscripciones > 0)
 			{
-				$this->session->set_flashdata('error', 'No se pudo desactivar la curso, hay '. $total_inscripciones . ' <b>INSCRIPCIONES ACTIVAS</b> asociadas.');
+				$this->session->set_flashdata('error', 'No se pudo desactivar el curso, hay '. $total_inscripciones . ' <b>INSCRIPCIONES ACTIVAS</b> asociadas.');
 				redirect(base_url().'gestion/curso/');
 			}
 			else if($total_inscripciones == 0)
 			{
 				$data = array(
-					'estado_instancia' => 0,
+					'estado' => 0,
 				);
 
 				// Update register if TRUE
-				if($this->Curso_model->update($id_instancia, $data))
+				if($this->Curso_model->update($id_curso, $data))
 				{
-					$this->session->set_flashdata('success', 'Se desactivó la curso.');
+					$this->session->set_flashdata('success', 'Se desactivó el curso.');
 					redirect(base_url().'gestion/curso/');
 				}
 				else
@@ -219,12 +221,11 @@ class Curso extends CI_Controller {
 					$this->session->set_flashdata('alert', 'No se realizó ningún cambio en la base de datos.');
 					redirect(base_url().'gestion/curso/');
 				}	
-
 			}
 		}
 		else
 		{
-			$this->session->set_flashdata('error', 'La curso ya cerró, no puede ser desactivado.');
+			$this->session->set_flashdata('error', 'El curso ya cerró, no puede ser desactivado.');
 			redirect(base_url().'gestion/curso/');
 		}
 	}
@@ -234,25 +235,25 @@ class Curso extends CI_Controller {
 	 * 
 	 * Las cursos pueden ser desactivadas en caso de que se cancele su ejecución.
 	 *
-	 * @param [type] $id_instancia
+	 * @param [type] $id_curso
 	 * @return void
 	 */
-	public function activate_instancia($id_instancia)
+	public function activate_instancia($id_curso)
     {
-		// Obtén la fecha de culminación del período asociado a la curso
-		$fecha_valida = $this->Curso_model->verificar_periodo_curso($id_instancia);
+		// Obtén la fecha de culminación del período asociado a el curso
+		$fecha_valida = $this->Curso_model->verificar_periodo_curso($id_curso);
 
 		if($fecha_valida == TRUE)
 		{
 	
 			$data = array(
-				'estado_instancia' => 1,
+				'estado' => 1,
 			);
 
 			// Update register if TRUE
-			if($this->Curso_model->update($id_instancia, $data))
+			if($this->Curso_model->update($id_curso, $data))
 			{
-				$this->session->set_flashdata('success', 'Se activó la curso exitosamente.');
+				$this->session->set_flashdata('success', 'Se activó el curso exitosamente.');
 				redirect(base_url().'gestion/curso/');
 			}
 			else
@@ -263,7 +264,7 @@ class Curso extends CI_Controller {
 		}
 		else
 		{
-			$this->session->set_flashdata('error', 'La curso ya cerró, no puede ser activada.');
+			$this->session->set_flashdata('error', 'El curso ya cerró, no puede ser activada.');
 			redirect(base_url().'gestion/curso/');
 		}
     }
@@ -303,26 +304,26 @@ class Curso extends CI_Controller {
 	 * Este método utliza la librería FPDF, que se almacena en el directorio:
 	 * application/third_party/fpdf
 	 *
-	 * @param integer $id_instancia
+	 * @param integer $id_curso
 	 * @return void
 	 */
-	public function generate_pdf($id_instancia)
+	public function generate_pdf($id_curso)
 	{
-		$curso = $this->Curso_model->get_curso($id_instancia);
+		$curso = $this->Curso_model->get_curso($id_curso);
 
 		// Curso la clase PDF
 		$pdf = new PDF('L', 'mm', 'A4');
 		
 		// Setter que permite pasar el valor de $id_curso a la función Header()
 		// de fpdf antes de que la página pdf sea renderizada
-		$pdf->set_id_curso($id_instancia);
+		$pdf->set_id_curso($id_curso);
 
 		$pdf->set_datos_curso($curso->nombre, $curso->periodo, $curso->locacion);
 		
 		// Renderiza la página pdf
 		$pdf->AddPage();
 		
-		$participantes = $this->Curso_model->get_participantes_inscritos($id_instancia);
+		$participantes = $this->Curso_model->get_participantes_inscritos($id_curso);
 		// $participantes = json_decode($participantes, true);
 		$i = 1;
 

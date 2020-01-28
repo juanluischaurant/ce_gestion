@@ -7,6 +7,16 @@
         CE Gestión <?php if(!empty($page_title)) echo '| '.$page_title; ?>
     </title>
 
+    <script>
+        
+        /**
+         * URL base actual (Sujeto a cambios dependiendo de
+         * la dirección real):http://localhost/ce_gestion/
+         */
+        const base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
+         
+    </script>
+
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->

@@ -42,7 +42,7 @@ class Permiso extends CI_Controller {
         
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/permisos/list', $data);
+		$this->load->view('admin/permiso/list', $data);
 		$this->load->view('layouts/footer');
 	}
 
@@ -55,7 +55,7 @@ class Permiso extends CI_Controller {
         
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/permisos/add', $data);
+		$this->load->view('admin/permiso/add', $data);
 		$this->load->view('layouts/footer');
     }
     

@@ -8,23 +8,14 @@
     </div>
     <!-- ./wrapper -->
 
-<!-- jQuery 3 -->
-
 <!-- AdminLTE App -->
 <script src="<?php echo base_url();?>assets/template/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="<?php // echo base_url();?>assets/template/dist/js/demo.js"></script> -->
 
 <script>
-
     $(document).ready(function () {
 
-        /**
-         * URL base actual (Sujeto a cambios dependiendo de
-         * la dirección real):http://localhost/ce_gestion/
-         */
-        let base_url = "<?php echo base_url();?>"; // Almacena el url base del proyecto
-         
         // Activa el pluggin jQuery InputMask
         // $('[data-mask]').inputmask();
 
@@ -46,7 +37,6 @@
         // =============================================
         // JS para DataTables
         // =============================================
-
         
         // Cambia el estado de un registro dado
         // Este botón funciona de manera similar en distintos formularios
@@ -67,153 +57,7 @@
             });
         });
         
-        $('#export-acciones').DataTable({
-            "order": [[ 1, "desc" ]],
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    title: "Listado de Acciones",
-                    exportOptions: {
-                        columns: [ 0, 1, 2, 3 ]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: "Listado de Acciones",
-                    exportOptions: {
-                        columns: [ 0, 1, 2, 3]
-                    }
-
-                }
-            ],
-            language: {
-                "lengthMenu": "Mostrar _MENU_ registros por pagina",
-                "zeroRecords": "No se encontraron resultados en su busqueda",
-                "searchPlaceholder": "Buscar registros",
-                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-                "infoEmpty": "No existen registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-            }
-        });
-
-        $('#export-inscripciones').DataTable( {
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    title: "Listado de Acciones",
-                    exportOptions: {
-                        columns: [ 0, 1, 2, 3 ]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: "Listado de Acciones",
-                    exportOptions: {
-                        columns: [ 0, 1, 2, 3]
-                    }
-
-                }
-            ],
-
-            language: {
-                "lengthMenu": "Mostrar _MENU_ registros por pagina",
-                "zeroRecords": "No se encontraron resultados en su busqueda",
-                "searchPlaceholder": "Buscar registros",
-                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-                "infoEmpty": "No existen registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-            }
-        });
-
-        $('#export-especialidades').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    title: "Listado de especialidades",
-                    exportOptions: {
-                        columns: [ 0, 1, 2 ]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: "Listado de Ventas",
-                    exportOptions: {
-                        columns: [ 0, 1, 2]
-                    }
-
-                }
-            ],
-            language: {
-                "lengthMenu": "Mostrar _MENU_ registros por pagina",
-                "zeroRecords": "No se encontraron resultados en su busqueda",
-                "searchPlaceholder": "Buscar registros",
-                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-                "infoEmpty": "No existen registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-            }
-        });
-
-        $('#export-inscripciones').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                {
-                    extend: 'excelHtml5',
-                    title: "Listado de Inscripciones",
-                    exportOptions: {
-                        columns: [ 0, 1, 2, 3 ]
-                    }
-                },
-                {
-                    extend: 'pdfHtml5',
-                    title: "Listado de Inscripciones",
-                    exportOptions: {
-                        columns: [ 0, 1, 2, 3]
-                    }
-
-                }
-            ],
-
-            language: {
-                "lengthMenu": "Mostrar _MENU_ registros por pagina",
-                "zeroRecords": "No se encontraron resultados en su busqueda",
-                "searchPlaceholder": "Buscar registros",
-                "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
-                "infoEmpty": "No existen registros",
-                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                "search": "Buscar:",
-                "paginate": {
-                    "first": "Primero",
-                    "last": "Último",
-                    "next": "Siguiente",
-                    "previous": "Anterior"
-                },
-            }
-        });
-
+       
         // =============================================
         // Fin de JS para DataTables
         // =============================================
@@ -241,39 +85,6 @@
         // JS para Facilitadores
         // =============================================
         
-        // if($('#fk-id-persona').val() !== '') {
-        //     // Si hay alguna persona seleccionada para ser instanciada, 
-        //     // remueve el atributo 'disabled' del botón
-        //     $('#guardar-facilitador').removeAttr('disabled');
-        // }
-
-        // $(document).on('click', '.btn-check-facilitador', function() {
-        //     let facilitador = $(this).val();
-        //     let informacionFacilitador = facilitador.split('*');
-
-        //     let personaId = informacionFacilitador[0],
-        //     nombresPersona = informacionFacilitador[1],
-        //     apellidosPersona = informacionFacilitador[2],
-        //     telefonoPersona = informacionFacilitador[3],
-        //     cedulaPersona = informacionFacilitador[4],
-        //     fechaNacimientoPersona = informacionFacilitador[5],
-        //     generoPersona = informacionFacilitador[6];
-        //     direccionPersona = informacionFacilitador[7];
-
-        //     $('#fk-id-persona').val(personaId);
-        //     $('#nombres-facilitador').val(nombresPersona);
-        //     $('#apellidos-facilitador').val(apellidosPersona);
-        //     $('#nacimiento-facilitador').val(fechaNacimientoPersona);
-        //     $('#genero-facilitador').val(generoPersona);
-        //     $('#telefono-facilitador').val(telefonoPersona);
-        //     $('#direccion-facilitador').val(direccionPersona);
-
-        //     // Al seleccionar un facilitador de la lista, activa el botón "Guardar"
-        //     $('#guardar-facilitador').removeAttr('disabled');
-
-        //     // Oculta ventana modal
-        //     $('#modal-default').modal('hide');
-        // });
 
         $('.btn-view-facilitador').on('click', function() {
             // Al clickear el botón de vista de facilitador, expande modal
@@ -292,195 +103,9 @@
         // Fin de JS para Facilitadores
         // =============================================
 
-
-        // =============================================
-        // JS para Pagos
-        // =============================================
-
-        /**
-          * Detecta cuando el tipo de pago es seleccionado, y responde en base a la opción
-          * seleccionada.
-          */
-        $('#tipo-de-pago').on('change', function() {
-
-            let idTipoDeOperacion = $(this).val();
-
-            if(idTipoDeOperacion != '') {
-
-                $.ajax({
-                    url: base_url + "movimientos/pago/get_tipo_de_operacion_ajax",
-                    type:"POST",
-                    dataType:"html",
-                    data:{
-                        id_tipo_operacion: idTipoDeOperacion
-                    },
-                    success:function(data) {
-
-                        let a = JSON.parse(data);
-
-                        let conteoDeOperaciones = a.conteo_operaciones,
-                        tipoDeOperacion = a.tipo_de_operacion;
-
-                        // Almacena el id único del tipo de pago en un elemento HTML oculto
-                        $('#id-tipo-de-pago').val(idTipoDeOperacion);
-
-                        configurarTipoOperacion(tipoDeOperacion, conteoDeOperaciones);
-
-                        if(tipoDeOperacion === 'Efectivo') {
-
-                            $('#serial-de-pago').val('efe-'+generarNumero(conteoDeOperaciones));   
-                        } else if(tipoDeOperacion === 'Transferencia') {
-
-                            $('#serial-de-pago').val('tra-'+generarNumero(conteoDeOperaciones));
-                        } else if(tipoDeOperacion === 'Exonerado') {
-
-                            $('#serial-de-pago').val('exo-'+generarNumero(conteoDeOperaciones));
-                        }
-                    }
-                });
-            } else {
-
-                // Vacía el valor de las siguentes entidades HTML:
-                $('#id-tipo-de-pago').val(null);
-                $('#serial-de-pago').val(null);
-            }
-        });
-
-        function configurarTipoOperacion(tipoOperacion, conteoDeOperaciones) {
-
-           switch(tipoOperacion) { 
-               case 'Efectivo':
-                    // HTML Elements return NULL when disabled
-                    $('#banco-de-operacion')
-                        .prop('readonly', true)
-                        .val('No aplica');
-
-                    $('#id-banco-de-operacion')
-                        .val('4');
-
-                    $('#numero-de-operacion-unico')
-                        .prop('readonly', true)
-                        .val('EFE'+generarNumero(conteoDeOperaciones));
-
-                    $('#monto-de-operacion')
-                        .prop('readonly', false)
-                        .val('');
-                    break;
-                
-                case 'Exonerado':
-                    $('#banco-de-operacion')
-                        .prop('readonly', true)
-                        .val('No aplica');
-
-                    $('#id-banco-de-operacion')
-                        .val('4');
-
-                    $('#numero-de-operacion-unico')
-                        .prop('readonly', true)
-                        .val('EXO'+generarNumero(conteoDeOperaciones));
-
-                    $('#monto-de-operacion')
-                        .prop('readonly', true)
-                        .val('0.00');
-                    break;
-
-                case 'Transferencia':
-                    $('#banco-de-operacion')
-                        .prop('readonly', false)
-                        .val('');
-
-                    $('#numero-de-operacion-unico')
-                        .prop('readonly', false)
-                        .val('');
-
-                    $('#monto-de-operacion')
-                        .prop('readonly', false)
-                        .val('')
-                    break;
-
-                default:
-                    $('#banco-de-operacion')
-                        .prop('readonly', true)
-                        .val('No aplica');
-
-                    $('#numero-de-operacion-unico')
-                        .prop('readonly', true)
-                        .val('');
-                    
-                    $('#monto-de-operacion')
-                        .prop('readonly', false)
-                        .val('');
-                        break;
-           }       
-        }
-  
-        $(document).on("click",".btn-view-pago",function() {
-            
-            let id_pago = $(this).val(); // ID del elemento a consultar
-            $.ajax({
-                url: base_url + "movimientos/pago/view",
-                type:"POST",
-                dataType:"html",
-                data:{
-                    id_pago: id_pago
-                },
-                success:function(data) {
-                    $("#modal-default .modal-body").html(data);
-                }
-            });
-        });
-
-        $('#cedula-titular').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: base_url+'movimientos/pago/get_titulares_json',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        query: request.term
-                    },
-                    success: function(data) {
-                        response(data)
-                    }
-                });
-            }, minLength: 1,
-            select: function(event, ui) {
-                // Considera eliminar esta variable `data` no utilizada aquí
-                data = ui.item.id_titular+'*'+ui.item.label;
-
-                $('#nombre_titular').val(ui.item.nombre_titular);
-                $('#id-titular').val(ui.item.id_titular);
-            }
-        });
-
-        $('#banco-de-operacion').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: base_url+'movimientos/Pagos/getBancosJSON',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        query: request.term
-                    },
-                    success: function(data) {
-                        response(data)
-                    }
-                });
-            }, minLength: 3,
-            select: function(event, ui) {
-                $('#id-banco-de-operacion').val(ui.item.id_banco);
-            }
-        });
-
-        // =============================================
-        // Fin de JS para Pagos
-        // =============================================
-
-
         // =============================================
         // JS para Inscripciones
         // =============================================
-
         $('#numero-de-operacion').autocomplete({
 
             source: function(request, response) {
@@ -507,7 +132,7 @@
                     return;
                 }
 
-                data = ui.item.serial_pago+'*'+ui.item.numero_operacion+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula+'*'+ui.item.id_pago+'*'+ui.item.fk_id_tipo_operacion+'*'+ui.item.estado_pago;
+                data = ui.item.serial_pago+'*'+ui.item.numero_referencia_bancaria+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula+'*'+ui.item.id_pago+'*'+ui.item.id_tipo_de_operacion+'*'+ui.item.estado_pago;
                 $('#btn-agregar-pago').val(data);
             }
         });
@@ -521,21 +146,21 @@
                 let datosPago = data.split('*');
 
                 let serial_pago = datosPago[0],
-                numero_operacion = datosPago[1],
+                numero_referencia_bancaria = datosPago[1],
                 monto_operacion = datosPago[2],
                 nombre_cliente = datosPago[3],
                 cedula_cliente = datosPago[4],
                 id_pago = datosPago[5],
-                fk_id_tipo_operacion = datosPago[6],
+                id_tipo_de_operacion = datosPago[6],
                 estado_pago = datosPago[7];        
 
                 if(estado_pago == 1 || estado_pago == 3)
                 {
                     html = '<tr id="'+ id_pago + '">';
                     html += '<td><input type="hidden" name="id-pago[]" value="'+id_pago+'">'+serial_pago+'</td>';
-                    html += '<td><input type="hidden" name="numero-operacion[]" value="'+numero_operacion+'">'+numero_operacion+'</td>';
+                    html += '<td><input type="hidden" name="numero-operacion[]" value="'+numero_referencia_bancaria+'">'+numero_referencia_bancaria+'</td>';
                     html += '<td><input type="hidden" name="monto-operacion[]" value="'+monto_operacion+'">'+monto_operacion+'</td>';
-                    html += '<td><input type="hidden" name="cedula-cliente[]" value="'+cedula_cliente+'">'+cedula_cliente+'<input type="hidden" name="fk_id_tipo_operacion[]" value="'+datosPago[7]+'">'+'</td>';
+                    html += '<td><input type="hidden" name="cedula-cliente[]" value="'+cedula_cliente+'">'+cedula_cliente+'<input type="hidden" name="id_tipo_de_operacion[]" value="'+datosPago[7]+'">'+'</td>';
 
                     html += '<td><button type="button" class="btn btn-danger btn-remove-pago"><span class="fa fa-remove"></span></button></td>'
                     html += '</tr>';
@@ -591,10 +216,9 @@
             let exito = false; // Do you need it?
 
             let id_banco_operacion = $('#id-banco-de-operacion').val(),
-            fk_id_tipo_operacion = $('#id-tipo-de-pago').val(),
-            id_cliente = $('#id-titular').val(),
-            serial_de_pago = $('#serial-de-pago').val(),
-            numero_de_operacion = $('#numero-de-operacion-unico').val(),
+            id_tipo_de_operacion = $('#id-tipo-de-pago').val(),
+            id_cliente = $('#cedula-titular').val(),
+            numero_referencia_bancaria = $('#numero-referencia').val(),
             monto_de_operacion = $('#monto-de-operacion').val(),
             fecha_de_operacion = $('#fecha-operacion').val();
 
@@ -604,10 +228,9 @@
                 dataType: 'JSON',
                 data: {
                     id_banco_operacion: id_banco_operacion,
-                    fk_id_tipo_operacion: fk_id_tipo_operacion,
+                    id_tipo_de_operacion: id_tipo_de_operacion,
                     id_cliente: id_cliente,
-                    serial_de_pago: serial_de_pago,
-                    numero_de_operacion: numero_de_operacion,
+                    numero_referencia_bancaria: numero_referencia_bancaria,
                     monto_de_operacion: monto_de_operacion,
                     fecha_de_operacion: fecha_de_operacion
                 },
@@ -830,146 +453,11 @@
             });
         });
 
-        // =============================================
-        // Fin de JS para Locaciones
-        // =============================================
-
-
-        // =============================================
-        // JS para Cursos
-        // =============================================
-
-        /**
-        * Genera un serial para la curso al momento de presionar el botón indicado
-        */
-        $(document).on('click', '.btn-check-especialidad-instanciado', function() {
-            let especialidad = $(this).val();
-            let infoCurso = especialidad.split('*');
-
-            let vecesInstanciado = infoCurso[3],
-            nombreCurso = infoCurso[1];
-
-            let id_curso = infoCurso[0],
-            prefijo = nombreCurso.substring(0, 3);
-
-            $('#serial-curso').val(prefijo.toUpperCase()+'-'+id_curso+'-'+generarNumero(vecesInstanciado));
-
-            $('#id-especialidad-instanciado').val(id_curso);
-            $('#nombre-especialidad-instanciado').val(nombreCurso);
-
-            $('#modal-default').modal('hide');
-        });
-
-        $('')
-
-        $('#periodo-curso').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: base_url+'gestion/curso/getPeriodosJSON',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        query: request.term
-                    },
-                    success: function(data) {
-                        response(data)
-                    }
-                });
-            }, minLength: 1,
-            select: function(event, ui) {
-                // Solo necesitamos almacenar el id del periodos
-                let data = ui.item.id_periodo;
-                $('#id-periodo-curso').val(data);
-                $('#periodo-curso').parent().addClass('has-success');
-                $('label[for="periodo-curso"] i').removeClass('hidden');
-
-            }
-        });
-
-        $('#locacion-curso').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: base_url+'gestion/curso/getLocacionesJSON',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        query: request.term
-                    },
-                    success: function(data) {
-                        response(data)
-                    }
-                });
-            }, minLength: 1,
-            select: function(event, ui) {
-                // Solo necesitamos almacenar el id de la locación
-                let data = ui.item.id_locacion;
-                $('#id-locacion-curso').val(data);
-                $('#locacion-curso').parent().addClass('has-success');
-                $('label[for="locacion-curso"] i').removeClass('hidden');
-            }
-        });
-        
-        $('#facilitador-curso').autocomplete({
-            source: function(request, response) {
-                $.ajax({
-                    url: base_url+'gestion/curso/getFacilitadoresJSON',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        query: request.term
-                    },
-                    success: function(data) {
-                        response(data)
-                    }
-                });
-            }, minLength: 1,
-            select: function(event, ui) {
-                // Solo necesitamos almacenar el id de la locación
-                let data = ui.item.id_facilitador;
-                $('#id-facilitador-curso').val(data);
-                $('#facilitador-curso').parent().addClass('has-success');
-                $('label[for="facilitador-curso"] i').removeClass('hidden');
-            }
-        });
-
-        // $('input[name="turno-curso"]').on('click', function() { alert('hi');});
-
-        // =============================================
-        // Fin de JS para Cursos
-        // =============================================
 
 
         // =============================================
         // JS para Participantes
         // =============================================
-
-        $(document).on('click', '.btn-check-participante', function() {
-            let participante = $(this).val();
-            let informacionParticipante = participante.split('*');
-
-            let personaId = informacionParticipante[0],
-            nombresPersona = informacionParticipante[1],
-            apellidosPersona = informacionParticipante[2],
-            telefonoPersona = informacionParticipante[3],
-            cedulaPersona = informacionParticipante[4],
-            fechaNacimientoPersona = informacionParticipante[5],
-            generoPersona = informacionParticipante[6];
-            direccionPersona = informacionParticipante[7];
-
-            $('#fk-id-persona').val(personaId);
-            $('#nombres-participante').val(nombresPersona);
-            $('#apellidos-participante').val(apellidosPersona);
-            $('#nacimiento-participante').val(fechaNacimientoPersona);
-            $('#genero-participante').val(generoPersona);
-            $('#telefono-participante').val(telefonoPersona);
-            $('#direccion-participante').val(direccionPersona);
-
-            // Al seleccionar un participante de la lista, activa el botón "Guardar"
-            $('#guardar-participante').removeAttr('disabled');
-
-            // Oculta ventana modal
-            $('#modal-default').modal('hide');
-        });
 
         $(document).on("click",".btn-view-participante",function() {
 
@@ -1037,7 +525,7 @@
          * Verifica que el número de operación sea único antes de enviar la solicitud
          * a la base de datos.
          */
-        $('#numero-de-operacion-unico').on('keyup click cut copy paste drop', function() {
+        $('#numero-referencia').on('keyup click cut copy paste drop', function() {
 
             // Al alterar el contenido de la caja de texto desactiva el botón de guardado
             $('#btn-guardar-inscripcion-pago').attr('disabled', true);
@@ -1063,8 +551,8 @@
                     }
                     
                     if(data == true) {
-                        $('#numero-de-operacion-unico').parent().addClass('has-success');
-                        $('label[for="numero-de-operacion-unico"] i').removeClass('hidden');
+                        $('#numero-referencia').parent().addClass('has-success');
+                        $('label[for="numero-referencia"] i').removeClass('hidden');
                         $('#btn-guardar-inscripcion-pago').removeAttr('disabled');
                     }
 
@@ -1073,7 +561,6 @@
                     // $('#btn-guardar-inscripcion-pago').toggleClass('disabled')
 
                     // $('#id-periodo-curso').val(data);
-
 
                 }
             });
@@ -1085,9 +572,7 @@
             let data = $(this).val(); // Almacena los datos del atributo "value" del boton clickeado
 
             // Comprobar si la variable "data" está vacia o no
-            if(data != '') 
-            {
-
+            if(data != '') {
                 let datosCurso = data.split('*'),
                 cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por especialidad
                 cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por especialidad
@@ -1111,7 +596,7 @@
                         data: {
 
                             // "data-id-especialidad" es un atributo personalizado de HTML que almacena
-                            // el ID de la curso seleccionada
+                            // el ID de el curso seleccionada
                             id: $(this).attr('data-id-especialidad')
                         },
                         success: function( data, textStatus, jQxhr ) {
@@ -1166,10 +651,7 @@
                         }
                     }); 
                 }
-            }
-            else
-            {
-
+            } else {
                 alert('Seleccione una curso');
             }
         });
@@ -1190,8 +672,7 @@
             {
                 $('#btn-guardar-inscripcion').attr('disabled', true);
             }
-
-            
+  
         });
 
         /**

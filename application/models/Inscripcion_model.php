@@ -255,7 +255,7 @@ class Inscripcion_model extends CI_Model {
     /**
      * Obtén datos de curso inscrita
      * 
-     * El presente método permite obtener la información de la curso
+     * El presente método permite obtener la información de el curso
      * relacionada a determinada inscripción, función usada principalmente 
      * al momento de cargar la vista de edición de inscripción.
      *
@@ -285,7 +285,7 @@ class Inscripcion_model extends CI_Model {
 
      
     /**
-     * Obtén datos de la curso inscrita
+     * Obtén datos de el curso inscrita
      *     
      * @param integer $id_inscripcion
      * @return array
@@ -338,7 +338,7 @@ class Inscripcion_model extends CI_Model {
         ->from('inscripcion as insc')
         ->join('pago_de_inscripcion as pdins', 'pdins.fk_id_inscripcion = insc.id_inscripcion')
         ->join('banco as ban', 'ban.id_banco = pdins.fk_id_banco')
-        ->join('tipo_de_operacion as tdo', 'tdo.id_tipo_de_operacion = pdins.fk_id_tipo_operacion')
+        ->join('tipo_de_operacion as tdo', 'tdo.id_tipo_de_operacion = pdins.id_tipo_de_operacion')
         ->join('titular as tit', 'tit.id_titular = pdins.fk_id_titular')
         ->join('persona as per', 'per.id = id_persona')
         ->where('insc.id_inscripcion', $id_inscripcion)
@@ -397,7 +397,7 @@ class Inscripcion_model extends CI_Model {
         ->from('curso')
         ->join('especialidad', 'especialidad.id_curso = curso.fk_id_curso_1')
         ->join('periodo', 'periodo.id_periodo = curso.fk_id_periodo_1')
-        // ->where('curso.estado_instancia', 1)
+        // ->where('curso.estado_curso', 1)
         ->like('especialidad.nombre_curso', $valor)
         ->get();
 
@@ -432,7 +432,7 @@ class Inscripcion_model extends CI_Model {
     } 
 
     /**
-     * Verifica que el período de la curso a la cuál se encuentra asociada
+     * Verifica que el período de el curso a la cuál se encuentra asociada
      * una inscripción aún no haya expirado.
      *
      * @param integer $id_inscripcion

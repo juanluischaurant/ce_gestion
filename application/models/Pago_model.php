@@ -7,16 +7,15 @@ class Pago_model extends CI_Model {
     // Obtén una lista de pagos realizados
     $resultados = $this->db->select(
       'pdi.id, 
-      pdi.numero_transferencia, 
+      pdi.numero_referencia_bancaria, 
       pdi.monto_operacion, 
-      pdi.estado,
+      pdi.estatus_pago,
       pdi.fecha_registro, 
-      ti.id,
       per.cedula'
     )
     ->from('pago_de_inscripcion as pdi')
-    ->join('titular as ti', 'ti.id = pdi.id_titular')
-    ->join('persona as per', 'per.id = ti.id_persona')
+    ->join('titular as ti', 'ti.cedula_persona = pdi.cedula_titular')
+    ->join('persona as per', 'per.cedula = ti.cedula_persona')
     ->get();
 
     return $resultados->result();
@@ -94,7 +93,7 @@ class Pago_model extends CI_Model {
 
   public function get_tipo_de_operacion($id)
   {
-    $this->db->where("id_tipo_de_operacion", $id);
+    $this->db->where("id", $id);
     $resultado = $this->db->get("tipo_de_operacion");
     return $resultado->row();
   }
@@ -102,7 +101,7 @@ class Pago_model extends CI_Model {
   /**
    * Insertar un registro en la tabla indicada dentro del método
    *
-   * @param [type] $data
+   * @param array $data
    * @return void
    */
   public function save($data)
@@ -117,7 +116,7 @@ class Pago_model extends CI_Model {
    * dicho procedimiento se encarga de insertar registro en la tabla de pago
    * de inscripción, y además aumenta el contador de tipo de operación.
    *
-   * @param [type] $data
+   * @param array $data
    * @return void
    */
   public function insertar_pago_procedure($data)
@@ -139,7 +138,7 @@ class Pago_model extends CI_Model {
    * Este método se utiliza en el módulo de pago al momento de editar
    * un pago para verificar su estado actual.
    *
-   * @param [type] $id_pago
+   * @param integer $id_pago
    * @return void
    */
   public function get_estado_pago($id_pago)
@@ -153,17 +152,6 @@ class Pago_model extends CI_Model {
     ->get();
 
     return $resultados->row();
-  }
-
-  public function lastID()
-  {
-		return $this->db->insert_id();
-  }
-    
-  public function actualizar_conteo_operaciones($idOperacion,$data)
-  {
-    $this->db->where("id_tipo_de_operacion",$idOperacion);
-    $this->db->update("tipo_de_operacion",$data);
   }
 
   public function actualiza_estado_pago($id_pago)
@@ -187,16 +175,16 @@ class Pago_model extends CI_Model {
    * Retorna TRUE de no existir un número de pago similar, para caso
    * contrario retorna FALSE.
    *
-   * @param string $numero_operacion
+   * @param string $numero_referencia_bancaria
    * @return void
    */
-  public function pago_unico($numero_operacion)
+  public function pago_unico($numero_referencia_bancaria)
   {
     $resultado = $this->db->select(
       'pdi.numero_transferencia'
       )
     ->from('pago_de_inscripcion as pdi')
-    ->where('pdi.numero_transferencia', $numero_operacion)
+    ->where('pdi.numero_transferencia', $numero_referencia_bancaria)
     ->get();
 
     if($resultado->num_rows() < 1)
@@ -224,14 +212,14 @@ class Pago_model extends CI_Model {
   public function get_titulares_json($valor)
   {
     $resultados = $this->db->select(
-      'ti.id, 
-      concat(per.nombres, " ", per.apellidos) as nombre_titular, 
-      per.cedula as label'
+      't.cedula_persona, 
+      concat(p.nombres, " ", p.apellidos) as nombre_titular, 
+      p.cedula as label'
     )
-      ->from('titular as ti')
-      ->join('persona as per', 'per.id = ti.id_persona')
+      ->from('titular as t')
+      ->join('persona as p', 'p.cedula = t.cedula_persona')
 
-      ->like('per.cedula', $valor)
+      ->like('p.cedula', $valor)
 
       ->get();
 
@@ -239,15 +227,19 @@ class Pago_model extends CI_Model {
       
   }   
 
-    public function getBancosJSON($valor) {
-        $this->db->select('id_banco, nombre_banco as label');
-        $this->db->from('banco');
-        $this->db->like('nombre_banco', $valor);
+  public function get_bancos_json($valor)
+  {
+    $this->db->select(
+      'id, 
+      nombre as label'
+    );
+    $this->db->from('banco');
+    $this->db->like('nombre', $valor);
 
-        $resultados = $this->db->get();
+    $resultados = $this->db->get();
 
-        return $resultados->result_array();
-    }
+    return $resultados->result_array();
+  }
 
     /**
      * Obtén lista de pagos realizados 
@@ -258,13 +250,13 @@ class Pago_model extends CI_Model {
     public function get_pagos_json($valor)
     {
         $resultados = $this->db->select(
-            'pi.numero_operacion,
+            'pi.numero_referencia_bancaria,
             pi.estado,
             pi.monto_operacion,
             pi.id,
             pi.estado,
-            pi.fk_id_tipo_operacion,
-            concat(pi.numero_operacion, " - ID: ", pe.cedula) as label,
+            pi.id_tipo_de_operacion,
+            concat(pi.numero_referencia_bancaria, " - ID: ", pe.cedula) as label,
             concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_cliente,
             pe.cedula'
         )
@@ -278,7 +270,7 @@ class Pago_model extends CI_Model {
             // hilo de StackOverflow:
             // https://stackoverflow.com/questions/41113805/codeigniter-like-or-like-doesnt-work-with-where
             $resultados->where('pi.estado', 1)
-            ->like('pi.numero_operacion', $valor)
+            ->like('pi.numero_referencia_bancaria', $valor)
             
             ->or_where('pi.estado', 1)
             ->like('pe.cedula', $valor, 'after')

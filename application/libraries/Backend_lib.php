@@ -5,7 +5,7 @@
 
 class Backend_lib {
 
-    // Almacenará la curso del objeto CodeIgniter
+    // Almacenará el curso del objeto CodeIgniter
     private $CI;
 
     public function __construct()

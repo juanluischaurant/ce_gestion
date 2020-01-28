@@ -94,7 +94,7 @@
 				</span>
 
 				<h4 class="timeline-header">
-					<a href="#"><?php echo $pdi->tipo_de_operacion; ?>:</a> <?php echo $pdi->numero_operacion; ?>
+					<a href="#"><?php echo $pdi->tipo_de_operacion; ?>:</a> <?php echo $pdi->numero_referencia_bancaria; ?>
 				</h4>
 
 				<div class="timeline-body">

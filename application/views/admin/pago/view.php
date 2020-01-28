@@ -43,7 +43,7 @@
         <br>
 
 		<?php echo $pago->nombre_banco; ?><br>
-		<?php echo ($pago->numero_operacion == NULL) ? 'No Aplica' : $pago->numero_operacion; ?><br>
+		<?php echo ($pago->numero_referencia_bancaria == NULL) ? 'No Aplica' : $pago->numero_referencia_bancaria; ?><br>
 		<?php echo $pago->tipo_de_operacion; ?><br>
 		<?php echo $pago->fecha_operacion; ?><br>
 		

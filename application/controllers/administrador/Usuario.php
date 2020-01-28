@@ -43,7 +43,7 @@ class Usuario extends CI_Controller {
         
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/usuarios/list', $data);
+		$this->load->view('admin/usuario/list', $data);
 		$this->load->view('layouts/footer');
 	}
 
@@ -55,7 +55,7 @@ class Usuario extends CI_Controller {
         
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
-		$this->load->view('admin/usuarios/add', $data);
+		$this->load->view('admin/usuario/add', $data);
 		$this->load->view('layouts/footer');
     }
     
@@ -74,7 +74,7 @@ class Usuario extends CI_Controller {
 			);
 			$this->load->view('layouts/header');
 			$this->load->view('layouts/aside');
-			$this->load->view('admin/usuarios/edit', $data);
+			$this->load->view('admin/usuario/edit', $data);
 			$this->load->view('layouts/footer');
 		}
 	}
@@ -195,7 +195,7 @@ class Usuario extends CI_Controller {
 			'usuario' => $this->Usuario_model->get_usuario($id_usuario),
 		);
 
-		$this->load->view('admin/usuarios/view', $data);
+		$this->load->view('admin/usuario/view', $data);
     }
 
     public function delete($id_usuario)

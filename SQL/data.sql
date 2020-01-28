@@ -200,7 +200,7 @@ FROM periodo
 WHERE fecha_culminacion_periodo >= CURRENT_DATE
 
 -- ===================================================================
--- Obtener conteo de instancias activas por período
+-- Contarinstancias activas por período
 -- ===================================================================
 SELECT 
 	periodo.id_periodo,
@@ -352,5 +352,52 @@ SELECT
     MONTHNAME(fecha_inicio),
     DATE_FORMAT(periodo.fecha_inicio, '%M') as Mes
 FROM `periodo`
+-- =============================================================
+-- =============================================================
+
+-- =============================================================
+-- =============================================================
+-- Contar veces que se ha usado un nombre
+-- =============================================================
+-- =============================================================
+SELECT
+	nombre_curso.descripcion,
+    nombre_curso.id,
+    COUNT(curso.id) as conteo_uso
+FROM
+	nombre_curso
+JOIN curso ON curso.id_nombre_curso = nombre_curso.id
+GROUP BY nombre_curso.descripcion
+-- =============================================================
+-- =============================================================
+
+-- =============================================================
+-- =============================================================
+-- Conteo de inscripciones en el curso
+-- =============================================================
+-- =============================================================
+SELECT 
+curso.serial,
+nombre_curso.descripcion,
+(
+    SELECT 
+    	COUNT(inscripcion.id)
+    FROM inscripcion
+    WHERE inscripcion.estado = 1
+) AS inscripciones_activas,
+(
+    SELECT 
+    	COUNT(inscripcion.id)
+    FROM inscripcion
+    WHERE inscripcion.estado = 0
+) AS inscripciones_inactivas,
+(
+    SELECT 
+    	COUNT(inscripcion.id)
+    FROM inscripcion
+) AS inscripciones_totales
+FROM curso
+LEFT JOIN nombre_curso ON nombre_curso.id = curso.id_nombre_curso
+GROUP BY curso.serial
 -- =============================================================
 -- =============================================================
