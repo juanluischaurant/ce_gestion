@@ -35,7 +35,7 @@ class Dashboard extends CI_Controller {
 	 *
 	 * @return void
 	 */
-	public function getData()
+	public function get_informacion()
 	{
 		$year = $this->input->post('year_inscripcion'); // Valor generado con AJAX
 		$resultados = $this->Inscripcion_model->inscripcion_montos($year);

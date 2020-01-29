@@ -15,11 +15,11 @@
         <div class="col-md-12">
             <!-- Custom Tabs -->
             <div class="nav-tabs-custom">
-            <ul class="nav nav-tabs" id="edit-inscripcion-tabs">
-                <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="true" id="tab-cambiar-curso">Curso</a></li>
-                <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false" id="tab-asociar-pago">Asociar Pago</a></li>
-                <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false" id="tab-desasociar-pago">Desasociar Pago</a></li>
-            </ul>
+                <ul class="nav nav-tabs" id="edit-inscripcion-tabs">
+                    <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="true" id="tab-cambiar-curso">Curso</a></li>
+                    <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false" id="tab-asociar-pago">Asociar Pago</a></li>
+                    <li class=""><a href="#tab_3" data-toggle="tab" aria-expanded="false" id="tab-desasociar-pago">Desasociar Pago</a></li>
+                </ul>
             <div class="tab-content">
             <div class="tab-pane" id="tab_1">
 
@@ -32,7 +32,7 @@
 
                                     <div>
                                         <h4>
-                                            <b>Curso Actual:</b> <?php echo $data_instancia_inscrita->nombre_completo_instancia; ?>
+                                            <b>Curso Actual:</b> <?php echo $data_curso_inscrito->nombre_completo_instancia; ?>
                                         </h4>
                                     </div>
                                     
@@ -55,7 +55,7 @@
 
                                                     <span class="input-group-btn">
 
-                                                        <button type="button" class="btn btn-success btn-flat" id="btn-agregar-especialidad">
+                                                        <button type="button" class="btn btn-success btn-flat" id="btn-agregar-curso">
                                                             <span class="fa fa-paperclip"></span>
                                                         </button>
 
@@ -80,13 +80,13 @@
 
                                                 <tbody>
                                                     <tr>
-                                                        <td><?php echo $data_instancia_inscrita->id_instancia; ?></td>
-                                                        <td><?php echo $data_instancia_inscrita->nombre_completo_instancia; ?></td>
-                                                        <td><?php echo $data_instancia_inscrita->cupos_instancia; ?></td>
-                                                        <td><?php echo $data_instancia_inscrita->cupos_instancia_ocupados; ?></td>
+                                                        <td><?php echo $data_curso_inscrito->id_instancia; ?></td>
+                                                        <td><?php echo $data_curso_inscrito->nombre_completo_instancia; ?></td>
+                                                        <td><?php echo $data_curso_inscrito->cupos_instancia; ?></td>
+                                                        <td><?php echo $data_curso_inscrito->cupos_instancia_ocupados; ?></td>
                                                         <td>
-                                                            <input type="hidden" name="precioactualcursos[]" value="<?php echo $data_instancia_inscrita->precio_instancia; ?>">
-                                                            <?php echo $data_instancia_inscrita->precio_instancia; ?>
+                                                            <input type="hidden" name="precioactualcursos[]" value="<?php echo $data_curso_inscrito->precio_instancia; ?>">
+                                                            <?php echo $data_curso_inscrito->precio_instancia; ?>
                                                         </td>
                                                         <td>
                                                             <button type="button" class="btn btn-danger btn-remove-especialidad">
@@ -144,7 +144,7 @@
                                                         
                                 <form action="<?php echo base_url();?>movimientos/inscripcion/update_asociar_pago" method="POST" class="form-horizontal" id='agregar-pago'>
                                     <!-- ID De la inscripción de curso bajo edición -->
-                                    <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion_instancia->id_inscripcion; ?>">
+                                    <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion->id; ?>">
                                                                             
                                     <div class="box">
                                         <div class="box-header">
@@ -168,7 +168,6 @@
 
                                                 <thead>
                                                     <tr>
-                                                        <th>Serial Pago</th>
                                                         <th>Número de Operación</th>
                                                         <th>Monto de Operación</th>
                                                         <th>Cédula</th>
@@ -192,7 +191,7 @@
 
                                         //$monto_pagado = $data_inscripcion->monto_pagado;
                                         //$deuda_pendiente = $data_inscripcion->deuda;
-                                        $costo_de_inscripcion = $data_inscripcion->costo_de_inscripcion;
+                                        $costo = $data_inscripcion->costo;
                                     ?>
 
                                     <div class="form-group">
@@ -206,7 +205,7 @@
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Costo Inscripción:</span>
-                                                <input type="text" value="<?php echo number_format((float)$costo_de_inscripcion, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
+                                                <input type="text" value="<?php echo number_format((float)$costo, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
                                             </div>
                                         </div>
 
@@ -263,7 +262,6 @@
 
                                         <thead>
                                             <tr>
-                                                <th>Serial Pago</th>
                                                 <th>Número de Operación</th>
                                                 <th>Monto de Operación</th>
                                                 <th>Cédula</th>
@@ -278,12 +276,10 @@
                                             y una clase .pago-registrado que le permitirá diferenciarse
                                             de los pagos agregados posteriormente -->
                                             <?php foreach($pagos_de_inscripcion as $pdi): ?>
-                                                <tr id='<?php echo $pdi->id_pago; ?>' class='pago-registrado'>
+                                                <tr id='<?php echo $pdi->id; ?>' class='pago-registrado'>                                                    
                                                     <td>
-                                                        <input type="hidden" name="id-pago[]" value="<?php echo $pdi->id_pago; ?>">
-                                                        <?php echo $pdi->serial_pago; ?>
+                                                        <?php echo $pdi->numero_referencia_bancaria; ?>
                                                     </td>
-                                                    <td><?php echo $pdi->numero_referencia_bancaria; ?></td>
                                                     <td>
                                                         <?php echo $pdi->monto_operacion; ?>
                                                     </td>
@@ -310,7 +306,7 @@
                                                         
                                 <form action="<?php echo base_url();?>movimientos/inscripcion/update_desasociar_pago" method="POST" class="form-horizontal" id='desasociar-pago'>
                                     <!-- ID De la inscripción de curso bajo edición -->
-                                    <input type="hidden" name="id-inscripcion-actual" value="<?php echo $data_inscripcion_instancia->id_inscripcion; ?>">
+                                    <input type="hidden" name="id-inscripcion" value="<?php echo $data_inscripcion->id; ?>">
 
                                     <div class="box">
 
@@ -324,7 +320,6 @@
 
                                             <thead>
                                                 <tr>
-                                                    <th>Serial Pago</th>
                                                     <th>Número de Operación</th>
                                                     <th>Monto de Operación</th>
                                                     <th>Cédula</th>
@@ -359,7 +354,7 @@
                                         <div class="col-md-3">
                                             <div class="input-group">
                                                 <span class="input-group-addon">Costo Inscripción:</span>
-                                                <input type="text" value="<?php echo number_format((float)$costo_de_inscripcion, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
+                                                <input type="text" value="<?php echo number_format((float)$costo, 2, '.', ''); ?>" class="form-control" placeholder="0.00" name="costo-de-inscripcion" readonly="readonly">
                                             </div>
                                         </div>
                                         
@@ -402,9 +397,11 @@
         </div>
         <!-- /.row -->
         
-        
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/inscripcion.edit.js"></script>

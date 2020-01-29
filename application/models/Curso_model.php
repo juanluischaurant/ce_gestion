@@ -275,7 +275,7 @@ class Curso_model extends CI_Model {
         ->join('periodo as pe', 'pe.id_periodo = in.fk_id_periodo_1')
         ->join('inscripcion_instancia as ii', 'ii.fk_id_instancia_1 = in.id_instancia')
         ->join('inscripcion as insc', 'insc.id_inscripcion = ii.fk_id_inscripcion_1')
-        ->join('participante as par', 'par.id = insc.fk_id_participante_1')
+        ->join('participante as par', 'par.id = insc.cedula_participante')
         ->join('persona as per', 'per.id = par.id_persona')
         ->where('in.id_instancia', $id_curso) 
         ->where('insc.activa', 1)

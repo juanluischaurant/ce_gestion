@@ -37,7 +37,7 @@
                                     <th>Fecha de Regisro</th>
                                     <th>Número de Operación</th>
                                     <th>Monto (Bs.)</th>
-                                    <th>Estado</th>
+                                    <th>Estatus</th>
                                     <th>Cédula Cliente</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -45,25 +45,25 @@
                             <tbody>
                                 <?php if(!empty($pagos)): ?>
                                 <?php foreach($pagos as $pago): ?>
-                                    <?php  $id_pago = $pago->id_pago; ?>
+                                    <?php  $id_pago = $pago->id; ?>
                                     <tr>
-                                        <td><?php echo $id_pago ?></td>
-                                        <td><?php echo $pago->fecha_registro_operacion; ?></td>
+                                        <td><?php echo $id_pago; ?></td>
+                                        <td><?php echo $pago->fecha_registro; ?></td>
                                         <td><?php echo ($pago->numero_referencia_bancaria == NULL) ? 'No Aplica' : $pago->numero_referencia_bancaria; ?></td>
                                         <td><?php echo ($pago->monto_operacion == '') ? '0.00' : $pago->monto_operacion; ?></td>
                                         
                                         <td>
-                                        <?php if($pago->estado_pago == 1): ?>
+                                        <?php if($pago->estatus_pago == 1): ?>
                                             <small class="label label-success">
                                                 <i class="fa fa-clock-o"></i> Disponible
                                             </small>
                                         <?php endif; ?> 
-                                        <?php if($pago->estado_pago == 2): ?>
+                                        <?php if($pago->estatus_pago == 2): ?>
                                             <small class="label label-danger">
                                                 <i class="fa fa-clock-o"></i> Usado
                                             </small>
                                         <?php endif; ?> 
-                                        <?php if($pago->estado_pago == 3): ?>
+                                        <?php if($pago->estatus_pago == 3): ?>
                                             <small class="label label-warning">
                                                 <i class="fa fa-clock-o"></i> Liberado
                                             </small>
@@ -124,7 +124,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
-
 
 <!-- CUSTOM JS -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/pago.list.js"></script>

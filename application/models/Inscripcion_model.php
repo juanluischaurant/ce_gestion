@@ -11,23 +11,21 @@ class Inscripcion_model extends CI_Model {
     public function get_inscripciones()
     {
         $resultados = $this->db->select(
-            'ocu.id,
-            ocu.id_instancia,
-            ocu.id, 
-            insc.fecha_registro, 
-            insc.estado,
-            p.fecha_cierre as valida_hasta,
-            concat(especialidad.nombre, "-", MONTH(p.fecha_inicio), " ",  MONTH(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
-            concat(per.nombres, " ", per.apellidos) as nombre_completo_participante,
-            per.cedula'
+            'ins.id,
+            ins.cedula_participante,
+            ins.fecha_registro, 
+            ins.estado,
+            ins.id_curso,
+            p.fecha_culminacion as valida_hasta,
+            concat(nc.descripcion, "-", MONTH(p.fecha_inicio), " ",  MONTH(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
+            concat(per.nombres, " ", per.apellidos) as nombre_completo_participante'
         )
-        ->from('ocupa as ocu')
-        ->join('inscripcion as insc', 'insc.id = ocu.id_inscripcion')
-        ->join('participante as par', 'par.id = insc.id_participante')
-        ->join('persona as per', 'per.id = par.id_persona')
-        ->join('curso', 'curso.id = ocu.id_instancia')
-        ->join('periodo as p', 'id_periodo = curso.id_periodo')
-        ->join('especialidad', 'especialidad.id_curso = curso.id')
+        ->from('inscripcion as ins')
+        ->join('curso', 'curso.id = ins.id_curso')
+        ->join('periodo as p', 'p.id = curso.id_periodo')
+        ->join('nombre_curso AS nc', 'nc.id = curso.id_nombre_curso')
+        ->join('participante as par', 'par.cedula_persona = ins.cedula_participante')
+        ->join('persona as per', 'per.cedula = par.cedula_persona')
         // ->where('in.activa', 1)
 
         ->get();
@@ -48,17 +46,17 @@ class Inscripcion_model extends CI_Model {
     public function get_inscripcion($id_inscripcion)
     {
         $resultado = $this->db->select(
-            'i.hora_inscripcion,
-            i.hora_inscripcion,
-            i.costo_de_inscripcion,
-            p.cedula,
-            concat(p.nombres, " ", p.apellidoscur.) as nombre_completo_participante,
-            p.direccioncur.,
-            p.telefonocur.')
+            'i.id,
+            i.fecha_registro,
+            i.costo,
+            par.cedula_persona,
+            concat(per.nombres, " ", per.apellidos) as nombre_completo_participante,
+            per.direccion,
+            per.telefono')
         ->from('inscripcion as i')
-        ->join('participante as par', 'par.id = fk_id_participante_1')
-        ->join('persona as p', 'p.id = par.id_persona')
-        ->where('i.id_inscripcion', $id_inscripcion)
+        ->join('participante as par', 'par.cedula_persona = i.cedula_participante')
+        ->join('persona as per', 'per.cedula = par.cedula_persona')
+        ->where('i.id', $id_inscripcion)
         ->get();
 
         return $resultado->row();
@@ -76,12 +74,13 @@ class Inscripcion_model extends CI_Model {
     public function get_montos_inscripcion($id_inscripcion)
     {
         $SQL = "SELECT 
-        inscripcion.id_inscripcion,
+        inscripcion.id,
         SUM(pago_de_inscripcion.monto_operacion) as calculo_monto_pagado,
-        (inscripcion.costo_de_inscripcion - SUM(pago_de_inscripcion.monto_operacion)) AS calculo_deuda
+        (inscripcion.costo - SUM(pago_de_inscripcion.monto_operacion)) AS calculo_deuda
         FROM inscripcion
-        INNER JOIN pago_de_inscripcion ON pago_de_inscripcion.fk_id_inscripcion = inscripcion.id_inscripcion
-        WHERE inscripcion.id_inscripcion = ?";
+        INNER JOIN pago_de_inscripcion ON pago_de_inscripcion.id_inscripcion
+         = inscripcion.id
+        WHERE inscripcion.id = ?";
 
         $resultado = $this->db->query($SQL, array($id_inscripcion));
 
@@ -125,10 +124,10 @@ class Inscripcion_model extends CI_Model {
         return $this->db->update('inscripcion_instancia', $data);
     }
 
-    public function restar_cupo_instancia($id_instancia)
+    public function restar_cupo_instancia($id_curso)
     {
         $this->db->set('curso.cupos_instancia_ocupados', 'curso.cupos_instancia_ocupados-1', FALSE);
-        $this->db->where('curso.id_instancia', $id_instancia);
+        $this->db->where('curso.id_instancia', $id_curso);
         
 
         if($this->db->update('curso'))
@@ -142,29 +141,7 @@ class Inscripcion_model extends CI_Model {
     }
 
     /**
-     * Utilizada para actualizar datos de inscripción_instancia
-     *
-     * @param integer $id_inscripcion_instancia
-     * @param array $data
-     * @return boolean
-     */
-    public function sumar_cupo_instancia($id_instancia)
-    {
-        $this->db->set('curso.cupos_instancia_ocupados', 'curso.cupos_instancia_ocupados+1', FALSE);
-        $this->db->where('curso.id_instancia', $id_instancia);
-
-        if($this->db->update('curso'))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-
-    /**
-	 * Actualiza la clave foránea fk_id_inscripcion 
+	 * Actualiza la clave foránea id_inscripcion 
 	 *
      * Al momento de realizar una inscripción, es necesario asociar al pago
      * una clave foránea que lo relacione a dicha inscripción, esa es la tarea
@@ -188,47 +165,22 @@ class Inscripcion_model extends CI_Model {
     }
 
     /**
-     * Método utilizado para obtener IDs que son necesarios para la ejecución de otros métodos
-     *
-     * @param [type] $id_inscripcion
-     * @return void
-     */
-    public function get_id_inscripcion_instancia($id_inscripcion)
-    { 
-        // Eliminar deuda de aquí
-        $resultado = $this->db->select(
-            'i.id_inscripcion,
-            par.id,
-            ii.id_inscripcion_instancia,
-            inst.id_instancia'
-            )
-        ->from('inscripcion as i')
-        ->join('participante as par', 'par.id = i.fk_id_participante_1')
-        ->join('inscripcion_instancia as ii', 'i.id_inscripcion = ii.fk_id_inscripcion_1')
-        ->join('curso as inst', 'ii.fk_id_instancia_1 = inst.id_instancia')
-        ->where('ii.fk_id_inscripcion_1', $id_inscripcion)
-        ->get();
-
-        return $resultado->row();
-    }
-
-    /**
      * Verifica cupos disponibles 
      * 
      * Verifica los cupos disponibles en determinada curso, de ser
      * cupos_disponibles < cupos_ocupados retorna: verdadero
      * cupos_disponibles >= cupos_ocupados retorna: falso
      *
-     * @param [type] $id_instancia
+     * @param [type] $id_curso
      * @return void
      */
-    public function verificar_cupos_disponibles($id_instancia)
+    public function verificar_cupos_disponibles($id_curso)
     {
         $resultado = $this->db->select(
             'inst.cupos_instancia,
             inst.cupos_instancia_ocupados')
         ->from('curso as inst')
-        ->where('inst.id_instancia', $id_instancia)
+        ->where('inst.id_instancia', $id_curso)
         ->get()
         ->row();
 
@@ -251,64 +203,27 @@ class Inscripcion_model extends CI_Model {
     {
         return $this->db->insert_id();
     }
-    
-    /**
-     * Obtén datos de curso inscrita
-     * 
-     * El presente método permite obtener la información de el curso
-     * relacionada a determinada inscripción, función usada principalmente 
-     * al momento de cargar la vista de edición de inscripción.
-     *
-     * @param integer $id_inscripcion
-     * @return array
-     */
-    public function get_inscripcion_instancias($id_inscripcion)
-    {
-        $resultados = $this->db->select(
-            'int.id_instancia,
-            int.cupos_instancia,
-            int.cupos_instancia_ocupados,
-            concat(cur.nombre_curso, " ", MONTH(per.fecha_inicio) "-", MONTH(per.fecha_cierre), " ", YEAR(per.fecha_inicio_periodo)) as nombre_completo_instancia,
-            int.precio_instancia'
-        )
-        ->from('inscripcion as insc')
-        ->join('inscripcion_instancia as ini', 'ini.fk_id_inscripcion_1 = insc.id_inscripcion')
-        ->join('curso as int', 'int.id_instancia = ini.fk_id_instancia_1')
-        ->join('especialidad as cur', 'cur.id_curso = int.fk_id_curso_1')
-        ->join('periodo as per', 'id_periodo = int.fk_id_periodo_1') 
-        ->where('insc.id_inscripcion', $id_inscripcion)
-
-        ->get();
-
-        return $resultados->result();
-    }
-
      
     /**
-     * Obtén datos de el curso inscrita
+     * Obtén datos de el curso inscrito
      *     
      * @param integer $id_inscripcion
      * @return array
      */
-    public function get_instancia_inscrita($id_inscripcion)
+    public function get_curso_inscrito($id_inscripcion)
     {
         $resultados = $this->db->select(
-            'inst.id_instancia,
-            inst.cupos_instancia,
-            inst.cupos_instancia_ocupados,
-            inst.precio_instancia,
-            insci.fk_id_inscripcion_1,
-            insci.id_inscripcion_instancia,
-            concat(cur.nombre_curso, " ", MONTH(per.fecha_inicio), "-", MONTH(p.fecha_cierre), " ", YEAR(per.fecha_inicio_periodo)) as nombre_completo_instancia,
-            int.precio_instancia,
-            int.serial_instancia'
+            'cur.id,
+            cur.serial,
+            cur.cupos,
+            cur.precio,
+            concat(nc.descripcion, " ", MONTH(per.fecha_inicio), "-", MONTH(per.fecha_culminacion), " ", YEAR(per.fecha_inicio)) as nombre_completo_instancia'
         )
-        ->from('inscripcion as insc')
-        ->join('inscripcion_instancia as insci', 'insci.fk_id_inscripcion_1 = insc.id_inscripcion')
-        ->join('curso as inst', 'int.id_instancia = insci.fk_id_instancia_1')
-        ->join('especialidad as cur', 'cur.id_curso = int.fk_id_curso_1')
-        ->join('periodo as per', 'id_periodo = int.fk_id_periodo_1')
-        ->where('insc.id', $id_inscripcion)
+        ->from('inscripcion as ins')
+        ->join('curso as cur', 'cur.id = ins.id_curso')
+        ->join('nombre_curso as nc', 'nc.id = cur.id_nombre_curso')
+        ->join('periodo as per', 'per.id = cur.id_periodo')
+        ->where('ins.id', $id_inscripcion)
 
         ->get();
 
@@ -329,19 +244,19 @@ class Inscripcion_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'pdins.*,
-            ban.nombre_banco,
-            tdo.tipo_de_operacion,
+            ban.nombre,
+            tdo.tipo,
             per.cedula,
             concat(per.nombres, " ", per.apellidos) as nombre_titular,
             per.cedula as cedula_titular_pago'
             )
-        ->from('inscripcion as insc')
-        ->join('pago_de_inscripcion as pdins', 'pdins.fk_id_inscripcion = insc.id_inscripcion')
-        ->join('banco as ban', 'ban.id_banco = pdins.fk_id_banco')
-        ->join('tipo_de_operacion as tdo', 'tdo.id_tipo_de_operacion = pdins.id_tipo_de_operacion')
-        ->join('titular as tit', 'tit.id_titular = pdins.fk_id_titular')
-        ->join('persona as per', 'per.id = id_persona')
-        ->where('insc.id_inscripcion', $id_inscripcion)
+        ->from('inscripcion as ins')
+        ->join('pago_de_inscripcion as pdins', 'pdins.id_inscripcion = ins.id')
+        ->join('banco as ban', 'ban.id = pdins.id_banco')
+        ->join('tipo_de_operacion as tdo', 'tdo.id = pdins.id_tipo_de_operacion')
+        ->join('titular as tit', 'tit.cedula_persona = pdins.cedula_titular')
+        ->join('persona as per', 'per.cedula = tit.cedula_persona')
+        ->where('ins.id', $id_inscripcion)
         ->get();
 
         return $resultado->result();
@@ -378,27 +293,29 @@ class Inscripcion_model extends CI_Model {
      * Utilizado para consultar especialidades en específico, se implementó este método
      * para ser utilizado en el módulo de Inscripciones. El método consulta información
      * en 3 varias tablas y regresa datos cómo por ejemplo: El ID de los participantes
-     * registrados en un determinado especialidad.
+     * registrados en un determinado curso.
      *
      * @param string $valor
      * @return array
      */
-    public function getInstanciasJSON($valor)
+    public function get_cursos_json($valor)
     {
+        $this->db->query("SET lc_time_names = 'es_ES';");
+
         $resultados = $this->db->select(
-            'curso.id_instancia, 
-            curso.cupos_instancia, 
-            curso.cupos_instancia_ocupados,
-            curso.precio_instancia,
-            especialidad.nombre_curso,
-            concat(especialidad.nombre_curso, " ", periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", YEAR(periodo.fecha_inicio_periodo)) as label,
-            concat(periodo.mes_inicio_periodo, "-", periodo.mes_cierre_periodo, " ", YEAR(periodo.fecha_inicio_periodo)) as periodo_academico'
+            'curso.id, 
+            curso.cupos,
+            curso.precio,
+            nc.descripcion,
+            concat(nc.descripcion, " " ,MONTHNAME(periodo.fecha_inicio), "-", MONTHNAME(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as label,
+            concat(MONTH(periodo.fecha_inicio), "-", MONTH(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as periodo_academico,
+            (SELECT COUNT(*) as inscripciones_asociadas FROM inscripcion WHERE inscripcion.id_curso = curso.id) AS inscripciones_asociadas'
         )
         ->from('curso')
-        ->join('especialidad', 'especialidad.id_curso = curso.fk_id_curso_1')
-        ->join('periodo', 'periodo.id_periodo = curso.fk_id_periodo_1')
+        ->join('nombre_curso AS nc', 'nc.id = curso.id_nombre_curso')
+        ->join('periodo', 'periodo.id = curso.id_periodo')
         // ->where('curso.estado_curso', 1)
-        ->like('especialidad.nombre_curso', $valor)
+        ->like('nc.descripcion', $valor)
         ->get();
 
         return $resultados->result_array();
@@ -408,24 +325,23 @@ class Inscripcion_model extends CI_Model {
      * Método invocado al momento de agregar una curso a la ficha de inscripción
      * 
      * Permite verificar que el participante seleccionado no se encuentre registrado en
-     * el especialidad seleccionado
+     * el curso seleccionado
      *
-     * @param integer $id_instancia
+     * @param integer $id_curso
      * @return void
      */
-    public function get_participantesJSON($id_instancia)
+    public function get_participantes_json($id_curso)
     {
         $resultados = $this->db->select(
-            'especialidad.nombre_curso,
-            i.fk_id_participante_1'
+            'nc.descripcion,
+            i.cedula_participante'
          )
         ->from('curso')
-        ->join('especialidad', 'especialidad.id_curso = curso.fk_id_curso_1')
-        ->join('periodo', 'periodo.id_periodo = curso.fk_id_periodo_1')
+        ->join('nombre_curso AS nc', 'nc.id = curso.id_nombre_curso')
+        ->join('periodo', 'periodo.id = curso.id_periodo')
         // Para consultar una lista de participantes inscritos en determinado especialidad
-        ->join('inscripcion_instancia as ii', 'ii.fk_id_instancia_1 = curso.id_instancia')
-        ->join('inscripcion as i', 'i.id_inscripcion = ii.fk_id_inscripcion_1')
-        ->where('curso.id_instancia',  $id_instancia)
+        ->join('inscripcion as i', 'i.id_curso = curso.id')
+        ->where('curso.id',  $id_curso)
         ->get();
 
         return $resultados->result_array();
@@ -440,32 +356,28 @@ class Inscripcion_model extends CI_Model {
      */
     public function verifica_validez_instancia($id_inscripcion) 
     {
-        $resultado = $this->db->select(
-            'per.id_periodo,
-            per.fecha_inicio_periodo,
-            per.fecha_culminacion_periodo'
+        $periodo = $this->db->select(
+            'per.id,
+            per.fecha_inicio,
+            per.fecha_culminacion'
         )
-        ->from('inscripcion as insc')
-        ->join('ocupa as ocu', 'ocu.id_inscripcion = insc.id')
-        ->join('curso as inst', 'inst.id = insci.id_instancia')
-        ->join('especialidad as cur', 'cur.id_curso = int.fk_id_curso_1')
-        ->join('periodo as per', 'id_periodo = int.fk_id_periodo_1')
-        ->join('mes as mi', 'per.mes_inicio_periodo = mi.id_mes') 
-        ->join('mes as mc', 'per.mes_cierre_periodo = mc.id_mes') 
-        ->where('insc.id_inscripcion', $id_inscripcion)
+        ->from('inscripcion as ins')
+        ->join('curso as cur', 'cur.id = ins.id_curso')
+        ->join('periodo as per', 'per.id = cur.id_periodo')
+        ->where('ins.id', $id_inscripcion)
         ->get()
         ->row();
 
         // Obtén fecha de hoy del sistema
-        $today = date('Y-m-d');
+        $hoy = date('Y-m-d');
 
-        if($resultado->fecha_culminacion_periodo >= $today)
+        if($periodo->fecha_culminacion >= $hoy)
         {
-            return true;
+            return TRUE;
         }
-        else if($resultado->fecha_inicio_periodo < $today)
+        else if($periodo->fecha_inicio < $hoy)
         {
-            return false;
+            return FALSE;
         }
     }
 
@@ -497,12 +409,15 @@ class Inscripcion_model extends CI_Model {
      */
     public function inscripcion_montos($year)
     {
-        $resultados = $this->db->select('MONTH(i.hora_inscripcion) as mes_inscripcion, SUM(i.monto_pagado) as monto_generado')
+        $resultados = $this->db->select(
+            'MONTH(i.fecha_registro) as mes_inscripcion, 
+            SUM(i.costo) as monto_generado'
+        )
         ->from('inscripcion as i')
-        ->where('fecha_inscripcion >=', $year.'-01-01')
-        ->where('fecha_inscripcion <=', $year.'-12-31')
-        ->group_by('mes_inscripcion')
-        ->order_by('mes_inscripcion')
+        ->where('i.fecha_registro >=', $year.'-01-01')
+        ->where('i.fecha_registro <=', $year.'-12-31')
+        ->group_by('i.fecha_registro')
+        ->order_by('i.fecha_registro')
         ->get();
 
         return $resultados->result(); 

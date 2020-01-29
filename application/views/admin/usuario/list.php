@@ -31,10 +31,10 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-usuario" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
-                                    <th>#</th>
+                                    <th>Cédula</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
@@ -48,22 +48,21 @@
                                 <?php if(!empty($usuarios)): ?>
                                 <?php foreach($usuarios as $usuario): ?>
                                     <tr>
-                                        <td><?php echo $usuario->id; ?></td>
+                                        <td><?php echo $usuario->cedula_persona; ?></td>
                                         <td><?php echo $usuario->fecha_registro; ?></td>
                                         <td><?php echo $usuario->nombres; ?></td>
                                         <td><?php echo $usuario->apellidos; ?></td>
-                                        <td><?php echo $usuario->email; ?></td>
+                                        <td><?php echo $usuario->correo_electronico; ?></td>
                                         <td><?php echo $usuario->username; ?></td>
                                         <td><small class="label label-success"><?php echo $usuario->rol; ?></small></td>
-                                        <?php $dataUsuario = $usuario->id; ?>
+                                        <?php $dataUsuario = $usuario->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-usuario" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataUsuario?>'><span class="fa fa-eye"></span></button>
-                                                <a href="<?php echo base_url(); ?>administrador/usuario/edit/<?php echo $usuario->id; ?>" .
-                                                class="btn btn-warning">
+                                                <a href="<?php echo base_url(); ?>administrador/usuario/edit/<?php echo $usuario->username; ?>". class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
-                                                <a href="<?php echo base_url(); ?>administrador/usuario/delete/<?php echo $usuario->id; ?>" class="btn btn-danger btn-remove">
+                                                <a href="<?php echo base_url(); ?>administrador/usuario/delete/<?php echo $usuario->cedula_persona; ?>" class="btn btn-danger btn-remove">
                                                     <span class="fa fa-remove"></span>
                                                 </a>
                                             </div>
@@ -106,3 +105,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/usuario.list.js"></script>

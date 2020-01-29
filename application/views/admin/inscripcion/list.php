@@ -38,7 +38,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-inscripcion" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -55,10 +55,10 @@
                                 <?php if(!empty($inscripciones)): ?>
                                 <?php foreach($inscripciones as $inscripcion): ?>
                                     
-                                    <?php $inscripcion_activa = $inscripcion->activa; ?>
+                                    <?php $inscripcion_activa = $inscripcion->estado; ?>
                                     <tr>
-                                        <td><?php echo $inscripcion->fk_id_inscripcion_1; ?></td>
-                                        <td><?php echo $inscripcion->hora_inscripcion; ?></td>
+                                        <td><?php echo $inscripcion->id; ?></td>
+                                        <td><?php echo $inscripcion->fecha_registro; ?></td>
                                         <td><?php echo $inscripcion->nombre_completo_instancia; ?></td>
 
                                         <td>
@@ -80,26 +80,26 @@
                                         </td>
 
                                         <td><?php echo $inscripcion->nombre_completo_participante; ?></td>
-                                        <td><?php echo $inscripcion->cedula; ?></td>
-                                        <?php $dataInscripcion =  $inscripcion->fk_id_instancia_1.'*'.$inscripcion->fk_id_inscripcion_1; ?>
+                                        <td><?php echo $inscripcion->cedula_participante; ?></td>
+                                        <?php $dataInscripcion =  $inscripcion->id_curso.'*'.$inscripcion->id; ?>
 
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>movimientos/inscripcion/edit/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion_activa; ?>" class="btn btn-warning">
+                                                <a href="<?php echo base_url() ?>movimientos/inscripcion/edit/<?php echo $inscripcion->id; ?>/<?php echo $inscripcion_activa; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
                                                 <?php if($inscripcion_activa == 1): ?>
-                                                    <a href="<?php echo base_url() ?>movimientos/inscripcion/deactivate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripcion/deactivate_inscripcion/<?php echo $inscripcion->id; ?>/<?php echo $inscripcion->id_curso; ?>" class="btn btn-danger btn-activate-inscripcion">
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                 <?php endif; ?> 
                                                 <?php if($inscripcion_activa == 0): ?>
-                                                    <a href="<?php echo base_url() ?>movimientos/inscripcion/activate_inscripcion/<?php echo $inscripcion->fk_id_inscripcion_1; ?>/<?php echo $inscripcion->fk_id_instancia_1; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>movimientos/inscripcion/activate_inscripcion/<?php echo $inscripcion->id; ?>/<?php echo $inscripcion->id_curso; ?>" class="btn btn-success btn-deactivate-inscripcion">
                                                         <span class="fa fa-toggle-on"></span>
                                                     </a>
                                                 <?php endif; ?> 
@@ -147,3 +147,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/inscripcion.list.js"></script>

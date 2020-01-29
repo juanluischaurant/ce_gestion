@@ -3,8 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Pago_model extends CI_Model {
 
-  public function get_pagos() {
-    // Obtén una lista de pagos realizados
+  /**
+   * Obtener pagos
+   * 
+   * Obtiene una lista de pagos realizados.
+   *
+   * @return void
+   */
+  public function get_pagos()
+  {
     $resultados = $this->db->select(
       'pdi.id, 
       pdi.numero_referencia_bancaria, 
@@ -30,19 +37,18 @@ class Pago_model extends CI_Model {
     {            
         $resultados = $this->db->select(
             'pdi.id,
-            pdi.numero_transferencia,
+            pdi.numero_referencia_bancaria,
             pdi.monto_operacion,
-            pdi.estado,
+            pdi.estatus_pago,
             pdi.fecha_registro, 
             pdi.id_tipo_de_operacion,
-            ti.id,
             concat(per.nombres, " ", per.apellidos) as nombre_titular,
             per.cedula'
         )
         ->from('pago_de_inscripcion as pdi')
-        ->join('titular as ti', 'ti.id = pdi.id_titular')
-        ->join('persona as per', 'per.id = ti.id_persona')
-        ->where('pdi.estado', 1)         
+        ->join('titular as ti', 'ti.cedula_persona = pdi.cedula_titular')
+        ->join('persona as per', 'per.cedula = ti.cedula_persona')
+        ->where('pdi.estatus_pago', 1)
         ->get();
 
         return $resultados->result();
@@ -52,26 +58,23 @@ class Pago_model extends CI_Model {
   {
     $resultados = $this->db->select(
       'pdi.id, 
-      pdi.numero_transferencia, 
-      pdi.serial, 
+      pdi.numero_referencia_bancaria, 
       pdi.monto_operacion, 
       pdi.fecha_registro, 
-      pdi.estado,
       pdi.fecha_operacion,
-      pdi.fk_id_inscripcion,
-      tdo.tipo_de_operacion,
-      b.id_banco,
-      b.nombre_banco,
-      ti.id,
-      per.cedula,
+      pdi.id_inscripcion,
+      pdi.cedula_titular,
+      tdo.id,
+      b.id AS id_banco,
+      b.nombre AS nombre_banco,
       per.nombres,
       per.apellidos'
     )
     ->from('pago_de_inscripcion as pdi')
-    ->join('tipo_de_operacion as tdo', 'tdo.id_tipo_de_operacion = pdi.id_tipo_de_operacion')
-    ->join('banco as b', 'b.id_banco = pdi.fk_id_banco')
-    ->join('titular as ti', 'ti.id = pdi.id_titular')
-    ->join('persona as per', 'per.id = ti.id_persona')
+    ->join('tipo_de_operacion as tdo', 'tdo.id = pdi.id_tipo_de_operacion')
+    ->join('banco as b', 'b.id = pdi.id_banco')
+    ->join('titular as ti', 'ti.cedula_persona = pdi.cedula_titular')
+    ->join('persona as per', 'per.cedula = ti.cedula_persona')
     ->where('pdi.id', $id)
     ->get();
 
@@ -141,11 +144,11 @@ class Pago_model extends CI_Model {
    * @param integer $id_pago
    * @return void
    */
-  public function get_estado_pago($id_pago)
+  public function get_estatus_pago($id_pago)
   {
     $resultados = $this->db->select(
       'pdi.id,
-      pdi.estado'
+      pdi.estatus_pago'
       )
     ->from('pago_de_inscripcion as pdi')
     ->where('pdi.id', $id_pago)
@@ -154,10 +157,19 @@ class Pago_model extends CI_Model {
     return $resultados->row();
   }
 
-  public function actualiza_estado_pago($id_pago)
+  /**
+   * Actualiza estatus de pago
+   * 
+   * Al realizar una inscripción el estatus de pago debe cambiar a
+   * "utilizado", esta función permite lograr dicha tarea.
+   *
+   * @param integer $id_pago
+   * @return void
+   */
+  public function actualiza_estatus_pago($id_pago)
   {
     $data = array(
-      'estado' => 2
+      'estatus_pago' => 2
     );
     $this->db->where("id",$id_pago);
     $this->db->update("pago_de_inscripcion", $data);
@@ -251,31 +263,31 @@ class Pago_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'pi.numero_referencia_bancaria,
-            pi.estado,
+            pi.estatus_pago,
             pi.monto_operacion,
             pi.id,
-            pi.estado,
+            pi.estatus_pago,
             pi.id_tipo_de_operacion,
             concat(pi.numero_referencia_bancaria, " - ID: ", pe.cedula) as label,
-            concat(pe.nombres_persona, " ", pe.apellidos_persona) as nombre_cliente,
+            concat(pe.nombres, " ", pe.apellidos) as nombre_cliente,
             pe.cedula'
         )
         ->from('pago_de_inscripcion as pi')
-        ->join('titular as c', 'c.id = pi.fk_id_titular')
-        ->join('persona as pe', 'pe.id_persona = c.id_persona');
+        ->join('titular as t', 't.cedula_persona = pi.cedula_titular')
+        ->join('persona as pe', 'pe.cedula = t.cedula_persona');
                 
         if($valor !== '')
         {
             // Para realizar esta consulta, se utilizó como referencia este
             // hilo de StackOverflow:
             // https://stackoverflow.com/questions/41113805/codeigniter-like-or-like-doesnt-work-with-where
-            $resultados->where('pi.estado', 1)
+            $resultados->where('pi.estatus_pago', 1)
             ->like('pi.numero_referencia_bancaria', $valor)
             
-            ->or_where('pi.estado', 1)
+            ->or_where('pi.estatus_pago', 1)
             ->like('pe.cedula', $valor, 'after')
             
-            ->or_where('pi.estado', 3)
+            ->or_where('pi.estatus_pago', 3)
             ->like('pe.cedula', $valor, 'after');
         }
 

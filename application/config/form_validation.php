@@ -82,29 +82,30 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[95]'
         )
     ),
+
     // Usada en el controlador:
     // administrador/usuario/update
-    'editar_usuario' => array(
+    'username_check' => array(
         array(
             'field' => 'username-usuario',
-            'label' => 'Nombre de Usuario',
-            'rules' => 'required|trim|min_length[2]|max_length[95]|callback_edit_unique_usuario',
-            'errors' => array(
-                'edit_unique_usuario' => 'Usuario existente. Por favor intenta de nuevo'
-            )
+            'label' => 'Username',
+            'rules' => 'required|is_unique[usuario.username]|min_length[6]|max_length[10]',
         ),
+    ),
+    'editar_usuario' => array(
         array(
             'field' => 'password-usuario',
             'label' => 'Contraseña',
-            'rules' => 'trim|min_length[2]|max_length[15]'
+            'rules' => 'trim|min_length[6]|max_length[15]'
         ),
         array(
             'field' => 'confirmar-password-usuario',
-            'label' => 'Comfirm Contraseña',
-            'rules' => 'matches[password-usuario]|min_length[2]|max_length[15]'
+            'label' => 'Comfirmar Contraseña',
+            'rules' => 'matches[password-usuario]|min_length[6]|max_length[15]'
         ),
 
     ),
+
     // Usada en el controlador:
     // movimientos/pago/update
     'editar_pago' => array(

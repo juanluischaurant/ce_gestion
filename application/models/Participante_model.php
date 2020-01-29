@@ -76,7 +76,7 @@ class Participante_model extends CI_Model {
         )
         ->from('participante AS par')
         ->join('persona AS per', 'persona.id = participante.id_persona')
-        ->join('inscripcion AS ins', 'ins.fk_id_participante_1 = participante.id')
+        ->join('inscripcion AS ins', 'ins.cedula_participante = participante.id')
         ->join('pago_de_inscripcion AS pdi', 'pdi.fk_id_inscripcion = ins.id_inscripcion')
         ->join('inscripcion_instancia AS ins_inst', 'ins_inst.fk_id_inscripcion_1 = ins.id_inscripcion')
         ->join('curso AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')

@@ -43,11 +43,15 @@ class Usuario_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'u.*,
+            p.nombres,
+            p.apellidos,
+            p.correo_electronico,
             r.funcion as rol'
             )
             ->from('usuario as u')
+            ->join('persona as p', 'p.cedula = u.cedula_persona') 
             ->join('rol as r', 'r.id = u.id_rol') 
-            ->where('estado', 1)
+            // ->where('estado', 1)
             ->get(); 
     
         return $resultados->result();
@@ -61,11 +65,20 @@ class Usuario_model extends CI_Model {
     public function get_usuario($username)
     {
         $resultado = $this->db->select(
-            'usuario.*,
-            rol.nombre')
-        ->from('usuario')
-        ->join('rol', 'rol.id = usuario.userna,e')
-        ->where('usuario.username', $username)
+            'u.username,
+            u.password,
+            u.cedula_persona,
+            u.id_rol,
+            u.estado,
+            u.fecha_registro,
+            r.funcion AS rol,
+            p.nombres,
+            p.apellidos,
+            p.correo_electronico')
+        ->from('usuario AS u')
+        ->join('rol AS r', 'r.id = u.id_rol')
+        ->join('persona AS p', 'p.cedula = u.cedula_persona')
+        ->where('u.username', $username)
         ->get();
 
         return $resultado->row();
@@ -89,7 +102,7 @@ class Usuario_model extends CI_Model {
         {
             // Crea un arreglo llave-valor,
             // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
-            $array[$row->id] = $row->nombre;
+            $array[$row->id] = $row->funcion;
         }
 
         return $array;
@@ -100,9 +113,9 @@ class Usuario_model extends CI_Model {
         return $this->db->insert('usuario', $data);
     }
 
-    public function update($id, $data)
+    public function update($username, $data)
     {
-        $this->db->where('id_usuario', $id);
+        $this->db->where('username', $username);
         return $this->db->update('usuario', $data);
     }
 

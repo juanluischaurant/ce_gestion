@@ -25,25 +25,24 @@
 
                         <form action="<?php echo base_url();?>administrador/usuario/update" method="POST" autocomplete="off">
 
-                            <input type="hidden" class="form-control" id="id-usuario" name="id-usuario" value="<?php echo $usuario->id_usuario; ?>">
+                            <input type="hidden" class="form-control" id="username-actual" name="username-actual" value="<?php echo $usuario->username; ?>">
                             
                             <div class="row form-group">
-
                                 <div class="col-md-4 <?php echo !empty(form_error('username-usuario')) ? 'has-error' : ''; ?>">
-                                    <label for="username-usuario">Username:</label>
-                                    <input type="text" class="form-control" id="username-usuario" name="username-usuario" value="<?php echo $usuario->username_usuario; ?>">
+                                    <label for="username-usuario">Username</label>
+                                    <input type="text" class="form-control" id="username-usuario" name="username-usuario" value="<?php echo $usuario->username; ?>">
                                     <?php echo form_error('username-usuario', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-3 <?php echo !empty(form_error('password-usuario')) ? 'has-error' : ''; ?>">                                
-                                    <label for="password-usuario">Contraseña:</label>
-                                    <input type="password" class="form-control" id="password-usuario" name="password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password_usuario ?>">
+                                    <label for="password-usuario">Contraseña</label>
+                                    <input type="password" class="form-control" id="password-usuario" name="password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password ?>">
                                     <?php echo form_error('password-usuario', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                                 <div class="col-md-3 <?php echo !empty(form_error('confirmar-password-usuario')) ? 'has-error' : ''; ?>">                                
-                                    <label for="confirmar-password-usuario">Confirmar Contraseña:</label>
-                                    <input type="password" class="form-control" id="confirmar-password-usuario" name="confirmar-password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password_usuario ?>">
+                                    <label for="confirmar-password-usuario">Confirmar Contraseña</label>
+                                    <input type="password" class="form-control" id="confirmar-password-usuario" name="confirmar-password-usuario" autocomplete="new-password" value="<?php // echo $usuario->password ?>">
                                     <?php echo form_error('confirmar-password-usuario', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
@@ -51,13 +50,13 @@
 
                             <div class="row form-group">
                                 <div class="col-md-4">
-                                    <label for="nombre-usuario">Nombres:</label>
+                                    <label for="nombre-usuario">Nombres</label>
                                     <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario" value="<?php echo $usuario->nombres; ?>">
                                 </div>
 
                                 <div class="col-md-6">                                
-                                    <label for="apellido-usuario">Apellidos:</label>
-                                    <input type="text" class="form-control" id="apellido-usuario" name="apellido-usuario" value="<?php echo $usuario->apellidos_usuario; ?>">
+                                    <label for="apellido-usuario">Apellidos</label>
+                                    <input type="text" class="form-control" id="apellido-usuario" name="apellido-usuario" value="<?php echo $usuario->apellidos; ?>">
                                 </div>
                             </div>
 
@@ -68,7 +67,7 @@
                                         $atributos = array('class' => 'form-control', 'required'); // atributos para el elemento select
 
                                         // Genera la etiquera
-                                        echo form_label('Rol:');
+                                        echo form_label('Rol');
 
                                         // Genera el elemento "select"
                                         // Parámetros de form_dropdown: atributo name, valores de la lista, atributo a seleccionar para selected, atributos
@@ -78,8 +77,8 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="email-usuario">Email:</label>
-                                    <input type="email" class="form-control" id="email-usuario" name="email-usuario" value="<?php echo $usuario->email_usuario; ?>">
+                                    <label for="email-usuario">Email</label>
+                                    <input type="email" class="form-control" id="email-usuario" name="email-usuario" value="<?php echo $usuario->correo_electronico; ?>">
                                 </div>
                             </div>
 

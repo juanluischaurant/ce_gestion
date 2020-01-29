@@ -37,8 +37,7 @@
                     <table id="tabla-pagos" class="table table-bordered table-striped table-hover">
                         <thead>
                             <tr>
-                                <th>Serial Pago</th>
-                                <th>Número de Operación</th>
+                                <th>Número de Referencia</th>
                                 <th>Monto de Operación</th>
                                 <th>Cédula</th>
                                 <th>Opciones</th>
@@ -57,7 +56,7 @@
 
                             <label for="">Seleccionar Participante:</label>
                             <div class="input-group">
-                                <input type="hidden" name="id_participante" id="id_participante">
+                                <input type="hidden" name="cedula_persona" id="cedula_persona">
                                 <input type="text" class="form-control" disabled="disabled" id="nombre_participante">
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" id="btn-buscar-participante" type="button" data-toggle="modal" data-target="#modal-default">
@@ -77,7 +76,7 @@
 
                         <span class="input-group-btn">
 
-                            <button type="button" class="btn btn-success btn-flat" id="btn-agregar-especialidad">
+                            <button type="button" class="btn btn-success btn-flat" id="btn-agregar-curso">
                                 <span class="fa fa-paperclip"></span>
                             </button>
 
@@ -160,7 +159,6 @@
                         <th>#</th>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>Documento</th>
                         <th>Opcion</th>
                     </tr>
                 </thead>
@@ -170,11 +168,10 @@
                     <?php if(!empty($participantes)): ?>
                     <?php foreach($participantes as $participante): ?>
                         <tr>
-                            <td><?php echo $participante->id_participante; ?></td>
-                            <td><?php echo $participante->nombres_persona; ?></td>
-                            <td><?php echo $participante->apellidos_persona; ?></td>
-                            <td><?php echo $participante->cedula; ?></td>
-                            <?php $dataParticipante = $participante->id_participante.'*'.$participante->nombres_persona.'*'.$participante->apellidos_persona.'*'.$participante->telefono_persona.'*'.$participante->cedula; ?>
+                            <td><?php echo $participante->cedula_persona; ?></td>
+                            <td><?php echo $participante->nombres; ?></td>
+                            <td><?php echo $participante->apellidos; ?></td>
+                            <?php $dataParticipante = $participante->cedula_persona.'*'.$participante->nombres.'*'.$participante->apellidos.'*'.$participante->telefono; ?>
                             <td>
                                 <button type='button' class='btn btn-success btn-check-participante-inscripcion' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
                             </td>
@@ -311,3 +308,6 @@
     </div>
     <!-- /.modal-dialog -->
 </div>
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/inscripcion.add.js"></script>

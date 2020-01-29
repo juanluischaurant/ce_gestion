@@ -53,9 +53,9 @@
 
 			<tbody>
 				<tr>
-					<td><?php echo $data_instancia_inscrita->serial_instancia; ?></td>
-					<td><?php echo $data_instancia_inscrita->nombre_completo_instancia; ?></td>
-					<td><?php echo $inscripcion->costo_de_inscripcion; ?> Bs.</td>
+					<td><?php echo $data_curso_inscrito->serial_instancia; ?></td>
+					<td><?php echo $data_curso_inscrito->nombre_completo_instancia; ?></td>
+					<td><?php echo $inscripcion->costo; ?> Bs.</td>
 				</tr>
 				<tr>
 				<td></td>

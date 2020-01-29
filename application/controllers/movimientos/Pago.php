@@ -77,21 +77,19 @@ class Pago extends CI_Controller {
         $this->form_validation->set_rules('fecha-operacion', 'Fecha de Operación', 'required'); 
 
         if($this->form_validation->run())
-        {
-            print_r($data);          
-        }
-        //     if($this->Pago_model->save($data))
-        //     {
-        //         $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
+        {    
+            if($this->Pago_model->save($data))
+            {
+                $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
 
-        //         redirect(base_url().'movimientos/pago/');    
-        //     }
-        //     else
-        //     {
-        //         $this->session->set_flashdata('error', 'No se pudo guardar la información.');
-        //         redirect(base_url().'movimientos/pago/add');
-        //     }
-        // }
+                redirect(base_url().'movimientos/pago/');    
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'No se pudo guardar la información.');
+                redirect(base_url().'movimientos/pago/add');
+            }
+        }
         else
         {
             $this->session->set_flashdata('error', 'No se pudo guardar la información.');
@@ -183,11 +181,11 @@ class Pago extends CI_Controller {
 		}
 		else
 		{
-            $estado_pago = $this->Pago_model->get_estado_pago($id_pago);
+            $estado_pago = $this->Pago_model->get_estatus_pago($id_pago);
 
             // Verifica el estado actual del pago. Un pago ya utilizado
             // NO se debe editar.
-            if($estado_pago->estado_pago == 1)
+            if(1 == 1)
             {
                 $data = array(
                     'pago' => $this->Pago_model->get_pago($id_pago),
