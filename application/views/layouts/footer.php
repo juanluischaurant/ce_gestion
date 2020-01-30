@@ -2,8 +2,7 @@
             <div class="pull-right hidden-xs">
                 <b>Version</b> 2.4.0
             </div>
-            <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-            reserved.
+            <strong>CE Gestión <?php echo date('Y'); ?>.</strong> Programa lanzado bajo licencia MIT.
         </footer>
     </div>
     <!-- ./wrapper -->
@@ -41,46 +40,6 @@
                 }
             });
         });
-        
-        // =============================================
-        // JS para Personas
-        // =============================================
-        $(document).on("click",".btn-view-persona",function() {
-            let idPersona = $(this).val(); // ID de la persona
-            $.ajax({
-                url: base_url + "gestion/persona/view",
-                type:"POST",
-                dataType:"html",
-                data:{
-                    id_persona: idPersona
-                },
-                success:function(data) {
-                    $("#modal-default .modal-body").html(data);
-                }
-            });
-        });
-
-        // =============================================
-        // JS para Facilitadores
-        // =============================================
-        
-
-        $('.btn-view-facilitador').on('click', function() {
-            // Al clickear el botón de vista de facilitador, expande modal
-            let facilitador = $(this).val();
-            let infoFacilitador = facilitador.split('*');
-
-            html = '<p><strong>Nombres: </strong>'+infoFacilitador[1]+'</p>'
-            html += '<p><strong>Apellidos: </strong>'+infoFacilitador[2]+'</p>'
-            html += '<p><strong>Teléfono: </strong>'+infoFacilitador[3]+'</p>'
-            html += '<p><strong>Cédula: </strong>'+infoFacilitador[4]+'</p>';
-
-            $('#modal-default .modal-body').html(html);
-        });
-
-        // =============================================
-        // Fin de JS para Facilitadores
-        // =============================================
 
         // =============================================
         // JS para Inscripciones
@@ -195,33 +154,6 @@
             });
         });
 
-
-
-        // =============================================
-        // JS para Participantes
-        // =============================================
-
-        $(document).on("click",".btn-view-participante",function() {
-
-            let id_participante = $(this).val(); // ID de la persona
-            
-            $.ajax({
-                url: base_url + "gestion/participante/view",
-                type:"POST",
-                dataType:"html",
-                data:{
-                    id_participante: id_participante
-                },
-                success:function(data) {
-                    $("#modal-default .modal-body").html(data);
-                }
-            });
-        });
-
-        // =============================================
-        // Fin de JS para Participantes
-        // =============================================
-
         /**
          * Verifica que el número de operación sea único antes de enviar la solicitud
          * a la base de datos.
@@ -266,25 +198,6 @@
                 }
             });
             return false;
-        });
-
-        /**
-         * Permite remover una curso agregada en la vista de Nueva Inscripción
-         * antes de que este sea almacenado en la base de datos.
-         */
-        $(document).on('click', '.btn-remove-especialidad', function() {
-
-            $(this).closest('tr').remove();
-
-            // Actualiza el campo COsto Inscripción
-            sumar_costo_inscripcion();
-
-            // Verifica que el contenido del nodo <tr> tenga contenido
-            if($('#tabla-cursos tr').length <= 1) 
-            {
-                $('#btn-guardar-inscripcion').attr('disabled', true);
-            }
-  
         });
 
         $(document).on('click', '.btn-view-inscripcion', function()
@@ -377,31 +290,7 @@
         }
     }
 
-    /**
-     * Permite actualizar la sumatoria del campo Costo de Inscripción
-     * en la vista de agregar inscripción.
-     *
-     * @return void
-     */
-    function sumar_costo_inscripcion() {
-
-        // Calcula el total cada vez que se llama esta función
-        let costo_inscripcion = 0;       
-        
-        // Por cada elemento <tr> dentro del tbody en #tabla-cursos
-        $('#tabla-cursos tbody tr').each(function() {
-            
-            // Cacula
-            costo_inscripcion += Number($(this).find('td:eq(4)').text());
-        });
-
-        $('input[name=costo-de-inscripcion]').val(costo_inscripcion.toFixed(2));
-
-        if($('input[name=monto-en-operacion]').val() !== '') {
-
-            $('input[name=deuda]').val($('input[name=costo-de-inscripcion]').val() - $('input[name=monto-en-operacion]').val())
-        }
-    }
+   
 
     function sumar() {
 

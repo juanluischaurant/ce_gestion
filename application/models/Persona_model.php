@@ -98,21 +98,21 @@ class Persona_model extends CI_Model {
     /**
      * Determina si una persona está registrada como participante
      *
-     * @param array $id_persona
+     * @param array $cedula
      * @return array
      */
-    public function get_es_participante($id_persona)
+    public function get_es_participante($cedula)
     {
         $SQL = "SELECT 
         persona.nombres, 
         persona.apellidos,
-        participante.id
+        participante.cedula_persona
         
         FROM persona
-        LEFT JOIN participante ON participante.id_persona = persona.id
-        WHERE participante.id_persona = ?";
+        LEFT JOIN participante ON participante.cedula_persona = persona.cedula
+        WHERE participante.cedula_persona = ?";
 
-        $resultado = $this->db->query($SQL, array($id_persona));
+        $resultado = $this->db->query($SQL, array($cedula));
 
         return $resultado->row();
     }
@@ -120,21 +120,21 @@ class Persona_model extends CI_Model {
     /**
      * Determina si una persona está registrada como participante
      *
-     * @param integer $id_persona
+     * @param integer $cedula
      * @return array
      */
-    public function get_es_titular($id_persona)
+    public function get_es_titular($cedula)
     {
         $SQL = "SELECT 
         persona.nombres, 
         persona.apellidos,
-        titular.id
+        titular.cedula_persona
         
         FROM persona
-        LEFT JOIN titular ON titular.id_persona = persona.id
-        WHERE titular.id_persona = ?";
+        LEFT JOIN titular ON titular.cedula_persona = persona.cedula
+        WHERE titular.cedula_persona = ?";
 
-        $resultado = $this->db->query($SQL, array($id_persona));
+        $resultado = $this->db->query($SQL, array($cedula));
 
         return $resultado->row();
     }
@@ -142,21 +142,21 @@ class Persona_model extends CI_Model {
     /**
      * Determina si una persona está registrada como participante
      *
-     * @param integer $id_persona
+     * @param integer $cedula
      * @return array
      */
-    public function get_es_facilitador($id_persona)
+    public function get_es_facilitador($cedula)
     {
         $SQL = "SELECT 
         persona.nombres, 
         persona.apellidos,
-        facilitador.id
+        facilitador.cedula_persona
         
         FROM persona
-        LEFT JOIN facilitador ON facilitador.id_persona = persona.id
-        WHERE facilitador.id_persona = ?";
+        LEFT JOIN facilitador ON facilitador.cedula_persona = persona.cedula
+        WHERE facilitador.cedula_persona = ?";
 
-        $resultado = $this->db->query($SQL, array($id_persona));
+        $resultado = $this->db->query($SQL, array($cedula));
 
         return $resultado->row();
     }

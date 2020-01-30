@@ -22,7 +22,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-participante" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>Cédula</th>
@@ -92,3 +92,6 @@
   <!-- /.modal-dialog -->
 </div>
 <!-- /.modal -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/participante.list.js"></script>

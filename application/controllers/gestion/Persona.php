@@ -72,13 +72,13 @@ class Persona extends CI_Controller {
 	 */
 	public function view()
 	{
-		$idParticipante = $this->input->post("id_persona");
+		$cedula = $this->input->post("cedula_persona");
 
 		$data = array(
-			"persona" => $this->Persona_model->get_persona($idParticipante),
-			'es_participante' => $this->Persona_model->get_es_participante($idParticipante),
-			'es_titular' => $this->Persona_model->get_es_titular($idParticipante),
-			'es_facilitador' => $this->Persona_model->get_es_facilitador($idParticipante),
+			"persona" => $this->Persona_model->get_persona($cedula),
+			'es_participante' => $this->Persona_model->get_es_participante($cedula),
+			'es_titular' => $this->Persona_model->get_es_titular($cedula),
+			'es_facilitador' => $this->Persona_model->get_es_facilitador($cedula),
 
 		);
 

@@ -276,6 +276,25 @@ $(document).ready(function() {
     });
 
     /**
+     * Permite remover una curso agregada en la vista de Nueva Inscripción
+     * antes de que este sea almacenado en la base de datos.
+     */
+    $(document).on('click', '.btn-remove-especialidad', function() {
+
+        $(this).closest('tr').remove();
+
+        // Actualiza el campo COsto Inscripción
+        sumar_costo_inscripcion();
+
+        // Verifica que el contenido del nodo <tr> tenga contenido
+        if($('#tabla-cursos tr').length <= 1) 
+        {
+            $('#btn-guardar-inscripcion').attr('disabled', true);
+        }
+
+    });
+
+    /**
      * Permite remover un pago agregado en la vista de Nueva Inscripción
      * antes de que este sea almacenado en la base de datos.
      */
@@ -287,3 +306,29 @@ $(document).ready(function() {
     });
 
 });
+
+ /**
+     * Permite actualizar la sumatoria del campo Costo de Inscripción
+     * en la vista de agregar inscripción.
+     *
+     * @return void
+     */
+    function sumar_costo_inscripcion() {
+
+        // Calcula el total cada vez que se llama esta función
+        let costo_inscripcion = 0;       
+        
+        // Por cada elemento <tr> dentro del tbody en #tabla-cursos
+        $('#tabla-cursos tbody tr').each(function() {
+            
+            // Cacula
+            costo_inscripcion += Number($(this).find('td:eq(4)').text());
+        });
+
+        $('input[name=costo-de-inscripcion]').val(costo_inscripcion.toFixed(2));
+
+        if($('input[name=monto-en-operacion]').val() !== '') {
+
+            $('input[name=deuda]').val($('input[name=costo-de-inscripcion]').val() - $('input[name=monto-en-operacion]').val())
+        }
+    }

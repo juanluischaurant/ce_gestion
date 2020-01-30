@@ -16,9 +16,9 @@
 		<b>Dirección:</b><br>
 		<b>
 			<?php 
-			if(isset($es_participante->id_participante) ||
-				isset($es_titular->id_titular) ||
-				isset($es_facilitador->id_facilitador))
+			if(isset($es_participante->cedula_persona) ||
+				isset($es_titular->cedula_persona) ||
+				isset($es_facilitador->cedula_persona))
 			{
 				echo 'Roles: ';
 			} 
@@ -34,9 +34,9 @@
         <?php echo (isset($persona->edad) && $persona->fecha_nacimiento !== '0000-00-00' )? $persona->edad : 'No disponible';?><br>
         <?php echo $persona->telefono !== '' ? $persona->telefono : 'No disponible';?><br>
 		<?php echo $persona->direccion !== '' ? $persona->direccion : 'No disponible';?><br>
-		<?php echo isset($es_participante->id_participante) ? 'Participante<br>' : '';?>
-		<?php echo isset($es_titular->id_titular) ? 'Titular<br>' : '';?>
-		<?php echo isset($es_facilitador->id_facilitador) ? 'Facilitador<br>' : '';?>
+		<?php echo isset($es_participante->cedula_persona) ? 'Participante<br>' : '';?>
+		<?php echo isset($es_titular->cedula_persona) ? 'Titular<br>' : '';?>
+		<?php echo isset($es_facilitador->cedula_persona) ? 'Facilitador<br>' : '';?>
 
 	</div>	
 </div>

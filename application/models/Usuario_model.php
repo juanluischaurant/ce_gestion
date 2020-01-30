@@ -21,7 +21,19 @@ class Usuario_model extends CI_Model {
         $this->db->where('password', sha1($password));
 
         // Consulta BD
-        $resultado = $this->db->get('usuario');
+        $resultado = $this->db->select(
+            'persona.cedula,
+            persona.nombres,
+            persona.apellidos,
+            persona.correo_electronico,
+            usuario.username,
+            usuario.id_rol'
+        )
+        ->from('usuario') 
+        ->join('persona', 'persona.cedula = usuario.cedula_persona')
+        ->where('usuario.estado', 1)
+        ->get(); 
+    
 
         if($resultado->num_rows() > 0)
         {

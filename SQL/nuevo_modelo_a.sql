@@ -492,7 +492,7 @@ GROUP BY `ano_inicio_periodo`, `nombre_curso`;
 CREATE VIEW vista_relacion_pagos1 AS 
 SELECT year(fecha_inicio) AS ano_inicio_periodo, month(fecha_inicio) AS mes_inicio_periodo, curso.estado, 
        nombre_curso.descripcion as nombre_curso, persona.cedula as ced_alumno, concat(persona.nombres, ' ',  
-       persona.apellidos) as alumno, locacion.nombre as nombre_locacion, 
+       persona.apellidos) as participante, locacion.nombre as nombre_locacion, 
        pago_de_inscripcion.cedula_titular,
        pago_de_inscripcion.fecha_operacion, pago_de_inscripcion.monto_operacion
 FROM periodo 
@@ -506,7 +506,7 @@ INNER JOIN persona on participante.cedula_persona = persona.cedula
 WHERE curso.estado= 1 AND pago_de_inscripcion.estatus_pago=2;
 
 CREATE VIEW vista_relacion_pagos AS 
-SELECT ano_inicio_periodo, mes_inicio_periodo, nombre_curso, ced_alumno, alumno, 
+SELECT ano_inicio_periodo, mes_inicio_periodo, nombre_curso, ced_alumno, participante, 
        nombre_locacion, persona.cedula as ced_cliente, 
        concat(persona.nombres, ' ', persona.apellidos) as nombre_cliente,
        fecha_operacion, monto_operacion
