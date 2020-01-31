@@ -13,8 +13,8 @@ class Persona_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'persona.cedula,
-            persona.nombres,
-            persona.apellidos,
+            persona.primer_nombre,
+            persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,
@@ -39,8 +39,8 @@ class Persona_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'persona.cedula,
-            persona.nombres,
-            persona.apellidos,
+            persona.primer_nombre,
+            persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) as edad,
@@ -105,8 +105,8 @@ class Persona_model extends CI_Model {
     public function get_es_participante($cedula)
     {
         $SQL = "SELECT 
-        persona.nombres, 
-        persona.apellidos,
+        persona.primer_nombre, 
+        persona.primer_apellido,
         participante.cedula_persona
         
         FROM persona
@@ -127,8 +127,8 @@ class Persona_model extends CI_Model {
     public function get_es_titular($cedula)
     {
         $SQL = "SELECT 
-        persona.nombres, 
-        persona.apellidos,
+        persona.primer_nombre, 
+        persona.primer_apellido,
         titular.cedula_persona
         
         FROM persona
@@ -149,8 +149,8 @@ class Persona_model extends CI_Model {
     public function get_es_facilitador($cedula)
     {
         $SQL = "SELECT 
-        persona.nombres, 
-        persona.apellidos,
+        persona.primer_nombre, 
+        persona.primer_apellido,
         facilitador.cedula_persona
         
         FROM persona

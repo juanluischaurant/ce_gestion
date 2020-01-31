@@ -6,8 +6,8 @@ class Facilitador_model extends CI_Model {
     public function get_facilitadores()
     {
     $resultados = $this->db->select(
-        'persona.nombres,
-        persona.apellidos,
+        'persona.primer_nombre,
+        persona.primer_apellido,
         persona.genero,
         persona.fecha_nacimiento,
         persona.telefono,
@@ -30,8 +30,8 @@ class Facilitador_model extends CI_Model {
     {
         $resultado = $this->db->select(
             'facilitador.cedula_persona,
-            persona.nombres,
-            persona.apellidos,
+            persona.primer_nombre,
+            persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,

@@ -50,15 +50,15 @@
 
                         <div class="row">
                             <div class="form-group col-md-6">
-                                <label for="nombre_persona">Nombres</label>
-                                <input type="text" class="form-control <?php echo !empty(form_error('nombre_persona'))? 'has-error' : '';?>" id="nombre_persona" name="nombre_persona" value="<?php echo set_value('nombre_persona');?>">
-                                <?php echo form_error('nombre_persona', '<span class="help-block">', '</span>'); ?>
+                                <label for="primer_nombre">Nombres</label>
+                                <input type="text" class="form-control <?php echo !empty(form_error('primer_nombre'))? 'has-error' : '';?>" id="primer_nombre" name="primer_nombre" value="<?php echo set_value('primer_nombre');?>">
+                                <?php echo form_error('primer_nombre', '<span class="help-block">', '</span>'); ?>
                             </div>
             
                             <div class="form-group col-md-6">                                
-                                <label for="apellido_persona">Apellidos</label>
-                                <input type="text" class="form-control <?php echo !empty(form_error('apellido_persona'))? 'has-error' : '';?>" id="apellido_persona" name="apellido_persona" value="<?php echo set_value('apellido_persona');?>">
-                                <?php echo form_error('apellido_persona', '<span class="help-block">', '</span>'); ?>
+                                <label for="primer_apellido">Apellidos</label>
+                                <input type="text" class="form-control <?php echo !empty(form_error('primer_apellido'))? 'has-error' : '';?>" id="primer_apellido" name="primer_apellido" value="<?php echo set_value('primer_apellido');?>">
+                                <?php echo form_error('primer_apellido', '<span class="help-block">', '</span>'); ?>
                             </div>
                         </div>
 

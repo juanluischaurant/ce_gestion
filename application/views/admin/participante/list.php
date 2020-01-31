@@ -39,8 +39,8 @@
                                     <tr>
                                         <td><?php echo $participante->cedula_persona; ?></td>
                                         <td><?php echo $participante->fecha_registro; ?></td>
-                                        <td><?php echo $participante->nombres; ?></td>
-                                        <td><?php echo $participante->apellidos; ?></td>
+                                        <td><?php echo $participante->primer_nombre; ?></td>
+                                        <td><?php echo $participante->primer_apellido; ?></td>
                                         <td><?php echo $participante->telefono; ?></td>
                                         <td>
                                             <div class="btn-group">

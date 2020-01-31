@@ -41,7 +41,7 @@
                             
                             <div class="form-group">
                                 <label for="nombre_titular">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre_titular" name="nombre_titular" value="<?php echo isset($persona) ? $persona->nombres : ''; ?>">
+                                <input type="text" class="form-control" id="nombre_titular" name="nombre_titular" value="<?php echo isset($persona) ? $persona->primer_nombre : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -129,9 +129,9 @@
                         <?php foreach($personas as $persona): ?>
                             <tr>
                                 <td><?php echo $persona->cedula; ?></td>
-                                <td><?php echo $persona->nombres; ?></td>
+                                <td><?php echo $persona->primer_nombre; ?></td>
                                 <td><?php echo $persona->apellidos; ?></td>
-                                <?php $dataPersona = $persona->cedula.'*'.$persona->nombres.'*'.$persona->apellidos.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
+                                <?php $dataPersona = $persona->cedula.'*'.$persona->primer_nombre.'*'.$persona->apellidos.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-titular' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>

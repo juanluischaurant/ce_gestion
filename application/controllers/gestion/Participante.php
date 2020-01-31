@@ -52,11 +52,11 @@ class Participante extends CI_Controller {
 	 */
 	public function view()
 	{
-		$id_participante = $this->input->post("id_participante");
+		$cedula_persona = $this->input->post("cedula_persona");
 
 		$data = array(
-			'participante' => $this->Participante_model->get_participante($id_participante),
-			'instancias_inscritas' => $this->Participante_model->get_instancias_inscritas($id_participante)
+			'participante' => $this->Participante_model->get_participante($cedula_persona),
+			'instancias_inscritas' => $this->Participante_model->get_instancias_inscritas($cedula_persona)
 		);
 
 		$this->load->view("admin/participante/view", $data);
@@ -130,10 +130,11 @@ class Participante extends CI_Controller {
 		}
 	}
 
-	public function edit($id)
+	public function edit($cedula_persona)
 	{
 		$data = array(
-			'participante' => $this->Participante_model->getParticipante($id),
+			'participante' => $this->Participante_model->getParticipante($cedula_persona),
+			'nivel_academico' => $this->Participante_model->nivel_academico_dropdown()
 		);
 
 		$this->load->view('layouts/header');
@@ -144,30 +145,18 @@ class Participante extends CI_Controller {
 
 	public function update()
 	{
-		$id_participante = $this->input->post('idParticipante');
-		$cedula = $this->input->post("cedula");
-		$nombres = $this->input->post('nombres');
-		$apellidos = $this->input->post('apellidos');
-		$fecha_nacimiento = $this->input->post('fecha');
-		$genero = $this->input->post('genero');
-		$telefono = $this->input->post('telefono');
-		$direccion = $this->input->post('direccion');
+		$cedula_persona = $this->input->post("cedula_persona");
+		$nivel_academico = $this->input->post('nivel_academico');
 
 		$data = array(
-			'cedula_participante' => $cedula,
-			'nombres_participante' => $nombres,
-			'apellidos_participante' => $apellidos,
-			'fecha_nacimiento_participante' => $fecha_nacimiento,
-			'genero_participante' => $genero,
-			'telefono_participante' => $telefono,
-			'direccion_participante' => $direccion
+			'id_nivel_academico' => $nivel_academico,
 		);
 
-		if($this->Participante_model->update($id_participante, $data)) {
+		if($this->Participante_model->update($cedula_persona, $data)) {
 			redirect(base_url().'gestion/participante');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
-			redirect(base_url().'gestion/participante/edit'.$id_participante);
+			redirect(base_url().'gestion/participante/edit'.$cedula_persona);
 		}
 		
 	}

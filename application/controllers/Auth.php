@@ -46,8 +46,8 @@ class Auth extends CI_Controller {
         {
             $data = array(
                 'username' => $datos_usuario->username,
-                'nombre' => $datos_usuario->nombres,
-                'apellidos' => $datos_usuario->apellidos,
+                'nombre' => $datos_usuario->primer_nombre,
+                'apellidos' => $datos_usuario->primer_apellido,
                 'rol' => $datos_usuario->id_rol,
                 'login' => TRUE
             );

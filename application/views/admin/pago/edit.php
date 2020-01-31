@@ -46,7 +46,7 @@
          
                                 <div class="col-md-6">
                                     <label for="">Nombre del Titular</label>
-                                    <?php $nombre =  $pago->nombres . " " . $pago->apellidos; ?>
+                                    <?php $nombre =  $pago->primer_nombre . " " . $pago->primer_apellido; ?>
                                     <input type="text" class="form-control" name="nombre_titular" id='nombre_titular' value="<?php echo $nombre; ?>" readonly>
                                     <input type="hidden" id="cedula_titular" name="cedula_titular" value="<?php echo $pago->cedula_titular; ?>">   
                                 </div>

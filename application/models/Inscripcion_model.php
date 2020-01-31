@@ -18,7 +18,7 @@ class Inscripcion_model extends CI_Model {
             ins.id_curso,
             p.fecha_culminacion as valida_hasta,
             concat(nc.descripcion, "-", MONTH(p.fecha_inicio), " ",  MONTH(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
-            concat(per.nombres, " ", per.apellidos) as nombre_completo_participante'
+            concat(per.primer_nombre, " ", per.primer_apellido) as nombre_completo_participante'
         )
         ->from('inscripcion as ins')
         ->join('curso', 'curso.id = ins.id_curso')
@@ -50,7 +50,7 @@ class Inscripcion_model extends CI_Model {
             i.fecha_registro,
             i.costo,
             par.cedula_persona,
-            concat(per.nombres, " ", per.apellidos) as nombre_completo_participante,
+            concat(per.primer_nombre, " ", per.primer_apellido) as nombre_completo_participante,
             per.direccion,
             per.telefono')
         ->from('inscripcion as i')
@@ -247,7 +247,7 @@ class Inscripcion_model extends CI_Model {
             ban.nombre,
             tdo.tipo,
             per.cedula,
-            concat(per.nombres, " ", per.apellidos) as nombre_titular,
+            concat(per.primer_nombre, " ", per.primer_apellido) as nombre_titular,
             per.cedula as cedula_titular_pago'
             )
         ->from('inscripcion as ins')
@@ -272,7 +272,7 @@ class Inscripcion_model extends CI_Model {
     public function participante_curso($id_curso)
     {
         $resultados = $this->db->select('par.id_participante, 
-        per.nombres, 
+        per.primer_nombre, 
         cur.id,
         cur.nombre')
         ->from('participante as par')

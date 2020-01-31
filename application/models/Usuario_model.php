@@ -23,8 +23,8 @@ class Usuario_model extends CI_Model {
         // Consulta BD
         $resultado = $this->db->select(
             'persona.cedula,
-            persona.nombres,
-            persona.apellidos,
+            persona.primer_nombre,
+            persona.primer_apellido,
             persona.correo_electronico,
             usuario.username,
             usuario.id_rol'
@@ -55,8 +55,8 @@ class Usuario_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'u.*,
-            p.nombres,
-            p.apellidos,
+            p.primer_nombre,
+            p.primer_apellido,
             p.correo_electronico,
             r.funcion as rol'
             )
@@ -84,8 +84,8 @@ class Usuario_model extends CI_Model {
             u.estado,
             u.fecha_registro,
             r.funcion AS rol,
-            p.nombres,
-            p.apellidos,
+            p.primer_nombre,
+            p.primer_apellido,
             p.correo_electronico')
         ->from('usuario AS u')
         ->join('rol AS r', 'r.id = u.id_rol')

@@ -59,8 +59,8 @@
                                     <tr>
                                         <td><?php echo $persona->cedula; ?></td>
                                         <td><?php echo $persona->fecha_registro; ?></td>
-                                        <td><?php echo $persona->nombres; ?></td>
-                                        <td><?php echo $persona->apellidos; ?></td>
+                                        <td><?php echo $persona->primer_nombre; ?></td>
+                                        <td><?php echo $persona->primer_apellido; ?></td>
                                         <td><?php echo $persona->telefono; ?></td>
                                         <?php $dataPersona = $persona->cedula; ?>
                                         <td>

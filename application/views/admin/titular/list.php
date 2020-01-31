@@ -39,10 +39,10 @@
                                     <tr>
                                         <td><?php echo $titular->cedula_persona; ?></td>
                                         <td><?php echo $titular->fecha_registro_titular; ?></td>
-                                        <td><?php echo $titular->nombres; ?></td>
-                                        <td><?php echo $titular->apellidos; ?></td>
+                                        <td><?php echo $titular->primer_nombre; ?></td>
+                                        <td><?php echo $titular->primer_apellido; ?></td>
                                         <td><?php echo $titular->telefono; ?></td>
-                                        <?php $dataTitular = $titular->nombres.'*'.$titular->apellidos.'*'.$titular->telefono.'*'.$titular->cedula_persona; ?>
+                                        <?php $dataTitular = $titular->primer_nombre.'*'.$titular->primer_apellido.'*'.$titular->telefono.'*'.$titular->cedula_persona; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-titular" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataTitular?>'><span class="fa fa-eye"></span></button>
@@ -92,5 +92,3 @@
 
 <!-- CUSTOM JS -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/titular.list.js"></script>
-
-

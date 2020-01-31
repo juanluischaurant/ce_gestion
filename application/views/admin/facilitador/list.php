@@ -39,10 +39,10 @@
                                     <tr>
                                         <td><?php echo $facilitador->cedula_persona; ?></td>
                                         <td><?php echo $facilitador->fecha_registro; ?></td>
-                                        <td><?php echo $facilitador->nombres; ?></td>
+                                        <td><?php echo $facilitador->primer_nombre; ?></td>
                                         <td><?php echo $facilitador->apellidos; ?></td>
                                         <td><?php echo $facilitador->telefono; ?></td>
-                                        <?php $dataFacilitador = $facilitador->cedula_persona.'*'.$facilitador->fecha_registro.'*'.$facilitador->nombres.'*'.$facilitador->apellidos.'*'.$facilitador->telefono.'*'; ?>
+                                        <?php $dataFacilitador = $facilitador->cedula_persona.'*'.$facilitador->fecha_registro.'*'.$facilitador->primer_nombre.'*'.$facilitador->apellidos.'*'.$facilitador->telefono.'*'; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-facilitador" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataFacilitador?>'><span class="fa fa-eye"></span></button>

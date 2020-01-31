@@ -88,7 +88,6 @@ class Usuario extends CI_Controller {
 	  */ 
 	public function update() 
 	{
-		
 		$username_actual = $this->input->post('username-actual'); // Username en uso actualmente
 		$username_usuario = $this->input->post('username-usuario'); // Username propuesto
 		$password_usuario = $this->input->post('password-usuario');
@@ -98,7 +97,6 @@ class Usuario extends CI_Controller {
 		$data = array(
 			'id_rol' => $rol_usuario
 		);
-
 
 		if($username_usuario !== $username_actual)
 		{			
@@ -155,20 +153,14 @@ class Usuario extends CI_Controller {
 	 */
     public function store()
     {
-        $nombres_usuario = $this->input->post('nombre-usuario');
-        $apellidos_usuario = $this->input->post('apellido-usuario');
         $username_usuario = $this->input->post('username-usuario');
         $password_usuario = $this->input->post('password-usuario');
         $rol_usuario = $this->input->post('rol-usuario');
-        $email_usuario = $this->input->post('email-usuario');
 
         $data = array(
-            'nombres' => $nombres_usuario,
-            'apellidos' => $apellidos_usuario,
             'username' => $username_usuario,
             'password' => sha1($password_usuario),
             'id_rol' => $rol_usuario,
-            'email' => $email_usuario
         );
 
         $this->form_validation->set_rules('username-usuario', 'Username', 'required|is_unique[usuario.username_usuario]|min_length[6]|max_length[10]'); 

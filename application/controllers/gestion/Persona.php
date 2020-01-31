@@ -191,8 +191,8 @@ class Persona extends CI_Controller {
 	public function store() 
 	{
 		$cedula = $this->input->post("cedula_persona");
-		$nombres = $this->input->post('nombre_persona');
-		$apellidos = $this->input->post('apellido_persona');
+		$primer_nombre = $this->input->post('primer_nombre');
+		$primer_apellido = $this->input->post('primer_apellido');
 		$fecha_nacimiento = $this->input->post('nacimiento_persona');
 		$genero = $this->input->post('genero_persona');
 		$telefono = $this->input->post('telefono_persona');
@@ -201,8 +201,8 @@ class Persona extends CI_Controller {
 		
 		$data_persona = array(
 			'cedula' => $cedula,
-			'nombres' => $nombres,
-			'apellidos' => $apellidos,
+			'primer_nombre' => $primer_nombre,
+			'primer_apellido' => $primer_apellido,
 			'fecha_nacimiento' => $fecha_nacimiento,
 			'genero' => $genero,
 			'telefono' => $telefono,
@@ -240,8 +240,8 @@ class Persona extends CI_Controller {
 	public function update() 
 	{
 		$cedula = $this->input->post('cedula_persona');
-		$nombres = $this->input->post('nombre_persona');
-		$apellidos = $this->input->post('apellido_persona');
+		$primer_nombre = $this->input->post('primer_nombre');
+		$primer_apellido = $this->input->post('primer_apellido');
 		$genero = $this->input->post('genero_persona');
 		$fecha_nacimiento = $this->input->post('nacimiento-persona');
 		$telefono = $this->input->post('telefono_persona');
@@ -249,8 +249,8 @@ class Persona extends CI_Controller {
 
 		$data = array(
 			'cedula' => $cedula,
-			'nombres' => $nombres,
-			'apellidos' => $apellidos,
+			'primer_nombre' => $primer_nombre,
+			'primer_apellido' => $primer_apellido,
 			'fecha_nacimiento' => $fecha_nacimiento,
 			'genero' => $genero,
 			'telefono' => $telefono,

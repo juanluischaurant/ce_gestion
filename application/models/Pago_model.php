@@ -42,7 +42,7 @@ class Pago_model extends CI_Model {
             pdi.estatus_pago,
             pdi.fecha_registro, 
             pdi.id_tipo_de_operacion,
-            concat(per.nombres, " ", per.apellidos) as nombre_titular,
+            concat(per.primer_nombre, " ", per.apellidos) as nombre_titular,
             per.cedula'
         )
         ->from('pago_de_inscripcion as pdi')
@@ -67,7 +67,7 @@ class Pago_model extends CI_Model {
       tdo.id,
       b.id AS id_banco,
       b.nombre AS nombre_banco,
-      per.nombres,
+      per.primer_nombre,
       per.apellidos'
     )
     ->from('pago_de_inscripcion as pdi')
@@ -225,7 +225,7 @@ class Pago_model extends CI_Model {
   {
     $resultados = $this->db->select(
       't.cedula_persona, 
-      concat(p.nombres, " ", p.apellidos) as nombre_titular, 
+      concat(p.primer_nombre, " ", p.apellidos) as nombre_titular, 
       p.cedula as label'
     )
       ->from('titular as t')
@@ -269,7 +269,7 @@ class Pago_model extends CI_Model {
             pi.estatus_pago,
             pi.id_tipo_de_operacion,
             concat(pi.numero_referencia_bancaria, " - ID: ", pe.cedula) as label,
-            concat(pe.nombres, " ", pe.apellidos) as nombre_cliente,
+            concat(pe.primer_nombre, " ", pe.apellidos) as nombre_cliente,
             pe.cedula'
         )
         ->from('pago_de_inscripcion as pi')

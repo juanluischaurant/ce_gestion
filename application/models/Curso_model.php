@@ -61,7 +61,7 @@ class Curso_model extends CI_Model {
             locacion.id,
             locacion.nombre as locacion_instancia,
             facilitador.id_facilitador,
-            concat(persona.nombres, " ", persona.apellidos) AS nombre_facilitador'
+            concat(persona.primer_nombre, " ", persona.primer_apellido) AS nombre_facilitador'
         )
         ->from('curso')
         ->join('especialidad', 'especialidad.id = curso.id_curso')
@@ -266,8 +266,8 @@ class Curso_model extends CI_Model {
             cu.nombre,
             insc.fecha_registro,
             par.estado,
-            per.nombres,
-            per.apellidos,
+            per.primer_nombre,
+            per.primer_apellido,
             per.cedula'
         )
         ->from('curso as in')
@@ -323,15 +323,15 @@ class Curso_model extends CI_Model {
          // Obtén los registros de curso de los profesores
          $resultados = $this->db->select(
             'facilitador.cedula_persona AS id_facilitador,
-            persona.nombres,
-            persona.apellidos,
-            concat(persona.nombres, " ", persona.apellidos) as label'
+            persona.primer_nombre,
+            persona.primer_apellido,
+            concat(persona.primer_nombre, " ", persona.primer_apellido) as label'
         )
         ->from('facilitador')
         ->join('persona', 'persona.cedula = facilitador.cedula_persona')
         ->where('facilitador.estado', '1') 
-        ->like('persona.nombres', $valor)
-        ->or_like('persona.apellidos', $valor)
+        ->like('persona.primer_nombre', $valor)
+        ->or_like('persona.primer_apellido', $valor)
         ->get();
 
         return $resultados->result_array();

@@ -33,13 +33,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="nombres">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre" name="nombres" value="<?php echo $participante->nombres_participante; ?>" required>
+                                <label for="primer_nombre">Nombres:</label>
+                                <input type="text" class="form-control" id="nombre" name="primer_nombre" value="<?php echo $participante->primer_nombre; ?>" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="apellidos">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $participante->apellidos_participante; ?>" required>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $participante->primer_apellido; ?>" required>
                             </div>
 
                             <div class="form-group">

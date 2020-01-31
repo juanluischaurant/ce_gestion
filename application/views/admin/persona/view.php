@@ -27,8 +27,8 @@
 		</b><br>
 	</div>
 	<div class="col-xs-6">	
-		<?php echo $persona->nombres;?><br>
-		<?php echo $persona->apellidos;?><br>
+		<?php echo $persona->primer_nombre;?><br>
+		<?php echo $persona->primer_apellido;?><br>
 		<?php echo $persona->cedula;?><br>
         <?php echo $persona->fecha_nacimiento;?><br>
         <?php echo (isset($persona->edad) && $persona->fecha_nacimiento !== '0000-00-00' )? $persona->edad : 'No disponible';?><br>

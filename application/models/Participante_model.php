@@ -14,7 +14,7 @@ class Participante_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'participante.cedula_persona,
-            persona.nombres,
+            persona.primer_nombre,
             persona.apellidos,
             persona.genero,
             persona.fecha_nacimiento,
@@ -41,7 +41,7 @@ class Participante_model extends CI_Model {
         $resultado = $this->db->select(
             'persona.id,
             persona.cedula,
-            persona.nombres,
+            persona.primer_nombre,
             persona.apellidos,
             persona.genero,
             persona.fecha_nacimiento,
@@ -72,7 +72,7 @@ class Participante_model extends CI_Model {
         $resultados = $this->db->select(
             'cur.nombre_curso,
             participante.id_persona,
-            persona.nombres'
+            persona.primer_nombre'
         )
         ->from('participante AS par')
         ->join('persona AS per', 'persona.id = participante.id_persona')

@@ -86,25 +86,15 @@ class Facilitador extends CI_Controller {
 
 	}
 
-	public function update() {
+	public function update()
+	{
 		$cedula_persona = $this->input->post('cedula-facilitador');
-		$nombres = $this->input->post('nombre-facilitador');
-		$apellidos = $this->input->post('apellido-facilitador');
-		$genero = $this->input->post('genero-facilitador');
-		$fecha_nacimiento = $this->input->post('nacimiento-facilitador');
-		$telefono = $this->input->post('telefono-facilitador');
-		$direccion = $this->input->post('direccion-facilitador');
+		$fecha_contratacion = $this->input->post('fecha_contratacion');
 
 		// $estado_facilitador; <- Aún no utilizada
 
 		$data = array(
-			'cedula' => $cedula_persona,
-			'nombres' => $nombres,
-			'apellidos_persona' => $apellidos,
-			'fecha_nacimiento_persona' => $fecha_nacimiento,
-			'genero_persona' => $genero,
-			'telefono_persona' => $telefono,
-			'direccion_persona' => $direccion
+			'fecha_contratacion' => $fecha_contratacion,
 		);
 
 		if($this->Persona_model->update($cedula_persona, $data)) {

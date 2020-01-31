@@ -15,8 +15,8 @@
 		<b>Dirección:</b><br>
 	</div>
 	<div class="col-xs-6">	
-		<?php echo $participante->nombres_persona;?><br>
-		<?php echo $participante->apellidos_persona;?><br>
+		<?php echo $participante->primer_nombre;?><br>
+		<?php echo $participante->primer_apellido;?><br>
 		<?php echo $participante->cedula;?><br>
         <?php echo $participante->fecha_nacimiento_persona;?><br>
         <?php echo $participante->telefono_persona;?><br>

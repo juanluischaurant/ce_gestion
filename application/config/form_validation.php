@@ -20,12 +20,12 @@ $config = array(
             )
         ),
         array(
-            'field' => 'nombre_persona',
+            'field' => 'primer_nombre',
             'label' => 'Nombres',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
         array(
-            'field' => 'apellido_persona',
+            'field' => 'primer_apellido',
             'label' => 'Apellidos',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
@@ -57,12 +57,12 @@ $config = array(
             )
         ),
         array(
-            'field' => 'nombre_persona',
+            'field' => 'primer_nombre',
             'label' => 'Nombres',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),
         array(
-            'field' => 'apellido_persona',
+            'field' => 'primer_apellido',
             'label' => 'Apellidos',
             'rules' => 'required|trim|min_length[2]|max_length[45]'
         ),

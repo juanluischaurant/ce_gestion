@@ -21,8 +21,8 @@ $(document).ready(function() {
         direccionPersona = informacionParticipante[6];
 
         $('#cedula_persona').val(cedulaPersona);
-        $('#nombres_participante').val(nombresPersona);
-        $('#apellidos_participante').val(apellidosPersona);
+        $('#primer_nombre').val(nombresPersona);
+        $('#primer_apellido').val(apellidosPersona);
         $('#nacimiento_participante').val(fechaNacimientoPersona);
         $('#genero_participante').val(generoPersona);
         $('#telefono_participante').val(telefonoPersona);

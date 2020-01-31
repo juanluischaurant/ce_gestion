@@ -51,7 +51,7 @@
                             <div class="row form-group">
                                 <div class="col-md-4">
                                     <label for="nombre-usuario">Nombres</label>
-                                    <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario" value="<?php echo $usuario->nombres; ?>">
+                                    <input type="text" class="form-control" id="nombre-usuario" name="nombre-usuario" value="<?php echo $usuario->primer_nombre; ?>">
                                 </div>
 
                                 <div class="col-md-6">                                

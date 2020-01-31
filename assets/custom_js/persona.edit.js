@@ -27,7 +27,7 @@ $(document).ready(function() {
                     },   
                 }
             },
-            nombre_persona: {
+            primer_nombre: {
                 validators: {
                     stringLength: {
                         min: 2,
@@ -39,7 +39,7 @@ $(document).ready(function() {
                     },
                 }
             },
-            apellido_persona: {
+            primer_apellido: {
                 validators: {
                     stringLength: {
                         min: 2,

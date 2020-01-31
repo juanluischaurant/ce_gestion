@@ -28,7 +28,7 @@
                 <form role="form">
                 <div class="box-body">
                     <blockquote>
-                    <p>¿Qué rol tendrá <b><?php echo $persona->nombres;?> <?php echo $persona->apellidos;?></b>?</p>
+                    <p>¿Qué rol tendrá <b><?php echo $persona->primer_nombre;?> <?php echo $persona->apellidos;?></b>?</p>
                     <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
 
                     <form id="add-rol-persona" method="POST">
@@ -99,7 +99,7 @@
 
             <div id="caja-secundaria" class="box box-success hidden">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Se registro exitosamente a <b><?php echo $persona->nombres;?></b></h3>
+                    <h3 class="box-title">Se registro exitosamente a <b><?php echo $persona->primer_nombre;?></b></h3>
                 </div>
                 <!-- /.box-header -->
 

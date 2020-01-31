@@ -169,9 +169,9 @@
                     <?php foreach($participantes as $participante): ?>
                         <tr>
                             <td><?php echo $participante->cedula_persona; ?></td>
-                            <td><?php echo $participante->nombres; ?></td>
+                            <td><?php echo $participante->primer_nombre; ?></td>
                             <td><?php echo $participante->apellidos; ?></td>
-                            <?php $dataParticipante = $participante->cedula_persona.'*'.$participante->nombres.'*'.$participante->apellidos.'*'.$participante->telefono; ?>
+                            <?php $dataParticipante = $participante->cedula_persona.'*'.$participante->primer_nombre.'*'.$participante->apellidos.'*'.$participante->telefono; ?>
                             <td>
                                 <button type='button' class='btn btn-success btn-check-participante-inscripcion' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
                             </td>

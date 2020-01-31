@@ -6,8 +6,8 @@ class Titular_model extends CI_Model {
     public function get_titulares()
     {
         $resultados = $this->db->select(
-            'persona.nombres,
-            persona.apellidos,
+            'persona.primer_nombre,
+            persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,

@@ -41,12 +41,12 @@
                             
                             <div class="form-group">
                                 <label for="nombre_participante">Nombres:</label>
-                                <input type="text" class="form-control" id="nombres_participante" name="nombre_participante" value="<?php echo isset($persona) ? $persona->nombres_persona : ''; ?>">
+                                <input type="text" class="form-control" id="primer_nombre" name="nombre_participante" value="<?php echo isset($persona) ? $persona->primer_nombre : ''; ?>">
                             </div>
 
                             <div class="form-group">
                                 <label for="apellido_participante">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos_participante" name="apellido_participante" value="<?php echo isset($persona) ? $persona->apellidos_persona : ''; ?>">
+                                <input type="text" class="form-control" id="primer_apellido" name="apellido_participante" value="<?php echo isset($persona) ? $persona->primer_apellido : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -145,9 +145,9 @@
                         <?php foreach($personas as $persona): ?>
                             <tr>
                                 <td><?php echo $persona->cedula; ?></td>
-                                <td><?php echo $persona->nombres; ?></td>
-                                <td><?php echo $persona->apellidos; ?></td>
-                                <?php $dataPersona = $persona->cedula.'*'.$persona->nombres.'*'.$persona->apellidos.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
+                                <td><?php echo $persona->primer_nombre; ?></td>
+                                <td><?php echo $persona->primer_apellido; ?></td>
+                                <?php $dataPersona = $persona->cedula.'*'.$persona->primer_nombre.'*'.$persona->primer_apellido.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-participante' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>

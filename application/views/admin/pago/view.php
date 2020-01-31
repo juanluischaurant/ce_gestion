@@ -18,7 +18,7 @@
 	</div>
 
 	<div class="col-xs-6">	
-		<?php echo $pago->nombres_persona . " " . $pago->apellidos_persona;?><br>
+		<?php echo $pago->primer_nombre . " " . $pago->primer_apellido;?><br>
 		<?php echo $pago->cedula; ?><br>
 		<?php $monto_pagado = ($pago->monto_operacion == '') ? '0.00' : $pago->monto_operacion; ?>
 		<?php echo $monto_pagado . ' Bs.';?><br>
