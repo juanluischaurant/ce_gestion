@@ -45,6 +45,7 @@ class Persona_model extends CI_Model {
             persona.fecha_nacimiento,
             TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) as edad,
             persona.telefono,
+            persona.correo_electronico,
             persona.direccion,
             persona.estado,
             persona.fecha_registro')

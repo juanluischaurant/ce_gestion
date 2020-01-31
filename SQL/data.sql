@@ -312,33 +312,28 @@ DELIMITER ;
 DELIMITER $$
 
 CREATE OR REPLACE PROCEDURE insertar_pago_nuevo(
-    IN id_banco INT(11), 
-    IN id_tipo_operacion INT(11), 
-    IN id_titular INT(11), 
-    IN serial_pago VARCHAR(255), 
-    IN numero_operacion VARCHAR(255), 
+    IN id_banco INT(2), 
+    IN id_tipo_de_operacion INT(1), 
+    IN cedula_titular INT(8), 
+    IN numero_referencia_bancaria VARCHAR(45), 
     IN monto_operacion DECIMAL(10,2), 
     IN fecha_operacion DATE)
 
 BEGIN 
 
- INSERT INTO `pago_de_inscripcion`(`fk_id_banco`, `fk_id_tipo_operacion`, `fk_id_titular`, `serial_pago`, `numero_operacion`, `monto_operacion`, `fecha_operacion`) 
- VALUES (id_banco, id_tipo_operacion, id_titular, serial_pago, numero_operacion, monto_operacion, fecha_operacion);
- 
-UPDATE tipo_de_operacion SET tipo_de_operacion.conteo_operaciones = tipo_de_operacion.conteo_operaciones + 1
-WHERE tipo_de_operacion.id_tipo_de_operacion = id_tipo_operacion;
- 
+ INSERT INTO `pago_de_inscripcion`(`id_banco`, `id_tipo_de_operacion`, `cedula_titular`, `numero_referencia_bancaria`, `monto_operacion`, `fecha_operacion`) 
+ VALUES (id_banco, id_tipo_de_operacion, cedula_titular, numero_referencia_bancaria, monto_operacion, fecha_operacion);
+  
 END $$
 
 DELIMITER ;
 
 CALL insertar_pago_nuevo(
     1,
-    3,
-    9,
-    'exo-000008',
-    'EXO000008',
-    10000.00,
+    1,
+    11244320,
+    '010244350282',
+    150000.00,
     '2020-01-07'
     )
 

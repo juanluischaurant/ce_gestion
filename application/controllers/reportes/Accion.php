@@ -26,7 +26,7 @@ class Accion extends CI_Controller
 
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/reportes/acciones', $data);
+        $this->load->view('admin/reporte/acciones', $data);
         $this->load->view('layouts/footer');
     }
 }

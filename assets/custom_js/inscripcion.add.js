@@ -1,5 +1,13 @@
 $(document).ready(function() {
 
+    /**
+     * Parámetros para configurar el objeto DataTable.
+     */
+    // Lista de participantes
+    $('#lista-participante').DataTable({
+        "order": [[ 1, "desc" ]]
+    });
+
     $('#numero-de-operacion').autocomplete({
 
         source: function(request, response) {
@@ -82,9 +90,7 @@ $(document).ready(function() {
         }
     });
 
-
-    $(document).on('click', '.btn-check-participante-inscripcion', function() 
-    {
+    $(document).on('click', '.btn-check-participante-inscripcion', function() {
         let participante = $(this).val(); // Almacena el valor almacenado en el atributo value del botón clickeado
         let infoParticipante = participante.split('*'); // divide la información en un array
 
@@ -104,15 +110,17 @@ $(document).ready(function() {
     });
 
     // Función encargada de almacenar los datos de pago de manera asincrona
-    $(document).on('click', '#btn-guardar-inscripcion-pago', function() {
+    $(document).on('click', '#btn-guardar-inscripcion-pago', function(event) {
+
+        event.preventDefault();
 
         let exito = false; // Do you need it?
 
-        let id_banco_operacion = $('#id-banco-de-operacion').val(),
-        id_tipo_de_operacion = $('#id-tipo-de-pago').val(),
-        id_cliente = $('#cedula-titular').val(),
-        numero_referencia_bancaria = $('#numero-referencia').val(),
-        monto_de_operacion = $('#monto-de-operacion').val(),
+        let id_banco_operacion = $('#id_banco_de_operacion').val(),
+        id_tipo_de_operacion = $('#tipo_de_pago').val(),
+        cedula_titular = $('#cedula_titular').val(),
+        numero_referencia_bancaria = $('#numero_referencia').val(),
+        monto_de_operacion = $('#monto_de_operacion').val(),
         fecha_de_operacion = $('#fecha-operacion').val();
 
         $.ajax({
@@ -120,9 +128,9 @@ $(document).ready(function() {
             type: 'POST',
             dataType: 'JSON',
             data: {
+                cedula_titular: cedula_titular,
                 id_banco_operacion: id_banco_operacion,
                 id_tipo_de_operacion: id_tipo_de_operacion,
-                id_cliente: id_cliente,
                 numero_referencia_bancaria: numero_referencia_bancaria,
                 monto_de_operacion: monto_de_operacion,
                 fecha_de_operacion: fecha_de_operacion
@@ -131,7 +139,7 @@ $(document).ready(function() {
                 // Oculta ventana modal
                 $('#modal-info').modal('hide');
 
-                $('option:selected').prop('selected', false);
+                // $('option:selected').prop('selected', false);
                 $('#serial-de-pago').val(null);
 
                 exito = true; 
@@ -140,7 +148,6 @@ $(document).ready(function() {
 
         return exito;           
     });
-
     
     $('#producto').autocomplete({
 
@@ -220,8 +227,7 @@ $(document).ready(function() {
                     },
                     success: function( data, textStatus, jQxhr ) {
 
-                        let idParticipante = $('#cedula_participante').val(), // Almacena el ID del participante a inscribir
-                        existe = false; // Al encontrar al participante cambia a TRUE
+                        let existe = false; // Al encontrar al participante cambia a TRUE
 
                         // Itera sobre cada OBJETO obtenido durante la llamada AJAX
                         for(let i = 0; i < data.length; i++)
@@ -255,7 +261,7 @@ $(document).ready(function() {
 
                             $('#tabla-cursos tbody').append(html);
 
-                            // Verifica el estado del atributo "disabled" del botón clickeado 
+                            // Verifica el estado del atributo "disabled" del botón clickeado
                             switchGuardarInscripcion();
 
                             // Vacía al elemento Producto
@@ -305,30 +311,73 @@ $(document).ready(function() {
         sumar();
     });
 
+    /**
+     * Verifica que el número de operación sea único antes de enviar la solicitud
+     * a la base de datos.
+     */
+    $('#numero_referencia').on('keyup click cut copy paste drop', function() {
+
+        // Al alterar el contenido de la caja de texto desactiva el botón de guardado
+        $('#btn-guardar-inscripcion-pago').attr('disabled', true);
+    });
+
+    /**
+     * Al presionar el botón de verificar pago, ubicado en la vista de
+     * añadir inscripción, consulta que el número provisto sea único.
+     */
+    $('#verificar-numero-pago').on('click', function() {
+
+        numeroEvaluado = $('#numero_referencia').val();
+
+        $.ajax({
+            url: base_url + "movimientos/pago/pago_unico",
+            type: "POST",
+            dataType: "json",
+            data: {
+                query: numeroEvaluado
+            },
+            success: function(data) {
+                
+                if(data == false) {   
+                    alert(data)
+                }
+                
+                if(data == true) {
+                    $('#numero_referencia').parent().addClass('has-success');
+                    $('label[for="numero_referencia"] i').removeClass('hidden');
+                    $('#btn-guardar-inscripcion-pago').removeAttr('disabled');
+                }
+
+
+            }
+        });
+        return false;
+    });
+
 });
 
  /**
-     * Permite actualizar la sumatoria del campo Costo de Inscripción
-     * en la vista de agregar inscripción.
-     *
-     * @return void
-     */
-    function sumar_costo_inscripcion() {
+ * Permite actualizar la sumatoria del campo Costo de Inscripción
+ * en la vista de agregar inscripción.
+ *
+ * @return void
+ */
+function sumar_costo_inscripcion() {
 
-        // Calcula el total cada vez que se llama esta función
-        let costo_inscripcion = 0;       
+    // Calcula el total cada vez que se llama esta función
+    let costo_inscripcion = 0;       
+    
+    // Por cada elemento <tr> dentro del tbody en #tabla-cursos
+    $('#tabla-cursos tbody tr').each(function() {
         
-        // Por cada elemento <tr> dentro del tbody en #tabla-cursos
-        $('#tabla-cursos tbody tr').each(function() {
-            
-            // Cacula
-            costo_inscripcion += Number($(this).find('td:eq(4)').text());
-        });
+        // Cacula
+        costo_inscripcion += Number($(this).find('td:eq(4)').text());
+    });
 
-        $('input[name=costo-de-inscripcion]').val(costo_inscripcion.toFixed(2));
+    $('input[name=costo-de-inscripcion]').val(costo_inscripcion.toFixed(2));
 
-        if($('input[name=monto-en-operacion]').val() !== '') {
+    if($('input[name=monto-en-operacion]').val() !== '') {
 
-            $('input[name=deuda]').val($('input[name=costo-de-inscripcion]').val() - $('input[name=monto-en-operacion]').val())
-        }
+        $('input[name=deuda]').val($('input[name=costo-de-inscripcion]').val() - $('input[name=monto-en-operacion]').val())
     }
+}

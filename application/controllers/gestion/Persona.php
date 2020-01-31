@@ -105,66 +105,6 @@ class Persona extends CI_Controller {
 		}
 	}
 	
-	/**
-	 * Método invocado al presionar el botón de guardado en el formulario correspondiente
-	 *
-	 * @return void
-	 */
-	public function store() 
-	{
-		$cedula = $this->input->post("cedula_persona");
-		$nombres = $this->input->post('nombre_persona');
-		$apellidos = $this->input->post('apellido_persona');
-		$fecha_nacimiento = $this->input->post('nacimiento_persona');
-		$genero = $this->input->post('genero_persona');
-		$telefono = $this->input->post('telefono_persona');
-		$correo_electronico = $this->input->post('correo-persona');
-		$direccion = $this->input->post('direccion-persona');
-		
-		$data_persona = array(
-			'cedula' => $cedula,
-			'nombres' => $nombres,
-			'apellidos' => $apellidos,
-			'fecha_nacimiento' => $fecha_nacimiento,
-			'genero' => $genero,
-			'telefono' => $telefono,
-			'correo_electronico' => $correo_electronico,
-			'direccion' => $direccion,
-			'estado' => '1'
-		);
-		
-		// Reglas declaradas para la validación de formularios en el directorio application/config/form_validation.php
-		// Si la validación es correcta
-		if($this->form_validation->run('agregar_persona'))
-		{
-			// Procede a guardar los datos
-			if($this->Persona_model->save($data_persona))
-			{ 
-				$id_ultimo_registro = $this->Persona_model->lastID(); // id del último registro creado
-
-				$id_usuario = $this->session->userdata('username'); // ID del usuario con sesión iniciada
-				$id_tipo_accion = 2; // Tipo de acción ejecudada (clave foránea)
-				$descripcion = "PERSONA ID: " . $id_ultimo_registro; // Texto de descripción de acción
-				$tabla_afectada = "PERSONA"; // Tabla afectada
-
-				$agregar_accion = $this->Accion_model->save_action($id_usuario, $id_tipo_accion, $descripcion, $tabla_afectada);
-	
-				// Redirige a la vista "success" dentro de este controlador
-				// $this->success($id_ultimo_registro);
-				redirect(base_url().'gestion/persona/success/'.$id_ultimo_registro);
-			}
-			else
-			{
-				$this->session->set_flashdata('error', 'No se pudo guardar la información');
-				redirect(base_url().'gestion/persona/add');	
-			}
-		}
-		else
-		{
-			// $this hace referencia al módulo donde es invocado
-			$this->add();
-		}	
-	}
 	
 	/**
 	 * Carga en la vista una pantalla que permite al usuario escoger un rol
@@ -202,46 +142,99 @@ class Persona extends CI_Controller {
 	 */
 	public function add_rol()
 	{
-		$id_persona = $this->input->post('id_persona');
+		$cedula_persona = $this->input->post('cedula_persona');
 		$participante = $this->input->post('participante');
 		$nivel_academico_participante = $this->input->post('nivel_academico_participante');
 		$titular = $this->input->post('titular');
 
-		$mensaje = '';
-
 		if($participante !== '')
 		{
-			$no_registrado = $this->Participante_model->duplicidad_participante($id_persona);
+			$no_registrado = $this->Participante_model->duplicidad_participante($cedula_persona);
 
 			// Verifica si esta persona ya está registrada como participante
 			if($no_registrado === TRUE)
 			{
 				$data_participante = array(
-					'id_persona' => $id_persona,
+					'cedula_persona' => $cedula_persona,
 					'id_nivel_academico' => $nivel_academico_participante
 				);
 
-				$this->Participante_model->save($data_participante);
-				echo 'hi';
-				$mensaje .= 'participante';
+				if($this->Participante_model->save($data_participante))
+				{
+					$this->guardar_accion(2, $cedula_persona, 'PARTICIPANTE');
+				}
 			}
 		}
 
 		if($titular !== '')
 		{
-			$no_registrado = $this->Titular_model->duplicidad_persona($id_persona);
 			// Verifica si esta persona ya está registrada como titular
+			$no_registrado = $this->Titular_model->duplicidad_titular($cedula_persona);
+
 			if($no_registrado === TRUE)
 			{
-				$data_titular = array( 'id_persona' => $id_persona, );
+				$data_titular = array( 'cedula_persona' => $cedula_persona, );
 
-				$this->Titular_model->save($data_titular);
-				echo 'ho';
-				$mensaje .= ' titular';
+				if($this->Titular_model->save($data_titular))
+				{
+					$this->guardar_accion(2, $cedula_persona, 'TITULAR');
+				}
 			}
 		}
+	}
 
-		echo $mensaje;
+	/**
+	 * Método invocado al presionar el botón de guardado en el formulario correspondiente
+	 *
+	 * @return void
+	 */
+	public function store() 
+	{
+		$cedula = $this->input->post("cedula_persona");
+		$nombres = $this->input->post('nombre_persona');
+		$apellidos = $this->input->post('apellido_persona');
+		$fecha_nacimiento = $this->input->post('nacimiento_persona');
+		$genero = $this->input->post('genero_persona');
+		$telefono = $this->input->post('telefono_persona');
+		$correo_electronico = $this->input->post('correo-persona');
+		$direccion = $this->input->post('direccion-persona');
+		
+		$data_persona = array(
+			'cedula' => $cedula,
+			'nombres' => $nombres,
+			'apellidos' => $apellidos,
+			'fecha_nacimiento' => $fecha_nacimiento,
+			'genero' => $genero,
+			'telefono' => $telefono,
+			'correo_electronico' => $correo_electronico,
+			'direccion' => $direccion,
+			'estado' => '1'
+		);
+		
+		// Reglas declaradas para la validación de formularios en el directorio application/config/form_validation.php
+		// Si la validación es correcta
+		if($this->form_validation->run('agregar_persona'))
+		{
+			// Procede a guardar los datos
+			if($this->Persona_model->save($data_persona))
+			{
+				$this->guardar_accion(2, $cedula, 'PERSONA');
+				
+				// Redirige a la vista "success" dentro de este controlador
+				// $this->success($id_ultimo_registro);
+				redirect(base_url().'gestion/persona/success/'.$cedula);
+			}
+			else
+			{
+				$this->session->set_flashdata('error', 'No se pudo guardar la información');
+				redirect(base_url().'gestion/persona/add');	
+			}
+		}
+		else
+		{
+			// $this hace referencia al módulo donde es invocado
+			$this->add();
+		}	
 	}
 	
 	public function update() 
@@ -271,13 +264,8 @@ class Persona extends CI_Controller {
 		{
 			if($this->Persona_model->update($cedula, $data))
 			{
-				// $username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
-				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-				// $descripcion_accion = "PERSONA CÉDULA: " . $cedula; // Texto de descripción de acción
-				// $tabla_afectada = "PERSONA"; // Tabla afectada
+				$this->guardar_accion(3, $cedula, 'PERSONA');
 
-				// $agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
-				
 				$this->session->set_flashdata('success', 'Datos actualizados correctamente');
 				redirect(base_url().'gestion/persona');
 			}
@@ -294,23 +282,43 @@ class Persona extends CI_Controller {
 		}		
 	}
 
-	public function delete($id_persona)
+	public function delete($cedula_persona)
 	{
 		$data = array(
 			'estado' => 0,
 		);
 		
-		if($this->Persona_model->update($id_persona, $data))
+		if($this->Persona_model->update($cedula_persona, $data))
 		{
-			$fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-			$fk_id_tipo_accion = 1; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-			$descripcion_accion = "PERSONA ID: " . $id_persona; // Texto de descripción de acción
-			$tabla_afectada = "PERSONA"; // Tabla afectada
-
-			$agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
-
+			$this->guardar_accion(1, $cedula, 'PERSONA');
 			echo 'gestion/persona';
 		};
+	}
+
+	/**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "CÉDULA: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
+		}
 	}
 
 	/**

@@ -166,7 +166,7 @@ INSERT INTO `tipo_de_accion` (`nombre`, `tipo_notificacion`, `estado`, `fecha_re
 
 DROP TABLE IF EXISTS `accion`;
 CREATE TABLE `accion` (
-  `id` int(11) NOT NULL COMMENT 'ID de la tabla',
+  `id` int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT COMMENT 'ID de la tabla',
   `username` varchar(10) NOT NULL COMMENT 'Referencia al usuario del sistema que realizó la acción',
   `id_tipo_accion` INT(2) NOT NULL COMMENT 'Referencia al tipo de acción realizada',
   `descripcion` varchar(100) NOT NULL COMMENT 'Descripción de la acción realizada',

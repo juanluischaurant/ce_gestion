@@ -12,7 +12,9 @@
     <section class="content">
         <!-- Default box -->
         <div class="box box-solid">
+
             <div class="box-body">
+            
                 <div class="row">
                     <div class="col-md-12">
 
@@ -74,18 +76,18 @@
                             </div>
 
                             <div class="form-group">
-                                    <?php
-                                        $atributos = array('class' => 'form-control', 'id' => 'nivel_academico', 'required' => 'required');
-                                    
-                                        // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
-                                        // Verifica si se encuentra asignada (isset) la variable $persona
-                                                                
-                                        echo form_label('Nivel Académico:'); // Genera la etiqueta
-    
-                                        // Genera el elemento "select"
-                                        // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
-                                        echo form_dropdown('nivel_academico', $nivel_academico, '', $atributos);
-                                    ?>
+                                <?php
+                                    $atributos = array('class' => 'form-control', 'id' => 'nivel_academico', 'required' => 'required');
+                                
+                                    // Almacena el valor correspondiente a cada género (1=Masculino, 2=Femenino)
+                                    // Verifica si se encuentra asignada (isset) la variable $persona
+                                                            
+                                    echo form_label('Nivel Académico:'); // Genera la etiqueta
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, seleccionado, atributos
+                                    echo form_dropdown('nivel_academico', $nivel_academico, '', $atributos);
+                                ?>
                             </div>
 
                             <div class="form-group">
@@ -109,10 +111,13 @@
                 </div>
             </div>
             <!-- /.box-body -->
+
         </div>
         <!-- /.box -->
+
     </section>
     <!-- /.content -->
+
 </div>
 <!-- /.content-wrapper -->
 

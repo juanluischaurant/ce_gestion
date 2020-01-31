@@ -17,7 +17,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="export-acciones" class="table table-bordered btn-hover">
+                        <table id="lista-accion" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -33,7 +33,7 @@
                                         <td><?php echo $accion->id; ?></td>
                                         <td><?php echo $accion->fecha_registro; ?></td>
                                         <td><?php echo $accion->username; ?></td>
-                                        <td><?php echo $accion->nombre . ' ' .$accion->descripcion; ?></td>
+                                        <td><?php echo $accion->nombre . ' ' . $accion->tabla_afectada . '. ' .$accion->descripcion; ?></td>
                                     </tr>
                                  <?php endforeach; ?>
                                 <?php endif; ?>
@@ -50,3 +50,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/accion.js"></script>

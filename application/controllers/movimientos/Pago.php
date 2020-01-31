@@ -52,11 +52,11 @@ class Pago extends CI_Controller {
         // ¿Se utiliza esta variable?
         // $modulo = $this->input->post('modulo-actual');
 
-        $id_banco_operacion = $this->input->post('id-banco-de-operacion');
-        $id_tipo_de_operacion = $this->input->post('id-tipo-de-pago');
-        $cedula_titular = $this->input->post('cedula-titular');
-        $numero_referencia_bancaria = $this->input->post('numero-referencia');
-        $monto_de_operacion = $this->input->post('monto-de-operacion');
+        $id_banco_operacion = $this->input->post('id_banco_de_operacion');
+        $id_tipo_de_operacion = $this->input->post('id_tipo_de_pago');
+        $cedula_titular = $this->input->post('cedula_titular');
+        $numero_referencia_bancaria = $this->input->post('numero_referencia');
+        $monto_de_operacion = $this->input->post('monto_de_operacion');
         $fecha_de_operacion = $this->input->post('fecha-operacion');
 
         $data = array(
@@ -71,7 +71,7 @@ class Pago extends CI_Controller {
             $data['id_banco'] = $id_banco_operacion;
             $data['numero_referencia_bancaria' ] = $numero_referencia_bancaria;
 
-            $this->form_validation->set_rules('numero-referencia', 'Número de Referencia', 'required|is_unique[pago_de_inscripcion.numero_referencia_bancaria]'); 
+            $this->form_validation->set_rules('numero_referencia', 'Número de Referencia', 'required|is_unique[pago_de_inscripcion.numero_referencia_bancaria]'); 
         }
   
         $this->form_validation->set_rules('fecha-operacion', 'Fecha de Operación', 'required'); 
@@ -209,11 +209,11 @@ class Pago extends CI_Controller {
 	{
 		$id_pago = $this->input->post('id-pago');
 
-		$cedula_titular = $this->input->post('cedula-titular');
-        $monto_operacion = $this->input->post('monto-de-operacion');
+		$cedula_titular = $this->input->post('cedula_titular');
+        $monto_operacion = $this->input->post('monto_de_operacion');
         $fecha_operacion = $this->input->post('fecha-operacion');
-        $id_banco = $this->input->post('id-banco-de-operacion');
-        $numero_referencia_bancaria = $this->input->post('numero-referencia');
+        $id_banco = $this->input->post('id_banco_de_operacion');
+        $numero_referencia_bancaria = $this->input->post('numero_referencia');
 
 		$data = array(
             'fk_id_titular' => $cedula_titular,

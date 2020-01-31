@@ -17,7 +17,10 @@
             <div id="caja-principal" class="box box-primary">
 
                 <div class="box-header with-border">
-                    <h3 class="box-title">Un paso más antes de terminar</h3>
+                    <h3 class="box-title">
+                        Un paso más antes de terminar
+                    </h3>
+                    <div class="lds-ellipsis hidden"><div></div><div></div><div></div><div></div></div>    
                 </div>
                 <!-- /.box-header -->
 
@@ -31,14 +34,14 @@
                     <form id="add-rol-persona" method="POST">
 
                         <!-- ID de la persona -->
-                        <input type="hidden" name="id-persona" value="<?php echo $persona->id; ?>">
+                        <input type="hidden" name="cedula-persona" value="<?php echo $persona->cedula; ?>">
 
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-10">
                                     <div class="checkbox">
                                         <label>
-                                            <input type="checkbox" name="rol-participante">
+                                            <input type="checkbox" name="rol-participante" value="participante">
                                             <b>Participante</b>
                                         </label>
                                     </div>
@@ -78,7 +81,7 @@
 
                         <div class="form-group">
                             <p class=>Agregar un facilitador puede requerir permisos especiales.</p>
-                            <a class="btn btn-flat btn-warning btn-xs" href="<?php echo base_url(); ?>gestion/facilitador/add/<?php echo $persona->id;?>">Facilitador</a>
+                            <a class="btn btn-flat btn-warning btn-xs" href="<?php echo base_url(); ?>gestion/facilitador/add/<?php echo $persona->cedula;?>">Facilitador</a>
                         </div>
 
                     </form>
@@ -96,7 +99,7 @@
 
             <div id="caja-secundaria" class="box box-success hidden">
                 <div class="box-header with-border">
-                    <h3 class="box-title"><?php echo $persona->nombres;?> ha sido registrado exitosamente</h3>
+                    <h3 class="box-title">Se registro exitosamente a <b><?php echo $persona->nombres;?></b></h3>
                 </div>
                 <!-- /.box-header -->
 
@@ -128,7 +131,7 @@
                 <!-- /.box-body -->
 
                 <div class="box-footer">
-                    <button type="button" class="btn btn-success btn-flat">Pantalla Principal</button>
+                    <a id="redirige-hasta-dashboard" class="btn btn-success btn-flat">Pantalla Principal</a>
                 </div>
                 <!-- /.box-footer -->
                 </form>
@@ -145,3 +148,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/success.js"></script>

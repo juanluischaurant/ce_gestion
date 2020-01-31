@@ -13,9 +13,6 @@
 <script>
     $(document).ready(function () {
 
-        // Activa el pluggin jQuery InputMask
-        // $('[data-mask]').inputmask();
-
         $('.sidebar-menu').tree(); // Menú lateral
 
         // =============================================
@@ -42,98 +39,6 @@
         });
 
         // =============================================
-        // JS para Inscripciones
-        // =============================================
-        
-        // Cambia el estado de un registro dado
-        // Este botón funciona de manera similar en distintos formularios
-        // $('.btn-deactivate-inscripcion').on('click', function(e) {
-
-        //     // Código para el botón de eliminar en las tablas
-        //     e.preventDefault();
-        //     let tr_element = $(this).closest('tr');
-        //     let ruta = $(this).attr('href');
-
-        //     $.ajax({
-        //         url: ruta,
-        //         type: 'POST',
-        //         success: function(response) {
-        //             // window.location.href = base_url+response;
-        //             tr_element.remove();
-        //         }
-        //     });
-        // });   
-        
-        /**
-         * Botón que se encuentra ubicado en la vista de Éxito, mostrada luego
-         * de registrar a una persona exitosamente en la base de datos.
-         */
-        $('#add-roles-persona').on('click', function(event) {
-
-            let id_persona = $('input[name="id-persona"]').val();
-            let participante = $('input[name="rol-participante"]');
-            let nivelAcademicoParticipante = $('select[name="nivel-academico-participante"]');
-            let titular = $('input[name="rol-titular"]');
-
-            if(participante.is(":checked")) {
-                participante = 'participante';
-                nivelAcademicoParticipante = nivelAcademicoParticipante.val();
-            } else if(participante.is(":not(:checked)"))
-            {
-                participante = '';
-            }
-
-            if(titular.is(":checked")) {
-                titular = 'titular'
-            } else if(titular.is(":not(:checked)"))
-            {
-                titular = '';
-            }
-       
-            $.ajax({
-                url: base_url + "gestion/persona/add_rol",
-                type: 'POST',
-                data: {
-                    id_persona: id_persona,
-                    participante: participante,
-                    nivel_academico_participante: nivelAcademicoParticipante,
-                    titular: titular
-                },
-                success: function(response) {
-
-                }
-            });
-            $('#caja-principal').hide();
-            $('#caja-secundaria').toggleClass('hidden');
-
-            if(participante !== '') {
-                $('#redirecciona-inscribir').toggleClass('hidden');
-            }
-            if(titular !== '') {
-                $('#redirecciona-pago').toggleClass('hidden');
-            }
-            if(titular == '' && participante == '') { 
-                $('#redirecciona-inicio').toggleClass('hidden');
-            }
-
-            return false;
-        });
-
-        /**
-         * Al presionar el checkbox indicado, se debe ocultar o mostrar
-         * el selector de nivel académico que por defecto se encuentra 
-         * inactivo. 
-         */
-        $('input[name="rol-participante"]').on('click', function() {
-            $('select[name="nivel-academico-participante"]').parent().toggleClass('hidden')
-        });
-
-        // =============================================
-        // Fin de JS para Inscripciones
-        // =============================================
-
-
-        // =============================================
         // JS para Locaciones
         // =============================================
         $(document).on("click",".btn-view-locacion",function() {
@@ -154,54 +59,7 @@
             });
         });
 
-        /**
-         * Verifica que el número de operación sea único antes de enviar la solicitud
-         * a la base de datos.
-         */
-        $('#numero-referencia').on('keyup click cut copy paste drop', function() {
-
-            // Al alterar el contenido de la caja de texto desactiva el botón de guardado
-            $('#btn-guardar-inscripcion-pago').attr('disabled', true);
-        });
-
-        $('#verificar-numero-pago').on('click', function() {
-
-            numeroEvaluado = $(this).val();
-
-            $.ajax({
-                url: base_url + "movimientos/pago/pago_unico",
-                type: "POST",
-                dataType: "json",
-                data: {
-                    query: numeroEvaluado
-                },
-                success: function(data) {
-
-                    
-                    if(data == false) {
-                        
-                        alert(data)
-                    }
-                    
-                    if(data == true) {
-                        $('#numero-referencia').parent().addClass('has-success');
-                        $('label[for="numero-referencia"] i').removeClass('hidden');
-                        $('#btn-guardar-inscripcion-pago').removeAttr('disabled');
-                    }
-
-                    // $('#caja-principal').hide();
-                    // $('#caja-secundaria').toggleClass('hidden');
-                    // $('#btn-guardar-inscripcion-pago').toggleClass('disabled')
-
-                    // $('#id-periodo-curso').val(data);
-
-                }
-            });
-            return false;
-        });
-
-        $(document).on('click', '.btn-view-inscripcion', function()
-        {
+        $(document).on('click', '.btn-view-inscripcion', function() {
             dataInscripcion = $(this).val();
             datosInscripcion = dataInscripcion.split('*');
 

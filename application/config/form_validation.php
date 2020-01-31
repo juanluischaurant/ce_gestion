@@ -110,7 +110,7 @@ $config = array(
     // movimientos/pago/update
     'editar_pago' => array(
         array(
-            'field' => 'monto-de-operacion',
+            'field' => 'monto_de_operacion',
             'label' => 'Monto de Operacion',
             'rules' => 'required|trim|min_length[2]|max_length[95]'
         ),

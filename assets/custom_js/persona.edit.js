@@ -9,7 +9,7 @@ $(document).ready(function() {
                     stringLength: {
                         min: 7,
                         max: 11,
-                        message:'Ingrese entre 6 y 15 caractéres'
+                        message:'Ingrese entre 7 y 15 caractéres'
                     },
                     notEmpty: {
                         message: 'Campo obligatorio'

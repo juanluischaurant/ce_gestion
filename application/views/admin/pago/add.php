@@ -35,7 +35,7 @@
                                     <!-- Campo select rellenado con data de la BD -->
                                     <label for="">Tipo de Pago</label>
                                     
-                                    <select name="tipo-de-pago" id="tipo-de-pago" class="form-control" required>
+                                    <select name="tipo_de_pago" id="tipo_de_pago" class="form-control" required>
                                         <option value="">Seleccione...</option>
                                         <?php foreach($tipos_de_operacion as $tipo_de_operacion) : ?>
                                             <?php $id_tipo_de_operacion = $tipo_de_operacion->id; ?>
@@ -43,7 +43,7 @@
                                         <?php endforeach; ?>
                                     </select>
 
-                                    <input type="hidden" id="id-tipo-de-pago" name="id-tipo-de-pago">
+                                    <input type="hidden" id="id_tipo_de_pago" name="id_tipo_de_pago">
                                     <!-- Fin del campo -->
 
                                 </div>
@@ -53,8 +53,8 @@
 
                             <div class="form-group">
                                 <div class="col-md-3">
-                                    <label for="cedula-titular">Cédula del Titular</label>
-                                    <input type="text" class="form-control" id="cedula-titular" name='cedula-titular'>
+                                    <label for="cedula_titular">Cédula del Titular</label>
+                                    <input type="text" class="form-control" id="cedula_titular" name='cedula_titular'>
                                 </div>
          
                                 <div class="col-md-6">
@@ -69,7 +69,7 @@
 
                                 <div class="col-md-4">
                                     <label for="">Monto de Operación</label>
-                                    <input type="text" class="form-control" id="monto-de-operacion" name="monto-de-operacion" value="<?php echo set_value('monto-de-operacion'); ?>">
+                                    <input type="text" class="form-control" id="monto_de_operacion" name="monto_de_operacion" value="<?php echo set_value('monto_de_operacion'); ?>">
                                 </div>
 
                                 <div class="col-md-4">
@@ -82,14 +82,14 @@
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="">Banco de Operación</label>
-                                    <input type="text" class="form-control" id="banco-de-operacion" name="banco-de-operacion">
-                                    <input type="hidden" id="id-banco-de-operacion" name="id-banco-de-operacion">  
+                                    <input type="text" class="form-control" id="banco_de_operacion" name="banco_de_operacion">
+                                    <input type="hidden" id="id_banco_de_operacion" name="id_banco_de_operacion">  
                                 </div>
 
-                                <div class="col-md-4 <?php echo !empty(form_error('numero-referencia')) ? 'has-error' : ''; ?>">
+                                <div class="col-md-4 <?php echo !empty(form_error('numero_referencia')) ? 'has-error' : ''; ?>">
                                     <label for="">Número de Referencia</label>
-                                    <input type="text" class="form-control" id="numero-referencia" name="numero-referencia" value="<?php echo set_value('numero-referencia'); ?>">
-                                    <?php echo form_error('numero-referencia', '<span class="help-block">', '</span>'); ?>
+                                    <input type="text" class="form-control" id="numero_referencia" name="numero_referencia" value="<?php echo set_value('numero_referencia'); ?>">
+                                    <?php echo form_error('numero_referencia', '<span class="help-block">', '</span>'); ?>
                                 </div>
 
                             </div>

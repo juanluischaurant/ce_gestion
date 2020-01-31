@@ -44,7 +44,7 @@ class Titular_model extends CI_Model {
      * @param integer $id
      * @return boolean
      */
-    public function duplicidad_persona($cedula_persona)
+    public function duplicidad_titular($cedula_persona)
     {
         // Al momento de asignar el rol de Facilitador a una Persona, verifica que esta acción no haya sido realizada anteriormente
         $query = $this->db->select('cedula_persona')

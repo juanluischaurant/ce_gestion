@@ -4,12 +4,12 @@ $(document).ready(function() {
      * Detecta cuando el tipo de pago es seleccionado, y responde en base a la opción
      * seleccionada.
      */
-    $('#tipo-de-pago').on('change', function() {
+    $('#tipo_de_pago').on('change', function() {
 
         let idTipoOperacion = $(this).val();
 
         // Almacena el id único del tipo de pago en un elemento HTML oculto
-        $('#id-tipo-de-pago').val(idTipoOperacion);
+        $('#id_tipo_de_pago').val(idTipoOperacion);
 
         limpiarCampos();
         configurarTipoOperacion(idTipoOperacion);    
@@ -17,7 +17,7 @@ $(document).ready(function() {
 
     /**
      * Activa o desactiva los campos del formulario de pago en base
-     * al valor seleccionado por el usuario.
+     * al valor (tipo de operación) seleccionado por el usuario.
      * 
      * @param {integer} tipoOperacion 
      */
@@ -25,38 +25,53 @@ $(document).ready(function() {
 
         if(tipoOperacion == 1) {
             // Transferencia
-            $('#banco-de-operacion')
+            $('#banco_de_operacion')
                 .prop('disabled', false);
 
-            $('#monto-de-operacion')
+            $('#monto_de_operacion')
                 .prop('disabled', false);
 
-            $('#numero-referencia')
+            $('#numero_referencia')
                 .prop('disabled', false);
+
+            $('#btn-guardar-inscripcion-pago')
+                .prop('disabled', true);
         }
 
         if(tipoOperacion == 2) {
             // Efectivo
-            $('#banco-de-operacion')
+            $('#banco_de_operacion')
                 .prop('disabled', true);
+                
+            $('#id_banco_de_operacion')
+                .val(4);
 
-            $('#monto-de-operacion')
+            $('#monto_de_operacion')
                 .prop('disabled', false);
 
-            $('#numero-referencia')
+            $('#numero_referencia')
                 .prop('disabled', true);
+
+            $('#btn-guardar-inscripcion-pago')
+                .prop('disabled', false);
         }
         
         if(tipoOperacion == 3) {
             // Exonerado
-            $('#banco-de-operacion')
+            $('#banco_de_operacion')
+                .prop('disabled', true);
+            
+            $('#id_banco_de_operacion')
+                .val(4);
+
+            $('#monto_de_operacion')
                 .prop('disabled', true);
 
-            $('#monto-de-operacion')
+            $('#numero_referencia')
                 .prop('disabled', true);
-
-            $('#numero-referencia')
-                .prop('disabled', true);
+            
+            $('#btn-guardar-inscripcion-pago')
+                .prop('disabled', false);
         }   
     }
 
@@ -65,16 +80,16 @@ $(document).ready(function() {
      */
     function limpiarCampos() {
 
-        $('#banco-de-operacion')
+        $('#banco_de_operacion')
             .val('');
 
-        $('#id-banco-de-operacion')
+        $('#id_banco_de_operacion')
             .val('');
 
-        $('#monto-de-operacion')
+        $('#monto_de_operacion')
             .val('');
 
-        $('#numero-referencia')
+        $('#numero_referencia')
             .val('');
     }
   
@@ -94,7 +109,7 @@ $(document).ready(function() {
         });
     });
 
-    $('#cedula-titular').autocomplete({
+    $('#cedula_titular').autocomplete({
         source: function(request, response) {
             $.ajax({
                 url: base_url+'movimientos/pago/get_titulares_json',
@@ -114,11 +129,11 @@ $(document).ready(function() {
             $('#nombre_titular').val(ui.item.nombre_titular);
 
             // Imprime la cédula del titular seleccionado
-            $('#cedula-titular').val(ui.item.cedula_persona);
+            $('#cedula_titular').val(ui.item.cedula_persona);
         }
     });
 
-    $('#banco-de-operacion').autocomplete({
+    $('#banco_de_operacion').autocomplete({
         source: function(request, response) {
             $.ajax({
                 url: base_url+'movimientos/pago/get_bancos_json',
@@ -133,7 +148,70 @@ $(document).ready(function() {
             });
         }, minLength: 3,
         select: function(event, ui) {
-            $('#id-banco-de-operacion').val(ui.item.id);
+            $('#id_banco_de_operacion').val(ui.item.id);
+        }
+    });
+
+    $('#registrar_pago').bootstrapValidator({
+        messasge: 'Campo no válido',
+        excluded: [':disabled'],
+        fields: {
+            tipo_de_pago: {
+                validators: {
+                    notEmpty: {
+                        message: 'Seleccione una opción'
+                    },
+                }
+            },
+            cedula_titular: {
+                validators: {
+                    stringLength: {
+                        max: 8,
+                        message:'Ingrese máximo 8 caractéres'
+                    },
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                    numeric: {
+                        message: 'Ingrese solo valores numéricos'
+                    }
+                }
+            },
+            monto_de_operacion: {
+                validators: {
+                    stringLength: {
+                        max: 11,
+                        message:'Ingrese máximo 11 caractéres'
+                    },
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                    numeric: {
+                        message: 'Ingrese solo valores numéricos'
+                    }
+                }
+            },
+            banco_de_operacion: {
+                validators: {
+                    stringLength: {
+                        max: 55,
+                        message:'Ingrese máximo 55 caractéres'
+                    },
+                }
+            },
+            numero_referencia: {
+                validators: {
+                    stringLength: {
+                        min: 4,
+                        max: 45,
+                        message:'Ingrese entre 4 y 45 caractéres'
+                    },
+                    numeric: {
+                        message: 'Ingrese solo valores numéricos'
+                    }
+                }
+            },
+         
         }
     });
 

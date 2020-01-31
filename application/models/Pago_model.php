@@ -124,7 +124,7 @@ class Pago_model extends CI_Model {
    */
   public function insertar_pago_procedure($data)
   {
-    $SQL = "CALL insertar_pago_nuevo(?, ?, ?, ?, ?, ?, ?)";
+    $SQL = "CALL insertar_pago_nuevo(?, ?, ?, ?, ?, ?)";
 
     return $query = $this->db->query($SQL, $data);
 
@@ -193,10 +193,10 @@ class Pago_model extends CI_Model {
   public function pago_unico($numero_referencia_bancaria)
   {
     $resultado = $this->db->select(
-      'pdi.numero_transferencia'
+      'pdi.numero_referencia_bancaria'
       )
     ->from('pago_de_inscripcion as pdi')
-    ->where('pdi.numero_transferencia', $numero_referencia_bancaria)
+    ->where('pdi.numero_referencia_bancaria', $numero_referencia_bancaria)
     ->get();
 
     if($resultado->num_rows() < 1)

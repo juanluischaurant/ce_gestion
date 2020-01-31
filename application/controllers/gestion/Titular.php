@@ -64,7 +64,7 @@ class Titular extends CI_Controller {
 			'cedula_persona' => $cedula_persona,
 		);
 
-		if($this->Titular_model->duplicidad_persona($cedula_persona) === TRUE)
+		if($this->Titular_model->duplicidad_titular($cedula_persona) === TRUE)
 		{
 			if($this->Titular_model->save($data_cliente))
 			{

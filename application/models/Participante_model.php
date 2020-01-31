@@ -95,7 +95,7 @@ class Participante_model extends CI_Model {
 
     public function update($id, $data)
     {
-        $this->db->where('id_participante', $id);
+        $this->db->where('cedula_persona', $id);
         return $this->db->update('participante', $data);
     }
     
