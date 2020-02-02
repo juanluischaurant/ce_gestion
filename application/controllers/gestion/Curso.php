@@ -336,7 +336,7 @@ class Curso extends CI_Controller {
 			else
 			{
 				$pdf->Cell(6, 6, $i++, 1, 0, 'C');
-				$pdf->Cell(69,6, utf8_decode($participante->primer_nombre) . " " . utf8_decode($participante->primer_apellido), 1, 0, 'C');
+				$pdf->Cell(69,6, utf8_decode($participante->primer_nombre) . " " . utf8_decode($participante->apellidos_persona), 1, 0, 'C');
 				$pdf->Cell(28,6, $participante->cedula,1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');

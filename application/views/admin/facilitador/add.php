@@ -43,8 +43,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido_facilitador">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido_facilitador" name="apellido_facilitador" value="<?php echo isset($persona) ? $persona->primer_apellido : ''; ?>">
+                                <label for="primer_apellido">Apellidos:</label>
+                                <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" value="<?php echo isset($persona) ? $persona->primer_apellido : ''; ?>">
                             </div>
 
                             <div class="form-group">
@@ -126,8 +126,8 @@
                             <tr>
                                 <td><?php echo $persona->cedula; ?></td>
                                 <td><?php echo $persona->primer_nombre; ?></td>
-                                <td><?php echo $persona->apellidos; ?></td>
-                                <?php $dataPersona = $persona->cedula.'*'.$persona->primer_nombre.'*'.$persona->apellidos.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
+                                <td><?php echo $persona->primer_apellido; ?></td>
+                                <?php $dataPersona = $persona->cedula.'*'.$persona->primer_nombre.'*'.$persona->primer_apellido.'*'.$persona->telefono.'*'.$persona->fecha_nacimiento.'*'.$persona->genero.'*'.$persona->direccion; ?>
                                 <td>
                                     <button type='button' class='btn btn-success btn-check-facilitador' value='<?php echo $dataPersona; ?>'><span class="fa fa-check"></span></button>
                                 </td>

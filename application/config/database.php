@@ -76,7 +76,7 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	// watch out here Juan, remember to add a password to your database 
+	// watch out, remember to add a password to your database 
 	'username' => 'root',
 	'password' => '',
 	'database' => '26_01_2020_ce_gestion',

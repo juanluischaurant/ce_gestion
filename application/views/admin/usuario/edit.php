@@ -56,7 +56,7 @@
 
                                 <div class="col-md-6">                                
                                     <label for="apellido-usuario">Apellidos</label>
-                                    <input type="text" class="form-control" id="apellido-usuario" name="apellido-usuario" value="<?php echo $usuario->apellidos; ?>">
+                                    <input type="text" class="form-control" id="apellido-usuario" name="apellido-usuario" value="<?php echo $usuario->primer_apellido; ?>">
                                 </div>
                             </div>
 

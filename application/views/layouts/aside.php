@@ -51,9 +51,7 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="<?php echo base_url(); ?>reportes/inscripciones"><i class="fa fa-circle-o"></i> Inscripciones </a></li>
-                            <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Titular</a></li>
-                            <li><a href="<?php echo base_url(); ?>reportes/especialidades"><i class="fa fa-circle-o"></i> Especialidades</a></li>
-                            <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Ventas</a></li>
+                            <li><a href="<?php echo base_url(); ?>reportes/inscripciones"><i class="fa fa-circle-o"></i> Relación de Cursos</a></li>
                             <li><a href="<?php echo base_url(); ?>reportes/accion"><i class="fa fa-circle-o"></i> Acciones</a></li>
                         </ul>
                     </li>

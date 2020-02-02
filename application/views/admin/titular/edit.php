@@ -38,8 +38,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="apellidos">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellidos" name="apellidos" value="<?php echo $participante->primer_apellido; ?>" required>
+                                <label for="primer_apellido">Apellidos:</label>
+                                <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" value="<?php echo $participante->primer_apellido; ?>" required>
                             </div>
 
                             <div class="form-group">

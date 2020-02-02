@@ -56,7 +56,10 @@
 
                             <label for="">Seleccionar Participante</label>
                             <div class="input-group">
+                                <!-- Este campo oculto es necesario para verificar que el participante
+                                no se encuentre inscrito en el curso que se intenta seleccionar -->
                                 <input type="hidden" name="cedula_persona" id="cedula_persona">
+
                                 <input type="text" class="form-control" disabled="disabled" id="nombre_participante">
                                 <span class="input-group-btn">
                                     <button class="btn btn-primary" id="btn-buscar-participante" type="button" data-toggle="modal" data-target="#modal-default">
@@ -149,7 +152,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Lita de Titulares</h4>
+                <h4 class="modal-title">Lita de Participantes</h4>
             </div>
             <div class="modal-body">
                 <table id="lista-participante" class="table table-bordered table-striped table-hover">
@@ -170,8 +173,8 @@
                         <tr>
                             <td><?php echo $participante->cedula_persona; ?></td>
                             <td><?php echo $participante->primer_nombre; ?></td>
-                            <td><?php echo $participante->apellidos; ?></td>
-                            <?php $dataParticipante = $participante->cedula_persona.'*'.$participante->primer_nombre.'*'.$participante->apellidos.'*'.$participante->telefono; ?>
+                            <td><?php echo $participante->primer_apellido; ?></td>
+                            <?php $dataParticipante = $participante->cedula_persona.'*'.$participante->primer_nombre.'*'.$participante->primer_apellido.'*'.$participante->telefono; ?>
                             <td>
                                 <button type='button' class='btn btn-success btn-check-participante-inscripcion' value='<?php echo $dataParticipante; ?>'><span class="fa fa-check"></span></button>
                             </td>

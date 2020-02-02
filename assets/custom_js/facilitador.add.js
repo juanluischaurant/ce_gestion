@@ -22,7 +22,7 @@ $(document).ready(function() {
         $('#cedula_persona').val(cedulaPersona);
         $('#genero_facilitador').val(generoPersona);
         $('#nombre_facilitador').val(nombresPersona);
-        $('#apellido_facilitador').val(apellidosPersona);
+        $('#primer_apellido').val(apellidosPersona);
         $('#telefono_facilitador').val(telefonoPersona);
         $('#direccion_facilitador').val(direccionPersona);
 

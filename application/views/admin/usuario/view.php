@@ -15,7 +15,7 @@
 	</div>
 	<div class="col-xs-6">	
 		<?php echo $usuario->primer_nombre;?><br>
-		<?php echo $usuario->apellidos;?><br>
+		<?php echo $usuario->primer_apellido;?><br>
 		<?php echo $usuario->email;?><br>
         <?php echo $usuario->username;?><br>
         <?php echo $usuario->rol;?><br>

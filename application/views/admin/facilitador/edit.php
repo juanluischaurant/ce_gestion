@@ -32,13 +32,13 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="nombre-facilitador">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre-facilitador" name="nombre-facilitador" value="<?php echo $facilitador->primer_nombre; ?>" required>
+                                <label for="primer_nombre">Nombres:</label>
+                                <input type="text" class="form-control" id="primer_nombre" name="primer_nombre" value="<?php echo $facilitador->primer_nombre; ?>" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="apellido-facilitador">Apellidos:</label>
-                                <input type="text" class="form-control" id="apellido-facilitador" name="apellido-facilitador" value="<?php echo $facilitador->primer_apellido; ?>" required>
+                                <label for="primer_apellido">Apellidos:</label>
+                                <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" value="<?php echo $facilitador->primer_apellido; ?>" required>
                             </div>
 
                             <div class="form-group">

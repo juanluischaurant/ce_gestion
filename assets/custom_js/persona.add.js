@@ -3,7 +3,7 @@ $(document).ready(function() {
     // Activa el pluggin jQuery InputMask
     $('[data-mask]').inputmask();
 
-    $('#registrar_pago').bootstrapValidator({
+    $('#agregar_persona').bootstrapValidator({
         fields: {
             cedula_persona: {
                 validators: {

@@ -28,7 +28,7 @@
                 <form role="form">
                 <div class="box-body">
                     <blockquote>
-                    <p>¿Qué rol tendrá <b><?php echo $persona->primer_nombre;?> <?php echo $persona->apellidos;?></b>?</p>
+                    <p>¿Qué rol tendrá <b><?php echo $persona->primer_nombre;?> <?php echo $persona->primer_apellido;?></b>?</p>
                     <!-- <small>Someone famous in <cite title="Source Title">Source Title</cite></small> -->
 
                     <form id="add-rol-persona" method="POST">

@@ -15,7 +15,7 @@ class Participante_model extends CI_Model {
         $resultados = $this->db->select(
             'participante.cedula_persona,
             persona.primer_nombre,
-            persona.apellidos,
+            persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,
@@ -42,7 +42,7 @@ class Participante_model extends CI_Model {
             'persona.id,
             persona.cedula,
             persona.primer_nombre,
-            persona.apellidos,
+            persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,

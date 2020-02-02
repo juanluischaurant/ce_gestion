@@ -51,7 +51,7 @@
                                         <td><?php echo $usuario->cedula_persona; ?></td>
                                         <td><?php echo $usuario->fecha_registro; ?></td>
                                         <td><?php echo $usuario->primer_nombre; ?></td>
-                                        <td><?php echo $usuario->apellidos; ?></td>
+                                        <td><?php echo $usuario->primer_apellido; ?></td>
                                         <td><?php echo $usuario->correo_electronico; ?></td>
                                         <td><?php echo $usuario->username; ?></td>
                                         <td><small class="label label-success"><?php echo $usuario->rol; ?></small></td>

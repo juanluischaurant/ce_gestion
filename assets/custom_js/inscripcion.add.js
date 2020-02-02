@@ -201,7 +201,8 @@ $(document).ready(function() {
         if(data != '') {
             let datosCurso = data.split('*'),
             cupos_totales = datosCurso[2], // Almacena la cantidad de cupos totales por especialidad
-            cupos_ocupados = datosCurso[4]; // Almacena la cantidad de cupos ocupados por especialidad
+            cupos_ocupados = datosCurso[4], // Almacena la cantidad de cupos ocupados por especialidad
+            cedula_participante = $('#cedula_persona').val();
 
             // Si la cantidad de cupos totales es menor a la de cupos ocupados
             if(parseInt(cupos_totales) <= parseInt(cupos_ocupados)) {
@@ -233,9 +234,9 @@ $(document).ready(function() {
                         for(let i = 0; i < data.length; i++)
                         {
 
-                            let cedulaParticipanteInscrito = data[i]['cedula_participante']; // Almacena ID del participante Inscrito en el especialidad dado
+                            let cedulaParticipanteInscrito = data[i]['cedula_participante']; // Almacena ID del participante Inscrito en un curso dado
                             
-                            if(cedulaParticipanteInscrito == cedulaParticipante)
+                            if(cedulaParticipanteInscrito == cedula_participante)
                             {
 
                                 existe = true; // Cambia estado de la variable "existe"
