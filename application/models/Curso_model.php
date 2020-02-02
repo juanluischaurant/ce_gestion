@@ -51,26 +51,26 @@ class Curso_model extends CI_Model {
         $resultado = $this->db->select(
             'curso.id,
             curso.cupos,
-            curso.precio_instancia,
+            curso.precio,
             curso.id_turno,
             curso.descripcion,
-            especialidad.nombre,
+            nc.descripcion,
             periodo.id,
             concat(MONTH(periodo.fecha_inicio), "-", MONTH(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as periodo_academico,
             periodo.fecha_culminacion,
             locacion.id,
             locacion.nombre as locacion_instancia,
-            facilitador.id_facilitador,
+            facilitador.cedula_persona,
             concat(persona.primer_nombre, " ", persona.primer_apellido) AS nombre_facilitador'
         )
         ->from('curso')
-        ->join('especialidad', 'especialidad.id = curso.id_curso')
+        ->join('nombre_curso as nc', 'nc.id = curso.id_nombre_curso')
         ->join('periodo', 'periodo.id = curso.id_periodo')
         ->join('locacion', 'locacion.id = curso.id_locacion')
-        ->join('facilitador', 'facilitador.id = curso.id_facilitador')
-        ->join('persona', 'persona.id = facilitador.id_persona')
+        ->join('facilitador', 'facilitador.cedula_persona = curso.cedula_facilitador')
+        ->join('persona', 'persona.cedula = facilitador.cedula_persona')
         ->where('curso.id', $id_curso)
-        ->get('curso');
+        ->get();
 
         return $resultado->row();
     }
