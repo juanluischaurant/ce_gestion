@@ -5,8 +5,8 @@ require('fpdf/fpdf.php');
 
 class PDF extends FPDF {
 
-    private $id_instancia = '';
-    private $nombre_instancia = '';
+    private $id_curso = '';
+    private $nombre_curso = '';
     private $periodo = '';
     private $locacion = '';
     
@@ -18,12 +18,12 @@ class PDF extends FPDF {
      */
     public function set_id_curso($id)
     {
-        $this->id_instancia = $id;
+        $this->id_curso = $id;
     }
 
     public function set_datos_curso($nombre, $periodo, $locacion)
     {
-        $this->nombre_instancia = $nombre;
+        $this->nombre_curso = $nombre;
         $this->periodo = $periodo;
         $this->locacion = $locacion;
     }
@@ -61,7 +61,7 @@ class PDF extends FPDF {
 
         $this->Cell(29);
         $this->SetFont('Arial', 'B', 11);
-        $this->Cell(150, 5, 'Especialidad: '.utf8_decode($this->nombre_instancia), 0, 0, 'L');
+        $this->Cell(150, 5, 'Especialidad: '.utf8_decode($this->nombre_curso), 0, 0, 'L');
 
         // Inicio de la tabla
         $this->Ln(8);

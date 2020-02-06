@@ -33,29 +33,38 @@ class Auth extends CI_Controller {
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        // Consulta al modelo Usuarios
-        $datos_usuario = $this->Usuario_model->login($username, $password);
         
-        // SI $datos_usuario retorna como resultado FALSE
-        if(!$datos_usuario)
+        if($this->form_validation->run('login'))
         {
-            $this->session->set_flashdata('error', 'El usuario y/o contraseña son incorrectos.');
-            redirect(base_url());
-        } 
+            // Consulta al modelo Usuarios
+            $datos_usuario = $this->Usuario_model->login($username, $password);
+
+            // SI $datos_usuario retorna como resultado FALSE
+            if(!$datos_usuario)
+            {
+                $this->session->set_flashdata('error', 'El usuario y/o contraseña son incorrectos');
+                redirect(base_url());
+            } 
+            else
+            {
+                $data = array(
+                    'username' => $datos_usuario->username,
+                    'primer_nombre' => $datos_usuario->primer_nombre,
+                    'primer_apellido' => $datos_usuario->primer_apellido,
+                    'rol' => $datos_usuario->id_rol,
+                    'login' => TRUE
+                );
+
+                // Almacena los datos de usuario en los datos de sesión
+                $this->session->set_userdata($data);
+                
+                redirect(base_url().'dashboard');
+            }
+        }
         else
         {
-            $data = array(
-                'username' => $datos_usuario->username,
-                'primer_nombre' => $datos_usuario->primer_nombre,
-                'primer_apellido' => $datos_usuario->primer_apellido,
-                'rol' => $datos_usuario->id_rol,
-                'login' => TRUE
-            );
-
-            // Almacena los datos de usuario en los datos de sesión
-            $this->session->set_userdata($data);
-            
-            redirect(base_url().'dashboard');
+            $this->session->set_flashdata('error', 'El usuario no existe');
+            redirect(base_url());
         }
     }
 
@@ -71,5 +80,31 @@ class Auth extends CI_Controller {
     {
         $this->session->sess_destroy();
         redirect(base_url());
+    }
+
+    /**
+     * Verificar que dado usuario existe
+     * 
+     * Este método es utilizado para reconocer si el usuario existe
+     * o no en la base de datos al momento de iniciar sesión.
+     *
+     * @param string $username
+     * @return void
+     */
+    public function usuario_existe($username)
+    {
+        // $this->Usuario_model->usuario_existe($username);
+        $this->db->where('username', $username);
+        $query = $this->db->get('usuario');
+
+        if($query->num_rows() > 0)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    
     }
 }

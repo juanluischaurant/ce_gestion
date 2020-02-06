@@ -15,7 +15,9 @@ class Titular extends CI_Controller {
 	{
         parent::__construct();
         $this->load->model('Persona_model');  
-        $this->load->model('Titular_model');  
+		$this->load->model('Titular_model');  
+		
+		$this->load->library('unit_test');
     }
 
 	public function index()
@@ -54,19 +56,55 @@ class Titular extends CI_Controller {
 			$this->load->view('admin/titular/add', $data_persona);
 			$this->load->view('layouts/footer');
 		}
-    }
+	}
+	
+	public function edit($cedula_persona = NULL)
+	{	
+		if($cedula_persona !== NULL)
+		{
+			$test = $this->Titular_model->get_titular($cedula_persona);
+
+			$resultado_esperado = 'is_array';
+	
+			$nombre_prueba = 'Consulta los períodos registrados en la base de datos';
+	
+			echo $this->unit->run($test, $resultado_esperado, $nombre_prueba);
+			echo '<br>';
+			print_r($test);
+
+			$data_titular = array(
+				'titular' => $this->Titular_model->get_titular($cedula_persona),
+			);
+
+			$this->load->view('layouts/header');
+			$this->load->view('layouts/aside');
+			$this->load->view('admin/titular/edit', $data_titular); 
+			$this->load->view('layouts/footer');
+		}
+	}
+
+	public function view()
+	{
+		$cedula_persona = $this->input->post("cedula_persona");
+
+		$data = array(
+			'titular' => $this->Titular_model->get_titular($cedula_persona),
+		);
+
+		$this->load->view("admin/titular/view", $data);
+	}
     
 	public function store()
 	{
 		$cedula_persona = $this->input->post('cedula_persona');
 
-		$data_cliente = array(
+		$data_titular = array(
 			'cedula_persona' => $cedula_persona,
 		);
 
 		if($this->Titular_model->duplicidad_titular($cedula_persona) === TRUE)
 		{
-			if($this->Titular_model->save($data_cliente))
+			if($this->Titular_model->save($data_titular))
 			{
 				redirect(base_url().'gestion/titular');
 			}

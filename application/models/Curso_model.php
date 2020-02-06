@@ -20,17 +20,20 @@ class Curso_model extends CI_Model {
             curso.fecha_registro,
             curso.estado,
             curso.cupos AS total_cupos,
+            COUNT(CASE WHEN inscripcion.estado = 1 THEN 1 END) AS cupos_ocupados,
             turno.nombre AS nombre_turno,
             nombre_curso.descripcion AS nombre_curso,
-            concat(MONTH(periodo.fecha_inicio), "-", MONTH(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as periodo_academico,
+            concat(MONTHNAME(periodo.fecha_inicio), "-", MONTHNAME(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as periodo_academico,
             periodo.fecha_culminacion'
         )
         ->from('curso')
+        ->join('inscripcion', 'inscripcion.id_curso = curso.id', 'left')
         ->join('turno', 'curso.id_turno = turno.id')
         ->join('nombre_curso', 'nombre_curso.id = curso.id_nombre_curso')
         ->join('periodo', 'periodo.id = curso.id_periodo')
         ->where('curso.estado', '1')
         ->or_where('curso.estado', '0')
+        ->group_by('curso.serial')
         ->get();
 
         return $resultados->result();
@@ -49,19 +52,18 @@ class Curso_model extends CI_Model {
 
         // Obtén el curso de una especialidad en específico
         $resultado = $this->db->select(
-            'curso.id,
+            "curso.id,
             curso.cupos,
             curso.precio,
             curso.id_turno,
-            curso.descripcion,
             nc.descripcion,
             periodo.id,
-            concat(MONTH(periodo.fecha_inicio), "-", MONTH(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as periodo_academico,
+            concat(MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico,
             periodo.fecha_culminacion,
             locacion.id,
-            locacion.nombre as locacion_instancia,
+            locacion.nombre as locacion_curso,
             facilitador.cedula_persona,
-            concat(persona.primer_nombre, " ", persona.primer_apellido) AS nombre_facilitador'
+            concat(persona.primer_nombre, ' ', persona.primer_apellido) AS nombre_facilitador"
         )
         ->from('curso')
         ->join('nombre_curso as nc', 'nc.id = curso.id_nombre_curso')
@@ -102,9 +104,12 @@ class Curso_model extends CI_Model {
     
      /**
      * Verifica que el período asignado al curso aún esté en vigencia
+     * 
+     * Un período en vigencia es aquel cuya fecha de culminación es mayor
+     * a la fecha actual.
      *
      * @param integer $id_curso
-     * @return array
+     * @return boolean
      */
     public function verificar_periodo_curso($id_curso)
     {
@@ -137,17 +142,17 @@ class Curso_model extends CI_Model {
      * Regresa verdadero en caso de ser activo (1)
      * y regresa falso en caso de ser inactivo (0).
      *
-     * @param [type] $id_curso
+     * @param integer $id_curso
      * @return void
      */
     public function verificar_estado_curso($id_curso)
     {
         // Obtén el curso de un especialidad en específico
         $resultado = $this->db->select(
-            'ins.estado'
+            'estado'
         )
-        ->from('curso as ins')
-        ->where('ins.id_instancia', $id_curso)
+        ->from('curso')
+        ->where('id', $id_curso)
         ->get()
         ->row();
 
@@ -172,32 +177,22 @@ class Curso_model extends CI_Model {
      * inscripciones totales
      * nombre especialidad
      *
-     * @param [type] $id_curso
+     * @param integer $id_curso
      * @return void
      */
     public function conteo_inscripciones($id_curso)
     {
         $SQL = "SELECT 
         curso.serial,
-        nombre_curso.descripcion,
-        (
-            SELECT 
-                COUNT(inscripcion.id)
-            FROM inscripcion
-            WHERE inscripcion.estado = 1
-        ) AS inscripciones_activas,
-        (
-            SELECT 
-                COUNT(inscripcion.id)
-            FROM inscripcion
-            WHERE inscripcion.estado = 0
-        ) AS inscripciones_inactivas,
+        COUNT(CASE WHEN inscripcion.estado = 1 THEN 1 END) AS inscripciones_activas,
+        COUNT(CASE WHEN inscripcion.estado = 0 THEN 1 END) AS inscripciones_inactivas,
         (
             SELECT 
                 COUNT(inscripcion.id)
             FROM inscripcion
         ) AS inscripciones_totales
         FROM curso
+        LEFT JOIN inscripcion ON inscripcion.id_curso = curso.id
         LEFT JOIN nombre_curso ON nombre_curso.id = curso.id_nombre_curso
         WHERE curso.id = ?
         GROUP BY curso.serial";
@@ -262,23 +257,22 @@ class Curso_model extends CI_Model {
     public function get_participantes_inscritos($id_curso)
     {
         $resultado = $this->db->select(
-            'in.id,
-            cu.nombre,
+            'curso.id,
+            nc.descripcion,
             insc.fecha_registro,
             par.estado,
             per.primer_nombre,
             per.primer_apellido,
             per.cedula'
         )
-        ->from('curso as in')
-        ->join('especialidad as cu', 'cu.id = in.fk_id_curso_1')
-        ->join('periodo as pe', 'pe.id_periodo = in.fk_id_periodo_1')
-        ->join('inscripcion_instancia as ii', 'ii.fk_id_instancia_1 = in.id_instancia')
-        ->join('inscripcion as insc', 'insc.id_inscripcion = ii.fk_id_inscripcion_1')
-        ->join('participante as par', 'par.id = insc.cedula_participante')
-        ->join('persona as per', 'per.id = par.id_persona')
-        ->where('in.id_instancia', $id_curso) 
-        ->where('insc.activa', 1)
+        ->from('curso')
+        ->join('nombre_curso as nc', 'nc.id = curso.id_nombre_curso')
+        ->join('periodo as pe', 'pe.id = curso.id_periodo')
+        ->join('inscripcion as insc', 'insc.id_curso = curso.id')
+        ->join('participante as par', 'par.cedula_persona = insc.cedula_participante')
+        ->join('persona as per', 'per.cedula = par.cedula_persona')
+        ->where('curso.id', $id_curso) 
+        ->where('insc.estado', 1)
         ->get();
 
         return $resultado->result();

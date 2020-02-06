@@ -83,7 +83,7 @@
                                         <td>
                                             <?php echo $curso->nombre_turno; ?>
                                         </td>
-                                        <td><?php echo $curso->total_cupos; ?></td>
+                                        <td><?php echo $curso->total_cupos . "/" . $curso->cupos_ocupados ?></td>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-curso" data-toggle='modal' data-target='#modal-default' value='<?php echo $curso->id; ?>'>
@@ -98,7 +98,7 @@
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
                                                 <?php if($curso->estado == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/curso/deactivate_instancia/<?php echo $curso->id; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                    <a href="<?php echo base_url() ?>gestion/curso/desactiva_curso/<?php echo $curso->id; ?>" class="btn btn-danger btn-activate-inscripcion">
                                                         <span class="fa fa-toggle-off"></span>
                                                     </a>
                                                 <?php endif; ?> 

@@ -4,77 +4,50 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Participantes
+        Titular
         <small>Editar</small>
         </h1>
     </section>
+
     <!-- Main content -->
     <section class="content">
-        <!-- Default box -->
-        <div class="box box-solid">
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
 
-                        <?php if($this->session->flashdata("error")):?>
-                            <div class="alert alert-danger alert-dismissible">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                                <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>
-                                
-                             </div>
-                        <?php endif;?>
-
-                        <form action="<?php echo base_url();?>gestion/participante/update" method="POST">
-                            <input type="hidden" name="idParticipante" value="<?php echo $participante->id_participante;?>">
-
-                            <div class="form-group">
-                                <label for="cedula">Cédula:</label>
-                                <input type="text" class="form-control" id="cedula" name="cedula" value='<?php echo $participante->cedula_participante; ?>'>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="primer_nombre">Nombres:</label>
-                                <input type="text" class="form-control" id="nombre" name="primer_nombre" value="<?php echo $participante->primer_nombre; ?>" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="primer_apellido">Apellidos:</label>
-                                <input type="text" class="form-control" id="primer_apellido" name="primer_apellido" value="<?php echo $participante->primer_apellido; ?>" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Fecha de Nacimiento:</label>
-                                <input type="date" class="form-control" name="fecha" value="<?php echo $participante->fecha_nacimiento_participante; ?>" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="">Genero:</label>
-                                <input type="text" class="form-control" name="genero" value="<?php echo $participante->genero_participante; ?>" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="direccion">Número de Teléfono:</label>
-                                <input type="text" class="form-control" id="telefono" name="telefono" value="<?php echo $participante->telefono_participante; ?>">
-                            </div>
-
-                            <div class="form-group">
-                                <label for="direccion">Dirección:</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" value="<?php echo $participante->direccion_participante; ?>">
-                            </div>
-
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-success btn-flat">Guardar</button>
-                            </div>
-
-                        </form>
-                        <!-- fin del cursor -->
-
-                    </div>
+    <div class="box box-primary">
+        <div class="box-header with-border text-center">
+            <h3 class="box-title">Datos de <?php echo $titular->primer_nombre . ' ' . $titular->primer_apellido; ?></h3>
+            
+            <?php if($this->session->flashdata("error")):?>
+                <div class="alert alert-danger alert-dismissible">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>    
                 </div>
+            <?php endif;?>
+
+        </div>
+        <!-- /.box-header -->
+
+        <!-- form start -->
+        <form role="form">
+            <div class="box-body">
+                <div class="centrar_div">
+                    <dl class="text-center">
+                        <dt>Información</dt>
+                        <dd>Para editar la información asociada a este titular, <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $titular->cedula_persona; ?>">sigue este enlace.</a></dd>
+                    </dl>
+                </div>
+            
             </div>
             <!-- /.box-body -->
-        </div>
-        <!-- /.box -->
+
+            <div class="box-footer">
+                <input type="hidden" name="cedula_titular" value="<?php echo $titular->cedula_persona;?>">
+                <button type="submit" class="btn btn-success btn-flat center-block" disabled>Guardar</button>
+            </div>
+            <!-- .box-footer -->
+        </form>
+        <!-- /.form end -->
+    </div>
+
     </section>
     <!-- /.content -->
 </div>

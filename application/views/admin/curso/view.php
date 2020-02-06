@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        <?php echo 'Curso: ' . $datos_instancia->nombre_curso; ?>
+        <?php echo 'Curso: ' . $datos_curso->descripcion; ?>
     </div>
 </div> <br>
 <div class="row">

@@ -197,7 +197,7 @@ class Inscripcion extends CI_Controller {
 		$fecha_valida = $this->Inscripcion_model->verifica_validez_instancia($id_inscripcion);
 
 		$data = array(
-			'activa' => 0,
+			'estado' => 0,
 		);
 
 		if($fecha_valida === TRUE)
@@ -206,7 +206,7 @@ class Inscripcion extends CI_Controller {
 			if($this->Inscripcion_model->update_inscripcion($id_inscripcion, $data))
 			{
 				// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
-				$data = array( 'estado' => 3,);
+				$data = array( 'estatus_pago' => 3,);
 				$this->Inscripcion_model->update_estado_pago($id_inscripcion, $data);
 
 				// Esta cadena de texto se concatena al resto de un enlace obetnido
@@ -253,11 +253,9 @@ class Inscripcion extends CI_Controller {
 				if($this->Inscripcion_model->update_inscripcion($id_inscripcion, $data))
 				{
 					// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
-					$data = array( 'estado' => 2,);
+					$data = array( 'estatus_pago' => 2,);
 					$this->Inscripcion_model->update_estado_pago($id_inscripcion, $data);
-		
-						$this->sumar_cupo_instancia($id_instancia);
-		
+				
 						// Esta cadena de texto se concatena al resto de un enlace obetnido
 						// durante la llamada AJAX con jQuery para redireccionar la página
 						// echo 'movimientos/inscripcion';
@@ -310,16 +308,9 @@ class Inscripcion extends CI_Controller {
 				// Actualizar la tabla relacional "inscripcion_instanica" con el ID de la nueva curso
 				if($this->Inscripcion_model->update_ocupa($id_ocupa, $data))
 				{
-					// Sumar +1 a los cupos de el curso nueva
-					if($this->Inscripcion_model->sumar_cupo_instancia($idin))
-					{
-						if($this->Inscripcion_model->restar_cupo_instancia($instancia_actual))
-						{
-							// Emitir alerta y redireccionar
-							$this->session->set_flashdata('success', 'Cambio de curso exitoso.');
-							redirect(base_url().'movimientos/inscripcion/');
-						}
-					}					
+					// Emitir alerta y redireccionar
+					$this->session->set_flashdata('success', 'Cambio de curso exitoso.');
+					redirect(base_url().'movimientos/inscripcion/');				
 				}
 			}
 			else

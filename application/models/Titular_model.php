@@ -25,6 +25,30 @@ class Titular_model extends CI_Model {
             return $resultados->result();
     }
 
+    public function get_titular($cedula_persona)
+    {
+        $resultados = $this->db->select(
+            'persona.primer_nombre,
+            persona.primer_apellido,
+            persona.genero,
+            persona.fecha_nacimiento,
+            TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) as edad,
+            persona.telefono,
+            persona.correo_electronico,
+            persona.direccion,
+            persona.estado,
+            titular.cedula_persona,
+            titular.estado,
+            titular.fecha_registro as fecha_registro_titular,
+            titular.estado')
+            ->from('titular')
+            ->join('persona', 'persona.cedula = titular.cedula_persona', 'left')
+            ->where('titular.cedula_persona', $cedula_persona)
+            ->get(); 
+    
+            return $resultados->row();
+    }
+
     public function save($data)
     {
         return $this->db->insert('titular', $data);

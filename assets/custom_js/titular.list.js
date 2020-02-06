@@ -7,4 +7,23 @@ $(document).ready(function() {
         "order": [[ 1, "desc" ]]
     });
 
+    /**
+     * Carga la vista de detalles de titular
+     */
+    $(document).on('click', '.btn-view-titular', function() {
+
+        let cedula_persona = $(this).val();
+        $.ajax({
+            url: base_url + 'gestion/titular/view',
+            type: 'POST',
+            dataType: 'html',
+            data: {
+                cedula_persona: cedula_persona
+            },
+            success: function(data) {
+                $('#modal-default .modal-body').html(data);
+            }
+        });
+    });
+
 });

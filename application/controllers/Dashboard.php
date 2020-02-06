@@ -7,6 +7,7 @@ class Dashboard extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('Inscripcion_model'); 
+		$this->load->model('Estadistica_model'); 
 		
 		// Si el usuario no está logeado
 		if(!$this->session->userdata('login'))
@@ -20,6 +21,9 @@ class Dashboard extends CI_Controller {
 	{
 		$data = array(
 			'years' => $this->Inscripcion_model->inscripcion_years(),
+            'estadistica_cursos' => $this->Estadistica_model->get_estadistica_cursos(),
+			'menor_18' => $this->Estadistica_model->get_porcentage_menor_18(),
+			'edad_promedio' => $this->Estadistica_model->get_edad_promedio()
 		);
 		$general['page_title'] = 'Principal';
 		

@@ -72,13 +72,7 @@
                                                 class="btn btn-warning">
                                                         <span class="fa fa-pencil"></span>
                                                     </a>
-                                                <?php endif; ?>  
-
-                                                <?php if($permisos->delete == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/persona/delete/<?php echo $dataPersona; ?>" class="btn btn-danger btn-remove">
-                                                        <span class="fa fa-remove"></span>
-                                                    </a>
-                                                <?php endif; ?>  
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>

@@ -18,6 +18,7 @@ class Persona_model extends CI_Model {
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,
+            persona.correo_electronico,
             persona.direccion,
             persona.estado,
             persona.fecha_registro')
@@ -48,15 +49,12 @@ class Persona_model extends CI_Model {
             persona.correo_electronico,
             persona.direccion,
             persona.estado,
-            persona.fecha_registro')
-            ->from('persona') 
-            ->where('persona.cedula', $cedula)
-            ->get(); 
+            persona.fecha_registro'
+            )
+        ->from('persona') 
+        ->where('persona.cedula', $cedula)
+        ->get(); 
     
-        // return $resultados->result();
-
-        // $resultado = $this->db->where('id', $id)
-        // ->get('persona');
 
         return $resultado->row();
     }

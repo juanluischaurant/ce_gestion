@@ -15,8 +15,8 @@
 
         <div class="box box-warning">
         
-            <div class="box-header with-border  text-center">
-              <h3 class="box-title">Datos de la persona</h3>
+            <div class="box-header with-border text-center">
+              <h3 class="box-title">Datos de Nueva Persona</h3>
 
               <?php if($this->session->flashdata("error")):?>
                     <div class="alert alert-danger alert-dismissible">

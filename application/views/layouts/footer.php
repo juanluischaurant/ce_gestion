@@ -96,22 +96,6 @@
             });
         });
 
-        $(document).on('click', '.btn-view-curso', function() {
-
-            let id_instancia = $(this).val();
-            $.ajax({
-                url: base_url + 'gestion/curso/view',
-                type: 'POST',
-                dataType: 'html',
-                data: {
-                    id_instancia: id_instancia
-                },
-                success: function(data) {
-                    $('#modal-default .modal-body').html(data);
-                }
-            });
-        });
-
     });
 
     /**
@@ -147,8 +131,6 @@
             return '00000' + (Number(numero)+1);
         }
     }
-
-   
 
     function sumar() {
 

@@ -9,24 +9,38 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @subpackage Personas
  * @category Controladores
  */
-class Accion extends CI_Controller
+class Relacion extends CI_Controller
 {
     public function __construct()
     {
         parent::__construct();
         $this->load->model('Relacion_model');  
+        $this->load->model('Curso_model');
     }
 
     
     public function index()
     {
         $data = array(
-            'acciones' => $this->Accion_model->get_relaciones_curso()
+            'cursos' => $this->Curso_model->get_cursos()
         );
 
         $this->load->view('layouts/header');
         $this->load->view('layouts/aside');
-        $this->load->view('admin/reporte/acciones', $data);
+        $this->load->view('admin/reporte/relaciones', $data);
+        $this->load->view('layouts/footer');
+    }
+
+    public function relacion_curso($id_curso)
+    {
+        $data = array(
+            'curso' => $this->Curso_model->get_curso($id_curso),
+            'inscripciones' => $this->Relacion_model->get_relacion_curso($id_curso)
+        );
+
+        $this->load->view('layouts/header');
+        $this->load->view('layouts/aside');
+        $this->load->view('admin/reporte/relacion', $data);
         $this->load->view('layouts/footer');
     }
 }

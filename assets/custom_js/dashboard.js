@@ -16,8 +16,17 @@ $(document).ready(function () {
 });
 
 // Highcharts user-declared functions
+
+/**
+ * Renderiza el gráfico correspondiente al monto geneardo por mes
+ * a lo largo de un año.
+ * 
+ * @param {string} base_url 
+ * @param {integer} year 
+ */
 function grafico_inscripciones_mes(base_url, year)
 {
+    // Array de meses
     let nombres_mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
 
     $.ajax({

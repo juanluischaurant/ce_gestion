@@ -14,13 +14,14 @@
     <section class="content">
         <!-- Default box -->
         <div class="row">
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-aqua">
-                    <div class="inner">
-                        <h3>150</h3>
 
-                        <p>New Orders</p>
+            <div class="col-lg-6 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-navy">
+                    <div class="inner">
+                        <h3><?php echo $estadistica_cursos->promedio_cupos; ?> Cupos</h3>
+
+                        <p>Promedio de Cupos por Curso</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-bag"></i>
@@ -29,13 +30,14 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
+            
+            <div class="col-lg-6 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-green">
                     <div class="inner">
-                        <h3>53<sup style="font-size: 20px">%</sup></h3>
+                        <h3><?php echo $menor_18->porcentaje_menor_de_18; ?><sup style="font-size: 20px">% (Participantes)</sup></h3>
 
-                        <p>Bounce Rate</p>
+                        <p>... Son Menores de Edad al inscribirse</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-stats-bars"></i>
@@ -44,13 +46,14 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
-                <!-- small box -->
-                <div class="small-box bg-yellow">
-                    <div class="inner">
-                        <h3>44</h3>
 
-                        <p>User Registrations</p>
+            <div class="col-lg-6 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-orange">
+                    <div class="inner">
+                        <h3><?php echo $estadistica_cursos->promedio_cupos_ocupados; ?> Cupos</h3>
+
+                        <p>Promedio de Cupos Ocupados por Curso</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-person-add"></i>
@@ -59,13 +62,14 @@
                 </div>
             </div>
             <!-- ./col -->
-            <div class="col-lg-3 col-xs-6">
+
+            <div class="col-lg-6 col-xs-6">
                 <!-- small box -->
                 <div class="small-box bg-red">
                     <div class="inner">
-                        <h3>65</h3>
+                        <h3><?php echo $edad_promedio->edad_promedio; ?> Años</h3>
 
-                        <p>Unique Visitors</p>
+                        <p>Edad Promedio al inscribirse</p>
                     </div>
                     <div class="icon">
                         <i class="ion ion-pie-graph"></i>
@@ -74,6 +78,7 @@
                 </div>
             </div>
             <!-- ./col -->
+
         </div>
         <!-- /.row -->
 

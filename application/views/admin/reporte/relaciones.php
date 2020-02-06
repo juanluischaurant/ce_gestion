@@ -1,0 +1,75 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <h1>
+        Relación de Cursos
+        <small>Lista General</small>
+        </h1>
+    </section>
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="box box-solid">
+            <div class="box-body">
+                           
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <table id="export-cursos" class="table table-bordered btn-hover">
+                            <thead>
+                                <tr>
+                                    <th>Serial</th>
+                                    <th>Descripción</th>
+                                    <th>Estado</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php if(!empty($cursos)): ?>
+                                <?php foreach($cursos as $curso): ?>
+                                    <tr>
+                                        <td><?php echo $curso->serial; ?></td>
+                                        <td><?php echo $curso->nombre_curso . " " . $curso->periodo_academico; ?></td>
+                                        
+                                        <td>
+                                        <?php $today = date('Y-m-d'); ?>
+                                        <?php if($curso->estado == 1 && date($curso->fecha_culminacion) >= $today): ?>
+                                            <small class="label label-success">
+                                                <i class="fa fa-clock-o"></i> Activa
+                                            </small>
+                                        <?php endif; ?> 
+                                        <?php if($curso->estado == 0): ?>
+                                            <small class="label label-danger">
+                                                <i class="fa fa-clock-o"></i> Cancelada
+                                            </small>
+                                        <?php endif; ?> 
+                                        <?php if(date($curso->fecha_culminacion) <= $today): ?>
+                                            <small class="label label-warning">
+                                                <i class="fa fa-clock-o"></i> Archivada
+                                            </small>
+                                        <?php endif; ?> 
+                                        </td>
+
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                 <?php endforeach; ?>
+                                <?php endif; ?>
+                            </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

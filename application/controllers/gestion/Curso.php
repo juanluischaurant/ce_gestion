@@ -38,7 +38,7 @@ class Curso extends CI_Controller {
 
 		$data = array(
 			"participantes_inscritos" => $this->Curso_model->get_participantes_inscritos($id_curso),
-			'datos_instancia' => $this->Curso_model->get_curso($id_curso)
+			'datos_curso' => $this->Curso_model->get_curso($id_curso)
 		);
 
 		$this->load->view("admin/curso/view", $data);
@@ -55,43 +55,7 @@ class Curso extends CI_Controller {
 		$this->load->view('admin/curso/add', $data);
 		$this->load->view('layouts/footer');
 	}
-
-	public function store()
-	{
-		$id_nombre_curso = $this->input->post('id-nombre-curso');   // fk_id_curso_1
-		$serial_curso = $this->input->post('serial-curso');
-        $cedula_facilitador = $this->input->post('id-facilitador-curso'); // fk_id_facilitador
-        $id_periodo_instancia = $this->input->post('id-periodo-curso');   // fk_id_periodo_1
-        $id_locacion_instancia = $this->input->post('id-locacion-curso'); // fk_id_locacion_1
-        $turno_instancia = $this->input->post('turno-curso');             // turno_instancia1
-        $cupos_instancia = $this->input->post('cupos-curso');             // cupos_instancia
-		$precio_instancia = $this->input->post('costo-curso');            // precio_instancia
-		$descripcion_instancia = $this->input->post('descripcion-curso'); // descripcion_instancia
-		
-        $data = array (
-			'id_nombre_curso' => $id_nombre_curso,
-			'serial' => $serial_curso,
-            'cedula_facilitador' => $cedula_facilitador,
-            'id_periodo' => $id_periodo_instancia,
-			'id_turno' => $turno_instancia,
-			'id_locacion' => $id_locacion_instancia,
-            'precio' => $precio_instancia,
-			'cupos' => $cupos_instancia,
-			'descripcion' => $descripcion_instancia
-        );
-
-		print_r($data);
-		if($this->Curso_model->save($data))
-		{
-			redirect(base_url().'gestion/curso');
-		}
-		else
-		{
-			$this->session->set_flashdata('error', 'No se pudo registrar el curso.');
-			redirect(base_url().'gestion/curso/add');
-		}
-	}
-		
+	
 	public function edit($id_curso)
 	{
 		// Obtén la fecha de culminación del período asociado a el curso
@@ -131,6 +95,41 @@ class Curso extends CI_Controller {
 		}
 	}
 
+	public function store()
+	{
+		$id_nombre_curso = $this->input->post('id-nombre-curso');   // fk_id_curso_1
+		$serial_curso = $this->input->post('serial-curso');
+        $cedula_facilitador = $this->input->post('id-facilitador-curso'); // fk_id_facilitador
+        $id_periodo_instancia = $this->input->post('id-periodo-curso');   // fk_id_periodo_1
+        $id_locacion_curso = $this->input->post('id-locacion-curso'); // fk_id_locacion_1
+        $turno_instancia = $this->input->post('turno-curso');             // turno_instancia1
+        $cupos_instancia = $this->input->post('cupos-curso');             // cupos_instancia
+		$precio_instancia = $this->input->post('costo-curso');            // precio_instancia
+		$descripcion_instancia = $this->input->post('descripcion-curso'); // descripcion_instancia
+		
+        $data = array (
+			'id_nombre_curso' => $id_nombre_curso,
+			'serial' => $serial_curso,
+            'cedula_facilitador' => $cedula_facilitador,
+            'id_periodo' => $id_periodo_instancia,
+			'id_turno' => $turno_instancia,
+			'id_locacion' => $id_locacion_curso,
+            'precio' => $precio_instancia,
+			'cupos' => $cupos_instancia,
+			'descripcion' => $descripcion_instancia
+        );
+
+		if($this->Curso_model->save($data))
+		{
+			redirect(base_url().'gestion/curso');
+		}
+		else
+		{
+			$this->session->set_flashdata('error', 'No se pudo registrar el curso.');
+			redirect(base_url().'gestion/curso/add');
+		}
+	}
+	
 	public function update()
 	{
 		$id_curso = $this->input->post('id-curso');
@@ -139,7 +138,7 @@ class Curso extends CI_Controller {
 		{		
 			$id_facilitador_instancia = $this->input->post('id-facilitador-curso');
 			$id_periodo_instancia = $this->input->post('id-periodo-curso');
-			$id_locacion_instancia = $this->input->post('id-locacion-curso'); 
+			$id_locacion_curso = $this->input->post('id-locacion-curso'); 
 			$turno_instancia = $this->input->post('turno-curso');
 			$cupos_instancia = $this->input->post('cupos-curso');
 			$precio_instancia = $this->input->post('costo-curso');
@@ -148,7 +147,7 @@ class Curso extends CI_Controller {
 			$data = array(
 				'id_facilitador' => $id_facilitador_instancia,
 				'id_periodo' => $id_periodo_instancia,
-				'id_locacion' => $id_locacion_instancia,
+				'id_locacion' => $id_locacion_curso,
 				'id_turno' => $turno_instancia,
 				'precio' => $precio_instancia,
 				'cupos' => $cupos_instancia,
@@ -186,7 +185,7 @@ class Curso extends CI_Controller {
 	 * @param integer $id_curso
 	 * @return void
 	 */
-	public function deactivate_instancia($id_curso)
+	public function desactiva_curso($id_curso)
     {
 		// Verifica el total de inscripciones activas
 		$total_inscripciones = $this
@@ -318,7 +317,7 @@ class Curso extends CI_Controller {
 		// de fpdf antes de que la página pdf sea renderizada
 		$pdf->set_id_curso($id_curso);
 
-		$pdf->set_datos_curso($curso->nombre, $curso->periodo, $curso->locacion);
+		$pdf->set_datos_curso($curso->descripcion, $curso->periodo_academico, $curso->locacion_curso);
 		
 		// Renderiza la página pdf
 		$pdf->AddPage();
@@ -329,14 +328,14 @@ class Curso extends CI_Controller {
 
 		foreach($participantes as $participante)
 		{
-			if($participante->estado_participante == '2')
+			if($participante->estado == '2')
 			{
 				continue;
 			}
 			else
 			{
 				$pdf->Cell(6, 6, $i++, 1, 0, 'C');
-				$pdf->Cell(69,6, utf8_decode($participante->primer_nombre) . " " . utf8_decode($participante->apellidos_persona), 1, 0, 'C');
+				$pdf->Cell(69,6, utf8_decode($participante->primer_nombre) . " " . utf8_decode($participante->primer_apellido), 1, 0, 'C');
 				$pdf->Cell(28,6, $participante->cedula,1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');
 				$pdf->Cell(34,6,'',1,0,'C');

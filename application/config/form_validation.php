@@ -141,6 +141,16 @@ $config = array(
 
 
     ),
+    'login' => array(
+        array(
+            'field' => 'username',
+            'label' => 'Usuario',
+            'rules' => 'callback_usuario_existe',
+            'errors' => array(
+                'usuario_existe' => 'Usuario no registrado'
+            )
+        ),
+    )
 );
 
 

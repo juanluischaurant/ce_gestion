@@ -34,7 +34,6 @@ class Usuario_model extends CI_Model {
         ->where('usuario.estado', 1)
         ->get(); 
     
-
         if($resultado->num_rows() > 0)
         {
             // Returna registro
@@ -129,6 +128,30 @@ class Usuario_model extends CI_Model {
     {
         $this->db->where('username', $username);
         return $this->db->update('usuario', $data);
+    }
+
+    /**
+     * Verificar que dado usuario existe
+     * 
+     * Este método es utilizado para reconocer si el usuario existe
+     * o no en la base de datos al momento de iniciar sesión.
+     *
+     * @param string $username
+     * @return boolean
+     */
+    public function usuario_existe($usuario)
+    {
+        $this->db->where('username', $username);
+        $query = $this->db->get('usuario');
+
+        if($query->num_rows() > 0)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
     }
 
 

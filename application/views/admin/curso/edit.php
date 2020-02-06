@@ -78,7 +78,7 @@
                                         <div class="col-md-10">
                                             <div class="form-group">
                                                 <label class="control-label" for="locacion-curso"><i class="fa fa-check hidden"></i> Locación</label>
-                                                <input type="text" class="form-control" id="locacion-curso" value="<?php echo $curso->locacion_instancia ?>" placeholder="Enter ...">
+                                                <input type="text" class="form-control" id="locacion-curso" value="<?php echo $curso->locacion_curso ?>" placeholder="Enter ...">
                                             </div>
                                         </div>
                                     </div>

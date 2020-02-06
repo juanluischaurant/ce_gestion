@@ -200,7 +200,7 @@ FROM periodo
 WHERE fecha_culminacion_periodo >= CURRENT_DATE
 
 -- ===================================================================
--- Contarinstancias activas por período
+-- Contar instancias activas por período
 -- ===================================================================
 SELECT 
 	periodo.id_periodo,
@@ -266,6 +266,7 @@ WHERE inscripcion.id_inscripcion = 4
 SELECT YEAR(CURRENT_TIMESTAMP) - YEAR(persona.fecha_nacimiento_persona) - (RIGHT(CURRENT_TIMESTAMP, 5) < RIGHT(persona.fecha_nacimiento_persona, 5)) as age 
   FROM persona
   
+
 -- ===================================================================
   -- STORED PROCEDURES
 -- ===================================================================
@@ -396,3 +397,89 @@ LEFT JOIN nombre_curso ON nombre_curso.id = curso.id_nombre_curso
 GROUP BY curso.serial
 -- =============================================================
 -- =============================================================
+
+
+-- =============================================================
+-- Obtener edad promedio
+-- =============================================================
+SELECT
+    CAST(AVG(TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE())) AS INT) AS edad_promedio
+FROM persona
+
+
+-- =============================================================
+-- Obtener total de masculino y total de femenino
+-- =============================================================
+SELECT 
+    COUNT(CASE WHEN persona.genero = 1 THEN 1 END) AS total_masculino,
+    COUNT(CASE WHEN persona.genero = 2 THEN 1 END) AS total_femenino,
+    COUNT(persona.cedula) AS total_personas
+FROM persona
+
+
+-- =============================================================
+-- Obtener lista de meses y las personas nacidas en cada mes
+-- =============================================================
+SELECT 
+    MONTH(persona.fecha_nacimiento) meses_numero,
+    MONTHNAME(persona.fecha_nacimiento) meses_nombre,
+    COUNT(persona.cedula) AS personas
+FROM persona
+    GROUP BY meses_nombre, meses_numero
+    ORDER BY meses_numero
+
+
+-- =============================================================
+-- Obtener lista de inscripciones activas por curso
+-- =============================================================
+SELECT
+	curso.serial,
+	COUNT(CASE WHEN inscripcion.estado = 1 THEN 1 END) AS inscripciones_activas
+FROM curso
+LEFT JOIN inscripcion ON inscripcion.id_curso = curso.id
+GROUP BY curso.serial
+
+
+-- ==================================================================
+-- Obtener promedio de cupos por curso y de cupos ocupados por curso
+-- ==================================================================
+SELECT
+	AVG(curso.cupos) promedio_cupos,
+    AVG((SELECT COUNT(*) FROM inscripcion WHERE inscripcion.id_curso = curso.id AND inscripcion.estado = 1)) AS promedio_cupos_ocupados,
+	COUNT(CASE WHEN inscripcion.estado = 1 THEN 1 END) AS inscripciones_activas
+FROM curso
+LEFT JOIN inscripcion ON inscripcion.id_curso = curso.id
+WHERE curso.estado = 1
+
+SELECT
+	AVG(curso.cupos) promedio_cupos,
+    AVG((SELECT COUNT(*) FROM inscripcion WHERE inscripcion.id_curso = curso.id AND inscripcion.estado = 1)) AS promedio_cupos_ocupados,
+	COUNT(CASE WHEN inscripcion.estado = 1 THEN 1 END) AS inscripciones_activas
+FROM curso
+LEFT JOIN inscripcion ON inscripcion.id_curso = curso.id
+INNER JOIN periodo ON periodo.id = curso.id_periodo
+WHERE curso.estado = 1 AND periodo.fecha_culminacion >= CURRENT_DATE
+
+
+-- ==================================================================
+-- Obtener registro de participantes registrados un año atrás hasta hoy 
+-- ==================================================================
+SELECT
+    participante.cedula_persona
+FROM participante
+ LEFT JOIN persona ON persona.cedula = participante.cedula_persona
+WHERE participante.fecha_registro > CURRENT_DATE - INTERVAL 1 YEAR
+AND TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) < 18
+
+SELECT
+ROUND(menores_de_18*100/activos, 2) AS porcentaje_menores_de_18
+FROM 
+(SELECT
+ 	COUNT(CASE WHEN participante.estado = 1 THEN 1 END) AS activos,
+    (SELECT 
+        COUNT(*)
+    FROM participante
+    LEFT JOIN persona ON persona.cedula = participante.cedula_persona
+    WHERE YEAR(participante.fecha_registro) >= YEAR(CURRENT_DATE)
+    AND TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) < 18) AS menores_de_18
+FROM participante) AS seleccion
