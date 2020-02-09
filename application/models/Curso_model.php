@@ -53,14 +53,16 @@ class Curso_model extends CI_Model {
         // Obtén el curso de una especialidad en específico
         $resultado = $this->db->select(
             "curso.id,
+            curso.serial,
             curso.cupos,
             curso.precio,
             curso.id_turno,
+            curso.descripcion AS detalles_curso,
             nc.descripcion,
-            periodo.id,
+            periodo.id AS id_periodo,
             concat(MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico,
             periodo.fecha_culminacion,
-            locacion.id,
+            locacion.id AS id_locacion,
             locacion.nombre as locacion_curso,
             facilitador.cedula_persona,
             concat(persona.primer_nombre, ' ', persona.primer_apellido) AS nombre_facilitador"
@@ -208,9 +210,9 @@ class Curso_model extends CI_Model {
 		return $this->db->insert("curso", $data);
     }
 
-    public function update($id_instancia, $data)
+    public function update($id_curso, $data)
     {
-        $resultado = $this->db->where('id', $id_instancia)
+        $resultado = $this->db->where('id', $id_curso)
         ->update('curso', $data);
 
         if($resultado === TRUE)

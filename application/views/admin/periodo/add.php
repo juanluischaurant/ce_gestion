@@ -21,40 +21,40 @@
         <?php endif; ?>
 
         <!-- Default box -->
-        <div class="box box-solid">
+        <div class="box box-warning">
 
-            <div class="box-header with-border">
-                <h3 class="box-title">Selecciona la fecha de inicio y culminación</h3>
+            <div class="box-header with-border text-center">
+                <h3 class="box-title">Datos de Nuevo Período</h3>
             </div>
             
             <form action="<?php echo base_url(); ?>gestion/periodo/store" method="POST">
                 
                 <div class="box-body">
              
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="form-group <?php echo !empty(form_error('fecha-inicio'))? 'has-error' : '';?>">                                
-                                <label for="fecha-inicio">Fecha de Inicio:</label>
-                                <input type="date" class="form-control" name="fecha-inicio" value="<?php // echo $data_periodo->fecha_inicio_periodo;?>">
-                                <?php echo form_error('fecha-inicio', '<span class="help-block">', '</span>'); ?>                        
-                            </div>    
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group <?php echo !empty(form_error('fecha-inicio'))? 'has-error' : '';?>">                                
-                                <label for="fecha-culminacion">Fecha de Culminación:</label>
-                                <input type="date" class="form-control" name="fecha-culminacion" value="<?php // echo $data_periodo->fecha_culminacion_periodo;?>">
-                                <?php echo form_error('fecha-culminacion', '<span class="help-block">', '</span>'); ?>    
+                    <div class="centrar_div">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group <?php echo !empty(form_error('fecha-inicio'))? 'has-error' : '';?>">                                
+                                    <label for="fecha-inicio">Fecha de Inicio:</label>
+                                    <input type="date" class="form-control" name="fecha-inicio" value="<?php // echo $data_periodo->fecha_inicio_periodo;?>">
+                                    <?php echo form_error('fecha-inicio', '<span class="help-block">', '</span>'); ?>                        
+                                </div>    
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group <?php echo !empty(form_error('fecha-inicio'))? 'has-error' : '';?>">                                
+                                    <label for="fecha-culminacion">Fecha de Culminación:</label>
+                                    <input type="date" class="form-control" name="fecha-culminacion" value="<?php // echo $data_periodo->fecha_culminacion_periodo;?>">
+                                    <?php echo form_error('fecha-culminacion', '<span class="help-block">', '</span>'); ?>    
+                                </div>
                             </div>
                         </div>
-                    
                     </div>
-                      
+                          
                 </div>
                 <!-- /.box-body -->
 
                 <div class="box-footer">
-                    <button type="submit" class="btn btn-success btn-flat">Guardar</button>
+                    <button type="submit" class="btn btn-success btn-flat center-block">Guardar</button>
                 </div>
             </form>
 

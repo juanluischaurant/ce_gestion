@@ -12,41 +12,44 @@
     <!-- Main content -->
     <section class="content">
         <!-- Default box -->
-        <div class="box box-solid">
-            <div class="box-body">
-                
-                <div class="row">
-                    <div class="col-md-12">
+        <div class="box box-warning">
+            <div class="box-header with-border text-center">
+                <h3 class="box-title">Datos de Nueva Locación</h3>
 
-                        <?php if($this->session->flashdata('error')): ?>
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                        <?php endif; ?>
+                <?php if($this->session->flashdata("error")):?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>
+                        
+                    </div>
+                <?php endif;?>
 
-                        <form action="<?php echo base_url(); ?>gestion/locacion/store" method="POST">
-
-                            <div class="form-group <?php echo !empty(form_error('nombre-locacion'))? 'has-error' : '';?>">
+            </div>
+            <form action="<?php echo base_url(); ?>gestion/locacion/store" method="POST">
+                <!-- /.box-header -->
+                <div class="box-body">
+                    
+                    <div class="centrar_div">
+                        <div class="row">
+                            <div class="col-md-12 form-group <?php echo !empty(form_error('nombre-locacion'))? 'has-error' : '';?>">
                                 <label for="nombre">Nombre: </label>
                                 <input type="text" name="nombre-locacion" id="nombre-locacion" class="form-control" value="<?php echo set_value('nombre-locacion');?>">
                                 <?php echo form_error('nombre-locacion', '<span class="help-block">', '</span>'); ?>
                             </div>
 
-                            <div class="form-group">
+                            <div class="col-md-12 form-group">
                                 <label for="descripcion">Dirección: </label>
                                 <input type="text" name="direccion-locacion" id="direccion-locacion" class="form-control">
                             </div>
-
-                            <div class="form-group"> 
-                                <button type="submit" class="btn btn-success btn-flat">Guardar</button>
-                            </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!-- /.box-body -->
+                <!-- /.box-body -->    
+
+                <div class="box-footer"> 
+                    <button type="submit" class="btn btn-success btn-flat center-block">Guardar</button>
+                </div>
+            </form>
         </div>
         <!-- /.box -->
     </section>

@@ -122,7 +122,7 @@ class Locacion extends CI_Controller {
 		$nombre_locacion = $this->input->post('nombre-locacion');
 		$direccion_locacion = $this->input->post('direccion-locacion');
 
-		$this->form_validation->set_rules('nombre-locacion', 'Nombre de Locación', 'required|is_unique[locacion.nombre_locacion]');
+		$this->form_validation->set_rules('nombre-locacion', 'Nombre de Locación', 'required|is_unique[locacion.nombre]');
 		
 		if($this->form_validation->run()) {
 			$data = array (
@@ -155,10 +155,14 @@ class Locacion extends CI_Controller {
 			'direccion' => $direccion_locacion
 		);
 
-		if($this->Locacion_model->update($id_locacion, $data))
-		{
-			$this->session->set_flashdata('success', 'Se actualizó la locación.');
-			redirect(base_url().'gestion/locacion/');
+		$this->form_validation->set_rules('nombre-locacion', 'Nombre de Locación', 'required|is_unique[locacion.nombre]');
+
+		if($this->form_validation->run()) {
+			if($this->Locacion_model->update($id_locacion, $data))
+			{
+				$this->session->set_flashdata('success', 'Se actualizó la locación.');
+				redirect(base_url().'gestion/locacion/');
+			}
 		}
 	}
 

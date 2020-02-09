@@ -2,124 +2,132 @@
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
+
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
         Curso
-        <small>Nueva</small>
+        <small>Nuevo</small>
         </h1>
     </section>
+
     <!-- Main content -->
     <section class="content">
+
         <!-- Default box -->
-        <div class="box box-solid">
-            <div class="box-body">
-                
-                <div class="row">
-                    <div class="col-md-12">
+        <div class="box box-warning">
 
-                        <?php if($this->session->flashdata('error')): ?>
-                        <div class="alert alert-danger alert-dismissible">
-                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                            <h4><i class="icon fa fa-ban"></i> ¡Alerta!</h4>
-                            <?php echo $this->session->flashdata('error'); ?>
-                        </div>
-                        <?php endif; ?>
+            <div class="box-header with-border text-center">
+              <h3 class="box-title">Datos de Nuevo Curso</h3>
 
-                        <form action="<?php echo base_url(); ?>gestion/curso/store" method="post" class='form-horizontal'>
-                            
-                            <div class="form-group <?php echo !empty(form_error('nombre_curso'))? 'has-error' : '';?>">
-                                <div class="col-md-6">
-                                    <label for="">Nombre del Curso</label>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" disabled="disabled" id="nombre-curso">
-                                        <input type="hidden" name="id-nombre-curso" id="id-nombre-curso">
-                                        <input type="hidden" name="serial-curso" id="serial-curso">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span> Buscar</button>
-                                        </span>
-                                    </div><!-- /input-group -->
-                                </div> 
-
-                                <div class="col-md-4">
-                                    <label for="">Costo</label>
-                                    <input type="number" class="form-control" id="costo-curso" name="costo-curso">
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="form-group">
-                                <div class="col-md-2">
-                                    <label for="">Período</label>
-                                    <input type="text" class="form-control" id="periodo-curso">
-                                    <input type="hidden" id="id-periodo-curso" name="id-periodo-curso">  
-                                </div>
-
-                                <div class="col-md-6 <?php echo !empty(form_error('numero-de-operacion')) ? 'has-error' : ''; ?>">
-                                    <label for="locacion-curso">Locación</label>
-                                    <input type="text" class="form-control" id="locacion-curso">
-                                    <input type="hidden" id="id-locacion-curso" name="id-locacion-curso">  
-                                    <?php echo form_error('numero-de-operacion', '<span class="help-block">', '</span>'); ?>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <?php
-
-                                        $atributos = array('class' => 'form-control', 'required');
-                                        // Genera la etiquera
-                                        echo form_label('Turno');
-
-                                        // Genera el elemento "select"
-                                        // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
-                                        echo form_dropdown('turno-curso', $lista_turnos, '', $atributos);
-                                    ?>
-                                    <!-- Fin del campo -->
-                                </div>
-                            </div>
-
-                            <hr>
-
-                            <div class="form-group">
-                                <div class="col-md-8">
-                                    <label for="facilitador-curso">Facilitador </label>
-                                    <input type="text" id="facilitador-curso" class="form-control">
-                                    <input type="hidden" id="id-facilitador-curso" name="id-facilitador-curso">  
-                                </div>
-                                <div class="col-md-2">
-                                    <label for="cupos-especialidad">Cupos </label>
-                                    <input type="text" name="cupos-curso" id="cupos-curso" class="form-control">
-                                </div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <div class="col-md-6">
-                                    <label for="descripcion-curso">Descripción </label>
-                                    <input type="text" name="descripcion-curso" id="descripcion-curso" class="form-control">
-                                </div>    
-                            </div>
-
-                            <div class="form-group"> 
-                                <div class="col-md-6">
-                                    <button type="submit" class="btn btn-success btn-flat">Guardar</button>
-                                </div>
-                            </div>
-
-                        </form>
+              <?php if($this->session->flashdata("error")):?>
+                    <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        <p><i class="icon fa fa-ban"></i><?php echo $this->session->flashdata("error"); ?></p>
+                        
                     </div>
-                </div>
+                <?php endif;?>
+
             </div>
-            <!-- /.box-body -->
+            <!-- /.box-header -->
+                  
+            <form action="<?php echo base_url(); ?>gestion/curso/store" method="POST">
+
+                <div class="box-body">
+                    
+                    <div class="centrar_div">
+                                        
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <label for="">Nombre del Curso</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" disabled="disabled" id="nombre-curso">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span></button>
+                                    </span>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-4">
+                                <label for="costo-curso">Costo</label>
+                                <input type="number" class="form-control" id="costo-curso" name="costo-curso">
+                            </div>
+
+                            <div class="col-md-8">
+                                <label for="">Período</label>
+                                <input type="text" class="form-control" id="periodo-curso">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label for="locacion-curso">Locación</label>
+                                <input type="text" class="form-control" id="locacion-curso">
+                            </div>
+
+                            <div class="col-md-4">
+                                <?php
+                                    $atributos = array('class' => 'form-control', 'required');
+                                    // Genera la etiquera
+                                    echo form_label('Turno');
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
+                                    echo form_dropdown('turno-curso', $lista_turnos, '', $atributos);
+                                ?>
+                                <!-- Fin del campo -->
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group col-md-8">
+                                <label for="facilitador-curso">Facilitador</label>
+                                <input type="text" id="facilitador-curso" class="form-control">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="cupos-especialidad">Cupos</label>
+                                <input type="text" name="cupos-curso" id="cupos-curso" class="form-control">
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="descripcion-curso">Descripción</label>
+                                <input type="text" name="descripcion-curso" id="descripcion-curso" class="form-control">
+                            </div>    
+                        </div>
+
+                    </div>
+                    <!-- /.centrar_div -->
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+
+                    <input type="hidden" id="id-periodo-curso" name="id-periodo-curso">  
+                    <input type="hidden" id="id-locacion-curso" name="id-locacion-curso">  
+                    <input type="hidden" id="id-facilitador-curso" name="id-facilitador-curso">
+                    <input type="hidden" name="id-nombre-curso" id="id-nombre-curso">
+                    <input type="hidden" name="serial-curso" id="serial-curso">
+                    
+                    <button type="submit" class="btn btn-success btn-flat center-block">Guardar</button>
+
+                </div>
+                <!-- .box-footer -->
+
+            </form>
+
         </div>
         <!-- /.box -->
+
     </section>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
-
-
-<!-- Modal para lista de especialidades -->
+<!-- Modal para lista de nombres de curso -->
 <div class="modal fade" id="modal-default">
     <div class="modal-dialog">
         <div class="modal-content">

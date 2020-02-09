@@ -133,9 +133,10 @@ class Curso extends CI_Controller {
 	public function update()
 	{
 		$id_curso = $this->input->post('id-curso');
+		$serial_curso = $this->input->post('serial-curso');
 
 		if($this->form_validation->run('editar_instancia'))
-		{		
+		{
 			$id_facilitador_instancia = $this->input->post('id-facilitador-curso');
 			$id_periodo_instancia = $this->input->post('id-periodo-curso');
 			$id_locacion_curso = $this->input->post('id-locacion-curso'); 
@@ -145,24 +146,18 @@ class Curso extends CI_Controller {
 			$descripcion_instancia = $this->input->post('descripcion-curso');
 			
 			$data = array(
-				'id_facilitador' => $id_facilitador_instancia,
+				'cedula_facilitador' => $id_facilitador_instancia,
 				'id_periodo' => $id_periodo_instancia,
 				'id_locacion' => $id_locacion_curso,
 				'id_turno' => $turno_instancia,
 				'precio' => $precio_instancia,
 				'cupos' => $cupos_instancia,
+				'descripcion' => $descripcion_instancia
 			);
-			
-			if(trim($this->input->post('descripcion-curso')) !== '')
-			{
-				$data['descripcion_instancia'] = trim($this->input->post('descripcion-curso'));
-			}
 			
 			if($this->Curso_model->update($id_curso, $data))
 			{
-				$serial_curso = $this->input->post('serial-curso');
-				
-				$this->session->set_flashdata('success', $serial_curso . ' actualizada correctamente.');
+				$this->session->set_flashdata('success', $serial_curso . ' actualizado correctamente.');
 				redirect(base_url().'gestion/curso');
 			}
 			else
