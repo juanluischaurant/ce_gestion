@@ -99,6 +99,26 @@
     });
 
     /**
+     * Este objeto se utiliza para traducir al español los controles
+     * de DataTables a lo largo de distintos archivos JS.
+     */
+    const lenguaje_para_datatables = {
+        "lengthMenu": "Mostrar _MENU_ registros por pagina",
+        "zeroRecords": "No se encontraron resultados en su busqueda",
+        "searchPlaceholder": "Buscar registros",
+        "info": "Mostrando registros de _START_ al _END_ de un total de  _TOTAL_ registros",
+        "infoEmpty": "No existen registros",
+        "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+        "search": "Buscar:",
+        "paginate": {
+            "first": "Primero",
+            "last": "Último",
+            "next": "Siguiente",
+            "previous": "Anterior"
+        },
+    };
+
+    /**
      * Función utilizada para generar un número entero dentrol del rango:
      * 1 a 999999, con la finalidad de generar un número para distintos seriales.
      * El parámetro recibido por esta función es necesario para poder llevar un control

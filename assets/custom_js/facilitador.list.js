@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
     $('#lista-facilitador').DataTable({
-        "order": [[ 1, "desc" ]]
+        "order": [[ 1, "desc" ]],
+        language: lenguaje_para_datatables
     });
 
     $('.btn-view-facilitador').on('click', function() {

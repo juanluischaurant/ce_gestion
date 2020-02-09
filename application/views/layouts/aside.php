@@ -50,7 +50,6 @@
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="<?php echo base_url(); ?>reportes/inscripciones"><i class="fa fa-circle-o"></i> Inscripciones </a></li>
                             <li><a href="<?php echo base_url(); ?>reportes/historial_pagos"><i class="fa fa-circle-o"></i> Hist. de Pagos </a></li>
                             <li><a href="<?php echo base_url(); ?>reportes/historial_inscripciones"><i class="fa fa-circle-o"></i> Hist. de Inscripciones </a></li>
                             <li><a href="<?php echo base_url(); ?>reportes/relacion"><i class="fa fa-circle-o"></i> Rel. de Cursos</a></li>

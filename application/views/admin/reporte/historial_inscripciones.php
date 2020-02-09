@@ -52,14 +52,7 @@
         <!-- Default box -->
         <div class="box box-solid">
             <div class="box-body">
-                <div class="row">
-                    <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>movimientos/inscripcion/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Inscripción</a>
-                    </div>
-                </div>
                 
-                <hr>
-
                 <?php if($this->session->flashdata('alert')): ?>
                     <div class="alert alert-warning alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -188,7 +181,7 @@
 <!-- /.modal -->
 
 <!-- CUSTOM JS -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/pago.list.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/reporte.inscripcion.js"></script>
 
 
                                

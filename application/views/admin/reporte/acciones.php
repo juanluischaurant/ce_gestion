@@ -90,4 +90,4 @@
 <!-- /.content-wrapper -->
 
 <!-- CUSTOM JS -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/accion.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/reporte.accion.js"></script>

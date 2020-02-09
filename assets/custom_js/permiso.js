@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
     $('#lista-permiso').DataTable({
-        "order": [[ 1, "desc" ]]
+        "order": [[ 1, "desc" ]],
+        language: lenguaje_para_datatables
     });
 
     $("#formulario_permiso").bootstrapValidator({

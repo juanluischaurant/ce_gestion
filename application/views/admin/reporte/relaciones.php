@@ -12,12 +12,9 @@
         <!-- Default box -->
         <div class="box box-solid">
             <div class="box-body">
-                           
-                <hr>
-
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="export-cursos" class="table table-bordered btn-hover">
+                        <table id="tabla-relacion" class="table table-bordered btn-hover tabla-ce">
                             <thead>
                                 <tr>
                                     <th>Serial</th>
@@ -61,7 +58,6 @@
                                  <?php endforeach; ?>
                                 <?php endif; ?>
                             </tbody>
-
                         </table>
                     </div>
                 </div>
@@ -73,3 +69,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/relacion.js"></script>

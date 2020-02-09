@@ -50,13 +50,8 @@
         <!-- /.box -->
  
 
-        <div class="box box-solid">
-            <div class="box-header">
-                
-            </div>
-    
+        <div class="box box-solid">    
             <div class="box-body">
-                
                 <div class="row">
                     <div class="col-md-12">
                         <table id="lista-pago" class="table table-bordered btn-hover">
@@ -155,7 +150,7 @@
 <!-- /.modal -->
 
 <!-- CUSTOM JS -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/pago.list.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/reporte.pago.js"></script>
 
 
                                

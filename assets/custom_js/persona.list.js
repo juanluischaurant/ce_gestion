@@ -1,7 +1,8 @@
 $(document).ready(function() {
 
     $('#lista-persona').DataTable({
-        "order": [[ 1, "desc" ]]
+        "order": [[ 1, "desc" ]],
+        language: lenguaje_para_datatables
     });
 
     $(document).on("click",".btn-view-persona",function() {
