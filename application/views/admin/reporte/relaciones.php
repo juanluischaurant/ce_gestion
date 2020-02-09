@@ -4,7 +4,7 @@
     <section class="content-header">
         <h1>
         Relación de Cursos
-        <small>Lista General</small>
+        <small>Reporte General</small>
         </h1>
     </section>
     <!-- Main content -->
@@ -54,7 +54,7 @@
 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
+                                                <a href="<?php echo base_url() .'/reportes/relacion/relacion_curso/'.$curso->id; ?>" class="btn btn-info"><span class="fa fa-eye"></span></a>
                                             </div>
                                         </td>
                                     </tr>

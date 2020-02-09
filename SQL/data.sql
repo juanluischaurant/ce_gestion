@@ -483,3 +483,27 @@ FROM
     WHERE YEAR(participante.fecha_registro) >= YEAR(CURRENT_DATE)
     AND TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, CURDATE()) < 18) AS menores_de_18
 FROM participante) AS seleccion
+
+
+-- ==================================================================
+-- ESTADÍSTICAS DE CURSO
+-- ==================================================================
+SELECT
+	curso.serial,
+    COUNT(inscripcion.id),
+    SUM(inscripcion.costo),
+    AVG(TIMESTAMPDIFF(YEAR, persona.fecha_nacimiento, inscripcion.fecha_registro)) as edad_al_inscribirse
+FROM curso
+LEFT JOIN inscripcion ON inscripcion.id_curso = curso.id
+JOIN participante ON participante.cedula_persona = inscripcion.cedula_participante
+JOIN persona ON persona.cedula = participante.cedula_persona
+WHERE curso.id = 2 AND curso.estado = 1
+
+-- Conteo de personas y participantes por año
+SELECT 
+	(SELECT COUNT(persona.cedula)
+     FROM persona
+     WHERE YEAR(persona.fecha_registro) = 2020  AND persona.estado = 1) AS conteo_personas,
+    (SELECT COUNT(participante.cedula_persona)
+     FROM participante
+     WHERE YEAR(participante.fecha_registro) = 2020  AND participante.estado = 1) AS conteo_participantes

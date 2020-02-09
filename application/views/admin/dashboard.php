@@ -102,8 +102,8 @@
                     <div class="box-body">
                         <div class="row">
                             <div class="col-md-12">
-                                <div id="grafico">
-                                    <div id="container"></div>
+                                <div id="grafico_inscripciones_mes">
+                                    <div id="container_inscripciones_mes"></div>
                                 </div>
                             </div>
                         </div>

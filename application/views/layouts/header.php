@@ -52,6 +52,7 @@
     JAVASCRIPT LIBRARIES 
     ============================ -->
     <script src="<?php echo base_url();?>assets/template/jquery/jquery.min.js"></script>
+    <script src="<?php echo base_url();?>assets/template/jquery-print/jquery.print.js"></script>
 
     <!-- jQuery UI -->
     <script src="<?php echo base_url();?>assets/template/jquery-ui/jquery-ui.js"></script>

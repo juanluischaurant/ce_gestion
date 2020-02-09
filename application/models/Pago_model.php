@@ -28,6 +28,53 @@ class Pago_model extends CI_Model {
     return $resultados->result();
   }
 
+    /**
+     * Obtener pagos recientes
+     * 
+     * Obtén lista de pagos realizados recientemente en base a un criterio
+     * especificado en la sentencia WHERE.
+     *
+     * @return void
+     */
+    public function get_pagos_recientes()
+    {
+      $SQL = "SELECT 
+      pdi.id, 
+      pdi.numero_referencia_bancaria, 
+      pdi.monto_operacion, 
+      pdi.estatus_pago, 
+      pdi.fecha_registro, 
+      per.cedula 
+      FROM pago_de_inscripcion as pdi 
+      JOIN titular as ti ON ti.cedula_persona = pdi.cedula_titular 
+      JOIN persona as per ON per.cedula = ti.cedula_persona 
+      WHERE pdi.fecha_registro >= CURRENT_DATE -25";
+
+      $query = $this->db->query($SQL);
+
+      return $query->result();
+    }
+
+    public function get_pagos_por_fecha($fecha_inicio, $fecha_fin)
+    {
+      $resultados = $this->db->select(
+          'pdi.id, 
+          pdi.numero_referencia_bancaria, 
+          pdi.monto_operacion, 
+          pdi.estatus_pago, 
+          pdi.fecha_registro, 
+          per.cedula'
+      )
+      ->from('pago_de_inscripcion as pdi')
+      ->join('titular as ti', 'ti.cedula_persona = pdi.cedula_titular')
+      ->join('persona as per', 'per.cedula = ti.cedula_persona')
+      ->where('pdi.fecha_registro >=', $fecha_inicio)
+      ->where('pdi.fecha_registro <=', $fecha_fin)
+      ->get(); 
+
+      return $resultados->result();
+    }
+
       /**
      * Obtén lista de pagos realizados pero no utilizados
      *
@@ -262,19 +309,19 @@ class Pago_model extends CI_Model {
     public function get_pagos_json($valor)
     {
         $resultados = $this->db->select(
-            'pi.numero_referencia_bancaria,
-            pi.estatus_pago,
+            'pi.id,
+            pi.numero_referencia_bancaria,
             pi.monto_operacion,
-            pi.id,
+            concat(pe.primer_nombre, " ", pe.primer_apellido) as nombre_cliente,
+            pe.cedula,
             pi.estatus_pago,
             pi.id_tipo_de_operacion,
-            concat(pi.numero_referencia_bancaria, " - ID: ", pe.cedula) as label,
-            concat(pe.primer_nombre, " ", pe.primer_apellido) as nombre_cliente,
-            pe.cedula'
+            concat(pi.numero_referencia_bancaria, " - ID: ", pe.cedula) as label'
         )
         ->from('pago_de_inscripcion as pi')
         ->join('titular as t', 't.cedula_persona = pi.cedula_titular')
-        ->join('persona as pe', 'pe.cedula = t.cedula_persona');
+        ->join('persona as pe', 'pe.cedula = t.cedula_persona')
+        ->where('pi.estatus_pago', 1);
                 
         if($valor !== '')
         {

@@ -18,7 +18,6 @@ class Relacion extends CI_Controller
         $this->load->model('Curso_model');
     }
 
-    
     public function index()
     {
         $data = array(

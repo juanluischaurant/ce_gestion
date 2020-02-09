@@ -30,7 +30,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-permiso" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
@@ -49,7 +49,7 @@
                                      <tr>
                                         <td><?php echo $permiso->id; ?></td>
                                         <td><?php echo $permiso->nombre; ?></td>
-                                        <td><?php echo $permiso->nombre; ?></td>
+                                        <td><?php echo $permiso->funcion; ?></td>
                                         <td>
                                             <?php if($permiso->read == 0): ?>
                                                 <span class="fa fa-times"></span>
@@ -105,3 +105,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/permiso.js"></script>

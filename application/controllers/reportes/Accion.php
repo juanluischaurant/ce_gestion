@@ -20,8 +20,23 @@ class Accion extends CI_Controller
     
     public function index()
     {
+        // Captura la data enviada por la solicitud POST
+        $fecha_fin = $this->input->post('fecha_fin');
+        $fecha_inicio = $this->input->post('fecha_inicio');
+
+        // En caso de que el botón buscar haya sido presionado
+        // carga la búsqueda por fecha
+        if($this->input->post('buscar'))
+        {
+            $acciones = $this->Accion_model->get_acciones_por_fecha($fecha_inicio, $fecha_fin);
+        }
+        else
+        {
+            $acciones = $this->Accion_model->get_acciones();
+        }
+
         $data = array(
-            'acciones' => $this->Accion_model->get_acciones()
+            'acciones' => $acciones
         );
 
         $this->load->view('layouts/header');

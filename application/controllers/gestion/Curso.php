@@ -212,7 +212,7 @@ class Curso extends CI_Controller {
 				// Update register if TRUE
 				if($this->Curso_model->update($id_curso, $data))
 				{
-					$this->session->set_flashdata('success', 'Se desactivó el curso.');
+					$this->session->set_flashdata('success', 'Se desactivó el curso exitosamente.');
 					redirect(base_url().'gestion/curso/');
 				}
 				else

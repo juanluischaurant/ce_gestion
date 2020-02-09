@@ -4,7 +4,7 @@
     <section class="content-header">
         <h1>
         Relación de Curso
-        <small></small>
+        <small>Reporte Epecífico</small>
         </h1>
     </section>
     <!-- Main content -->

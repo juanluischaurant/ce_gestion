@@ -443,11 +443,14 @@ ALTER TABLE `pago_de_inscripcion`
 
 
 CREATE VIEW vista_cursos_activos AS 
-SELECT year(fecha_inicio) AS ano_inicio_periodo, month(fecha_inicio) AS mes_inicio_periodo, 
-       nombre_curso.descripcion as nombre_curso, persona.cedula as cedula_facilitador, 
-       concat(persona.primer_nombre, ' ',  persona.primer_apellido) as facilitador, 
-       locacion.nombre as nombre_locacion, curso.cupos, 
-       count(inscripcion.cedula_participante) as cupos_curso_ocupados, curso.estado
+SELECT 
+  year(fecha_inicio) AS ano_inicio_periodo, 
+  month(fecha_inicio) AS mes_inicio_periodo, 
+  nombre_curso.descripcion as nombre_curso,
+  persona.cedula as cedula_facilitador, 
+  concat(persona.primer_nombre, ' ',  persona.primer_apellido) as facilitador, 
+  locacion.nombre as nombre_locacion, curso.cupos, 
+  count(inscripcion.cedula_participante) as cupos_curso_ocupados, curso.estado
 FROM periodo 
 INNER JOIN curso on curso.id_periodo = periodo.id
 INNER JOIN nombre_curso on nombre_curso.id = curso.id_nombre_curso
@@ -456,7 +459,6 @@ INNER JOIN facilitador on curso.cedula_facilitador = facilitador.cedula_persona
 INNER JOIN persona on facilitador.cedula_persona = persona.cedula
 INNER JOIN locacion on locacion.id = curso.id_locacion
 WHERE curso.estado=1 AND inscripcion.estado=1
-GROUP BY inscripcion.cedula_participante
 
 
 

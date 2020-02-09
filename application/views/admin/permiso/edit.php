@@ -15,7 +15,7 @@
         <!-- Default box -->
         <div class="box box-warning">
             <div class="box-header with-border text-center">
-                <h3 class="box-title">Datos de Nuevo Permiso</h3>
+                <h3 class="box-title">Datos de Permiso para <?php echo $permiso->nombre; ?></h3>
 
                 <?php if($this->session->flashdata("error")):?>
                     <div class="alert alert-danger alert-dismissible">
@@ -32,12 +32,22 @@
                 
                 <div class="centrar_div">
 
-                    <form action="<?php echo base_url(); ?>administrador/permiso/store" id="formulario_permiso" method="POST">
+                    <form action="<?php echo base_url(); ?>administrador/permiso/update" id="formulario_permiso" method="POST">
+                        <?php 
+                            /**
+                             * Utilizado en métodos para generar listas deplegablesen el formulario
+                             */
+                            $si_no = array(
+                                0 => 'No',
+                                1 => 'Si',
+                            ); 
+                        ?>
 
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <?php
                                     $roles = $roles; // Valor obtenido en el controlador
+                                    $selected = $permiso->id_rol;
                                     $atributos = array('class' => 'form-control '); // atributos para el elemento select
 
                                     // Genera la etiquera
@@ -45,7 +55,7 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos varios
-                                    echo form_dropdown('rol', $roles, '', $atributos);
+                                    echo form_dropdown('rol', $roles, $selected, $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div> 
@@ -53,6 +63,7 @@
                             <div class="form-group col-md-6">
                                 <?php
                                     $menus = $menus; // Valor obtenido en el controlador
+                                    $selected = $permiso->id_menu;
                                     $atributos = array('class' => 'form-control '); // atributos para el elemento select
 
                                     // Genera la etiquera
@@ -60,7 +71,7 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos varios
-                                    echo form_dropdown('menu', $menus, '', $atributos);
+                                    echo form_dropdown('menu', $menus, $selected, $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div> 
@@ -70,11 +81,7 @@
                             
                             <div class="form-group col-md-3">
                                 <?php
-                                    $opciones = array(
-                                        1 => 'Si',
-                                        0 => 'No'
-                                    ); 
-                                    
+                                     $selected = $permiso->read;               
                                     $atributos = array('class' => 'form-control'); // atributos para el elemento select
 
                                     // Genera la etiquera
@@ -82,18 +89,14 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos varios
-                                    echo form_dropdown('leer', $opciones, '', $atributos);
+                                    echo form_dropdown('leer', $si_no, $selected, $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div>
 
                             <div class="form-group col-md-3">
                                 <?php
-                                    $opciones = array(
-                                        0 => 'No',
-                                        1 => 'Si',
-                                    ); 
-
+                                    $selected = $permiso->insert;
                                     $atributos = array('class' => 'form-control'); // atributos para el elemento select
 
                                     // Genera la etiquera
@@ -101,18 +104,14 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos varios
-                                    echo form_dropdown('insertar', $opciones, '', $atributos);
+                                    echo form_dropdown('insertar', $si_no, $selected, $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div>
 
                             <div class="form-group col-md-3">
                                 <?php
-                                    $opciones = array(
-                                        0 => 'No',
-                                        1 => 'Si',
-                                    ); 
-
+                                    $selected = $permiso->update;
                                     $atributos = array('class' => 'form-control'); // atributos para el elemento select
 
                                     // Genera la etiquera
@@ -120,18 +119,14 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos varios
-                                    echo form_dropdown('editar', $opciones, '', $atributos);
+                                    echo form_dropdown('editar', $si_no, $selected, $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div> 
 
                             <div class="form-group col-md-3">
                                 <?php
-                                    $opciones = array(
-                                        0 => 'No',
-                                        1 => 'Si',
-                                    ); 
-
+                                    $selected = $permiso->delete;
                                     $atributos = array('class' => 'form-control '); // atributos para el elemento select
 
                                     // Genera la etiquera
@@ -139,7 +134,7 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: atributo name, valores de la lista, '', atributos varios
-                                    echo form_dropdown('eliminar', $opciones, '', $atributos);
+                                    echo form_dropdown('eliminar', $si_no, $selected, $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div> 
@@ -147,6 +142,7 @@
                         </div>
 
                         <div class="box-footer">
+                        <input type="hidden" name="id_permiso" value="<?php echo $permiso->id_permiso; ?>">
                             <button type="submit" class="btn btn-success btn-flat center-block">Guardar</button>
                         </div>
 

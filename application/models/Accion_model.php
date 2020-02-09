@@ -45,7 +45,37 @@ class Accion_model extends CI_Model
         ->join('tipo_de_accion as ta', 'ta.id = a.id_tipo_accion')
         ->get(); 
     
-            return $resultados->result();
+        return $resultados->result();
+    }
+
+    /**
+     * Consulta acciones en rango de fecha
+     * 
+     * Método utilizado para filtrar resultados de búsqueda de acciones
+     * en base a un determinado rango de fechas.
+     *
+     * @param string $fecha_inicio
+     * @param string $fecha_fin
+     * @return void
+     */
+    public function get_acciones_por_fecha($fecha_inicio, $fecha_fin)
+    {
+        $resultados = $this->db->select(
+            'a.id,
+            a.username,
+            a.id_tipo_accion,
+            a.descripcion,
+            a.tabla_afectada,
+            a.fecha_registro,
+            ta.nombre,'
+        )
+        ->from('accion as a')
+        ->join('tipo_de_accion as ta', 'ta.id = a.id_tipo_accion')
+        ->where('a.fecha_registro >=', $fecha_inicio)
+        ->where('a.fecha_registro <=', $fecha_fin)
+        ->get(); 
+    
+        return $resultados->result();
     }
 
 }

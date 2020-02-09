@@ -3,13 +3,52 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Inscripciones
-        <small>Lista General</small>
+        Historial de Inscripciones
+        <small>Reporte General</small>
         </h1>
     </section>
     <!-- Main content -->
     <section class="content">
+
+        <!-- Rango de fecha -->
+        <div class="box box-solid">
+            <div class="box-header with-border">
+                <h3 class="box-title">Selecciona un rango de fecha</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <form action="<?php echo current_url();?>" method="POST" class="form">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Desde</label>
+                                <input type="date" class="form-control" name="fecha_inicio" value="<?php echo !empty($fecha_inicio) ? $fecha_inicio : '';?>">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Hasta</label>
+                                <input type="date" class="form-control" name="fecha_fin" value="<?php  echo !empty($fecha_fin) ? $fecha_fin:'';?>">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">   
+                        <div class="col-md-4">
+                            <button type="submit" class="btn btn-primary" name="buscar" value="buscar">
+                                <span class="fa fa-search"></span>
+                            </button>    
         
+                            <a href="<?php echo base_url(); ?>reportes/historial_inscripciones" class="btn btn-danger">
+                                <span class="fa fa-repeat"></span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+
         <!-- Default box -->
         <div class="box box-solid">
             <div class="box-body">
@@ -127,21 +166,19 @@
 </div>
 <!-- /.content-wrapper -->
 
-
-<!-- modal -->
 <div class="modal fade" id="modal-default">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title text-center">Ficha de Inscripción</h4>
+        <h4 class="modal-title text-center">Información de Pago</h4>
       </div>
       <div class="modal-body">
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-danger center-block" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -151,4 +188,7 @@
 <!-- /.modal -->
 
 <!-- CUSTOM JS -->
-<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/inscripcion.list.js"></script>
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/pago.list.js"></script>
+
+
+                               

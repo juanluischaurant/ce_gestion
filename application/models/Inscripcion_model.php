@@ -34,6 +34,36 @@ class Inscripcion_model extends CI_Model {
     }
 
     /**
+     * Consulta base de dayos y retorna una lista de inscripciones realizadas
+     * 
+     * @return array
+     */   
+    public function get_inscripciones_por_fecha($fecha_inicio, $fecha_fin)
+    {
+        $resultados = $this->db->select(
+            'ins.id,
+            ins.cedula_participante,
+            ins.fecha_registro, 
+            ins.estado,
+            ins.id_curso,
+            p.fecha_culminacion as valida_hasta,
+            concat(nc.descripcion, "-", MONTH(p.fecha_inicio), " ",  MONTH(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
+            concat(per.primer_nombre, " ", per.primer_apellido) as nombre_completo_participante'
+        )
+        ->from('inscripcion as ins')
+        ->join('curso', 'curso.id = ins.id_curso')
+        ->join('periodo as p', 'p.id = curso.id_periodo')
+        ->join('nombre_curso AS nc', 'nc.id = curso.id_nombre_curso')
+        ->join('participante as par', 'par.cedula_persona = ins.cedula_participante')
+        ->join('persona as per', 'per.cedula = par.cedula_persona')
+        ->where('ins.fecha_registro >=', $fecha_inicio)
+        ->where('ins.fecha_registro <=', $fecha_fin)
+        ->get();
+
+        return $resultados->result();
+    }
+
+    /**
      * Obtén un registro determinado de la tabla "inscripcion"
      * 
      * Método utilizado principalmente para generar la ficha de inscripción. Recibe
@@ -248,24 +278,25 @@ class Inscripcion_model extends CI_Model {
     public function get_cursos_json($valor)
     {
         $this->db->query("SET lc_time_names = 'es_ES';");
+        
+        $SQL = "SELECT 
+        curso.id, 
+        curso.cupos, 
+        curso.precio, 
+        nc.descripcion, 
+        concat(nc.descripcion, ' ', MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as label, 
+        concat(MONTH(periodo.fecha_inicio), '-', MONTH(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico, (SELECT COUNT(*) as inscripciones_asociadas FROM inscripcion WHERE inscripcion.id_curso = curso.id) AS inscripciones_asociadas 
+        FROM curso 
+        JOIN nombre_curso AS nc ON nc.id = curso.id_nombre_curso 
+        JOIN periodo ON periodo.id = curso.id_periodo 
+        WHERE curso.estado = 1 AND nc.descripcion LIKE '";
+        $SQL .= $valor;
+        $SQL .= "%' ESCAPE '!' AND periodo.fecha_culminacion > CURRENT_DATE";
+        
+        
+        $resultado = $this->db->query($SQL, array($valor));
 
-        $resultados = $this->db->select(
-            'curso.id, 
-            curso.cupos,
-            curso.precio,
-            nc.descripcion,
-            concat(nc.descripcion, " " ,MONTHNAME(periodo.fecha_inicio), "-", MONTHNAME(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as label,
-            concat(MONTH(periodo.fecha_inicio), "-", MONTH(periodo.fecha_culminacion), " ", YEAR(periodo.fecha_inicio)) as periodo_academico,
-            (SELECT COUNT(*) as inscripciones_asociadas FROM inscripcion WHERE inscripcion.id_curso = curso.id) AS inscripciones_asociadas'
-        )
-        ->from('curso')
-        ->join('nombre_curso AS nc', 'nc.id = curso.id_nombre_curso')
-        ->join('periodo', 'periodo.id = curso.id_periodo')
-        // ->where('curso.estado_curso', 1)
-        ->like('nc.descripcion', $valor)
-        ->get();
-
-        return $resultados->result_array();
+        return $resultado->result_array();
     } 
 
     /**

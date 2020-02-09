@@ -26,9 +26,37 @@ class Permiso_model extends CI_Model {
         return $resultados->result();    
     }
 
+    public function get_permiso($id_permiso)
+    {
+        $resultados = $this->db->select(
+            'permiso.id AS id_permiso,
+            permiso.id_menu,
+            permiso.id_rol,
+            permiso.read,
+            permiso.insert,
+            permiso.update,
+            permiso.delete,
+            menu.nombre,
+            rol.funcion'
+        )
+        ->from('permiso')
+        ->join('rol', 'permiso.id_rol = rol.id')
+        ->join('menu', 'permiso.id_menu = menu.id')
+        ->where('permiso.id', $id_permiso)
+        ->get();
+
+        return $resultados->row();    
+    }
+
     public function save($data)
     {
         return $this->db->insert('permiso', $data);
+    }
+
+    public function update($id_permiso, $data)
+    {
+        $this->db->where('id', $id_permiso);
+        return $this->db->update('permiso', $data);
     }
 
     /**

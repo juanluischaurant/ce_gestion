@@ -34,7 +34,7 @@ $(document).ready(function() {
                 return;
             }
 
-            data = ui.item.id+'*'+ui.item.numero_referencia_bancaria+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula+'*'+ui.item.id_pago+'*'+ui.item.id_tipo_de_operacion+'*'+ui.item.estatus_pago;
+            data = ui.item.id+'*'+ui.item.numero_referencia_bancaria+'*'+ui.item.monto_operacion+'*'+ui.item.nombre_cliente+'*'+ui.item.cedula+'*'+ui.item.estatus_pago+'*'+ui.item.id_tipo_de_operacion;
             $('#btn-agregar-pago').val(data);
         }
     });
@@ -52,8 +52,8 @@ $(document).ready(function() {
             monto_operacion = datosPago[2],
             nombre_cliente = datosPago[3],
             cedula_cliente = datosPago[4],
-            id_tipo_de_operacion = datosPago[5],
-            estatus_pago = datosPago[6]; 
+            estatus_pago = datosPago[5],
+            id_tipo_de_operacion = datosPago[6];
 
             if(estatus_pago == 1 || estatus_pago == 3)
             {

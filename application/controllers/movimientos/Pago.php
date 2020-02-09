@@ -28,7 +28,7 @@ class Pago extends CI_Controller {
     public function index()
     {
         $data = array(
-			'pagos' => $this->Pago_model->get_pagos(),
+			'pagos' => $this->Pago_model->get_pagos_recientes(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');

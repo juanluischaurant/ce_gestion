@@ -1,16 +1,17 @@
 $(document).ready(function () {  
 
-    let current_year = (new Date).getFullYear();
+    // let current_year = (new Date).getFullYear();
+    let current_year = $('#parametro_de_grafico').val();
     
     // Invoca a la función encargada de generar el gráfico
-    grafico_inscripciones_mes(base_url, current_year);
+    grafico_ingresos_mes(base_url, current_year);
     
     $('#parametro_de_grafico').on('change', function() {
         
         let selected_year = $this.val();
 
         // Invoca a la función encargada de generar el gráfico
-        grafico_inscripciones_mes(base_url, selected_year);
+        grafico_ingresos_mes(base_url, selected_year);
     });
 
 });
@@ -24,7 +25,7 @@ $(document).ready(function () {
  * @param {string} base_url 
  * @param {integer} year 
  */
-function grafico_inscripciones_mes(base_url, year)
+function grafico_ingresos_mes(base_url, year)
 {
     // Array de meses
     let nombres_mes = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Set', 'Oct', 'Nov', 'Dic'];
@@ -44,19 +45,19 @@ function grafico_inscripciones_mes(base_url, year)
                 let valor = Number(value.monto_generado);
                 montos_generados.push(valor);
             });
-            graficar(meses_inscripciones, montos_generados, year);
+            graficar_ingresos_mes(meses_inscripciones, montos_generados, year);
         }
     })
 }
 
-function graficar(meses_inscripciones, montos_generados, year)
+function graficar_ingresos_mes(meses_inscripciones, montos_generados, year)
 {
-    Highcharts.chart('container', {
+    Highcharts.chart('container_inscripciones_mes', {
         chart: {
-            type: 'column'
+            height: 25 + '%'
         },
         title: {
-            text: 'Inscripciones por mes'
+            text: 'Ingresos por mes'
         },
         subtitle: {
             text: 'Inscripciones ' + year
@@ -72,7 +73,7 @@ function graficar(meses_inscripciones, montos_generados, year)
             }
         },
         tooltip: {
-            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            headerFormat: '<span style="font-size:14px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
                 '<td style="padding:0"><b>{point.y:.1f} Bs.</b></td></tr>',
             footerFormat: '</table>',
