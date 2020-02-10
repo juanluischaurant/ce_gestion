@@ -46,7 +46,7 @@ class Pago extends CI_Controller {
     public function add()
     {
 		$data = array(
-			'tipos_de_operacion' => $this->Pago_model->get_tipos_de_operacion(),
+			'tipos_de_operacion' => $this->Pago_model->tipos_de_operacion_dropdown()
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -60,7 +60,7 @@ class Pago extends CI_Controller {
         // $modulo = $this->input->post('modulo-actual');
 
         $id_banco_operacion = $this->input->post('id_banco_de_operacion');
-        $id_tipo_de_operacion = $this->input->post('id_tipo_de_pago');
+        $id_tipo_de_operacion = $this->input->post('tipo_de_pago');
         $cedula_titular = $this->input->post('cedula_titular');
         $numero_referencia_bancaria = $this->input->post('numero_referencia');
         $monto_de_operacion = $this->input->post('monto_de_operacion');
@@ -187,17 +187,18 @@ class Pago extends CI_Controller {
 			redirect(base_url().'movimientos/pago/');
 		}
 		else
-		{
+		{            
             $estado_pago = $this->Pago_model->get_estatus_pago($id_pago);
-
+            
             // Verifica el estado actual del pago. Un pago ya utilizado
             // NO se debe editar.
-            if(1 == 1)
+            if($estado_pago == TRUE)
             {
                 $data = array(
                     'pago' => $this->Pago_model->get_pago($id_pago),
-                    'tipos_de_operacion' => $this->Pago_model->get_tipos_de_operacion()
+                    'tipos_de_operacion' => $this->Pago_model->tipos_de_operacion_dropdown()
                 );
+
                 $this->load->view('layouts/header');
                 $this->load->view('layouts/aside');
                 $this->load->view('admin/pago/edit', $data);
@@ -205,12 +206,12 @@ class Pago extends CI_Controller {
             }
             else
             {
+                echo $estado_pago;
                 $this->session->set_flashdata('error', 'Pago ya en uso, no puedes editarlo.');
                 redirect(base_url().'movimientos/pago/');
             }
 		}
     }
-
     
 	public function update() 
 	{
@@ -223,10 +224,10 @@ class Pago extends CI_Controller {
         $numero_referencia_bancaria = $this->input->post('numero_referencia');
 
 		$data = array(
-            'fk_id_titular' => $cedula_titular,
+            'cedula_titular' => $cedula_titular,
             'monto_operacion' => $monto_operacion,
             'fecha_operacion' => $fecha_operacion,
-            'fk_id_banco' => $id_banco,
+            'id_banco' => $id_banco,
             'numero_referencia_bancaria' => $numero_referencia_bancaria,			
 		);
 
@@ -267,9 +268,35 @@ class Pago extends CI_Controller {
         echo json_encode($resultados);
     }
     
+	public function devolver_pago($id_pago)
+	{
+                
+        $estado_pago = $this->Pago_model->get_estatus_pago($id_pago);
+            
+        // Verifica el estado actual del pago. Un pago ya utilizado
+        // NO se debe editar.
+        if($estado_pago == TRUE)
+        {
+            $data = array(
+                'estatus_pago' => 4,
+                'fecha_devolucion' => date('Y-m-d H:i:s'),
+            );
+
+            $this->Pago_model->update($id_pago, $data);
+
+            $this->session->set_flashdata('error', 'Pago devuelto satisfactoriamente');
+            redirect(base_url().'movimientos/pago/');
+        }
+        else
+        {
+            echo $estado_pago;
+            $this->session->set_flashdata('error', 'No puedes devolver un pago en uso');
+            redirect(base_url().'movimientos/pago/');
+        }
+	}
+    
     // Métodos utilizados para el pluggin AUTOCOMPLETE
     
-
 	/**
 	 * Consulta el pago indicado
 	 * 

@@ -16,6 +16,7 @@ class Pago_model extends CI_Model {
       'pdi.id, 
       pdi.numero_referencia_bancaria, 
       pdi.monto_operacion, 
+      pdi.fecha_operacion,
       pdi.estatus_pago,
       pdi.fecha_registro, 
       per.cedula'
@@ -41,7 +42,8 @@ class Pago_model extends CI_Model {
       $SQL = "SELECT 
       pdi.id, 
       pdi.numero_referencia_bancaria, 
-      pdi.monto_operacion, 
+      pdi.monto_operacion,
+      pdi.fecha_operacion,
       pdi.estatus_pago, 
       pdi.fecha_registro, 
       per.cedula 
@@ -86,6 +88,7 @@ class Pago_model extends CI_Model {
             'pdi.id,
             pdi.numero_referencia_bancaria,
             pdi.monto_operacion,
+            pdi.fecha_operacion,
             pdi.estatus_pago,
             pdi.fecha_registro, 
             pdi.id_tipo_de_operacion,
@@ -111,7 +114,8 @@ class Pago_model extends CI_Model {
       pdi.fecha_operacion,
       pdi.id_inscripcion,
       pdi.cedula_titular,
-      tdo.id,
+      tdo.id AS id_tipo_operacion,
+      tdo.tipo,
       b.id AS id_banco,
       b.nombre AS nombre_banco,
       per.primer_nombre,
@@ -147,6 +151,23 @@ class Pago_model extends CI_Model {
     $resultado = $this->db->get("tipo_de_operacion");
     return $resultado->row();
   }
+
+  public function tipos_de_operacion_dropdown()
+    {
+        $query = $this->db->from('tipo_de_operacion')
+        ->get();
+
+        $array[''] = 'Selecciona';
+
+        foreach($query->result() as $row)
+        {
+            // Crea un arreglo llave-valor,
+            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
+            $array[$row->id] = $row->tipo;
+        }
+
+        return $array;
+    }
 
   /**
    * Insertar un registro en la tabla indicada dentro del método
@@ -193,15 +214,26 @@ class Pago_model extends CI_Model {
    */
   public function get_estatus_pago($id_pago)
   {
-    $resultados = $this->db->select(
+    $resultado = $this->db->select(
       'pdi.id,
       pdi.estatus_pago'
       )
     ->from('pago_de_inscripcion as pdi')
     ->where('pdi.id', $id_pago)
-    ->get();
+    ->get()
+    ->row();
 
-    return $resultados->row();
+    if($resultado->estatus_pago == 1 || $resultado->estatus_pago == 3)
+    {
+      // El pago está Sin Ubicar (1) ó liberado (3)
+      return TRUE;
+    }
+    else
+    {
+      // El pago ha sido utilizado
+      return FALSE;
+    }
+
   }
 
   /**

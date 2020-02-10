@@ -38,6 +38,7 @@
                                     <th>#</th>
                                     <th>Fecha de Regisro</th>
                                     <th>Número de Operación</th>
+                                    <th>Fecha de Operación</th>
                                     <th>Monto (Bs.)</th>
                                     <th>Estatus</th>
                                     <th>Cédula Cliente</th>
@@ -47,27 +48,33 @@
                             <tbody>
                                 <?php if(!empty($pagos)): ?>
                                 <?php foreach($pagos as $pago): ?>
-                                    <?php  $id_pago = $pago->id; ?>
+                                    <?php $id_pago = $pago->id; ?>
                                     <tr>
                                         <td><?php echo $id_pago; ?></td>
                                         <td><?php echo $pago->fecha_registro; ?></td>
                                         <td><?php echo ($pago->numero_referencia_bancaria == NULL) ? 'No Aplica' : $pago->numero_referencia_bancaria; ?></td>
+                                        <td><?php echo $pago->fecha_operacion; ?></td>
                                         <td><?php echo ($pago->monto_operacion == '') ? '0.00' : $pago->monto_operacion; ?></td>
                                         
                                         <td>
                                         <?php if($pago->estatus_pago == 1): ?>
-                                            <small class="label label-success">
-                                                <i class="fa fa-clock-o"></i> Disponible
+                                            <small class="label label-warning">
+                                                Sin Ubicar
                                             </small>
                                         <?php endif; ?> 
                                         <?php if($pago->estatus_pago == 2): ?>
-                                            <small class="label label-danger">
-                                                <i class="fa fa-clock-o"></i> Usado
+                                            <small class="label label-success">
+                                                Ubicado
                                             </small>
                                         <?php endif; ?> 
                                         <?php if($pago->estatus_pago == 3): ?>
                                             <small class="label label-warning">
-                                                <i class="fa fa-clock-o"></i> Liberado
+                                                Liberado
+                                            </small>
+                                        <?php endif; ?> 
+                                        <?php if($pago->estatus_pago == 4): ?>
+                                            <small class="label label-primary">
+                                                Devuelto
                                             </small>
                                         <?php endif; ?> 
                                         </td>
@@ -89,7 +96,7 @@
                                                 <?php endif; ?>
 
                                                 <?php if($permisos->delete == 1): ?>
-                                                <a href="#" class="btn btn-danger">
+                                                <a href="<?php echo base_url() ?>movimientos/pago/devolver_pago/<?php echo $id_pago; ?>" class="btn btn-danger">
                                                     <span class="fa fa-remove"></span>
                                                 </a>
                                                 <?php endif; ?>

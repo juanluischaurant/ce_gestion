@@ -77,21 +77,26 @@
                                         <td><?php echo ($pago->monto_operacion == '') ? '0.00' : $pago->monto_operacion; ?></td>
                                         
                                         <td>
-                                        <?php if($pago->estatus_pago == 1): ?>
-                                            <small class="label label-success">
-                                                <i class="fa fa-clock-o"></i> Disponible
-                                            </small>
-                                        <?php endif; ?> 
-                                        <?php if($pago->estatus_pago == 2): ?>
-                                            <small class="label label-danger">
-                                                <i class="fa fa-clock-o"></i> Usado
-                                            </small>
-                                        <?php endif; ?> 
-                                        <?php if($pago->estatus_pago == 3): ?>
-                                            <small class="label label-warning">
-                                                <i class="fa fa-clock-o"></i> Liberado
-                                            </small>
-                                        <?php endif; ?> 
+                                            <?php if($pago->estatus_pago == 1): ?>
+                                                <small class="label label-warning">
+                                                    Sin Ubicar
+                                                </small>
+                                            <?php endif; ?> 
+                                            <?php if($pago->estatus_pago == 2): ?>
+                                                <small class="label label-success">
+                                                    Ubicado
+                                                </small>
+                                            <?php endif; ?> 
+                                            <?php if($pago->estatus_pago == 3): ?>
+                                                <small class="label label-warning">
+                                                    Liberado
+                                                </small>
+                                            <?php endif; ?> 
+                                            <?php if($pago->estatus_pago == 4): ?>
+                                                <small class="label label-primary">
+                                                    Devuelto
+                                                </small>
+                                            <?php endif; ?> 
                                         </td>
 
                                         <td>

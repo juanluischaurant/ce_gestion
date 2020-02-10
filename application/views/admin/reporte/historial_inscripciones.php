@@ -110,6 +110,17 @@
                                                     <i class="fa fa-clock-o"></i> Inactiva
                                                 </small>
                                             <?php endif; ?> 
+
+                                            <?php if($inscripcion->conteo_pagos_asociados == 0): ?>
+                                                <small class="label label-danger">
+                                                    Sin Pagar
+                                                </small>
+                                            <?php endif; ?> 
+                                            <?php if($inscripcion->conteo_pagos_asociados >= 1): ?>
+                                                <small class="label label-warning">
+                                                    Pagos <?php echo $inscripcion->conteo_pagos_asociados; ?>
+                                                </small>
+                                            <?php endif; ?> 
                                         </td>
 
                                         <td><?php echo $inscripcion->nombre_completo_participante; ?></td>

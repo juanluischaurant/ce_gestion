@@ -10,6 +10,8 @@ class Inscripcion_model extends CI_Model {
      */   
     public function get_inscripciones()
     {
+        $this->db->query("SET lc_time_names = 'es_ES';");
+
         $resultados = $this->db->select(
             'ins.id,
             ins.cedula_participante,
@@ -17,7 +19,8 @@ class Inscripcion_model extends CI_Model {
             ins.estado,
             ins.id_curso,
             p.fecha_culminacion as valida_hasta,
-            concat(nc.descripcion, "-", MONTH(p.fecha_inicio), " ",  MONTH(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
+            (SELECT COUNT(*) FROM pago_de_inscripcion AS pdi WHERE pdi.id_inscripcion = ins.id) AS conteo_pagos_asociados,
+            concat(nc.descripcion, " ", MONTHNAME(p.fecha_inicio), "-",  MONTHNAME(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
             concat(per.primer_nombre, " ", per.primer_apellido) as nombre_completo_participante'
         )
         ->from('inscripcion as ins')
@@ -40,6 +43,8 @@ class Inscripcion_model extends CI_Model {
      */   
     public function get_inscripciones_por_fecha($fecha_inicio, $fecha_fin)
     {
+        $this->db->query("SET lc_time_names = 'es_ES';");
+
         $resultados = $this->db->select(
             'ins.id,
             ins.cedula_participante,
@@ -47,7 +52,8 @@ class Inscripcion_model extends CI_Model {
             ins.estado,
             ins.id_curso,
             p.fecha_culminacion as valida_hasta,
-            concat(nc.descripcion, "-", MONTH(p.fecha_inicio), " ",  MONTH(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
+            (SELECT COUNT(*) FROM pago_de_inscripcion AS pdi WHERE pdi.id_inscripcion = ins.id) AS conteo_pagos_asociados,
+            concat(nc.descripcion, " ", MONTHNAME(p.fecha_inicio), "-",  MONTHNAME(p.fecha_culminacion), " ", YEAR(p.fecha_inicio)) as nombre_completo_instancia,
             concat(per.primer_nombre, " ", per.primer_apellido) as nombre_completo_participante'
         )
         ->from('inscripcion as ins')
@@ -80,6 +86,7 @@ class Inscripcion_model extends CI_Model {
             inscripcion.fecha_registro,
             inscripcion.costo,
             par.cedula_persona,
+            (SELECT COUNT(*) FROM pago_de_inscripcion AS pdi WHERE pdi.id_inscripcion = inscripcion.id) AS conteo_pagos_asociados,
             concat(per.primer_nombre, " ", per.primer_apellido) as nombre_completo_participante,
             per.direccion,
             per.telefono')
@@ -223,7 +230,7 @@ class Inscripcion_model extends CI_Model {
             cur.cupos,
             cur.precio,
             (SELECT COUNT(*) FROM inscripcion WHERE inscripcion.id_curso = cur.id AND inscripcion.estado = 1) AS cupos_curso_ocupados,
-            concat(nc.descripcion, " ", MONTH(per.fecha_inicio), "-", MONTH(per.fecha_culminacion), " ", YEAR(per.fecha_inicio)) as nombre_completo_instancia'
+            concat(nc.descripcion, " ", MONTHNAME(per.fecha_inicio), "-", MONTHNAME(per.fecha_culminacion), " ", YEAR(per.fecha_inicio)) as nombre_completo_instancia'
         )
         ->from('inscripcion as ins')
         ->join('curso as cur', 'cur.id = ins.id_curso')
@@ -289,7 +296,7 @@ class Inscripcion_model extends CI_Model {
         curso.precio, 
         nc.descripcion, 
         concat(nc.descripcion, ' ', MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as label, 
-        concat(MONTH(periodo.fecha_inicio), '-', MONTH(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico, (SELECT COUNT(*) as inscripciones_asociadas FROM inscripcion WHERE inscripcion.id_curso = curso.id) AS inscripciones_asociadas 
+        concat(MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico, (SELECT COUNT(*) as inscripciones_asociadas FROM inscripcion WHERE inscripcion.id_curso = curso.id) AS inscripciones_asociadas 
         FROM curso 
         JOIN nombre_curso AS nc ON nc.id = curso.id_nombre_curso 
         JOIN periodo ON periodo.id = curso.id_periodo 
