@@ -58,6 +58,7 @@ class Curso_model extends CI_Model {
             curso.precio,
             curso.id_turno,
             curso.descripcion AS detalles_curso,
+            curso.cedula_facilitador,
             nc.descripcion,
             periodo.id AS id_periodo,
             concat(MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico,
@@ -168,7 +169,6 @@ class Curso_model extends CI_Model {
         }
     }
    
-
     /**
      * Realiza conteo de inscripciones
      * 
@@ -248,6 +248,79 @@ class Curso_model extends CI_Model {
         return $array;
     }
 
+    public function locaciones_dropdown()
+    {
+        // Obtén los registros de curso de los especialidades
+        $resultados = $this->db->select(
+            'locacion.id AS id_locacion,
+            locacion.nombre as nombre_locacion'
+        )
+        ->from('locacion')
+        ->where('locacion.estado', 1)
+        ->get();
+
+        $array[''] = 'Selecciona';
+
+        foreach($resultados->result() as $row)
+        {
+            // Crea un arreglo llave-valor,
+            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
+            $array[$row->id_locacion] = $row->nombre_locacion;
+        }
+       
+        return $array;
+    }
+
+    public function periodos_dropdown()
+    {
+        // Cambia el idioma del set de resultados a generar
+        $this->db->query("SET lc_time_names = 'es_ES';");
+
+        // Obtén los registros de curso de los especialidades
+        $resultados = $this->db->select(
+            "periodo.id AS id_periodo, 
+            concat(MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico"
+        )
+        ->from('periodo')
+        ->where('fecha_culminacion >= CURDATE()')
+        ->get();
+
+        $array[''] = 'Selecciona';
+
+        foreach($resultados->result() as $row)
+        {
+            // Crea un arreglo llave-valor,
+            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
+            $array[$row->id_periodo] = $row->periodo_academico;
+        }
+       
+        return $array;
+    }
+
+    public function facilitadores_dropdown()
+    {
+        // Obtén los registros de curso de los profesores
+        $resultados = $this->db->select(
+            'facilitador.cedula_persona AS id_facilitador,
+            concat(persona.primer_nombre, " ", persona.primer_apellido) as nombre_facilitador'
+        )
+        ->from('facilitador')
+        ->join('persona', 'persona.cedula = facilitador.cedula_persona')
+        ->where('facilitador.estado', '1') 
+        ->get();
+
+        $array[''] = 'Selecciona';
+
+        foreach($resultados->result() as $row)
+        {
+            // Crea un arreglo llave-valor,
+            // la llave se imprime en el atributo "value" y el nombre aparece visible en el dropdown
+            $array[$row->id_facilitador] = $row->nombre_facilitador;
+        }
+       
+        return $array;
+    }
+
     
     /**
      * Permite realizar una consulta a la base de datos para obterner toda la información 
@@ -280,6 +353,12 @@ class Curso_model extends CI_Model {
         return $resultado->result();
     }
     
+    /**
+     * NO UTILIZADA
+     *
+     * @param [type] $valor
+     * @return void
+     */
     public function getPeriodosJSON($valor) 
     {
         // Cambia el idioma del set de resultados a generar
@@ -301,8 +380,8 @@ class Curso_model extends CI_Model {
 
     public function getLocacionesJSON($valor)
     {
-         // Obtén los registros de curso de los especialidades
-         $resultados = $this->db->select(
+        // Obtén los registros de curso de los especialidades
+        $resultados = $this->db->select(
             'locacion.id AS id_locacion,
             locacion.nombre as label,
             locacion.direccion'

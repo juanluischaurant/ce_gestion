@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-    $('#lista-nombre-curso').DataTable({
+    $('#lista-nombre_curso').DataTable({
         "order": [[ 1, "desc" ]]
     });
 
@@ -20,8 +20,8 @@ $(document).ready(function() {
 
         $('#serial-curso').val(prefijo.toUpperCase()+'-'+id_curso+'-'+generarNumero(conteoUso));
 
-        $('#id-nombre-curso').val(id_curso);
-        $('#nombre-curso').val(nombreCurso);
+        $('#id_nombre_curso').val(id_curso);
+        $('#nombre_curso').val(nombreCurso);
 
         $('#modal-default').modal('hide');
     });
@@ -99,6 +99,81 @@ $(document).ready(function() {
             $('#id-facilitador-curso').val(data);
             $('#facilitador-curso').parent().addClass('has-success');
             $('label[for="facilitador-curso"] i').removeClass('hidden');
+        }
+    });
+
+    $('#agregar_curso').bootstrapValidator({
+        fields: {
+            nombre_curso: {
+                validators: {
+                    stringLength: {
+                        min: 5,
+                        max: 45,
+                        message:'Ingrese entre 5 y 85 caractéres'
+                    },
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            costo_curso: {
+                validators: {
+                    numeric: {
+                        message: 'Ingrese solo valores numéricos'
+                    },
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            periodo_curso: {
+                validators: {
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            locacion_curso: {
+                validators: {
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            turno_curso: {
+                validators: {
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            facilitador_curso: {
+                validators: {
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            cupos_curso: {
+                validators: {
+                    numeric: {
+                        message: 'Ingrese solo valores numéricos'
+                    },
+                    notEmpty: {
+                        message: 'Campo obligatorio'
+                    },
+                }
+            },
+            descripcion_curso: {
+                validators: {
+                    stringLength: {
+                        max: 256,
+                        message:'Ingrese máximo 256 caractéres'
+                    },
+                }
+            },
+
+         
         }
     });
 

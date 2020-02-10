@@ -31,7 +31,7 @@
             </div>
             <!-- /.box-header -->
                   
-            <form action="<?php echo base_url(); ?>gestion/curso/store" method="POST">
+            <form id="agregar_curso" action="<?php echo base_url(); ?>gestion/curso/store" method="POST">
 
                 <div class="box-body">
                     
@@ -41,7 +41,7 @@
                             <div class="form-group col-md-12">
                                 <label for="">Nombre del Curso</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" disabled="disabled" id="nombre-curso">
+                                    <input type="text" class="form-control" readonly id="nombre_curso" name="nombre_curso">
                                     <span class="input-group-btn">
                                         <button class="btn btn-primary" type="button" data-toggle="modal" data-target="#modal-default" ><span class="fa fa-search"></span></button>
                                     </span>
@@ -51,23 +51,47 @@
 
                         <div class="row">
                             <div class="form-group col-md-4">
-                                <label for="costo-curso">Costo</label>
-                                <input type="number" class="form-control" id="costo-curso" name="costo-curso">
+                                <label for="costo_curso">Costo</label>
+                                <input type="number" class="form-control" id="costo_curso" name="costo_curso">
                             </div>
 
-                            <div class="col-md-8">
-                                <label for="">Período</label>
-                                <input type="text" class="form-control" id="periodo-curso">
+                            <div class="form-group col-md-8">
+                                <?php
+                                    $atributos = array(
+                                        'class' => 'form-control', 'required',
+                                        'id' => 'periodo_curso'
+                                    );
+                                    // Genera la etiquera
+                                    echo form_label('Período');
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
+                                    echo form_dropdown('periodo_curso', $lista_periodos, '', $atributos);
+                                ?>
+                                <!-- Fin del campo -->
                             </div>
+
                         </div>
 
                         <div class="row">
+
                             <div class="form-group col-md-8">
-                                <label for="locacion-curso">Locación</label>
-                                <input type="text" class="form-control" id="locacion-curso">
+                                <?php
+                                    $atributos = array(
+                                        'class' => 'form-control', 'required',
+                                        'id' => 'locacion_curso'
+                                    );
+                                    // Genera la etiquera
+                                    echo form_label('Locación');
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
+                                    echo form_dropdown('locacion_curso', $lista_locaciones, '', $atributos);
+                                ?>
+                                <!-- Fin del campo -->
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="form-group col-md-4">
                                 <?php
                                     $atributos = array('class' => 'form-control', 'required');
                                     // Genera la etiquera
@@ -75,27 +99,40 @@
 
                                     // Genera el elemento "select"
                                     // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
-                                    echo form_dropdown('turno-curso', $lista_turnos, '', $atributos);
+                                    echo form_dropdown('turno_curso', $lista_turnos, '', $atributos);
                                 ?>
                                 <!-- Fin del campo -->
                             </div>
                         </div>
 
                         <div class="row">
+
                             <div class="form-group col-md-8">
-                                <label for="facilitador-curso">Facilitador</label>
-                                <input type="text" id="facilitador-curso" class="form-control">
+                                <?php
+                                    $atributos = array(
+                                        'class' => 'form-control', 'required',
+                                        'id' => 'facilitador_curso'
+                                    );
+                                    // Genera la etiquera
+                                    echo form_label('Facilitador');
+
+                                    // Genera el elemento "select"
+                                    // Parámetros de form_dropdown: nombre, valores de la lista, '', atributos
+                                    echo form_dropdown('facilitador_curso', $lista_facilitadores, '', $atributos);
+                                ?>
+                                <!-- Fin del campo -->
                             </div>
-                            <div class="col-md-4">
-                                <label for="cupos-especialidad">Cupos</label>
-                                <input type="text" name="cupos-curso" id="cupos-curso" class="form-control">
+
+                            <div class="form-group col-md-4">
+                                <label for="cupos_curso">Cupos</label>
+                                <input type="text" name="cupos_curso" id="cupos_curso" class="form-control">
                             </div>
                         </div>
                         
                         <div class="row">
-                            <div class="col-md-12">
-                                <label for="descripcion-curso">Descripción</label>
-                                <input type="text" name="descripcion-curso" id="descripcion-curso" class="form-control">
+                            <div class="form-group col-md-12">
+                                <label for="descripcion_curso">Descripción</label>
+                                <textarea class="form-control"  id="descripcion_curso" name="descripcion_curso" rows="4" placeholder="Ej: Enfoque en mantenimiento correctivo y preventivo"></textarea>
                             </div>    
                         </div>
 
@@ -106,10 +143,7 @@
 
                 <div class="box-footer">
 
-                    <input type="hidden" id="id-periodo-curso" name="id-periodo-curso">  
-                    <input type="hidden" id="id-locacion-curso" name="id-locacion-curso">  
-                    <input type="hidden" id="id-facilitador-curso" name="id-facilitador-curso">
-                    <input type="hidden" name="id-nombre-curso" id="id-nombre-curso">
+                    <input type="hidden" name="id_nombre_curso" id="id_nombre_curso">
                     <input type="hidden" name="serial-curso" id="serial-curso">
                     
                     <button type="submit" class="btn btn-success btn-flat center-block">Guardar</button>
@@ -137,7 +171,7 @@
                 <h4 class="modal-title">Lita de Especialidades</h4>
             </div>
             <div class="modal-body">
-                <table id="lista-nombre-curso" class="table table-bordered table-striped table-hover">
+                <table id="lista-nombre_curso" class="table table-bordered table-striped table-hover">
                     <thead>
                         <tr>
                             <th>#</th>

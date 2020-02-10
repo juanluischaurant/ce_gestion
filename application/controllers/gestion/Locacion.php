@@ -82,7 +82,7 @@ class Locacion extends CI_Controller {
 
 		if($instancias_asociadas > 0)
 		{
-			$this->session->set_flashdata('alert', 'No puedes eliminar una locación con cursos asociadas.');
+			$this->session->set_flashdata('alert', 'No puedes eliminar una locación con cursos asociados.');
 			$this->edit($id_locacion);
 		}
 		else
@@ -135,10 +135,10 @@ class Locacion extends CI_Controller {
 
 	public function store()
 	{
-		$nombre_locacion = $this->input->post('nombre-locacion');
-		$direccion_locacion = $this->input->post('direccion-locacion');
+		$nombre_locacion = $this->input->post('nombre_locacion');
+		$direccion_locacion = $this->input->post('direccion_locacion');
 
-		$this->form_validation->set_rules('nombre-locacion', 'Nombre de Locación', 'required|is_unique[locacion.nombre]');
+		$this->form_validation->set_rules('nombre_locacion', 'Nombre de Locación', 'required|is_unique[locacion.nombre]');
 		
 		if($this->form_validation->run()) {
 			$data = array (
@@ -163,23 +163,40 @@ class Locacion extends CI_Controller {
 	{
 		$id_locacion = $this->input->post('id-locacion');
 
-		$nombre_locacion = $this->input->post('nombre-locacion');
-		$direccion_locacion = $this->input->post('direccion-locacion');
+		$nombre_locacion = $this->input->post('nombre_locacion');
+		$nombre_locacion_nuevo = $this->input->post('nombre_locacion_nuevo');
+		$direccion_locacion = $this->input->post('direccion_locacion');
 		
 		$data = array(
-			'nombre' => $nombre_locacion,
 			'direccion' => $direccion_locacion
 		);
 
-		$this->form_validation->set_rules('nombre-locacion', 'Nombre de Locación', 'required|is_unique[locacion.nombre]');
+		if($nombre_locacion !== $nombre_locacion_nuevo)
+		{
+			$data['nombre'] = $nombre_locacion_nuevo;
+			$this->form_validation->set_rules('nombre_locacion_nuevo', 'Nombre de Locación', 'required|is_unique[locacion.nombre]');
+		}
+		else
+		{
+			$this->form_validation->set_rules('nombre_locacion_nuevo', 'Nombre de Locación', 'required');
+		}
+		
 
-		if($this->form_validation->run()) {
+		if($this->form_validation->run())
+		{
 			if($this->Locacion_model->update($id_locacion, $data))
 			{
-				$this->session->set_flashdata('success', 'Se actualizó la locación.');
+				$this->session->set_flashdata('success', 'Se actualizó la locación');
 				redirect(base_url().'gestion/locacion/');
 			}
 		}
+		else
+		{
+			$this->session->set_flashdata('alert', 'No se actualizó la locación');
+			redirect(base_url().'gestion/locacion/edit/'.$id_locacion);
+		}
+		
+
 	}
 
 

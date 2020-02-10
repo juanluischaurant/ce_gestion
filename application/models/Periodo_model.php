@@ -48,7 +48,7 @@ class Periodo_model extends CI_Model {
     }
 
     /**
-     * Obtén un conteo de las cursos asociadas a determinado período
+     * Obtén un conteo de las cursos asociados a determinado período
      * 
      * Método principalmente utilizado al momento de intentar eliminar un período,
      * verifica cuántas cursos estan asociadas a determinado período. 

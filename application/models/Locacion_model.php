@@ -100,7 +100,7 @@ class Locacion_model extends CI_Model {
     /**
      * Contar Cursos Asociados
      * 
-     * Retorna un conteo de las cursos asociadas a la
+     * Retorna un conteo de las cursos asociados a la
      * locación.
      *
      * @param integer $id_locacion

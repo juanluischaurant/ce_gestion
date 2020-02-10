@@ -64,7 +64,10 @@ class Curso extends CI_Controller {
 	{
         $data = array(
 			'nombres_curso' => $this->Curso_model->get_nombres_curso(),
-			'lista_turnos' =>  $this->Curso_model->turnos_dropdown()
+			'lista_turnos' =>  $this->Curso_model->turnos_dropdown(),
+			'lista_periodos' => $this->Curso_model->periodos_dropdown(),
+			'lista_locaciones' => $this->Curso_model->locaciones_dropdown(),
+			'lista_facilitadores' => $this->Curso_model->facilitadores_dropdown()
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');
@@ -89,7 +92,10 @@ class Curso extends CI_Controller {
 				// Obtén la información del especialidad instanciado
 				$data = array(
 					'curso' => $this->Curso_model->get_curso($id_curso),
-					'lista_turnos' =>  $this->Curso_model->turnos_dropdown()
+					'lista_turnos' =>  $this->Curso_model->turnos_dropdown(),
+					'lista_periodos' => $this->Curso_model->periodos_dropdown(),
+					'lista_locaciones' => $this->Curso_model->locaciones_dropdown(),
+					'lista_facilitadores' => $this->Curso_model->facilitadores_dropdown()
 				);
 				$this->load->view('layouts/header');
 				$this->load->view('layouts/aside');
@@ -113,15 +119,15 @@ class Curso extends CI_Controller {
 
 	public function store()
 	{
-		$id_nombre_curso = $this->input->post('id-nombre-curso');   // fk_id_curso_1
+		$id_nombre_curso = $this->input->post('id_nombre_curso');  
 		$serial_curso = $this->input->post('serial-curso');
-        $cedula_facilitador = $this->input->post('id-facilitador-curso'); // fk_id_facilitador
-        $id_periodo_instancia = $this->input->post('id-periodo-curso');   // fk_id_periodo_1
-        $id_locacion_curso = $this->input->post('id-locacion-curso'); // fk_id_locacion_1
-        $turno_instancia = $this->input->post('turno-curso');             // turno_instancia1
-        $cupos_instancia = $this->input->post('cupos-curso');             // cupos_instancia
-		$precio_instancia = $this->input->post('costo-curso');            // precio_instancia
-		$descripcion_instancia = $this->input->post('descripcion-curso'); // descripcion_instancia
+        $cedula_facilitador = $this->input->post('facilitador_curso'); 
+        $id_periodo_instancia = $this->input->post('periodo_curso');   
+        $id_locacion_curso = $this->input->post('locacion_curso'); 
+        $turno_instancia = $this->input->post('turno_curso');
+        $cupos_instancia = $this->input->post('cupos_curso');
+		$precio_instancia = $this->input->post('costo_curso');
+		$descripcion_instancia = $this->input->post('descripcion_curso');
 		
         $data = array (
 			'id_nombre_curso' => $id_nombre_curso,
@@ -153,19 +159,19 @@ class Curso extends CI_Controller {
 
 		if($this->form_validation->run('editar_instancia'))
 		{
-			$id_facilitador_instancia = $this->input->post('id-facilitador-curso');
-			$id_periodo_instancia = $this->input->post('id-periodo-curso');
-			$id_locacion_curso = $this->input->post('id-locacion-curso'); 
-			$turno_instancia = $this->input->post('turno-curso');
-			$cupos_instancia = $this->input->post('cupos-curso');
-			$precio_instancia = $this->input->post('costo-curso');
-			$descripcion_instancia = $this->input->post('descripcion-curso');
+			$cedula_facilitador = $this->input->post('facilitador_curso'); 
+			$id_periodo_instancia = $this->input->post('periodo_curso');   
+			$id_locacion_curso = $this->input->post('locacion_curso'); 
+			$turno_instancia = $this->input->post('turno_curso');
+			$cupos_instancia = $this->input->post('cupos_curso');
+			$precio_instancia = $this->input->post('costo_curso');
+			$descripcion_instancia = $this->input->post('descripcion_curso');
 			
 			$data = array(
-				'cedula_facilitador' => $id_facilitador_instancia,
+				'cedula_facilitador' => $cedula_facilitador,
 				'id_periodo' => $id_periodo_instancia,
-				'id_locacion' => $id_locacion_curso,
 				'id_turno' => $turno_instancia,
+				'id_locacion' => $id_locacion_curso,
 				'precio' => $precio_instancia,
 				'cupos' => $cupos_instancia,
 				'descripcion' => $descripcion_instancia

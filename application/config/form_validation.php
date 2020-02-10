@@ -119,7 +119,7 @@ $config = array(
     // movimientos/cursos/update
     'editar_instancia' => array(
         array(
-            'field' => 'costo-curso',
+            'field' => 'costo_curso',
             'label' => 'Costo',
             'rules' => 'required|trim|numeric'
         ),
@@ -129,18 +129,19 @@ $config = array(
             'rules' => 'required|trim'
         ),
         array(
-            'field' => 'turno-curso',
+            'field' => 'turno_curso',
             'label' => 'Turno',
             'rules' => 'required'
         ),
         array(
-            'field' => 'cupos-curso',
+            'field' => 'cupos_curso',
             'label' => 'Cupos',
             'rules' => 'required'
         ),
 
 
     ),
+    // VALIDACIÓN DE USUARIO AL INICAR SESIÓN
     'login' => array(
         array(
             'field' => 'username',

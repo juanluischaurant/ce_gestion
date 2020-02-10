@@ -145,7 +145,7 @@ class Periodo extends CI_Controller {
 
 		if($instancias_asociadas > 0)
 		{
-			$this->session->set_flashdata('alert', 'No se puede eliminar el periodo ' . $nombre_periodo . '. Tiene cursos asociadas.');
+			$this->session->set_flashdata('alert', 'No se puede eliminar el periodo ' . $nombre_periodo . '. Tiene cursos asociados.');
 			redirect(base_url().'gestion/periodo/');
 		}
 		else

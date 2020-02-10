@@ -25,22 +25,24 @@
                 <?php endif;?>
 
             </div>
-            <form action="<?php echo base_url(); ?>gestion/locacion/store" method="POST">
+            <form id="agregar_locacion" action="<?php echo base_url(); ?>gestion/locacion/store" method="POST">
                 <!-- /.box-header -->
                 <div class="box-body">
                     
                     <div class="centrar_div">
                         <div class="row">
-                            <div class="col-md-12 form-group <?php echo !empty(form_error('nombre-locacion'))? 'has-error' : '';?>">
-                                <label for="nombre">Nombre: </label>
-                                <input type="text" name="nombre-locacion" id="nombre-locacion" class="form-control" value="<?php echo set_value('nombre-locacion');?>">
-                                <?php echo form_error('nombre-locacion', '<span class="help-block">', '</span>'); ?>
+
+                            <div class="col-md-12 form-group <?php echo !empty(form_error('nombre_locacion'))? 'has-error' : '';?>">
+                                <label for="nombre">Nombre</label>
+                                <input type="text" name="nombre_locacion" id="nombre_locacion" class="form-control" value="<?php echo set_value('nombre_locacion');?>">
+                                <?php echo form_error('nombre_locacion', '<span class="help-block">', '</span>'); ?>
                             </div>
 
-                            <div class="col-md-12 form-group">
-                                <label for="descripcion">Dirección: </label>
-                                <input type="text" name="direccion-locacion" id="direccion-locacion" class="form-control">
-                            </div>
+                            <div class="form-group col-md-12">
+                                <label>Dirección</label>
+                                <textarea class="form-control"  id="direccion_locacion" name="direccion_locacion" rows="4" placeholder="Ej: Sector Central, calle 10 cruce con avenida 4"></textarea>
+                            </div>                                      
+
                         </div>
                     </div>
                 </div>
@@ -56,3 +58,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/locacion.add.js"></script>
