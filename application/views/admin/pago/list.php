@@ -21,9 +21,11 @@
                 <?php endif;?>
 
                 <div class="row">
+                <?php if($permisos->insert == 1): ?>
                     <div class="col-md-12">
                         <a href="<?php echo base_url(); ?>movimientos/pago/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Pago</a>
                     </div>
+                <?php endif; ?>
                 </div>
                 
                 <hr>
@@ -79,12 +81,18 @@
                                                 <button type='button' class="btn btn-info btn-view-pago" data-toggle='modal' data-target='#modal-default' value='<?php echo $id_pago ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
+
+                                                <?php if($permisos->update == 1): ?>
                                                 <a href="<?php echo base_url() ?>movimientos/pago/edit/<?php echo $id_pago; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
+                                                <?php endif; ?>
+
+                                                <?php if($permisos->delete == 1): ?>
                                                 <a href="#" class="btn btn-danger">
                                                     <span class="fa fa-remove"></span>
                                                 </a>
+                                                <?php endif; ?>
                                             </div>
                                         </td>
                                     </tr>

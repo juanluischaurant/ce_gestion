@@ -60,6 +60,14 @@ $(document).ready(function() {
                     }
                 }
             },
+            direccion_persona: {
+                validators: {
+                    stringLength: {
+                        max: 155,
+                        message:'Ingrese máximo 155 caractéres'
+                    },
+                }
+            },
          
         }
     });

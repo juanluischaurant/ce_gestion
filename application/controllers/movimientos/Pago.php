@@ -8,9 +8,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Pago extends CI_Controller {
 
+    private $permisos;
+
     public function __construct()
     {
         parent::__construct();
+
+		// El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
         
         // Si el usuario no está logeado
 		if(!$this->session->userdata('login'))
@@ -28,6 +34,7 @@ class Pago extends CI_Controller {
     public function index()
     {
         $data = array(
+            'permisos' => $this->permisos,
 			'pagos' => $this->Pago_model->get_pagos_recientes(),
 		);
 		$this->load->view('layouts/header');

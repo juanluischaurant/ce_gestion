@@ -40,7 +40,7 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[12]'
         ),
         array(
-            'field' => 'direccion-persona',
+            'field' => 'direccion_persona',
             'label' => 'Dirección',
             'rules' => 'trim|min_length[6]|max_length[95]'
         ),
@@ -77,7 +77,7 @@ $config = array(
             'rules' => 'trim|min_length[6]|max_length[12]'
         ),
         array(
-            'field' => 'direccion-persona',
+            'field' => 'direccion_persona',
             'label' => 'Dirección',
             'rules' => 'trim|min_length[6]|max_length[95]'
         )

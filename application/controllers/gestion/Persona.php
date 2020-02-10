@@ -197,7 +197,7 @@ class Persona extends CI_Controller {
 		$genero = $this->input->post('genero_persona');
 		$telefono = $this->input->post('telefono_persona');
 		$correo_electronico = $this->input->post('correo-persona');
-		$direccion = $this->input->post('direccion-persona');
+		$direccion = $this->input->post('direccion_persona');
 		
 		$data_persona = array(
 			'cedula' => $cedula,
@@ -245,7 +245,7 @@ class Persona extends CI_Controller {
 		$genero = $this->input->post('genero_persona');
 		$fecha_nacimiento = $this->input->post('nacimiento-persona');
 		$telefono = $this->input->post('telefono_persona');
-		$direccion = $this->input->post('direccion-persona');
+		$direccion = $this->input->post('direccion_persona');
 
 		$data = array(
 			'cedula' => $cedula,

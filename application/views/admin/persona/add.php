@@ -91,8 +91,8 @@
                         <div class="row">
                             <div class="form-group col-md-12">
                                 <label>Dirección</label>
-                                <textarea class="form-control <?php echo !empty(form_error('direccion-persona'))? 'has-error' : '';?>"  id="direccion-persona" name="direccion-persona" rows="1" placeholder="Ej: Sector Central, calle 10 cruce con avenida 4"></textarea>
-                                <?php echo form_error('direccion-persona', '<span class="help-block">', '</span>'); ?>
+                                <textarea class="form-control <?php echo !empty(form_error('direccion_persona'))? 'has-error' : '';?>"  id="direccion_persona" name="direccion_persona" rows="1" placeholder="Ej: Sector Central, calle 10 cruce con avenida 4"></textarea>
+                                <?php echo form_error('direccion_persona', '<span class="help-block">', '</span>'); ?>
                             </div>                                      
                         </div>
 

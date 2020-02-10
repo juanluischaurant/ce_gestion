@@ -69,7 +69,15 @@ $(document).ready(function() {
                         message: 'Ingrese solo valores numéricos'
                     }
                 }
-            }
+            },
+            direccion_persona: {
+                validators: {
+                    stringLength: {
+                        max: 155,
+                        message:'Ingrese máximo 155 caractéres'
+                    },
+                }
+            },
 
          
         }

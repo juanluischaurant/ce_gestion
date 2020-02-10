@@ -30,8 +30,8 @@ class Curso extends CI_Controller {
 	public function index() 
 	{
 		$data = array(
-			'cursos' => $this->Curso_model->get_cursos(),
 			'permisos' => $this->permisos,
+			'cursos' => $this->Curso_model->get_cursos(),
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');

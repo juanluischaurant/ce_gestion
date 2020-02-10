@@ -14,9 +14,11 @@
         <div class="box box-solid">
             <div class="box-body">
                 <div class="row">
+                <?php if($permisos->insert == 1): ?>
                     <div class="col-md-12">
                         <a href="<?php echo base_url(); ?>movimientos/inscripcion/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Inscripción</a>
                     </div>
+                <?php endif; ?>
                 </div>
                 
                 <hr>
@@ -89,6 +91,8 @@
                                                 <button type='button' class="btn btn-info btn-view-inscripcion" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataInscripcion; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
+
+                                                <?php if($permisos->update == 1): ?>
                                                 <a href="<?php echo base_url() ?>movimientos/inscripcion/edit/<?php echo $inscripcion->id; ?>/<?php echo $inscripcion_activa; ?>" class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
@@ -105,6 +109,7 @@
                                                     </a>
                                                 <?php endif; ?> 
                                                 <!-- Fin: Botón para activar/desactivar Inscripción -->
+                                                <?php endif; ?>
 
                                             </div>
                                         </td>
