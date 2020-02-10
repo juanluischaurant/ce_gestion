@@ -16,29 +16,6 @@
         $('.sidebar-menu').tree(); // Menú lateral
 
         // =============================================
-        // JS para DataTables
-        // =============================================
-        
-        // Cambia el estado de un registro dado
-        // Este botón funciona de manera similar en distintos formularios
-        $('.btn-remove').on('click', function(e) {
-
-            // Código para el botón de eliminar en las tablas
-            e.preventDefault();
-
-            let ruta = $(this).attr('href');
-            alert(ruta);
-            $.ajax({
-                url: ruta,
-                type: 'POST',
-                success: function(response) {
-
-                    window.location.href = base_url+response;
-                }
-            });
-        });
-
-        // =============================================
         // JS para Locaciones
         // =============================================
         $(document).on("click",".btn-view-locacion",function() {

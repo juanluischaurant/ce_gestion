@@ -9,14 +9,14 @@ $(document).ready(function() {
 
     $(document).on("click",".btn-view-participante",function() {
 
-        let id_participante = $(this).val(); // ID de la persona
+        let cedula_participante = $(this).val(); // ID de la persona
         
         $.ajax({
             url: base_url + "gestion/participante/view",
             type:"POST",
             dataType:"html",
             data:{
-                id_participante: id_participante
+                cedula_participante: cedula_participante
             },
             success:function(data) {
                 $("#modal-default .modal-body").html(data);

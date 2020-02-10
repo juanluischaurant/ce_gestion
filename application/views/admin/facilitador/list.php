@@ -49,8 +49,21 @@
 
                                                 <a href="<?php echo base_url() ?>gestion/facilitador/edit/<?php echo $facilitador->cedula_persona; ?>" .
                                                 class="btn btn-warning"><span class="fa fa-pencil"></span></a>
+                                                
+                                                <?php $estado_facilitador =  $facilitador->estado; ?>
+                                                 <!-- Botón para activar/desactivar Inscripción -->
+                                                 <?php if($estado_facilitador == 1): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/facilitador/desactivar_facilitador/<?php echo $facilitador->cedula_persona; ?>" class="btn btn-danger btn-activate-inscripcion">
+                                                        <span class="fa fa-toggle-off"></span>
+                                                    </a>
+                                                <?php endif; ?> 
+                                                <?php if($estado_facilitador == 0): ?>
+                                                    <a href="<?php echo base_url() ?>gestion/facilitador/activar_facilitador/<?php echo $facilitador->cedula_persona; ?>" class="btn btn-success btn-deactivate-inscripcion">
+                                                        <span class="fa fa-toggle-on"></span>
+                                                    </a>
+                                                <?php endif; ?> 
+                                                <!-- Fin: Botón para activar/desactivar Inscripción -->
 
-                                                <a href="<?php echo base_url() ?>gestion/facilitador/delete/<?php echo $facilitador->cedula_persona; ?>" class="btn btn-danger btn-remove"><span class="fa fa-remove"></span></a>
                                             </div>
                                         </td>
                                     </tr>

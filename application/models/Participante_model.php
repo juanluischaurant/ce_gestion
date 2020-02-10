@@ -14,6 +14,7 @@ class Participante_model extends CI_Model {
     {
         $resultados = $this->db->select(
             'participante.cedula_persona,
+            (SELECT COUNT(*) FROM inscripcion WHERE inscripcion.cedula_participante = participante.cedula_persona) AS inscripciones_participante,
             persona.primer_nombre,
             persona.primer_apellido,
             persona.genero,
@@ -36,26 +37,24 @@ class Participante_model extends CI_Model {
      * @param integer $id_participante
      * @return void
      */
-    public function get_participante($id_participante)
+    public function get_participante($cedula_persona)
     {
         $resultado = $this->db->select(
-            'persona.id,
-            persona.cedula,
-            persona.primer_nombre,
+            'persona.primer_nombre,
             persona.primer_apellido,
             persona.genero,
             persona.fecha_nacimiento,
             persona.telefono,
             persona.direccion,
             persona.estado,
-            participante.id,
+            participante.cedula_persona,
             participante.estado,
             participante.fecha_registro,
-            participante.id_persona,
+            participante.id_nivel_academico,
             participante.estado')
-            ->from('participante as par')
-            ->join('persona as per', 'persona.id = participante.id_persona')
-            ->where('participante.id', $id_participante)
+            ->from('participante')
+            ->join('persona', 'persona.cedula = participante.cedula_persona')
+            ->where('participante.cedula_persona', $cedula_persona)
             ->where('participante.estado', 1) 
             ->get(); 
     
@@ -63,29 +62,31 @@ class Participante_model extends CI_Model {
     }
 
     /**
-     * Retorna las cursos en las que el participante se ha inscrito
+     * Retorna las cursos en los que el participante se ha inscrito
      *
      * @return integer $id_participante
      */
-    public function get_instancias_inscritas($id_participante)
+    public function get_cursos_inscritos($cedula_persona)
     {
-        $resultados = $this->db->select(
-            'cur.nombre_curso,
-            participante.id_persona,
-            persona.primer_nombre'
-        )
-        ->from('participante AS par')
-        ->join('persona AS per', 'persona.id = participante.id_persona')
-        ->join('inscripcion AS ins', 'ins.cedula_participante = participante.id')
-        ->join('pago_de_inscripcion AS pdi', 'pdi.fk_id_inscripcion = ins.id_inscripcion')
-        ->join('inscripcion_instancia AS ins_inst', 'ins_inst.fk_id_inscripcion_1 = ins.id_inscripcion')
-        ->join('curso AS inst', 'inst.id_instancia = ins_inst.fk_id_instancia_1')
-        ->join('especialidad AS cur', 'cur.id_curso = inst.fk_id_curso_1')
-        ->where('participante.id', $id_participante)
-        ->group_by('ins.id_inscripcion')
-        ->get();
+        $this->db->query("SET lc_time_names = 'es_ES';");
+        $SQL = "SELECT 
+            inscripcion.id,
+            participante.cedula_persona,
+            nc.descripcion,
+            curso.serial,
+            concat(MONTHNAME(periodo.fecha_inicio), '-', MONTHNAME(periodo.fecha_culminacion), ' ', YEAR(periodo.fecha_inicio)) as periodo_academico
+        FROM inscripcion
+        JOIN participante ON participante.cedula_persona = inscripcion.cedula_participante
+        JOIN curso ON curso.id = inscripcion.id_curso
+        JOIN nombre_curso AS nc ON nc.id = curso.id_nombre_curso
+        JOIN periodo ON periodo.id = curso.id_periodo
+        JOIN persona ON persona.cedula = participante.cedula_persona
+        WHERE participante.cedula_persona = ?";
 
-        return $resultados->result_array();
+        $query = $this->db->query($SQL, $cedula_persona);
+
+        return $query->result();
+
     }
 
     public function save($data)

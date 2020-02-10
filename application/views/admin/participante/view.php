@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        Participante registrado durante: <?php echo $participante->fecha_registro_participante; ?>
+        Participante registrado durante: <?php echo $participante->fecha_registro; ?>
     </div>
 </div> <br>
 <div class="row">
@@ -17,10 +17,10 @@
 	<div class="col-xs-6">	
 		<?php echo $participante->primer_nombre;?><br>
 		<?php echo $participante->primer_apellido;?><br>
-		<?php echo $participante->cedula;?><br>
-        <?php echo $participante->fecha_nacimiento_persona;?><br>
-        <?php echo $participante->telefono_persona;?><br>
-        <?php echo $participante->direccion_persona;?><br>
+		<?php echo $participante->cedula_persona;?><br>
+        <?php echo $participante->fecha_nacimiento;?><br>
+        <?php echo $participante->telefono;?><br>
+        <?php echo $participante->direccion;?><br>
 
 	</div>	
 </div>
@@ -38,12 +38,12 @@
 
 			<tbody>
                
-            <?php if(!empty($instancias_inscritas)): ?>
-                <?php foreach($instancias_inscritas as $instancia_inscrita): ?>
+            <?php if(!empty($cursos_inscritos)): ?>
+                <?php foreach($cursos_inscritos as $curso_inscrito): ?>
                     <tr>
-                        <td><?php // echo $participante->fecha_registro_participante; ?></td>
-                        <td><?php echo $instancia_inscrita['nombre_curso']; ?></td>
-                        <td><?php // echo $participante->fecha_registro_participante; ?></td>
+                        <td><?php echo $curso_inscrito->serial; ?></td>
+                        <td><?php echo $curso_inscrito->descripcion; ?></td>
+                        <td><?php echo $curso_inscrito->periodo_academico; ?></td>
                     </tr>
                     <?php endforeach; ?>
             <?php endif; ?>

@@ -20,7 +20,6 @@ class Facilitador_model extends CI_Model {
         )
         ->from('facilitador')
         ->join('persona', 'persona.cedula = facilitador.cedula_persona')
-        ->where('facilitador.estado', '1') 
         ->get(); 
 
         return $resultados->result();
@@ -56,7 +55,7 @@ class Facilitador_model extends CI_Model {
 
     public function update($id, $data)
     {
-        $this->db->where('id', $id);
+        $this->db->where('cedula_persona', $id);
         return $this->db->update('facilitador', $data);
     }
 

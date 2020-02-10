@@ -52,11 +52,11 @@ class Participante extends CI_Controller {
 	 */
 	public function view()
 	{
-		$cedula_persona = $this->input->post("cedula_persona");
+		$cedula_persona = $this->input->post("cedula_participante");
 
 		$data = array(
 			'participante' => $this->Participante_model->get_participante($cedula_persona),
-			'instancias_inscritas' => $this->Participante_model->get_instancias_inscritas($cedula_persona)
+			'cursos_inscritos' => $this->Participante_model->get_cursos_inscritos($cedula_persona)
 		);
 
 		$this->load->view("admin/participante/view", $data);
@@ -133,7 +133,7 @@ class Participante extends CI_Controller {
 	public function edit($cedula_persona)
 	{
 		$data = array(
-			'participante' => $this->Participante_model->getParticipante($cedula_persona),
+			'participante' => $this->Participante_model->get_participante($cedula_persona),
 			'nivel_academico' => $this->Participante_model->nivel_academico_dropdown()
 		);
 
@@ -145,7 +145,7 @@ class Participante extends CI_Controller {
 
 	public function update()
 	{
-		$cedula_persona = $this->input->post("cedula_persona");
+		$cedula_persona = $this->input->post("cedula_participante");
 		$nivel_academico = $this->input->post('nivel_academico');
 
 		$data = array(

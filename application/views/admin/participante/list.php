@@ -29,6 +29,7 @@
                                     <th>Fecha de Registro</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
+                                    <th>Insc.</th>
                                     <th>Teléfono</th>
                                     <th>Opciones</th>
                                 </tr>
@@ -41,6 +42,7 @@
                                         <td><?php echo $participante->fecha_registro; ?></td>
                                         <td><?php echo $participante->primer_nombre; ?></td>
                                         <td><?php echo $participante->primer_apellido; ?></td>
+                                        <td><?php echo $participante->inscripciones_participante; ?></td>
                                         <td><?php echo $participante->telefono; ?></td>
                                         <td>
                                             <div class="btn-group">
@@ -75,7 +77,7 @@
 <div class="modal fade" id="modal-default">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header text-center">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Informacion del Participante</h4>
@@ -84,7 +86,7 @@
         
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger pull-left" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-danger center-block" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
     <!-- /.modal-content -->

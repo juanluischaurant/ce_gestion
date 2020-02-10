@@ -110,7 +110,7 @@ class Usuario extends CI_Controller {
 		if($password_usuario !== '')
 		{
 			// Si el usuario ingresó datos desde el formulario, añadelos al array especificado 
-			$data['password_usuario'] = sha1($password_usuario);
+			$data['password'] = sha1($password_usuario);
 		}
 
 		// Reglas declaradas para la validación de formularios en el directorio 

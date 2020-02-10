@@ -14,10 +14,20 @@ class Titular extends CI_Controller {
 	public function __construct()
 	{
         parent::__construct();
-        $this->load->model('Persona_model');  
-		$this->load->model('Titular_model');  
-		
-		$this->load->library('unit_test');
+
+		// Si el usuario no ha iniciado sesión
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+        else
+        {
+			$this->load->model('Persona_model');  
+			$this->load->model('Titular_model');  
+			
+			$this->load->library('unit_test');
+        }
     }
 
 	public function index()

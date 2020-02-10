@@ -15,7 +15,15 @@ class Facilitador extends CI_Controller {
 	{
         parent::__construct();
         $this->load->model('Persona_model');  
-        $this->load->model('Facilitador_model');  
+		$this->load->model('Facilitador_model'); 
+		
+				
+		// Si el usuario no está logeado
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
     }
 
     public function index() { 
@@ -28,8 +36,8 @@ class Facilitador extends CI_Controller {
 		$this->load->view('layouts/footer');
     }
     
-    public function add($cedula_persona = 'new') {
-
+	public function add($cedula_persona = 'new') 
+	{
 		if($cedula_persona !== 'new') {
 
 			$data_persona = array(
@@ -91,8 +99,6 @@ class Facilitador extends CI_Controller {
 		$cedula_persona = $this->input->post('cedula-facilitador');
 		$fecha_contratacion = $this->input->post('fecha_contratacion');
 
-		// $estado_facilitador; <- Aún no utilizada
-
 		$data = array(
 			'fecha_contratacion' => $fecha_contratacion,
 		);
@@ -106,7 +112,8 @@ class Facilitador extends CI_Controller {
 		
 	}
 
-	public function edit($cedula_persona) {
+	public function edit($cedula_persona)
+	{
 		$data = array(
 			'facilitador' => $this->Facilitador_model->get_facilitador($cedula_persona)
 		);
@@ -116,11 +123,40 @@ class Facilitador extends CI_Controller {
 		$this->load->view('layouts/footer');
 	}
 
-	public function delete($cedula_persona) {
-		$data = array(
-			'estado' => 0,
-		);
-		$this->Facilitador_model->update($cedula_persona, $data);
-		echo 'gestion/facilitador';
-	}
+   /*
+	* Desactivar un FACILITADOR
+	* 
+	* FACILITADORES pueden ser desactivados y reactivados, al desactivar un 
+	* facilitador estaeno debe aparecer en los campos de búsqueda del sistema.
+	*
+	* @param integer $id_locacion
+	* @return void
+	*/
+   public function desactivar_facilitador($cedula_persona)
+   {
+	   $data = array('estado' => 0);
+
+	   $this->Facilitador_model->update($cedula_persona, $data);
+	   $this->session->set_flashdata('success', 'Se desactivó exitosamente al facilitador');
+	   redirect(base_url().'gestion/facilitador/');
+   }
+
+   /*
+	* Activar un FACILITADOR
+	* 
+	* FACILITADORES pueden ser desactivados y reactivados, al desactivar un 
+	* facilitador estaeno debe aparecer en los campos de búsqueda del sistema.
+	*
+	* @param integer $id_locacion
+	* @return void
+	*/
+   public function activar_facilitador($cedula_persona)
+   {
+	   $data = array('estado' => 1);
+
+	   $this->Facilitador_model->update($cedula_persona, $data);
+	   $this->session->set_flashdata('success', 'Se desactivó exitosamente al facilitador');
+	   redirect(base_url().'gestion/facilitador/');
+   }
+
 }

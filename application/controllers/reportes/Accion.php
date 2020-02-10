@@ -14,7 +14,19 @@ class Accion extends CI_Controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('Accion_model');  
+
+        // Si el usuario no está logeado
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
+        else
+        {
+            // Carga el controlador
+            $this->load->model('Accion_model'); 
+        }
+         
     }
 
     

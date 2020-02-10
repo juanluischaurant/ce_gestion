@@ -27,10 +27,10 @@ class Curso_model extends CI_Model {
             periodo.fecha_culminacion'
         )
         ->from('curso')
+        ->join('periodo', 'periodo.id = id_periodo')
         ->join('inscripcion', 'inscripcion.id_curso = curso.id', 'left')
         ->join('turno', 'curso.id_turno = turno.id')
         ->join('nombre_curso', 'nombre_curso.id = curso.id_nombre_curso')
-        ->join('periodo', 'periodo.id = curso.id_periodo')
         ->where('curso.estado', '1')
         ->or_where('curso.estado', '0')
         ->group_by('curso.serial')

@@ -5,7 +5,14 @@ class Locacion extends CI_Controller {
 
 	public function __construct() {
         parent::__construct();
-        $this->load->model('Locacion_model');  
+		$this->load->model('Locacion_model');  
+		
+		// Si el usuario no está logeado
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
     }
 
 	public function index()

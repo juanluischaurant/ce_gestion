@@ -10,6 +10,14 @@ class Curso extends CI_Controller {
 		$this->load->model('Curso_model');  
 		// Carga la librería de generación de PDF 
 		include APPPATH . 'third_party/fpdf/lista_asistencia.class.php';
+
+				
+		// Si el usuario no está logeado
+		if(!$this->session->userdata('login'))
+		{
+			// redirigelo al inicio de la aplicación
+            redirect(base_url());
+        }
     }
 
 	public function index() 
