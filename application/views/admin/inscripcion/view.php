@@ -2,7 +2,7 @@
 <div class="row">
 	<div class="col-xs-12 text-center">
 		<b><?php echo ORGANIZACION; // Constante declarada en /application/confing/constants.php ?></b><br>
-        Persona registrada el día: <?php echo $inscripcion->hora_inscripcion; ?>
+        Inscripción registrada: <?php echo $inscripcion->fecha_registro; ?>
     </div>
 </div>
 
@@ -26,11 +26,11 @@
 
 			<tr>
 				<td><?php echo $inscripcion->nombre_completo_participante; ?></td>
-				<td><?php echo $inscripcion->cedula; ?></td>
-				<td><?php echo $inscripcion->telefono_persona; ?></td>	
+				<td><?php echo $inscripcion->cedula_persona; ?></td>
+				<td><?php echo $inscripcion->telefono; ?></td>	
 			</tr>
 			<tr>
-				<td colspan="2"><b>Dirección:</b> <?php echo $inscripcion->direccion_persona; ?></td>
+				<td colspan="2"><b>Dirección:</b> <?php echo $inscripcion->direccion; ?></td>
 			</tr>
 		</tbody>
 	</table>
@@ -53,7 +53,7 @@
 
 			<tbody>
 				<tr>
-					<td><?php echo $data_curso_inscrito->serial_instancia; ?></td>
+					<td><?php echo $data_curso_inscrito->serial; ?></td>
 					<td><?php echo $data_curso_inscrito->nombre_completo_instancia; ?></td>
 					<td><?php echo $inscripcion->costo; ?> Bs.</td>
 				</tr>
@@ -90,18 +90,18 @@
 
 				<div class="timeline-item">
 				<span class="time">
-					<i class="fa fa-clock-o"></i> <?php echo $pdi->fecha_registro_operacion; ?>
+					<i class="fa fa-clock-o"></i> <?php echo $pdi->fecha_registro; ?>
 				</span>
 
 				<h4 class="timeline-header">
-					<a href="#"><?php echo $pdi->tipo_de_operacion; ?>:</a> <?php echo $pdi->numero_referencia_bancaria; ?>
+					<a href="#"><?php echo $pdi->tipo; ?>:</a> <?php echo $pdi->numero_referencia_bancaria; ?>
 				</h4>
 
 				<div class="timeline-body">
 					<div class="row">
 					<div class="col-xs-12 col-md-8">
 					Titular: <?php echo $pdi->nombre_titular; ?><br>
-					Banco: <?php echo $pdi->nombre_banco; ?><br>
+					Banco: <?php echo $pdi->nombre; ?><br>
 					
 					</div>
 					<div class="col-xs-12 col-md-4">

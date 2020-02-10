@@ -177,16 +177,19 @@ class Inscripcion_model extends CI_Model {
      */
     public function verificar_cupos_disponibles($id_curso)
     {
-        $resultado = $this->db->select(
-            'cupos AS cupos_curso,
-            COUNT(CASE WHEN inscripcion.estado = 1 THEN 1 END) AS cupos_instancia_ocupados')
-        ->from('curso')
-        ->join('inscripcion', 'inscripcion.id_curso = curso.id', 'left')
-        ->where('curso.id', $id_curso)
-        ->get()
-        ->row();
+        $SQL = "SELECT 
+            cupos AS cupos_curso,
+            (SELECT COUNT(*) FROM inscripcion WHERE inscripcion.id_curso = curso.id AND inscripcion.estado = 1) AS cupos_curso_ocupados
+            FROM curso
+            LEFT JOIN inscripcion ON inscripcion.id_curso = curso.id
+            WHERE curso.id = ?
+            GROUP BY curso.id";
 
-        if($resultado->cupos_instancia_ocupados < $resultado->cupos_curso)
+            $resultado = $this->db->query($SQL, array($id_curso));
+
+            return $resultado->row();
+
+        if($resultado->cupos_curso_ocupados < $resultado->cupos_curso)
         {
             return TRUE;
         } 
@@ -219,6 +222,7 @@ class Inscripcion_model extends CI_Model {
             cur.serial,
             cur.cupos,
             cur.precio,
+            (SELECT COUNT(*) FROM inscripcion WHERE inscripcion.id_curso = cur.id AND inscripcion.estado = 1) AS cupos_curso_ocupados,
             concat(nc.descripcion, " ", MONTH(per.fecha_inicio), "-", MONTH(per.fecha_culminacion), " ", YEAR(per.fecha_inicio)) as nombre_completo_instancia'
         )
         ->from('inscripcion as ins')

@@ -88,27 +88,27 @@ function restar() {
 }
 
       // Recordar la pestaña seleccionada en la vista de Edición de Inscripción
-      $("a[data-toggle='tab']").on('show.bs.tab', function(e) {
-        localStorage.setItem('activeTab', $(e.target).attr('href'));
-    });
+    //   $("a[data-toggle='tab']").on('show.bs.tab', function(e) {
+    //     localStorage.setItem('activeTab', $(e.target).attr('href'));
+    // });
 
-    let activeTab = localStorage.getItem('activeTab');
+    // let activeTab = localStorage.getItem('activeTab');
 
-    if(activeTab) {
-        $("#edit-inscripcion-tabs a[href='"+activeTab+"']").tab("show");
-    }
+    // if(activeTab) {
+    //     $("#edit-inscripcion-tabs a[href='"+activeTab+"']").tab("show");
+    // }
 
-    $('#tab-cambiar-curso').on('click', function() {
+    // $('#tab-cambiar-curso').on('click', function() {
 
-        location.reload();
-    });
+    //     location.reload();
+    // });
     
-    $('#tab-asociar-pago').on('click', function(e) {
+    // $('#tab-asociar-pago').on('click', function(e) {
 
-        location.reload();
-    });
+    //     location.reload();
+    // });
 
-    $('#tab-desasociar-pago').on('click', function() {
+    // $('#tab-desasociar-pago').on('click', function() {
 
-        location.reload();
-    });
+    //     location.reload();
+    // });

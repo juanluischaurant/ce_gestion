@@ -77,7 +77,7 @@ class Locacion_model extends CI_Model {
         curso.fecha_registro,
         curso.estado,
         concat(curso.cupos, "/") as total_cupos,
-        (SELECT COUNT(*) FROM inscripcion WHERE curso.id = inscripcion.id_curso) AS conteo_inscripciones,
+        (SELECT COUNT(*) FROM inscripcion WHERE curso.id = inscripcion.id_curso AND inscripcion.estado = 1) AS conteo_inscripciones,
         tur.nombre AS nombre_turno,
         tur.id,
         nc.descripcion,

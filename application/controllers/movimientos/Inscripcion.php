@@ -122,7 +122,7 @@ class Inscripcion extends CI_Controller {
 			'montos_de_inscripcion' => $this->Inscripcion_model->get_montos_inscripcion($id_inscripcion)
 		);
 
-		$this->load->view('admin/inscripciones/view', $data);
+		$this->load->view('admin/inscripcion/view', $data);
 	}
 
 	public function store()
@@ -292,40 +292,36 @@ class Inscripcion extends CI_Controller {
 	 * Actualiza Inscripción
 	 * 
 	 * Método diseñado para ser llamado por el módulo de edición de inscripción,
-	 * permite actualizar la tabla "ocupa" y el conteo de especialidades
-	 * involucrados en la transacción.
+	 * permite actualizar la tabla inscripción involucrada en la transacción.
 	 *
 	 * @return void
 	 */
-	public function update()
+	public function update_curso()
 	{
-		$instancia_actual = $this->input->post('id-curso-actual'); 
-		$id_instancias_nuevas = $this->input->post('id-curso'); // Array de especialidades seleccionados
-		$id_ocupa = $this->input->post('id-inscripcion-curso'); 
+		$id_curso_actual = $this->input->post('id-curso-actual'); 
+		$id_curso_nuevo = $this->input->post('id-curso');
+		$id_inscripcion = $this->input->post('id_inscripcion'); 
 
-		foreach($id_instancias_nuevas as $idin)
-		{
 			// Verificar que hay cupos disponibles en la nueva curso que se desea seleccionar
-			if($this->Inscripcion_model->verificar_cupos_disponibles($idin))
+			if($this->Inscripcion_model->verificar_cupos_disponibles($id_curso_nuevo) == TRUE)
 			{
 				$data = array(
-					'fk_id_instancia_1' => $idin,
+					'id_curso' => $id_curso_nuevo,
 				);
 				
-				// Actualizar la tabla relacional "inscripcion_instanica" con el ID de la nueva curso
-				if($this->Inscripcion_model->update_ocupa($id_ocupa, $data))
+				// Actualizar la tabla inscripcion, con el ID del nuevo curso
+				if($this->Inscripcion_model->update_inscripcion($id_inscripcion, $data))
 				{
 					// Emitir alerta y redireccionar
 					$this->session->set_flashdata('success', 'Cambio de curso exitoso.');
 					redirect(base_url().'movimientos/inscripcion/');				
 				}
 			}
-			else
-			{
-				$this->session->set_flashdata('error', 'Curso no tiene cupos disponibles.');
-				redirect(base_url().'movimientos/inscripcion/');
-			}
-		}
+			// else
+			// {
+			// 	$this->session->set_flashdata('success', 'Curso no tiene cupos disponibles.');
+			// 	redirect(base_url().'movimientos/inscripcion/');
+			// }
 	}
 
 	/**
@@ -344,8 +340,8 @@ class Inscripcion extends CI_Controller {
 			$id_pago = $id_pagos[$i];
 
 			$data = array(
-				'fk_id_inscripcion' => $id_inscripcion,
-				'estado' =>  2
+				'id_inscripcion' => $id_inscripcion,
+				'estatus_pago' =>  2
 			);
 
 			// Actualiza los datos de pago
@@ -392,7 +388,7 @@ class Inscripcion extends CI_Controller {
 			
 			$data = array(
 				'id_inscripcion' => NULL,
-				'estado' =>  1
+				'estatus_pago' =>  1
 			);
 			
 			// Actualiza los datos de pago
