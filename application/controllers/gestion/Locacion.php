@@ -3,8 +3,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Locacion extends CI_Controller {
 
-	public function __construct() {
-        parent::__construct();
+	private $permisos;
+
+	public function __construct()
+	{
+		parent::__construct();
+						
+      	// El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
+
 		$this->load->model('Locacion_model');  
 		
 		// Si el usuario no está logeado
@@ -18,6 +26,7 @@ class Locacion extends CI_Controller {
 	public function index()
 	{
 		$data = array(
+			'permisos' => $this->permisos,
 			'locaciones' => $this->Locacion_model->get_locaciones(),
 		);
 		$this->load->view('layouts/header');

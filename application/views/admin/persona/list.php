@@ -14,11 +14,13 @@
             <div class="box-body">
                 <?php if($permisos->insert == 1): ?>
                     <div class="row">
+                    <?php if($permisos->insert == 1): ?>
                         <div class="col-md-12">
                             <a href="<?php echo base_url(); ?>gestion/persona/add" class="btn btn-primary btn-flat">
                                 <span class="fa fa-plus"></span> Agregar Persona
                             </a>
                         </div>
+                    <?php endif; ?>
                     </div>
                 <?php endif; ?>
                 
@@ -62,14 +64,13 @@
                                         <td><?php echo $persona->primer_nombre; ?></td>
                                         <td><?php echo $persona->primer_apellido; ?></td>
                                         <td><?php echo $persona->telefono; ?></td>
-                                        <?php $dataPersona = $persona->cedula; ?>
+                                        <?php $cedula = $persona->cedula; ?>
                                         <td>
                                             <div class="btn-group">
-                                                <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataPersona?>'><span class="fa fa-eye"></span></button>
+                                                <button type='button' class="btn btn-info btn-view-persona" data-toggle='modal' data-target='#modal-default' value='<?php echo $cedula?>'><span class="fa fa-eye"></span></button>
 
                                                 <?php if($permisos->update == 1): ?>
-                                                    <a href="<?php echo base_url() ?>gestion/persona/edit/<?php echo $dataPersona; ?>" .
-                                                class="btn btn-warning">
+                                                    <a href="<?php echo base_url().'gestion/persona/edit/'.$cedula; ?>" class="btn btn-warning">
                                                         <span class="fa fa-pencil"></span>
                                                     </a>
                                                 <?php endif; ?>

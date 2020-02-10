@@ -2,16 +2,23 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Curso extends CI_Controller {
+	
+	private $permisos;
 
 	public function __construct()
 	{
-        parent::__construct();
+		parent::__construct();
+		
+		// El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
+
         $this->load->model('Especialidad_model');  
 		$this->load->model('Curso_model');  
 		// Carga la librería de generación de PDF 
 		include APPPATH . 'third_party/fpdf/lista_asistencia.class.php';
 
-				
+		
 		// Si el usuario no está logeado
 		if(!$this->session->userdata('login'))
 		{
@@ -24,6 +31,7 @@ class Curso extends CI_Controller {
 	{
 		$data = array(
 			'cursos' => $this->Curso_model->get_cursos(),
+			'permisos' => $this->permisos,
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');

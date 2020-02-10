@@ -70,23 +70,26 @@ class Locacion_model extends CI_Model {
     public function get_instancias_asociadas($id_locacion)
     {
         // Obtén una lista de especialidades instanciados
-        $resultados = $this->db->select('ins.id, 
-        ins.cupos, 
-        ins.fecha_registro,
-        ins.estado,
-        concat(ins.cupos, "/") as total_cupos,
-        tur.nombre,
+        $resultados = $this->db->select(
+        'curso.id, 
+        curso.serial,
+        curso.cupos, 
+        curso.fecha_registro,
+        curso.estado,
+        concat(curso.cupos, "/") as total_cupos,
+        (SELECT COUNT(*) FROM inscripcion WHERE curso.id = inscripcion.id_curso) AS conteo_inscripciones,
+        tur.nombre AS nombre_turno,
         tur.id,
-        especialidad.nombre,
+        nc.descripcion,
         concat(MONTH(per.fecha_inicio), "-", MONTH(per.fecha_culminacion), " ", YEAR(per.fecha_inicio)) as periodo_academico,
         per.fecha_culminacion')
-        ->from('curso AS ins')
-        ->join('locacion AS loc', 'loc.id = ins.id_locacion')
-        ->join('turno as tur', 'ins.id_turno = tur.id')
-        ->join('especialidad', 'especialidad.id = ins.id_curso')
-        ->join('periodo as per', 'per.id = ins.id_periodo')
-        // ->where('ins.estado_curso', '1')
-        // ->or_where('ins.estado_curso', '0')
+        ->from('curso')
+        ->join('locacion AS loc', 'loc.id = curso.id_locacion')
+        ->join('turno as tur', 'curso.id_turno = tur.id')
+        ->join('nombre_curso AS nc', 'nc.id = curso.id_nombre_curso')
+        ->join('periodo as per', 'per.id = curso.id_periodo')
+        // ->where('curso.estado_curso', '1')
+        // ->or_where('curso.estado_curso', '0')
         ->where('loc.id', $id_locacion)
         ->limit(25)
         ->get();
@@ -97,7 +100,7 @@ class Locacion_model extends CI_Model {
     /**
      * Contar Cursos Asociados
      * 
-     * Retora un conteo de las cursos asociadas a la
+     * Retorna un conteo de las cursos asociadas a la
      * locación.
      *
      * @param integer $id_locacion

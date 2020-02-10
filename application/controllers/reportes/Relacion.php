@@ -2,9 +2,9 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 /**
- * Esta clase contiene funciones utilizadas a lo largo de CE_Gestión 
+ * Esta clase contiene funciones utilizadas a lo largo de CE_Gestión
  * donde sea necesario consultar información relacionada al historial de acciones
- * 
+ *
  * @package CE_gestion
  * @subpackage Personas
  * @category Controladores
@@ -15,6 +15,10 @@ class Relacion extends CI_Controller
     {
         parent::__construct();
 
+		// El archivo backend_lip fue creado por el programador
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
+
         // Si el usuario no está logeado
 		if(!$this->session->userdata('login'))
 		{
@@ -24,7 +28,7 @@ class Relacion extends CI_Controller
         else
         {
             // Carga el controlador
-            $this->load->model('Relacion_model');  
+            $this->load->model('Relacion_model');
             $this->load->model('Curso_model');
         }
 

@@ -507,3 +507,6 @@ SELECT
     (SELECT COUNT(participante.cedula_persona)
      FROM participante
      WHERE YEAR(participante.fecha_registro) = 2020  AND participante.estado = 1) AS conteo_participantes
+
+-- Modelo de INSERT para menu
+INSERT INTO `menu`(`nombre`, `enlace`) VALUES ('Relación de Cursos', 'reportes/relacion') 

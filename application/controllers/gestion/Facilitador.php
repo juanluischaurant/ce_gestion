@@ -11,23 +11,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  */
 class Facilitador extends CI_Controller {
 
+	private $permisos;
+
 	public function __construct()
 	{
-        parent::__construct();
-        $this->load->model('Persona_model');  
-		$this->load->model('Facilitador_model'); 
+		parent::__construct();
 		
-				
-		// Si el usuario no está logeado
+        // El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
+		
+        // Si el usuario no está logeado
 		if(!$this->session->userdata('login'))
 		{
 			// redirigelo al inicio de la aplicación
             redirect(base_url());
         }
+        else
+        {
+            // Carga el controlador
+			$this->load->model('Persona_model');  
+			$this->load->model('Facilitador_model');
+		}
+
     }
 
     public function index() { 
 		$data = array(
+			'permisos' => $this->permisos,
 			'facilitadores' => $this->Facilitador_model->get_facilitadores(),
 		);
 		$this->load->view('layouts/header');

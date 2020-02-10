@@ -30,9 +30,11 @@
         <div class="box box-solid">
             <div class="box-body">
                 <div class="row">
+                <?php if($permisos->insert == 1): ?>
                     <div class="col-md-12">
                         <a href="<?php echo base_url(); ?>gestion/curso/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Curso</a>
                     </div>
+                <?php endif; ?>
                 </div>
 
                 <hr>
@@ -89,12 +91,15 @@
                                                 <button type='button' class="btn btn-info btn-view-curso" data-toggle='modal' data-target='#modal-default' value='<?php echo $curso->id; ?>'>
                                                     <span class="fa fa-eye"></span>
                                                 </button>
-                                                <a href="<?php echo base_url() ?>gestion/curso/edit/<?php echo $curso->id; ?>" class="btn btn-warning">
-                                                    <span class="fa fa-pencil"></span>
-                                                </a>
+
                                                 <a href="<?php echo base_url() ?>gestion/curso/generate_pdf/<?php echo $curso->id; ?>" class="btn btn-primary btn-print" target="_blank">
                                                     <span class="fa fa-print"> </span>
                                                 </a>  
+
+                                                <?php if($permisos->update == 1): ?>
+                                                <a href="<?php echo base_url() ?>gestion/curso/edit/<?php echo $curso->id; ?>" class="btn btn-warning">
+                                                    <span class="fa fa-pencil"></span>
+                                                </a>
 
                                                 <!-- Botón para activar/desactivar Inscripción -->
                                                 <?php if($curso->estado == 1): ?>
@@ -108,6 +113,7 @@
                                                     </a>
                                                 <?php endif; ?> 
                                                 <!-- Fin: Botón para activar/desactivar Inscripción -->
+                                                <?php endif; ?>
                                                 
                                             </div>
                                         </td>

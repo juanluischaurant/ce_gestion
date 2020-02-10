@@ -2,7 +2,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Reporte Anual
+        Resumen Anual
         <small>General</small>
       </h1>
     </section>

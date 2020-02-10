@@ -11,6 +11,11 @@ class Resumen_anual extends CI_Controller {
     public function __construct()
     {
         parent::__construct();
+
+        // El archivo backend_lip fue creado por el programador 
+		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
+		$this->permisos = $this->backend_lib->control();
+
         
         // Si el usuario no está logeado
 		if(!$this->session->userdata('login'))

@@ -9,8 +9,8 @@
 	<div class="col-md-12">
         
 <div class="box">
-            <div class="box-header">
-              <h3 class="box-title">Últimas Cursos Asociadas</h3>
+            <div class="box-header text-center">
+              <h3 class="box-title">Últimos Cursos Asociados</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body table-responsive no-padding">
@@ -24,10 +24,10 @@
                
                 <?php foreach($cursos as $curso) : ?>
                     <tr>
-                        <td><?php echo $curso->serial_instancia; ?></td>
-                        <td><?php echo $curso->nombre_curso ?></td>
+                        <td><?php echo $curso->serial; ?></td>
+                        <td><?php echo $curso->descripcion ?></td>
                         <td> <?php echo $curso->nombre_turno; ?></td>
-                        <td><?php echo $curso->total_cupos; ?></td>
+                        <td><?php echo $curso->total_cupos."".$curso->conteo_inscripciones; ?></td>
                     </tr>
                 <?php endforeach; ?>
 
