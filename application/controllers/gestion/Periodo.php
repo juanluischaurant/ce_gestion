@@ -22,6 +22,7 @@ class Periodo extends CI_Controller {
 		else
 		{
 			$this->load->model('Periodo_model');  
+			$this->load->model('Accion_model');  
 		}
     }
 
@@ -100,6 +101,7 @@ class Periodo extends CI_Controller {
 			}
 			else
 			{
+				$this->guardar_accion(2, $this->Periodo_model->lastID(), 'PERIODO');
 				$this->session->set_flashdata('success', 'Se agregó el nuevo Período.');
 				redirect(base_url().'gestion/periodo/');
 			}
@@ -122,6 +124,7 @@ class Periodo extends CI_Controller {
 
 		if($this->Periodo_model->update($id_periodo, $data))
 		{
+			$this->guardar_accion(3, $id_periodo, 'PERIODO');
 			$this->session->set_flashdata('success', 'Período actualizado correctamente.');
 			redirect(base_url().'gestion/periodo');
 		}
@@ -160,6 +163,32 @@ class Periodo extends CI_Controller {
 				$this->session->set_flashdata('error', 'No se eliminó el periodo <b>' . $nombre_periodo. '</b> Algo pasó al consultar la base de datos');
 				redirect(base_url().'gestion/periodo/');
 			}			
+		}
+	}
+
+	/**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "ID PERIODO: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
 		}
 	}
 }

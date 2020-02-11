@@ -112,6 +112,16 @@ class Periodo_model extends CI_Model {
         }
     }
 
+    /**
+     * Obtén el ID del último registro realizado
+     *
+     * @return void
+     */
+    public function lastID()
+    {
+        return $this->db->insert_id();
+    }
+
     public function verificar_validez_periodo($id_periodo)
     {
         $resultado = $this->db->select(

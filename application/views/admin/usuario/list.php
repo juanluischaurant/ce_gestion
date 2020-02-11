@@ -55,7 +55,7 @@
                                         <td><?php echo $usuario->correo_electronico; ?></td>
                                         <td><?php echo $usuario->username; ?></td>
                                         <td><small class="label label-success"><?php echo $usuario->rol; ?></small></td>
-                                        <?php $dataUsuario = $usuario->cedula_persona; ?>
+                                        <?php $dataUsuario = $usuario->username; ?>
                                         <td>
                                             <div class="btn-group">
                                                 <button type='button' class="btn btn-info btn-view-usuario" data-toggle='modal' data-target='#modal-default' value='<?php echo $dataUsuario?>'><span class="fa fa-eye"></span></button>

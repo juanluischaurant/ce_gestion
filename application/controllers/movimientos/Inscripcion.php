@@ -26,6 +26,8 @@ class Inscripcion extends CI_Controller {
 			$this->load->model("Pago_model");
 			$this->load->model("Participante_model");
 			$this->load->model('Curso_model');
+
+			$this->load->model('Accion_model');
         }
     }
 
@@ -152,6 +154,7 @@ class Inscripcion extends CI_Controller {
 			// Asociar los pagos a la inscripción realizada
 			$this->asociar_pago($id_ultima_inscripcion, $ids_pago);
 
+			$this->guardar_accion(2, $id_ultima_inscripcion, 'INSCRIPCIÓN');
 			$this->session->set_flashdata('success', 'Inscripción almacenada exitosamente.');
 			redirect(base_url()."movimientos/inscripcion");
 		}
@@ -216,6 +219,8 @@ class Inscripcion extends CI_Controller {
 				$data = array( 'estatus_pago' => 3,);
 				$this->Inscripcion_model->update_estado_pago($id_inscripcion, $data);
 
+				$this->guardar_accion(1, $id_inscripcion, 'INSCRIPCIÓN');
+
 				// Esta cadena de texto se concatena al resto de un enlace obetnido
 				// durante la llamada AJAX con jQuery para redireccionar la página
 				// echo 'movimientos/inscripcion';
@@ -262,6 +267,7 @@ class Inscripcion extends CI_Controller {
 					// Cambia el estado del pago 'estado_pago', en la tabla pago_de_inscripción
 					$data = array( 'estatus_pago' => 2,);
 					$this->Inscripcion_model->update_estado_pago($id_inscripcion, $data);
+					$this->guardar_accion(4, $id_inscripcion, 'INSCRIPCIÓN');
 				
 						// Esta cadena de texto se concatena al resto de un enlace obetnido
 						// durante la llamada AJAX con jQuery para redireccionar la página
@@ -312,16 +318,17 @@ class Inscripcion extends CI_Controller {
 				// Actualizar la tabla inscripcion, con el ID del nuevo curso
 				if($this->Inscripcion_model->update_inscripcion($id_inscripcion, $data))
 				{
+					$this->guardar_accion(3, $id_inscripcion, 'INSCRIPCIÓN');
 					// Emitir alerta y redireccionar
 					$this->session->set_flashdata('success', 'Cambio de curso exitoso.');
 					redirect(base_url().'movimientos/inscripcion/');				
 				}
 			}
-			// else
-			// {
-			// 	$this->session->set_flashdata('success', 'Curso no tiene cupos disponibles.');
-			// 	redirect(base_url().'movimientos/inscripcion/');
-			// }
+			else
+			{
+				$this->session->set_flashdata('success', 'Curso no tiene cupos disponibles.');
+				redirect(base_url().'movimientos/inscripcion/');
+			}
 	}
 
 	/**
@@ -484,5 +491,33 @@ class Inscripcion extends CI_Controller {
 	// =======================================================
 	//Fin de Métodos utilizados para el pluggin AUTOCOMPLETE
 	// =======================================================
+
+	
+   	/**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "ID: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
+		}
+	}
+
 
 }

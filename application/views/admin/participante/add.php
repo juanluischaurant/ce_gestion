@@ -154,7 +154,6 @@
 </div>
 <!-- /.modal -->
 
-
 <!-- CUSTOM JS -->
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/participante.add.js"></script>
 

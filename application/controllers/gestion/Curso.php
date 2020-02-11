@@ -15,6 +15,7 @@ class Curso extends CI_Controller {
 
         $this->load->model('Especialidad_model');  
 		$this->load->model('Curso_model');  
+		$this->load->model('Accion_model');  
 		// Carga la librería de generación de PDF 
 		include APPPATH . 'third_party/fpdf/lista_asistencia.class.php';
 
@@ -143,6 +144,9 @@ class Curso extends CI_Controller {
 
 		if($this->Curso_model->save($data))
 		{
+			$this->guardar_accion(2, $this->Curso_model->lastID(), 'CURSO');
+
+			$this->session->set_flashdata('success', 'Se registro el curso satisfactoriamente');
 			redirect(base_url().'gestion/curso');
 		}
 		else
@@ -179,6 +183,8 @@ class Curso extends CI_Controller {
 			
 			if($this->Curso_model->update($id_curso, $data))
 			{
+				$this->guardar_accion(3, $id_curso, 'CURSO');
+
 				$this->session->set_flashdata('success', $serial_curso . ' actualizado correctamente.');
 				redirect(base_url().'gestion/curso');
 			}
@@ -229,6 +235,8 @@ class Curso extends CI_Controller {
 				// Update register if TRUE
 				if($this->Curso_model->update($id_curso, $data))
 				{
+					$this->guardar_accion(1, $id_curso, 'CURSO');
+					
 					$this->session->set_flashdata('success', 'Se desactivó el curso exitosamente.');
 					redirect(base_url().'gestion/curso/');
 				}
@@ -269,6 +277,7 @@ class Curso extends CI_Controller {
 			// Update register if TRUE
 			if($this->Curso_model->update($id_curso, $data))
 			{
+				$this->guardar_accion(4, $id_curso, 'CURSO');
 				$this->session->set_flashdata('success', 'Se activó el curso exitosamente.');
 				redirect(base_url().'gestion/curso/');
 			}
@@ -365,4 +374,29 @@ class Curso extends CI_Controller {
 		$pdf->Output();
 	}
 
+	/**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "ID CURSO: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
+		}
+	}
 }

@@ -282,19 +282,6 @@ class Persona extends CI_Controller {
 		}		
 	}
 
-	public function delete($cedula_persona)
-	{
-		$data = array(
-			'estado' => 0,
-		);
-		
-		if($this->Persona_model->update($cedula_persona, $data))
-		{
-			$this->guardar_accion(1, $cedula, 'PERSONA');
-			echo 'gestion/persona';
-		};
-	}
-
 	/**
 	 * Guardar Acción
 	 * 

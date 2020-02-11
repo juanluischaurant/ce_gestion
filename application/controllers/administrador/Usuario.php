@@ -31,6 +31,7 @@ class Usuario extends CI_Controller {
         {
             // Carga el modélo
             $this->load->model("Usuario_model");
+            $this->load->model("Persona_model");
             $this->load->model("Accion_model");
         }
     }
@@ -51,6 +52,7 @@ class Usuario extends CI_Controller {
     {
 		$data = array(
 			'roles' => $this->Usuario_model->roles_dropdown(),
+			'personas' => $this->Persona_model->get_personas()
         );
         
 		$this->load->view('layouts/header');
@@ -120,13 +122,6 @@ class Usuario extends CI_Controller {
 			// Si la validación es correcta
 			if($this->Usuario_model->update($username_actual, $data))
 			{
-				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión activa
-				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3 = modificar) 
-				// $descripcion_accion = "Usuario ID: " . $id_usuario; // Texto de descripción de acción
-				// $tabla_afectada = "Usuario"; // Tabla afectada
-
-				// $agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
-	
 				redirect(base_url().'administrador/usuario');
 			}
 			else
@@ -155,15 +150,20 @@ class Usuario extends CI_Controller {
     {
         $username_usuario = $this->input->post('username-usuario');
         $password_usuario = $this->input->post('password-usuario');
-        $rol_usuario = $this->input->post('rol-usuario');
+		$rol_usuario = $this->input->post('rol-usuario');
+		$cedula_persona = $this->input->post('cedula_persona');
 
         $data = array(
             'username' => $username_usuario,
             'password' => sha1($password_usuario),
-            'id_rol' => $rol_usuario,
+			'id_rol' => $rol_usuario,
+			'cedula_persona' => $cedula_persona
         );
 
-        $this->form_validation->set_rules('username-usuario', 'Username', 'required|is_unique[usuario.username_usuario]|min_length[6]|max_length[10]'); 
+        $this->form_validation->set_rules('username-usuario', 'Username', 'required|is_unique[usuario.username]|min_length[6]|max_length[10]'); 
+        $this->form_validation->set_rules('password-usuario', 'Contraseña', 'required|min_length[6]|max_length[45]'); 
+        $this->form_validation->set_rules('rol-usuario', 'Rol', 'required'); 
+        $this->form_validation->set_rules('cedula_persona', 'Cédula', 'is_unique[usuario.cedula_persona]|required'); 
 
         if($this->form_validation->run())
         {

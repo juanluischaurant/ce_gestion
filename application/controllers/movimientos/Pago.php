@@ -28,6 +28,7 @@ class Pago extends CI_Controller {
         {
             // Carga el controlador
             $this->load->model("Pago_model");
+            $this->load->model("Accion_model");
         }
     }
 
@@ -87,6 +88,7 @@ class Pago extends CI_Controller {
         {    
             if($this->Pago_model->save($data))
             {
+                $this->guardar_accion(2, $this->Pago_model->lastID(), 'PAGO');
                 $this->session->set_flashdata('success', 'Pago registrado exitosamente.');
 
                 redirect(base_url().'movimientos/pago/');    
@@ -136,6 +138,8 @@ class Pago extends CI_Controller {
             // if($this->form_validation->run('agregar_pago'))
             // {
                 $resultados = $this->Pago_model->insertar_pago_procedure($data);
+
+                $this->guardar_accion(2, $this->Pago_model->lastID(), 'PAGO');
                 // $resultados = $this->Pago_model->save($data);
 
                 // if($resultados == TRUE)
@@ -238,13 +242,7 @@ class Pago extends CI_Controller {
 		{
 			if($this->Pago_model->update($id_pago, $data))
 			{
-				// $fk_id_usuario = $this->session->userdata('id_usuario'); // ID del usuario con sesión iniciada
-				// $fk_id_tipo_accion = 3; // Tipo de acción ejecudada (clave foránea: 3=modificar) 
-				// $descripcion_accion = "PERSONA ID: " . $persona_id; // Texto de descripción de acción
-				// $tabla_afectada = "PERSONA"; // Tabla afectada
-
-				// $agregar_accion = $this->Accion_model->save_action($fk_id_usuario, $fk_id_tipo_accion, $descripcion_accion, $tabla_afectada);
-	
+				$this->guardar_accion(3, $this->Pago_model->lastID(), 'PAGO');
 				redirect(base_url().'movimientos/pago');
 			}
 			else
@@ -327,4 +325,29 @@ class Pago extends CI_Controller {
     }
     // Fin: Métodos utilizados para el pluggin AUTOCOMPLETE
 
+    /**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "ID: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
+		}
+	}
 }

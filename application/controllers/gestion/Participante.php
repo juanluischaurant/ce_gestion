@@ -32,6 +32,7 @@ class Participante extends CI_Controller {
             // Carga el controlador
 			$this->load->model('Persona_model');  
 			$this->load->model('Participante_model');  
+			$this->load->model('Accion_model');  
 		}
 		
     }
@@ -121,6 +122,8 @@ class Participante extends CI_Controller {
 		{
 			if($this->Participante_model->save($data_participante))
 			{
+				$this->guardar_accion(2, $cedula_persona, 'PARTICIPANTE');
+
 				$this->session->set_flashdata('success', 'Participante registrado exitosamente');
 				redirect(base_url().'gestion/participante');
 			}
@@ -159,13 +162,43 @@ class Participante extends CI_Controller {
 			'id_nivel_academico' => $nivel_academico,
 		);
 
-		if($this->Participante_model->update($cedula_persona, $data)) {
+		if($this->Participante_model->update($cedula_persona, $data))
+		{
+			$this->guardar_accion(3, $cedula_persona, 'PARTICIPANTE');
 			redirect(base_url().'gestion/participante');
-		} else {
+		}
+		else
+		{
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
 			redirect(base_url().'gestion/participante/edit'.$cedula_persona);
 		}
 		
+	}
+
+	/**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "CÉDULA: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
+		}
 	}
 
 }

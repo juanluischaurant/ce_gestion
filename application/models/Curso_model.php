@@ -169,6 +169,17 @@ class Curso_model extends CI_Model {
         }
     }
    
+    
+    /**
+     * Obtén el ID del último registro realizado
+     *
+     * @return void
+     */
+    public function lastID()
+    {
+        return $this->db->insert_id();
+    }
+     
     /**
      * Realiza conteo de inscripciones
      * 

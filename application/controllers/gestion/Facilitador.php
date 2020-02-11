@@ -32,6 +32,7 @@ class Facilitador extends CI_Controller {
             // Carga el controlador
 			$this->load->model('Persona_model');  
 			$this->load->model('Facilitador_model');
+			$this->load->model('Accion_model');
 		}
 
     }
@@ -85,8 +86,9 @@ class Facilitador extends CI_Controller {
 
 		if($this->Facilitador_model->evitaFacilitadorDuplicado($cedula_persona) === true) {
 
-			if($this->Facilitador_model->save($data_facilitador)) {
-
+			if($this->Facilitador_model->save($data_facilitador))
+			{
+				$this->guardar_accion(2, $cedula_persona, 'FACILITADOR');
 				redirect(base_url().'gestion/facilitador');
 
 			} else {
@@ -96,11 +98,12 @@ class Facilitador extends CI_Controller {
 
 			}
 
-		} else {
+		}
+		else
+		{
 
 			$this->session->set_flashdata('error', 'Esta persona ya está registrada como facilitador.');
-			redirect(base_url().'gestion/facilitador/add');	
-
+			redirect(base_url().'gestion/facilitador/add');
 		}
 
 	}
@@ -114,7 +117,9 @@ class Facilitador extends CI_Controller {
 			'fecha_contratacion' => $fecha_contratacion,
 		);
 
-		if($this->Persona_model->update($cedula_persona, $data)) {
+		if($this->Persona_model->update($cedula_persona, $data))
+		{
+			$this->guardar_accion(3, $cedula_persona, 'FACILITADOR');
 			redirect(base_url().'gestion/facilitador');
 		} else {
 			$this->session->set_flashdata('error', 'No se pudo actualizar la información');
@@ -147,6 +152,7 @@ class Facilitador extends CI_Controller {
    {
 	   $data = array('estado' => 0);
 
+	   $this->guardar_accion(1, $cedula_persona, 'FACILITADOR');
 	   $this->Facilitador_model->update($cedula_persona, $data);
 	   $this->session->set_flashdata('success', 'Se desactivó exitosamente al facilitador');
 	   redirect(base_url().'gestion/facilitador/');
@@ -165,9 +171,36 @@ class Facilitador extends CI_Controller {
    {
 	   $data = array('estado' => 1);
 
+	   $this->guardar_accion(4, $cedula_persona, 'FACILITADOR');
 	   $this->Facilitador_model->update($cedula_persona, $data);
 	   $this->session->set_flashdata('success', 'Se desactivó exitosamente al facilitador');
 	   redirect(base_url().'gestion/facilitador/');
    }
+
+   /**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "CÉDULA: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
+		}
+	}
 
 }

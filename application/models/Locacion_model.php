@@ -118,5 +118,15 @@ class Locacion_model extends CI_Model {
         return $resultado->row();
     }
 
+    /**
+     * Obtén el ID del último registro realizado
+     *
+     * @return void
+     */
+    public function lastID()
+    {
+        return $this->db->insert_id();
+    }
+
 
 }

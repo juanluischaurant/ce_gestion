@@ -31,6 +31,7 @@ class Titular extends CI_Controller {
         {
 			$this->load->model('Persona_model');  
 			$this->load->model('Titular_model');  
+			$this->load->model('Accion_model');  
 			
 			$this->load->library('unit_test');
         }
@@ -123,6 +124,9 @@ class Titular extends CI_Controller {
 		{
 			if($this->Titular_model->save($data_titular))
 			{
+				$this->guardar_accion(2, $cedula_persona, 'TITULAR');
+
+				$this->session->set_flashdata('error', 'Titular guardado exitosamente');
 				redirect(base_url().'gestion/titular');
 			}
 			else
@@ -135,6 +139,32 @@ class Titular extends CI_Controller {
 		{
 			$this->session->set_flashdata('error', 'Esta persona ya está registrada como Titular.');
 			redirect(base_url().'gestion/titular/add');	
+		}
+	}
+
+	/**
+	 * Guardar Acción
+	 * 
+	 * Método designado para el registro de las acciones realizadas
+	 * por el usuario.
+	 *
+	 * @param integer $id_tipo_accion
+	 * @param string $id_registro_afectado
+	 * @param string $tabla_afectada
+	 * @return void
+	 */
+	private function guardar_accion($id_tipo_accion, $id_registro_afectado, $tabla_afectada)
+	{
+		$username = $this->session->userdata('username'); // ID del usuario con sesión iniciada
+		$id_tipo_accion = $id_tipo_accion; // Tipo de acción ejecudada (clave foránea)
+		$descripcion = "CÉDULA: " . $id_registro_afectado; // Texto de descripción de acción
+		$tabla_afectada = $tabla_afectada; // Tabla afectada
+
+		$agregar_accion = $this->Accion_model->save_action($username, $id_tipo_accion, $descripcion, $tabla_afectada);
+
+		if($agregar_accion)
+		{
+			return TRUE;
 		}
 	}
 
