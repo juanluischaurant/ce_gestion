@@ -35,12 +35,16 @@
 
 <body class="">
     <div class="login-box">
-
+        
         <!-- /.login-logo -->
         <div class="login-box-body">
+
+            <img src="<?php echo base_url('assets/images/fe_y_alegria_logo.png') ?>" class="fya-logo" alt="fe_y_alegria_logo">
+            
             <div class="text-center">
-            <h2><b>CE Gestión</b></h2>
+                <h2><b>CE</b> Gestión</h2>
             </div>
+
             <p class="login-box-msg">Introduzca sus datos de ingreso</p>
 
             <div class="loader"></div>

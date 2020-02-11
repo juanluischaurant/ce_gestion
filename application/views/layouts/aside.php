@@ -26,7 +26,7 @@
                             <li><a href="<?php echo base_url(); ?>gestion/participante"><i class="fa fa-circle-o"></i> Participantes</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/locacion"><i class="fa fa-circle-o"></i> Locaciones</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/periodo"><i class="fa fa-circle-o"></i> Períodos</a></li>
-                            <li><a href="<?php echo base_url(); ?>gestion/especialidad"><i class="fa fa-circle-o"></i> Especialidades</a></li>
+                            <li><a href="<?php echo base_url(); ?>gestion/nombre_curso"><i class="fa fa-circle-o"></i> Nombres de Curso</a></li>
                             <li><a href="<?php echo base_url(); ?>gestion/curso"><i class="fa fa-circle-o"></i> Cursos</a></li>
                         </ul>
                     </li>

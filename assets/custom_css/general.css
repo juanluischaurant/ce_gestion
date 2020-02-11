@@ -20,9 +20,12 @@ body {
   background-size: cover;
 }
 
-.login-logo {
-  color: white;
+.fya-logo {
+  margin: 0 auto;
+  display: block;
+  width: 50px;
 }
+
 
 /* SPINNER */
 .lds-ellipsis {

@@ -5,7 +5,7 @@ class Curso_test extends CI_Controller
     public function __construct()
 	{
         parent::__construct();
-        $this->load->model('Especialidad_model');  
+        $this->load->model('Nombre_curso_model');  
 		$this->load->model('Curso_model');
 		$this->load->library('unit_test');
 		// Carga la librería de generación de PDF 

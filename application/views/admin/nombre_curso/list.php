@@ -3,7 +3,7 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
         <h1>
-        Especialidades
+        Nombres de Curso
         <small>Lista General</small>
         </h1>
     </section>
@@ -14,7 +14,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <a href="<?php echo base_url(); ?>gestion/especialidad/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Especialidad</a>
+                        <a href="<?php echo base_url(); ?>gestion/nombre_curso/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Nombre de Curso</a>
                     </div>
                 </div>
                 
@@ -30,29 +30,27 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <table id="example1" class="table table-bordered btn-hover">
+                        <table id="lista-nombre-curso" class="table table-bordered btn-hover">
                             <thead>
                                 <tr>
                                     <th>#</th>
                                     <th>Fecha de Registro</th>
                                     <th>Nombre</th>
-                                    <th>Descripción</th>
+                                    <th>Conteo</th>
                                     <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if(!empty($especialidades)): ?>
-                                <?php foreach($especialidades as $especialidad): ?>
+                                <?php if(!empty($nombres_curso)): ?>
+                                <?php foreach($nombres_curso as $nombre_curso): ?>
                                     <tr>
-                                        <td><?php echo $especialidad->id; ?></td>
-                                        <td><?php echo $especialidad->fecha_registro; ?></td>
-                                        <td><?php echo $especialidad->nombre; ?></td>
-                                        <td><?php echo $especialidad->descripcion; ?></td>
+                                        <td><?php echo $nombre_curso->id; ?></td>
+                                        <td><?php echo $nombre_curso->fecha_registro; ?></td>
+                                        <td><?php echo $nombre_curso->descripcion; ?></td>
+                                        <td><?php echo $nombre_curso->conteo_cursos_asociados; ?></td>
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/especialidad/edit/<?php echo $especialidad->id; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="#" class="btn btn-danger"><span class="fa fa-remove"></span></a>
+                                                <a href="<?php echo base_url() ?>gestion/nombre_curso/edit/<?php echo $nombre_curso->id; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                             </div>
                                         </td>
                                     </tr>
@@ -71,3 +69,6 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+
+<!-- CUSTOM JS -->
+<script type="text/javascript" src="<?php echo base_url(); ?>assets/custom_js/nombre_curso.list.js"></script>

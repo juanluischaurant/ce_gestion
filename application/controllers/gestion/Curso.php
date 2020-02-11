@@ -13,7 +13,7 @@ class Curso extends CI_Controller {
 		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
 		$this->permisos = $this->backend_lib->control();
 
-        $this->load->model('Especialidad_model');  
+        $this->load->model('Nombre_curso_model');  
 		$this->load->model('Curso_model');  
 		$this->load->model('Accion_model');  
 		// Carga la librería de generación de PDF 
