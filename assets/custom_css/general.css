@@ -6,12 +6,22 @@
     width: 45%;
 }
 
-/* Up to 700px */
+/* Up to 1155px */
 @media (max-width: 1155px) {
     .centrar_div {
         margin: 0 auto;
         width: 100%;
     }
+}
+
+body {
+  background-image: url('../images/sidorova-alice--yCPWuHHV6I-unsplash.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login-logo {
+  color: white;
 }
 
 /* SPINNER */

@@ -25,18 +25,22 @@
         <!-- Bootstrap Validator -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/bootstrap_validator/bootstrapValidator.min.css">
 
+        <!-- Hoja de estilos para uso general -->
+        <link rel="stylesheet" href="<?php echo base_url(); ?>assets/custom_css/general.css">
+
         <!-- Theme style -->
         <link rel="stylesheet" href="<?php echo base_url(); ?>assets/template/dist/css/AdminLTE.min.css">
 
     </head>
 
-<body class="hold-transition login-page">
+<body class="">
     <div class="login-box">
-        <div class="login-logo">
-            <h2>CE_Gestión</h2>
-        </div>
+
         <!-- /.login-logo -->
         <div class="login-box-body">
+            <div class="text-center">
+            <h2><b>CE Gestión</b></h2>
+            </div>
             <p class="login-box-msg">Introduzca sus datos de ingreso</p>
 
             <div class="loader"></div>
