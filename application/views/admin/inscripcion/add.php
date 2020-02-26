@@ -282,7 +282,7 @@
                     </div>
           
                     <div class="col-md-4">
-                        <button type="button" id="verificar-numero-pago" class="btn bg-olive btn-flat margin">Verificar</button>
+                        <button type="button" id="verificar-numero-pago" class="btn bg-olive btn-flat margin">ÚNICO</button>
                     </div>
                 </div>
 

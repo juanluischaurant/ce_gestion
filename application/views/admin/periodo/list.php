@@ -61,11 +61,8 @@
                                         <td><?php echo $periodo->instancias_asociadas; ?></td>                                 
                                         <td>
                                             <div class="btn-group">
-                                                <a href="#" class="btn btn-info"><span class="fa fa-eye"></span></a>
-
                                                 <?php if($permisos->update == 1): ?>
                                                 <a href="<?php echo base_url() ?>gestion/periodo/edit/<?php echo $periodo->id; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
-                                                <a href="<?php echo base_url() ?>gestion/periodo/delete/<?php echo $periodo->id; ?>" class="btn btn-danger"><span class="fa fa-remove"></span></a>
                                                 <?php endif; ?>
                                             </div>
                                         </td>

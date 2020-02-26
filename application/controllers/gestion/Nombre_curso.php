@@ -11,7 +11,7 @@ class Nombre_curso extends CI_Controller {
 
 		// El archivo backend_lip fue creado por el programador 
 		// y se encuentra almacenado en el directorio: application/libraries/Backend_lib.php
-		// $this->permisos = $this->backend_lib->control();
+		$this->permisos = $this->backend_lib->control();
 
         $this->load->model('Nombre_curso_model');  
     }
@@ -20,6 +20,7 @@ class Nombre_curso extends CI_Controller {
 	{
 		$data = array(
 			'nombres_curso' => $this->Nombre_curso_model->get_nombres_curso(),
+			'permisos' => $this->permisos
 		);
 		$this->load->view('layouts/header');
 		$this->load->view('layouts/aside');

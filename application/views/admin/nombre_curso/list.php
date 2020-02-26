@@ -13,9 +13,11 @@
         <div class="box box-solid">
             <div class="box-body">
                 <div class="row">
+                <?php if($permisos->insert == 1): ?>
                     <div class="col-md-12">
                         <a href="<?php echo base_url(); ?>gestion/nombre_curso/add" class="btn btn-primary btn-flat"><span class="fa fa-plus"></span> Agregar Nombre de Curso</a>
                     </div>
+                <?php endif; ?>
                 </div>
                 
                 <hr>
@@ -49,9 +51,11 @@
                                         <td><?php echo $nombre_curso->descripcion; ?></td>
                                         <td><?php echo $nombre_curso->conteo_cursos_asociados; ?></td>
                                         <td>
+                                        <?php if($permisos->update == 1): ?>
                                             <div class="btn-group">
                                                 <a href="<?php echo base_url() ?>gestion/nombre_curso/edit/<?php echo $nombre_curso->id; ?>" class="btn btn-warning"><span class="fa fa-pencil"></span></a>
                                             </div>
+                                        <?php endif; ?>
                                         </td>
                                     </tr>
                                  <?php endforeach; ?>

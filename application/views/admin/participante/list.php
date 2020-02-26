@@ -57,9 +57,6 @@
                                                 class="btn btn-warning">
                                                     <span class="fa fa-pencil"></span>
                                                 </a>
-                                                <a href="#" class="btn btn-danger">
-                                                    <span class="fa fa-remove"></span>
-                                                </a>
                                                 <?php endif; ?>
                                             </div>
                                         </td>
